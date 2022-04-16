@@ -212,8 +212,10 @@ ext = Extension("libarl.core",
             ],
             language="c++",
             include_dirs=[
-                os.path.join(libarl_dir, 'src'),
-                os.path.join(libarl_dir, 'src', 'include')
+#                os.path.join(libarl_dir, 'src'),
+                os.path.join(libarl_dir, 'src', 'include'),
+                os.path.join(packages_dir, 'libvsc', 'src', 'include'),
+                os.path.join(packages_dir, 'libvsc', 'python')
             ]
         )
 ext.cython_directives={'language_level' : '3'}
@@ -238,6 +240,7 @@ setup(
   ],
   setup_requires=[
     'setuptools_scm',
+    'libvsc',
     'cython'
   ],
   cmdclass={'build_ext': build_ext},

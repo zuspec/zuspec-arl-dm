@@ -9,7 +9,7 @@
 
 namespace arl {
 
-class IContext {
+class IContext : public vsc::IContext {
 public:
 
 	virtual ~IContext() { }

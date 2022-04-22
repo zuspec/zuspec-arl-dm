@@ -18,6 +18,8 @@ enum class FlowObjKindE {
 	Stream
 };
 
+class IDataTypeFlowObj;
+using IDataTypeFlowObjUP=std::unique_ptr<IDataTypeFlowObj>;
 class IDataTypeFlowObj : public vsc::IDataTypeStruct, public IAccept {
 public:
 

@@ -11,9 +11,16 @@
 
 namespace arl {
 
+class IDataTypeComponent;
+
+class IDataTypeAction;
+using IDataTypeActionUP=std::unique_ptr<IDataTypeAction>;
 class IDataTypeAction : public vsc::IDataTypeStruct, public IAccept {
 public:
 
+	virtual IDataTypeComponent *getComponentType() = 0;
+
+	virtual void setComponentType(IDataTypeComponent *) = 0;
 
 };
 

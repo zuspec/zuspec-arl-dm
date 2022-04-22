@@ -6,6 +6,7 @@
  */
 
 #include "Context.h"
+#include "DataTypeAction.h"
 
 namespace arl {
 
@@ -17,6 +18,62 @@ Context::~Context() {
 	if (m_ctxt) {
 		delete m_ctxt;
 	}
+}
+
+IDataTypeAction *Context::findDataTypeAction(const std::string &name) {
+	std::unordered_map<std::string,IDataTypeActionUP>::const_iterator it;
+
+	if ((it=m_action_type_m.find(name)) != m_action_type_m.end()) {
+		return it->second.get();
+	} else {
+		return 0;
+	}
+}
+
+IDataTypeAction *Context::mkDataTypeAction(const std::string &name) {
+//	return new DataTypeAction(name);
+}
+
+bool Context::addDataTypeAction(IDataTypeAction *t) {
+	return m_action_type_m.insert({t->name(), IDataTypeActionUP(t)}).second;
+}
+
+IDataTypeComponent *Context::findDataTypeComponent(const std::string &name) {
+	std::unordered_map<std::string,IDataTypeComponentUP>::const_iterator it;
+
+	if ((it=m_component_type_m.find(name)) != m_component_type_m.end()) {
+		return it->second.get();
+	} else {
+		return 0;
+	}
+}
+
+IDataTypeComponent *Context::mkDataTypeComponent(const std::string &name) {
+
+}
+
+bool Context::addDataTypeComponent(IDataTypeComponent *t) {
+
+}
+
+IDataTypeFlowObj *Context::findDataTypeFlowObj(const std::string &name) {
+	std::unordered_map<std::string,IDataTypeFlowObjUP>::const_iterator it;
+
+	if ((it=m_flowobj_type_m.find(name)) != m_flowobj_type_m.end()) {
+		return it->second.get();
+	} else {
+		return 0;
+	}
+}
+
+IDataTypeFlowObj *Context::mkDataTypeFlowObj(
+		const std::string 	&name,
+		FlowObjKindE		kind) {
+
+}
+
+bool Context::addDataTypeFlowObj(IDataTypeFlowObj *t) {
+
 }
 
 vsc::IModelFieldRoot *Context::buildModelField(

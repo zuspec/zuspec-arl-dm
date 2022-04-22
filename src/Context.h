@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include <unordered_map>
 #include "arl/IContext.h"
 
 namespace arl {
@@ -16,6 +17,29 @@ public:
 
 	virtual ~Context();
 
+	virtual IDataTypeAction *findDataTypeAction(const std::string &name) override;
+
+	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override;
+
+	virtual bool addDataTypeAction(IDataTypeAction *t) override;
+
+	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) override;
+
+	virtual IDataTypeComponent *mkDataTypeComponent(const std::string &name) override;
+
+	virtual bool addDataTypeComponent(IDataTypeComponent *t) override;
+
+	virtual IDataTypeFlowObj *findDataTypeFlowObj(const std::string &name) override;
+
+	virtual IDataTypeFlowObj *mkDataTypeFlowObj(
+			const std::string 	&name,
+			FlowObjKindE		kind) override;
+
+	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) override;
+
+	/****************************************************************
+	 * Implementation of vsc::IContext
+	 ****************************************************************/
 	virtual vsc::IModelFieldRoot *buildModelField(
 			vsc::IDataTypeStruct			*dt,
 			const std::string		&name) override;
@@ -98,6 +122,10 @@ public:
 
 private:
 	vsc::IContext			*m_ctxt;
+	std::unordered_map<std::string, IDataTypeActionUP>			m_action_type_m;
+	std::unordered_map<std::string, IDataTypeComponentUP>		m_component_type_m;
+	std::unordered_map<std::string, IDataTypeFlowObjUP>			m_flowobj_type_m;
+
 };
 
 } /* namespace arl */

@@ -6,10 +6,13 @@
  */
 
 #pragma once
+#include <memory>
 #include "arl/IArl.h"
 
 namespace arl {
 
+class ArlImpl;
+using ArlImplUP=std::unique_ptr<ArlImpl>;
 class ArlImpl : public IArl {
 public:
 	ArlImpl();
@@ -17,6 +20,12 @@ public:
 	virtual ~ArlImpl();
 
 	virtual IContext *mkContext(vsc::IContext *ctxt) override;
+
+	static ArlImpl *inst();
+
+private:
+	static ArlImplUP			m_inst;
+
 
 };
 

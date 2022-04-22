@@ -23,4 +23,17 @@ IContext *ArlImpl::mkContext(vsc::IContext *ctxt) {
 	return new Context(ctxt);
 }
 
+ArlImpl *ArlImpl::inst() {
+	if (!m_inst) {
+		m_inst = ArlImplUP(new ArlImpl());
+	}
+	return m_inst.get();
+}
+
+extern "C" IArl *iarl() {
+	return ArlImpl::inst();
+}
+
+ArlImplUP ArlImpl::m_inst;
+
 } /* namespace arl */

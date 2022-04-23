@@ -1,14 +1,16 @@
 
 package:
   name: libarl
-  version: 0.0.1
 
-  dev-deps:
-  - name: libvsc
-    url: https://github.com/fvutils/libvsc.git
+  dep-sets:
+  - name: default
+    deps:
+    - name: libvsc
+      url: https://github.com/fvutils/libvsc.git
 
-  deps:
-  - name: libvsc
-    url: https://github.com/fvutils/libvsc.git
+  - name: default-dev
+    deps:
+    - name: libvsc
+      url: https://github.com/fvutils/libvsc.git
 
 

@@ -238,7 +238,7 @@ setup(
     ]
   },
   install_requires=[
-      'pyyaml'
+    'libvsc',
   ],
   setup_requires=[
     'setuptools_scm',

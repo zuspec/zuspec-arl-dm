@@ -102,6 +102,24 @@ cdef class Arl(object):
 
 cdef class Context(vsc.Context):
 
+    cpdef DataTypeComponent findDataTypeComponent(self, name):
+        cdef decl.IDataTypeComponent *c = self.asContext().findDataTypeComponent(name.encode())
+        if c != NULL:
+            return DataTypeComponent.mk(c, False)
+        else:
+            return None
+
+    cpdef DataTypeComponent mkDataTypeComponent(self, name):
+        return DataTypeComponent.mk(
+            self.asContext().mkDataTypeComponent(name.encode()), True)
+        
+    cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t):
+        comp_t._owned = False
+        return self.asContext().addDataTypeComponent(comp_t.asComponent())
+    
+    cdef decl.IContext *asContext(self):
+        return dynamic_cast[decl.IContextP](self._hndl)
+
     @staticmethod
     cdef mk(decl.IContext *hndl, bool owned=True):
         ret = Context()
@@ -110,7 +128,7 @@ cdef class Context(vsc.Context):
         return ret
 
 
-cdef class DataTypeAction(vsc.DataTypeStruct):
+cdef class DataTypeAction(DataTypeStruct):
 
     cdef decl.IDataTypeAction *asAction(self):
         return dynamic_cast[decl.IDataTypeActionP](self._hndl)
@@ -122,3 +140,15 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
         ret._owned = owned
         return ret
 
+cdef class DataTypeComponent(DataTypeStruct):
+
+    cdef decl.IDataTypeComponent *asComponent(self):
+        return dynamic_cast[decl.IDataTypeComponentP](self._hndl)
+    
+    @staticmethod
+    cdef DataTypeComponent mk(decl.IDataTypeComponent *hndl, bool owned=True):
+        ret = DataTypeComponent()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+    

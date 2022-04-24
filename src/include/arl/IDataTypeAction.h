@@ -7,7 +7,7 @@
 
 #pragma once
 #include "arl/IAccept.h"
-#include "vsc/IDataTypeStruct.h"
+#include "arl/IDataTypeStruct.h"
 
 namespace arl {
 
@@ -15,7 +15,7 @@ class IDataTypeComponent;
 
 class IDataTypeAction;
 using IDataTypeActionUP=std::unique_ptr<IDataTypeAction>;
-class IDataTypeAction : public vsc::IDataTypeStruct, public IAccept {
+class IDataTypeAction : public IDataTypeStruct {
 public:
 
 	virtual IDataTypeComponent *getComponentType() = 0;

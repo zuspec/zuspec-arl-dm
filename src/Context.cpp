@@ -7,6 +7,7 @@
 
 #include "Context.h"
 #include "DataTypeAction.h"
+#include "DataTypeComponent.h"
 
 namespace arl {
 
@@ -49,11 +50,18 @@ IDataTypeComponent *Context::findDataTypeComponent(const std::string &name) {
 }
 
 IDataTypeComponent *Context::mkDataTypeComponent(const std::string &name) {
-
+	return new DataTypeComponent(name);
 }
 
 bool Context::addDataTypeComponent(IDataTypeComponent *t) {
+	std::unordered_map<std::string,IDataTypeComponentUP>::const_iterator it;
 
+	if ((it=m_component_type_m.find(t->name())) != m_component_type_m.end()) {
+		m_component_type_m.insert({t->name(), IDataTypeComponentUP(t)});
+		return true;
+	} else {
+		return false;
+	}
 }
 
 IDataTypeFlowObj *Context::findDataTypeFlowObj(const std::string &name) {

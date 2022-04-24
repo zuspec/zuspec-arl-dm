@@ -6,17 +6,18 @@
  */
 
 #pragma once
+#include "arl/IAccept.h"
 #include "arl/IModelStructCreateHook.h"
 #include "vsc/IDataTypeStruct.h"
 
 namespace arl {
 
-class IDataTypeStruct : vsc::IDataTypeStruct {
+class IDataTypeStruct : public vsc::IDataTypeStruct, public IAccept {
 public:
 
 	virtual ~IDataTypeStruct() { }
 
-	virtual void setCreateHook(IModelStructCreateHook *hook) = 0;
+	// TODO: exec blocks
 
 };
 

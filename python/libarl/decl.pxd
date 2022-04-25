@@ -17,23 +17,21 @@ cdef extern IArl *py_get_arl(const char *)
 
 cdef extern from "arl/IContext.h" namespace "arl":
     cdef cppclass IContext(vsc.IContext):
+        vsc.IModelField *buildModelComponent(IDataTypeComponent *t)
         IDataTypeComponent *findDataTypeComponent(const cpp_string &)
         IDataTypeComponent *mkDataTypeComponent(const cpp_string &)
         bool addDataTypeComponent(IDataTypeComponent *)
         
-cdef extern from "arl/IDataTypeStruct.h" namespace "arl":
-    cdef cppclass IDataTypeStruct(vsc.IDataTypeStruct):
-        pass
 cdef extern from "arl/IDataTypeAction.h" namespace "arl":
-    cdef cppclass IDataTypeAction(IDataTypeStruct):
+    cdef cppclass IDataTypeAction(vsc.IDataTypeStruct):
         pass
     
 cdef extern from "arl/IDataTypeComponent.h" namespace "arl":
-    cdef cppclass IDataTypeComponent(IDataTypeStruct):
+    cdef cppclass IDataTypeComponent(vsc.IDataTypeStruct):
         pass
     
 cdef extern from "arl/IDataTypeFlowObj.h" namespace "arl":
-    cdef cppclass IDataTypeFlowObj(IDataTypeStruct):
+    cdef cppclass IDataTypeFlowObj(vsc.IDataTypeStruct):
         pass
 
     

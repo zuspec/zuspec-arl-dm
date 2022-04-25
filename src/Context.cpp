@@ -21,6 +21,10 @@ Context::~Context() {
 	}
 }
 
+vsc::IModelField *Context::buildModelComponent(IDataTypeComponent *t) {
+
+}
+
 IDataTypeAction *Context::findDataTypeAction(const std::string &name) {
 	std::unordered_map<std::string,IDataTypeActionUP>::const_iterator it;
 

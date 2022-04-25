@@ -17,6 +17,8 @@ public:
 
 	virtual ~Context();
 
+	virtual vsc::IModelField *buildModelComponent(IDataTypeComponent *t) override;
+
 	virtual IDataTypeAction *findDataTypeAction(const std::string &name) override;
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override;

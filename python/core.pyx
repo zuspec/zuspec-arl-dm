@@ -4,6 +4,7 @@ from ctypes import CDLL
 from libcpp cimport bool
 from libcpp.cast cimport dynamic_cast
 cimport libvsc.core as vsc
+cimport libvsc.decl as vsc_decl
 
 cdef Arl _Arl_inst = None
 cdef class Arl(object):
@@ -102,6 +103,11 @@ cdef class Arl(object):
 
 cdef class Context(vsc.Context):
 
+    cpdef vsc.ModelField buildModelComponent(self, DataTypeComponent t):
+        cdef vsc_decl.IModelField *f = self.asContext().buildModelComponent(t.asComponent())
+        return 
+        pass
+
     cpdef DataTypeComponent findDataTypeComponent(self, name):
         cdef decl.IDataTypeComponent *c = self.asContext().findDataTypeComponent(name.encode())
         if c != NULL:
@@ -128,7 +134,7 @@ cdef class Context(vsc.Context):
         return ret
 
 
-cdef class DataTypeAction(DataTypeStruct):
+cdef class DataTypeAction(vsc.DataTypeStruct):
 
     cdef decl.IDataTypeAction *asAction(self):
         return dynamic_cast[decl.IDataTypeActionP](self._hndl)
@@ -140,7 +146,7 @@ cdef class DataTypeAction(DataTypeStruct):
         ret._owned = owned
         return ret
 
-cdef class DataTypeComponent(DataTypeStruct):
+cdef class DataTypeComponent(vsc.DataTypeStruct):
 
     cdef decl.IDataTypeComponent *asComponent(self):
         return dynamic_cast[decl.IDataTypeComponentP](self._hndl)

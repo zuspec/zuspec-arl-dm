@@ -17,6 +17,8 @@ public:
 
 	virtual ~IContext() { }
 
+	virtual vsc::IModelField *buildModelComponent(IDataTypeComponent *t) = 0;
+
 	virtual IDataTypeAction *findDataTypeAction(const std::string &name) = 0;
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) = 0;
@@ -36,7 +38,6 @@ public:
 			FlowObjKindE		kind) = 0;
 
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
-
 
 };
 

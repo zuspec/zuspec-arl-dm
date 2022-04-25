@@ -11,6 +11,7 @@ cdef class Arl(object):
 
 cdef class Context(vsc.Context):
 
+    cpdef vsc.ModelField buildModelComponent(self, DataTypeComponent t)
     cpdef DataTypeComponent findDataTypeComponent(self, name)
     cpdef DataTypeComponent mkDataTypeComponent(self, name)
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)
@@ -20,17 +21,14 @@ cdef class Context(vsc.Context):
     @staticmethod
     cdef mk(decl.IContext *ctxt, bool owned=*)
     
-cdef class DataTypeStruct(vsc.DataTypeStruct):
-    pass
-
-cdef class DataTypeAction(DataTypeStruct):
+cdef class DataTypeAction(vsc.DataTypeStruct):
 
     cdef decl.IDataTypeAction *asAction(self)
     
     @staticmethod
     cdef mk(decl.IDataTypeAction *, bool owned=*)
     
-cdef class DataTypeComponent(DataTypeStruct):
+cdef class DataTypeComponent(vsc.DataTypeStruct):
 
     cdef decl.IDataTypeComponent *asComponent(self)
     

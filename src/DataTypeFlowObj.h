@@ -11,7 +11,7 @@
 
 namespace arl {
 
-class DataTypeFlowObj : public DataTypeStruct, public IDataTypeFlowObj {
+class DataTypeFlowObj : public DataTypeStruct, public virtual IDataTypeFlowObj {
 public:
 	DataTypeFlowObj(
 			const std::string	&name,

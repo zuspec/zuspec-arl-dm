@@ -107,6 +107,20 @@ cdef class Context(vsc.Context):
         cdef vsc_decl.IModelField *f = self.asContext().buildModelComponent(t.asComponent())
         return 
         pass
+    
+    cpdef DataTypeAction findDataTypeAction(self, name):
+        cdef decl.IDataTypeAction *a = self.asContext().findDataTypeAction(name.encode())
+        if a != NULL:
+            return DataTypeAction.mk(a, False)
+        else:
+            return None
+        
+    cpdef DataTypeAction mkDataTypeAction(self, name):
+        return DataTypeAction.mk(self.asContext().mkDataTypeAction(name.encode()), True)
+    
+    cpdef bool addDataTypeAction(self, DataTypeAction a):
+        a._owned = False
+        return self.asContext().addDataTypeAction(a.asAction())
 
     cpdef DataTypeComponent findDataTypeComponent(self, name):
         cdef decl.IDataTypeComponent *c = self.asContext().findDataTypeComponent(name.encode())

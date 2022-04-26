@@ -20,7 +20,7 @@ enum class FlowObjKindE {
 
 class IDataTypeFlowObj;
 using IDataTypeFlowObjUP=std::unique_ptr<IDataTypeFlowObj>;
-class IDataTypeFlowObj : public vsc::IDataTypeStruct, public IAccept {
+class IDataTypeFlowObj : public virtual vsc::IDataTypeStruct, public virtual IAccept {
 public:
 
 	virtual ~IDataTypeFlowObj() { }

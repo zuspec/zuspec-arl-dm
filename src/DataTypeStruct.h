@@ -8,12 +8,14 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "vsc/IDataTypeStruct.h"
+#include "vsc/IModelStructCreateHook.h"
 #include "vsc/ITypeField.h"
 #include "vsc/ITypeConstraint.h"
 
 namespace arl {
 
-class DataTypeStruct {
+class DataTypeStruct : public virtual vsc::IDataTypeStruct {
 public:
 	DataTypeStruct(const std::string &name);
 
@@ -33,10 +35,15 @@ public:
 
 	virtual const std::vector<vsc::ITypeConstraintUP> &getConstraints() const;
 
+	virtual vsc::IModelStructCreateHook *getCreateHook() const override;
+
+	virtual void setCreateHook(vsc::IModelStructCreateHook *hook) override;
+
 public:
 	std::string								m_name;
 	std::vector<vsc::ITypeFieldUP>		 	m_fields;
 	std::vector<vsc::ITypeConstraintUP>		m_constraints;
+	vsc::IModelStructCreateHookUP			m_create_hook;
 
 
 };

@@ -12,6 +12,9 @@ cdef class Arl(object):
 cdef class Context(vsc.Context):
 
     cpdef vsc.ModelField buildModelComponent(self, DataTypeComponent t)
+    cpdef DataTypeAction findDataTypeAction(self, name)
+    cpdef DataTypeAction mkDataTypeAction(self, name)
+    cpdef bool addDataTypeAction(self, DataTypeAction)
     cpdef DataTypeComponent findDataTypeComponent(self, name)
     cpdef DataTypeComponent mkDataTypeComponent(self, name)
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)

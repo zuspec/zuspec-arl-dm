@@ -36,7 +36,7 @@ IDataTypeAction *Context::findDataTypeAction(const std::string &name) {
 }
 
 IDataTypeAction *Context::mkDataTypeAction(const std::string &name) {
-//	return new DataTypeAction(name);
+	return new DataTypeAction(name);
 }
 
 bool Context::addDataTypeAction(IDataTypeAction *t) {

@@ -38,4 +38,12 @@ const std::vector<vsc::ITypeConstraintUP> &DataTypeStruct::getConstraints() cons
 	return m_constraints;
 }
 
+vsc::IModelStructCreateHook *DataTypeStruct::getCreateHook() const {
+	return m_create_hook.get();
+}
+
+void DataTypeStruct::setCreateHook(vsc::IModelStructCreateHook *hook) {
+	m_create_hook = vsc::IModelStructCreateHookUP(hook);
+}
+
 } /* namespace arl */

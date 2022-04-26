@@ -18,6 +18,9 @@ cdef extern IArl *py_get_arl(const char *)
 cdef extern from "arl/IContext.h" namespace "arl":
     cdef cppclass IContext(vsc.IContext):
         vsc.IModelField *buildModelComponent(IDataTypeComponent *t)
+        IDataTypeAction *findDataTypeAction(const cpp_string &)
+        IDataTypeAction *mkDataTypeAction(const cpp_string &)
+        bool addDataTypeAction(IDataTypeAction *)
         IDataTypeComponent *findDataTypeComponent(const cpp_string &)
         IDataTypeComponent *mkDataTypeComponent(const cpp_string &)
         bool addDataTypeComponent(IDataTypeComponent *)

@@ -8,6 +8,8 @@
 #include "Context.h"
 #include "DataTypeAction.h"
 #include "DataTypeComponent.h"
+#include "TaskBuildModelAction.h"
+#include "TaskBuildModelComponent.h"
 
 namespace arl {
 
@@ -21,8 +23,16 @@ Context::~Context() {
 	}
 }
 
-vsc::IModelField *Context::buildModelComponent(IDataTypeComponent *t) {
+vsc::IModelField *Context::buildModelAction(
+		IDataTypeAction 	*t,
+		const std::string	&name) {
+	return TaskBuildModelAction(this).build(t, name);
+}
 
+vsc::IModelField *Context::buildModelComponent(
+		IDataTypeComponent 	*t,
+		const std::string	&name) {
+	return TaskBuildModelComponent(this).build(t, name);
 }
 
 IDataTypeAction *Context::findDataTypeAction(const std::string &name) {

@@ -44,7 +44,7 @@ void DataTypeComponent::addActionType(IDataTypeAction *action_t) {
 
 void DataTypeComponent::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<IVisitor *>(v)) {
-		accept(dynamic_cast<IVisitor *>(v));
+		dynamic_cast<IVisitor *>(v)->visitDataTypeComponent(this);
 	} else {
 		// TODO: abort?
 	}

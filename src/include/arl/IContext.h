@@ -17,7 +17,13 @@ public:
 
 	virtual ~IContext() { }
 
-	virtual vsc::IModelField *buildModelComponent(IDataTypeComponent *t) = 0;
+	virtual vsc::IModelField *buildModelAction(
+			IDataTypeAction 	*t,
+			const std::string	&name) = 0;
+
+	virtual vsc::IModelField *buildModelComponent(
+			IDataTypeComponent 	*t,
+			const std::string	&name) = 0;
 
 	virtual IDataTypeAction *findDataTypeAction(const std::string &name) = 0;
 

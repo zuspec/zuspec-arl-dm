@@ -11,14 +11,17 @@
 namespace arl {
 
 class IDataTypeAction;
+class IDataTypeComponent;
 class IDataTypeFlowObj;
 
-class IVisitor : public vsc::IVisitor {
+class IVisitor : public virtual vsc::IVisitor {
 public:
 
 	virtual ~IVisitor() { }
 
-	virtual void visitDataTypeAction(IDataTypeAction *i) = 0;
+	virtual void visitDataTypeAction(IDataTypeAction *t) = 0;
+
+	virtual void visitDataTypeComponent(IDataTypeComponent *t) = 0;
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
 

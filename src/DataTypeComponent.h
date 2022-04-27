@@ -47,8 +47,6 @@ public:
 
 	virtual void accept(vsc::IVisitor *v) override;
 
-	virtual void accept(IVisitor *v) override { /* TODO: v->visitDataTypeComponent(this); */ }
-
 private:
 	std::string								m_name;
 	std::vector<vsc::ITypeFieldUP>		 	m_fields;

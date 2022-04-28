@@ -177,6 +177,10 @@ vsc::IModelFieldType *Context::mkModelFieldType(
 	return m_ctxt->mkModelFieldType(type);
 }
 
+vsc::IModelVal *Context::mkModelVal() {
+	return m_ctxt->mkModelVal();
+}
+
 vsc::IRandomizer *Context::mkRandomizer(
 		vsc::ISolverFactory		*solver_factory,
 		vsc::IRandState			*randstate) {

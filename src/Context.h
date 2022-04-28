@@ -97,6 +97,8 @@ public:
 	virtual vsc::IModelFieldType *mkModelFieldType(
 			vsc::ITypeField			*type) override;
 
+	virtual vsc::IModelVal *mkModelVal() override;
+
 	virtual vsc::IRandomizer *mkRandomizer(
 			vsc::ISolverFactory		*solver_factory,
 			vsc::IRandState			*randstate) override;

@@ -140,6 +140,9 @@ cdef class Context(vsc.Context):
         comp_t._owned = False
         return self.asContext().addDataTypeComponent(comp_t.asComponent())
     
+    cpdef ModelEvaluator mkModelEvaluator(self):
+        return ModelEvaluator.mk(self.asContext().mkModelEvaluator())
+    
     cdef decl.IContext *asContext(self):
         return dynamic_cast[decl.IContextP](self._hndl)
 
@@ -174,4 +177,36 @@ cdef class DataTypeComponent(vsc.DataTypeStruct):
         ret._hndl = hndl
         ret._owned = owned
         return ret
+
+cdef class ModelEvaluator(object):
     
+    def __dealloc__(self):
+        if self._hndl != NULL:
+            del self._hndl
+            
+    cpdef ModelEvalIterator eval(self, 
+                        vsc.ModelField root_comp,
+                        DataTypeAction root_action):
+        cdef decl.IModelEvalIterator *it = self._hndl.eval(
+                root_comp._hndl,
+                root_action.asAction())
+        
+        return ModelEvalIterator.mk(it)
+    
+    @staticmethod
+    cdef ModelEvaluator mk(decl.IModelEvaluator *hndl):
+        ret = ModelEvaluator()
+        ret._hndl = hndl
+        return ret
+
+cdef class ModelEvalIterator(object):
+
+    def __dealloc__(self):
+        if self._hndl != NULL:
+            del self._hndl
+
+    @staticmethod
+    cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):
+        ret = ModelEvalIterator()
+        ret._hndl = hndl
+        return ret

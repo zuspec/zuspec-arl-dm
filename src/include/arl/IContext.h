@@ -9,6 +9,7 @@
 #include "arl/IDataTypeAction.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
+#include "arl/IModelEvaluator.h"
 
 namespace arl {
 
@@ -44,6 +45,8 @@ public:
 			FlowObjKindE		kind) = 0;
 
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
+
+	virtual IModelEvaluator *mkModelEvaluator() = 0;
 
 };
 

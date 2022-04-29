@@ -1,0 +1,28 @@
+/*
+ * ModelEvaluator.cpp
+ *
+ *  Created on: Apr 29, 2022
+ *      Author: mballance
+ */
+
+#include "ModelEvaluator.h"
+
+namespace arl {
+
+ModelEvaluator::ModelEvaluator(IContext *ctxt) : m_ctxt(ctxt) {
+	// TODO Auto-generated constructor stub
+
+}
+
+ModelEvaluator::~ModelEvaluator() {
+	// TODO Auto-generated destructor stub
+}
+
+IModelEvalIterator *ModelEvaluator::eval(
+			vsc::IModelField	*root_comp,
+			IDataTypeAction		*root_action) {
+	m_ctxt->buildModelAction(root_action, root_action->name());
+	return 0;
+}
+
+} /* namespace arl */

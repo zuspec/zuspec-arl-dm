@@ -20,6 +20,8 @@ cdef class Context(vsc.Context):
     cpdef DataTypeComponent mkDataTypeComponent(self, name)
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)
     
+    cpdef ModelEvaluator mkModelEvaluator(self)
+    
     cdef decl.IContext *asContext(self)
     
     @staticmethod
@@ -38,4 +40,20 @@ cdef class DataTypeComponent(vsc.DataTypeStruct):
     
     @staticmethod
     cdef DataTypeComponent mk(decl.IDataTypeComponent *, bool owned=*)
+
+cdef class ModelEvaluator(object):    
+    cdef decl.IModelEvaluator        *_hndl
+    
+    cpdef ModelEvalIterator eval(self, 
+                        vsc.ModelField root_comp,
+                        DataTypeAction root_action)
+    
+    @staticmethod
+    cdef ModelEvaluator mk(decl.IModelEvaluator *)
+    
+cdef class ModelEvalIterator(object):
+    cdef decl.IModelEvalIterator    *_hndl
+    
+    @staticmethod
+    cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
     

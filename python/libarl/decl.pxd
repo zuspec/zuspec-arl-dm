@@ -29,6 +29,7 @@ cdef extern from "arl/IContext.h" namespace "arl":
         IDataTypeComponent *findDataTypeComponent(const cpp_string &)
         IDataTypeComponent *mkDataTypeComponent(const cpp_string &)
         bool addDataTypeComponent(IDataTypeComponent *)
+        IModelEvaluator *mkModelEvaluator()
         
 cdef extern from "arl/IDataTypeAction.h" namespace "arl":
     cdef cppclass IDataTypeAction(vsc.IDataTypeStruct):
@@ -42,4 +43,10 @@ cdef extern from "arl/IDataTypeFlowObj.h" namespace "arl":
     cdef cppclass IDataTypeFlowObj(vsc.IDataTypeStruct):
         pass
 
-    
+cdef extern from "arl/IModelEvaluator.h" namespace "arl":
+    cdef cppclass IModelEvaluator:
+        IModelEvalIterator *eval(vsc.IModelField *, IDataTypeAction *)
+
+cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
+    cdef cppclass IModelEvalIterator:
+        pass

@@ -8,6 +8,7 @@
 #include "Context.h"
 #include "DataTypeAction.h"
 #include "DataTypeComponent.h"
+#include "ModelEvaluator.h"
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 
@@ -96,6 +97,10 @@ IDataTypeFlowObj *Context::mkDataTypeFlowObj(
 
 bool Context::addDataTypeFlowObj(IDataTypeFlowObj *t) {
 
+}
+
+IModelEvaluator *Context::mkModelEvaluator() {
+	return new ModelEvaluator(this);
 }
 
 vsc::IModelFieldRoot *Context::buildModelField(

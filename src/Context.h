@@ -45,6 +45,8 @@ public:
 
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) override;
 
+	virtual IModelEvaluator *mkModelEvaluator() override;
+
 	/****************************************************************
 	 * Implementation of vsc::IContext
 	 ****************************************************************/

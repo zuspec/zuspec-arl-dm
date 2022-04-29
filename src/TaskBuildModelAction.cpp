@@ -9,8 +9,8 @@
 
 namespace arl {
 
-TaskBuildModelAction::TaskBuildModelAction(IContext *ctxt) : m_ctxt(ctxt) {
-	// TODO Auto-generated constructor stub
+TaskBuildModelAction::TaskBuildModelAction(IContext *ctxt) :
+		m_ctxt(ctxt), m_field_builder(ctxt, this) {
 
 }
 
@@ -21,7 +21,7 @@ TaskBuildModelAction::~TaskBuildModelAction() {
 vsc::IModelField *TaskBuildModelAction::build(
 		IDataTypeAction 	*t,
 		const std::string 	&name) {
-	;
+	return vsc::TaskBuildModelField(m_ctxt, this).build(t, name);
 }
 
 } /* namespace arl */

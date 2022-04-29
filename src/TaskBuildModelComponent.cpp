@@ -9,7 +9,8 @@
 
 namespace arl {
 
-TaskBuildModelComponent::TaskBuildModelComponent(IContext *ctxt) : m_ctxt(ctxt) {
+TaskBuildModelComponent::TaskBuildModelComponent(IContext *ctxt) :
+		VisitorDelegator(&m_core), m_ctxt(ctxt), m_core(ctxt, this) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -21,14 +22,16 @@ TaskBuildModelComponent::~TaskBuildModelComponent() {
 vsc::IModelField *TaskBuildModelComponent::build(
 		arl::IDataTypeComponent *c,
 		const std::string &name) {
-	m_field_s.push_back(m_ctxt->mkModelFieldRoot(c, name));
-	c->accept(this);
-	return m_field_s.at(0);
+	return m_core.build(c, name);
 }
 
 void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
+	if (m_core.getFields().size() == 0) {
+		m_core.pushField(m_ctxt->mkModelFieldRoot(t, m_core.name()));
+	}
+
 //	m_ctxt->mkModelFieldRoot(type, name)
-	VisitorBase::visitDataTypeComponent(t);
+	VisitorDelegator::visitDataTypeComponent(t);
 }
 
 } /* namespace arl */

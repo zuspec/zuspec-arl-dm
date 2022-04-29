@@ -6,16 +6,21 @@
  */
 
 #pragma once
+#include "vsc/impl/VisitorBase.h"
+
 #include "arl/IDataTypeAction.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
 #include "arl/IVisitor.h"
-#include "vsc/VisitorBase.h"
 
 namespace arl {
 
-class VisitorBase : public virtual IVisitor, public vsc::VisitorBase {
+class VisitorBase : public virtual arl::IVisitor, public vsc::VisitorBase {
 public:
+
+	VisitorBase(vsc::IVisitor *this_p=0) : vsc::VisitorBase(this_p) { }
+
+	VisitorBase(arl::IVisitor *this_p) : vsc::VisitorBase(this_p) { }
 
 	virtual ~VisitorBase() { }
 

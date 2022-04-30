@@ -3,6 +3,7 @@ import os
 from ctypes import CDLL
 from libcpp cimport bool
 from libcpp.cast cimport dynamic_cast
+from enum import IntEnum
 cimport libvsc.core as vsc
 cimport libvsc.decl as vsc_decl
 
@@ -199,11 +200,34 @@ cdef class ModelEvaluator(object):
         ret._hndl = hndl
         return ret
 
+class ModelEvalNodeT(IntEnum):
+    Action = decl.ModelEvalNodeT.Action
+    Parallel = decl.ModelEvalNodeT.Parallel
+    Sequence = decl.ModelEvalNodeT.Sequence
+
 cdef class ModelEvalIterator(object):
 
     def __dealloc__(self):
         if self._hndl != NULL:
             del self._hndl
+            
+    cpdef bool next(self):
+        ret = self._hndl.next()
+        # Iterator self-destructs when it's no longer valid
+        if not ret:
+            self._hndl = NULL 
+        return ret
+            
+    cpdef type(self):
+        cdef int type_i
+        type_i = int(self._hndl.type())
+        return ModelEvalNodeT(type_i)
+    
+    cpdef vsc.ModelField action(self):
+        return vsc.ModelField.mk(self._hndl.action(), False)
+    
+    cpdef ModelEvalIterator iterator(self):
+        return ModelEvalIterator.mk(self._hndl.iterator())
 
     @staticmethod
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):

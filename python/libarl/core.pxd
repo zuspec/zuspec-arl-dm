@@ -54,6 +54,11 @@ cdef class ModelEvaluator(object):
 cdef class ModelEvalIterator(object):
     cdef decl.IModelEvalIterator    *_hndl
     
+    cpdef bool next(self)
+    cpdef type(self)
+    cpdef vsc.ModelField action(self)
+    cpdef ModelEvalIterator iterator(self)
+    
     @staticmethod
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
     

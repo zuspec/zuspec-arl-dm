@@ -6,6 +6,7 @@
  */
 
 #include "ModelEvaluator.h"
+#include "ModelEvalIterator.h"
 
 namespace arl {
 
@@ -21,8 +22,20 @@ ModelEvaluator::~ModelEvaluator() {
 IModelEvalIterator *ModelEvaluator::eval(
 			vsc::IModelField	*root_comp,
 			IDataTypeAction		*root_action) {
-	m_ctxt->buildModelAction(root_action, root_action->name());
-	return 0;
+	vsc::IModelField *action = m_ctxt->buildModelAction(
+			root_action,
+			root_action->name());
+
+	ModelEvalIterator *ret = new ModelEvalIterator({
+		{
+			ModelEvalNodeT::Action,
+			{
+					.action=action
+			}
+		}
+	});
+
+	return ret;
 }
 
 } /* namespace arl */

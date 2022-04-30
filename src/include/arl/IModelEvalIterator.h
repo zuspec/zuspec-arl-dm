@@ -6,10 +6,9 @@
  */
 
 #pragma once
+#include "vsc/IModelField.h"
 
 namespace arl {
-
-class IModelAction;
 
 enum class ModelEvalNodeT {
 	/**
@@ -42,7 +41,7 @@ public:
 
 	virtual ModelEvalNodeT type() const = 0;
 
-	virtual IModelAction *action() = 0;
+	virtual vsc::IModelField *action() = 0;
 
 	virtual IModelEvalIterator *iterator() = 0;
 

@@ -42,11 +42,18 @@ cdef extern from "arl/IDataTypeComponent.h" namespace "arl":
 cdef extern from "arl/IDataTypeFlowObj.h" namespace "arl":
     cdef cppclass IDataTypeFlowObj(vsc.IDataTypeStruct):
         pass
-
+    
 cdef extern from "arl/IModelEvaluator.h" namespace "arl":
     cdef cppclass IModelEvaluator:
         IModelEvalIterator *eval(vsc.IModelField *, IDataTypeAction *)
 
 cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
+    cdef enum ModelEvalNodeT:
+        Action   "arl::ModelEvalNodeT::Action"
+        Parallel "arl::ModelEvalNodeT::Parallel"
+        Sequence "arl::ModelEvalNodeT::Sequence"
     cdef cppclass IModelEvalIterator:
-        pass
+        bool next()
+        ModelEvalNodeT type() const
+        vsc.IModelField *action()
+        IModelEvalIterator *iterator()

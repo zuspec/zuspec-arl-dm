@@ -13,6 +13,7 @@ namespace arl {
 class IDataTypeAction;
 class IDataTypeComponent;
 class IDataTypeFlowObj;
+class ITypeActivityStmtTraverseType;
 
 class IVisitor : public virtual vsc::IVisitor {
 public:
@@ -24,6 +25,8 @@ public:
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) = 0;
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
+
+	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) = 0;
 
 };
 

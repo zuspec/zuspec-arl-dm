@@ -20,14 +20,10 @@ DataTypeAction::~DataTypeAction() {
 
 void DataTypeAction::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<IVisitor *>(v)) {
-		accept(dynamic_cast<IVisitor *>(v));
+		dynamic_cast<IVisitor *>(v)->visitDataTypeAction(this);
 	} else {
 		// TODO:
 	}
-}
-
-void DataTypeAction::accept(IVisitor *v) {
-	v->visitDataTypeAction(this);
 }
 
 } /* namespace arl */

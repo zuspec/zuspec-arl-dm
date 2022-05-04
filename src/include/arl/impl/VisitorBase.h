@@ -12,6 +12,7 @@
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
 #include "arl/IVisitor.h"
+#include "arl/ITypeActivityStmtTraverseType.h"
 
 namespace arl {
 
@@ -36,6 +37,9 @@ public:
 		vsc::VisitorBase::visitDataTypeStruct(t);
 	}
 
+	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) override {
+		s->getType()->accept(this);
+	}
 };
 
 }

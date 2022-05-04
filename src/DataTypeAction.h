@@ -27,8 +27,6 @@ public:
 
 	virtual void accept(vsc::IVisitor *v) override;
 
-	virtual void accept(IVisitor *v) override;
-
 private:
 	IDataTypeComponent					*m_component_t;
 

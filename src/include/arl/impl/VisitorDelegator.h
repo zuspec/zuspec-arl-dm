@@ -32,6 +32,10 @@ public:
 				&vsc::IVisitor::visitDataTypeStruct, t);
 	}
 
+	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) override {
+		delegate(&arl::IVisitor::visitTypeActivityStmtTraverseType, s);
+	}
+
 private:
 
 	template <class T1, class T2> void delegate(
@@ -42,6 +46,16 @@ private:
 			((*delegate()).*f1)(v);
 		} else {
 			((*vsc::VisitorDelegator::delegate()).*f2)(v);
+		}
+	}
+
+	template <class T1> void delegate(
+			void (arl::IVisitor::*f1)(T1 *),
+			T1 *v) {
+		if (delegate()) {
+			((*delegate()).*f1)(v);
+		} else {
+			// TODO: fatal
 		}
 	}
 

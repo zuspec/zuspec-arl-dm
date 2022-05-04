@@ -47,6 +47,10 @@ public:
 
 	virtual IModelEvaluator *mkModelEvaluator() override;
 
+	virtual ITypeActivityStmtTraverseType *mkTypeActivityStmtTraverseType(
+			IDataTypeAction			*action_t,
+			vsc::ITypeConstraint	*constraint) override;
+
 	/****************************************************************
 	 * Implementation of vsc::IContext
 	 ****************************************************************/

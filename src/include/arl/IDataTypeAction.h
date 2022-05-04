@@ -15,7 +15,7 @@ class IDataTypeComponent;
 
 class IDataTypeAction;
 using IDataTypeActionUP=std::unique_ptr<IDataTypeAction>;
-class IDataTypeAction : public virtual vsc::IDataTypeStruct, public virtual IAccept {
+class IDataTypeAction : public virtual vsc::IDataTypeStruct {
 public:
 
 	virtual IDataTypeComponent *getComponentType() = 0;

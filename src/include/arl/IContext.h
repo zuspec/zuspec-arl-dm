@@ -10,6 +10,7 @@
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
 #include "arl/IModelEvaluator.h"
+#include "arl/ITypeActivityStmtTraverseType.h"
 
 namespace arl {
 
@@ -47,6 +48,10 @@ public:
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
 
 	virtual IModelEvaluator *mkModelEvaluator() = 0;
+
+	virtual ITypeActivityStmtTraverseType *mkTypeActivityStmtTraverseType(
+			IDataTypeAction			*action_t,
+			vsc::ITypeConstraint	*constraint) = 0;
 
 };
 

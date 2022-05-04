@@ -11,6 +11,7 @@
 #include "ModelEvaluator.h"
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
+#include "TypeActivityStmtTraverseType.h"
 
 namespace arl {
 
@@ -101,6 +102,12 @@ bool Context::addDataTypeFlowObj(IDataTypeFlowObj *t) {
 
 IModelEvaluator *Context::mkModelEvaluator() {
 	return new ModelEvaluator(this);
+}
+
+ITypeActivityStmtTraverseType *Context::mkTypeActivityStmtTraverseType(
+			IDataTypeAction			*action_t,
+			vsc::ITypeConstraint	*constraint) {
+	return new TypeActivityStmtTraverseType(action_t, constraint);
 }
 
 vsc::IModelFieldRoot *Context::buildModelField(

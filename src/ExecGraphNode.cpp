@@ -13,6 +13,11 @@ ExecGraphNode::ExecGraphNode(ExecGraphNodeKindE kind) : m_kind(kind), m_action(0
 
 }
 
+ExecGraphNode::ExecGraphNode(vsc::IModelField *action) :
+		m_kind(ExecGraphNodeKindE::Traverse), m_action(action) {
+
+}
+
 ExecGraphNode::ExecGraphNode(ExecGraphNodeKindE kind, vsc::IModelField *action) :
 		m_kind(kind), m_action(action) {
 

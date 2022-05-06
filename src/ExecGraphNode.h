@@ -21,7 +21,10 @@ class ExecGraphNode;
 using ExecGraphNodeUP=std::unique_ptr<ExecGraphNode>;
 class ExecGraphNode {
 public:
+
 	ExecGraphNode(ExecGraphNodeKindE kind);
+
+	ExecGraphNode(vsc::IModelField *action);
 
 	ExecGraphNode(ExecGraphNodeKindE kind, vsc::IModelField *action);
 
@@ -36,6 +39,8 @@ public:
 	}
 
 	const std::vector<ExecGraphNodeUP> &children() const { return m_children; }
+
+	std::vector<ExecGraphNodeUP> &children() { return m_children; }
 
 protected:
 	ExecGraphNodeKindE				m_kind;

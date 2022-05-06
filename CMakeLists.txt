@@ -15,9 +15,9 @@ if (NOT PACKAGES_DIR)
 
 
   # Testing is only enabled when libvsc is the top-level project
-#  enable_testing()
+  enable_testing()
 
-#  add_subdirectory(test)
+  add_subdirectory(test)
 endif()
 
 set (LIBVSC_DIR "${PACKAGES_DIR}/libvsc")

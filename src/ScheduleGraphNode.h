@@ -6,12 +6,15 @@
  */
 
 #pragma once
+#include <memory>
 #include <unordered_set>
 #include <vector>
 #include "vsc/IModelField.h"
 
 namespace arl {
 
+class ScheduleGraphNode;
+using ScheduleGraphNodeUP=std::unique_ptr<ScheduleGraphNode>;
 class ScheduleGraphNode {
 public:
 	ScheduleGraphNode(
@@ -24,6 +27,10 @@ public:
 	vsc::IModelField *action() const { return m_action; }
 
 	int32_t id() const { return m_id; }
+
+	int32_t getDepth() const { return m_depth; }
+
+	void setDepth(int32_t d) { m_depth = d; }
 
 	bool addOutgoingArc(ScheduleGraphNode *dep);
 
@@ -44,6 +51,7 @@ public:
 private:
 	vsc::IModelField									*m_action;
 	int32_t												m_id;
+	int32_t												m_depth;
 	std::unordered_set<ScheduleGraphNode *>				m_incoming_arc_s;
 	std::unordered_set<ScheduleGraphNode *>				m_outgoing_arc_s;
 };

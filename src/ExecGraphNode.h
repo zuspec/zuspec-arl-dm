@@ -42,6 +42,8 @@ public:
 
 	std::vector<ExecGraphNodeUP> &children() { return m_children; }
 
+	std::string toString();
+
 protected:
 	ExecGraphNodeKindE				m_kind;
 	vsc::IModelField				*m_action;

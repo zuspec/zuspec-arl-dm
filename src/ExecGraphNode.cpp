@@ -6,6 +6,7 @@
  */
 
 #include "ExecGraphNode.h"
+#include "ExecGraph2String.h"
 
 namespace arl {
 
@@ -25,6 +26,10 @@ ExecGraphNode::ExecGraphNode(ExecGraphNodeKindE kind, vsc::IModelField *action) 
 
 ExecGraphNode::~ExecGraphNode() {
 	// TODO Auto-generated destructor stub
+}
+
+std::string ExecGraphNode::toString() {
+	return ExecGraph2String().toString(this);
 }
 
 } /* namespace arl */

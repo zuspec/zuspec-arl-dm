@@ -18,7 +18,7 @@ public:
 
 	virtual ~ExecGraphBuilder();
 
-	ExecGraphNodeUP build(const std::vector<ScheduleGraphNodeUP> &nodes);
+	ExecGraphNode *build(const std::vector<ScheduleGraphNodeUP> &nodes);
 
 protected:
 	ScheduleGraphNode *processSequence(

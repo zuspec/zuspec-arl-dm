@@ -8,6 +8,7 @@
 #include "ExecGraphBuilder.h"
 #include "ScheduleGraphNode.h"
 #include "ScheduleGraphArcTrimmer.h"
+#include "ExecGraph2String.h"
 #include "TestScheduleGraphNode.h"
 
 namespace arl {
@@ -107,7 +108,9 @@ TEST_F(TestScheduleGraphNode, test_smoke) {
 		fprintf(stdout, "\n");
 	}
 
-	ExecGraphBuilder().build(nodes);
+	ExecGraphNodeUP root(ExecGraphBuilder().build(nodes));
+
+	fprintf(stdout, "Graph:\n%s\n", ExecGraph2String().toString(root.get()).c_str());
 }
 
 } /* namespace arl */

@@ -14,7 +14,7 @@
 
 namespace arl {
 
-class IContext : public vsc::IContext {
+class IContext : public virtual vsc::IContext {
 public:
 
 	virtual ~IContext() { }
@@ -52,6 +52,12 @@ public:
 	virtual ITypeActivityStmtTraverseType *mkTypeActivityStmtTraverseType(
 			IDataTypeAction			*action_t,
 			vsc::ITypeConstraint	*constraint) = 0;
+
+	virtual ITypeFieldPool *mkTypeFieldPool(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			vsc::TypeFieldAttr		attr,
+			int32_t					decl_size) = 0;
 
 };
 

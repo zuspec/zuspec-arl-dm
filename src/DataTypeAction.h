@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include "arl/IContext.h"
 #include "arl/IDataTypeAction.h"
 #include "DataTypeStruct.h"
 
@@ -13,7 +14,9 @@ namespace arl {
 
 class DataTypeAction : public DataTypeStruct, public virtual IDataTypeAction {
 public:
-	DataTypeAction(const std::string &name);
+	DataTypeAction(
+			IContext			*ctxt,
+			const std::string 	&name);
 
 	virtual ~DataTypeAction();
 
@@ -21,9 +24,7 @@ public:
 		return m_component_t;
 	}
 
-	virtual void setComponentType(IDataTypeComponent *c) override {
-		m_component_t = c;
-	}
+	virtual void setComponentType(IDataTypeComponent *c) override;
 
 	virtual void accept(vsc::IVisitor *v) override;
 

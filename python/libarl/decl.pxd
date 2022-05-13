@@ -3,10 +3,12 @@ cimport libvsc.decl as vsc
 
 from libcpp.string cimport string as cpp_string
 from libcpp cimport bool
+from libc.stdint cimport int32_t
 
 ctypedef IContext *IContextP
 ctypedef IDataTypeAction *IDataTypeActionP
 ctypedef IDataTypeComponent *IDataTypeComponentP
+ctypedef ITypeFieldPool *ITypeFieldPoolP
 
 cdef extern from "arl/IArl.h" namespace "arl":
     cdef cppclass IArl:
@@ -30,6 +32,7 @@ cdef extern from "arl/IContext.h" namespace "arl":
         IDataTypeComponent *mkDataTypeComponent(const cpp_string &)
         bool addDataTypeComponent(IDataTypeComponent *)
         IModelEvaluator *mkModelEvaluator()
+        ITypeFieldPool *mkTypeFieldPool(const cpp_string &, vsc.IDataType *, vsc.TypeFieldAttr, int32_t)
         
 cdef extern from "arl/IDataTypeAction.h" namespace "arl":
     cdef cppclass IDataTypeAction(vsc.IDataTypeStruct):
@@ -57,3 +60,9 @@ cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
         ModelEvalNodeT type() const
         vsc.IModelField *action()
         IModelEvalIterator *iterator()
+
+cdef extern from "arl/ITypeFieldPool.h" namespace "arl":
+    cdef cppclass ITypeFieldPool(vsc.ITypeField):
+        int32_t getDeclSize()
+    
+    

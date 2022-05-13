@@ -34,4 +34,11 @@ void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
 	VisitorDelegator::visitDataTypeComponent(t);
 }
 
+void TaskBuildModelComponent::visitTypeFieldPool(ITypeFieldPool *f) {
+	vsc::IModelFieldType *field = m_ctxt->mkModelFieldType(f);
+	m_field_s.back()->addField(field);
+
+	field->addField(0);
+}
+
 } /* namespace arl */

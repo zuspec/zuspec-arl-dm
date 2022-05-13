@@ -7,6 +7,7 @@
 
 #pragma once
 #include "arl/IVisitor.h"
+#include "arl/ITypeFieldPool.h"
 #include "vsc/impl/VisitorDelegator.h"
 
 namespace arl {
@@ -34,6 +35,11 @@ public:
 
 	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) override {
 		delegate(&arl::IVisitor::visitTypeActivityStmtTraverseType, s);
+	}
+
+	virtual void visitTypeFieldPool(ITypeFieldPool *f) override {
+		delegate(&arl::IVisitor::visitTypeFieldPool,
+				&vsc::IVisitor::visitTypeField, f);
 	}
 
 private:

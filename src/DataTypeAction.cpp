@@ -9,13 +9,20 @@
 
 namespace arl {
 
-DataTypeAction::DataTypeAction(const std::string &name) : DataTypeStruct(name),
-		m_component_t(0) {
+DataTypeAction::DataTypeAction(
+		IContext			*ctxt,
+		const std::string 	&name) : DataTypeStruct(name), m_component_t(0) {
 
+	// Add the built-in 'comp' ref
+	addField(ctxt->mkTypeFieldRef("comp", 0, vsc::TypeFieldAttr::NoAttr));
 }
 
 DataTypeAction::~DataTypeAction() {
 	// TODO Auto-generated destructor stub
+}
+
+void DataTypeAction::setComponentType(IDataTypeComponent *t) {
+	m_component_t = t;
 }
 
 void DataTypeAction::accept(vsc::IVisitor *v) {

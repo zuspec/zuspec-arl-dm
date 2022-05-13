@@ -21,6 +21,7 @@ cdef class Context(vsc.Context):
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)
     
     cpdef ModelEvaluator mkModelEvaluator(self)
+    cpdef TypeFieldPool mkTypeFieldPool(self, name, vsc.DataType, vsc.TypeFieldAttr, decl_size)
     
     cdef decl.IContext *asContext(self)
     
@@ -61,4 +62,12 @@ cdef class ModelEvalIterator(object):
     
     @staticmethod
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
+
+cdef class TypeFieldPool(vsc.TypeField):
     
+    cpdef int getDeclSize(self)
+    
+    cdef decl.ITypeFieldPool *asPool(self)
+    
+    @staticmethod
+    cdef TypeFieldPool mk(decl.ITypeFieldPool *, bool owned=*)

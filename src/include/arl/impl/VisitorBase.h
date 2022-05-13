@@ -13,6 +13,7 @@
 #include "arl/IDataTypeFlowObj.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeActivityStmtTraverseType.h"
+#include "arl/ITypeFieldPool.h"
 
 namespace arl {
 
@@ -39,6 +40,10 @@ public:
 
 	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) override {
 		s->getType()->accept(this);
+	}
+
+	virtual void visitTypeFieldPool(ITypeFieldPool *f) override {
+		vsc::VisitorBase::visitTypeField(f);
 	}
 };
 

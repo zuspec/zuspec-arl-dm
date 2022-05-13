@@ -4,6 +4,7 @@ from ctypes import CDLL
 from libcpp cimport bool
 from libcpp.cast cimport dynamic_cast
 from enum import IntEnum
+from libarl cimport decl
 cimport libvsc.core as vsc
 cimport libvsc.decl as vsc_decl
 
@@ -144,6 +145,22 @@ cdef class Context(vsc.Context):
     cpdef ModelEvaluator mkModelEvaluator(self):
         return ModelEvaluator.mk(self.asContext().mkModelEvaluator())
     
+    cpdef TypeFieldPool mkTypeFieldPool(self, name, 
+                                        vsc.DataType type, 
+                                        attr, 
+                                        decl_size):
+        cdef int attr_i = int(attr)
+        cdef vsc_decl.IDataType *type_p = NULL
+        
+        if type is not None:
+            type_p = type._hndl
+        
+        return TypeFieldPool.mk(self.asContext().mkTypeFieldPool(
+            name.encode(),
+            type_p,
+            <vsc_decl.TypeFieldAttr>(attr_i),
+            decl_size), True)
+    
     cdef decl.IContext *asContext(self):
         return dynamic_cast[decl.IContextP](self._hndl)
 
@@ -234,3 +251,19 @@ cdef class ModelEvalIterator(object):
         ret = ModelEvalIterator()
         ret._hndl = hndl
         return ret
+    
+cdef class TypeFieldPool(vsc.TypeField):
+    
+    cpdef int getDeclSize(self):
+        return self.asPool().getDeclSize()
+    
+    cdef decl.ITypeFieldPool *asPool(self):
+        return dynamic_cast[decl.ITypeFieldPoolP](self._hndl)
+    
+    @staticmethod
+    cdef TypeFieldPool mk(decl.ITypeFieldPool *hndl, bool owned=True):
+        ret = TypeFieldPool()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+    

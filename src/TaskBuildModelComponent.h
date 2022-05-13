@@ -25,6 +25,8 @@ public:
 
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override;
 
+	virtual void visitTypeFieldPool(ITypeFieldPool *f) override;
+
 private:
 	IContext							*m_ctxt;
 	std::vector<vsc::IModelField *>		m_field_s;

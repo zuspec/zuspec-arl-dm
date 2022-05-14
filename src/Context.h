@@ -56,6 +56,16 @@ public:
 			IDataTypeAction			*action_t,
 			vsc::ITypeConstraint	*constraint) override;
 
+	virtual ITypeFieldClaim *mkTypeFieldClaim(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					is_lock) override;
+
+	virtual ITypeFieldInOut *mkTypeFieldInOut(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					is_input) override;
+
 	virtual ITypeFieldPool *mkTypeFieldPool(
 			const std::string		&name,
 			vsc::IDataType			*type,

@@ -13,6 +13,8 @@
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
 #include "TypeActivityStmtTraverseType.h"
+#include "TypeFieldClaim.h"
+#include "TypeFieldInOut.h"
 #include "TypeFieldPool.h"
 
 namespace arl {
@@ -114,6 +116,20 @@ ITypeActivityStmtTraverseType *Context::mkTypeActivityStmtTraverseType(
 			IDataTypeAction			*action_t,
 			vsc::ITypeConstraint	*constraint) {
 	return new TypeActivityStmtTraverseType(action_t, constraint);
+}
+
+ITypeFieldClaim *Context::mkTypeFieldClaim(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					is_lock) {
+	return new TypeFieldClaim(name, type, is_lock);
+}
+
+ITypeFieldInOut *Context::mkTypeFieldInOut(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					is_input) {
+	return new TypeFieldInOut(name, type, is_input);
 }
 
 ITypeFieldPool *Context::mkTypeFieldPool(

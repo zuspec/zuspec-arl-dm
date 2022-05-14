@@ -14,6 +14,8 @@ class IDataTypeAction;
 class IDataTypeComponent;
 class IDataTypeFlowObj;
 class ITypeActivityStmtTraverseType;
+class ITypeFieldClaim;
+class ITypeFieldInOut;
 class ITypeFieldPool;
 
 class IVisitor : public virtual vsc::IVisitor {
@@ -28,6 +30,10 @@ public:
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
 
 	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) = 0;
+
+	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) = 0;
+
+	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) = 0;
 
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) = 0;
 

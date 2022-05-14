@@ -14,8 +14,8 @@ TypeFieldPool::TypeFieldPool(
 		const std::string			&name,
 		vsc::IDataType				*type,
 		vsc::TypeFieldAttr			attr,
-		int32_t						decl_size) : m_parent(0),
-				m_name(name), m_type(type), m_attr(attr), m_decl_size(decl_size) {
+		int32_t						decl_size) :
+				TypeField(name, type, attr), m_decl_size(decl_size) {
 
 }
 

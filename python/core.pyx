@@ -145,6 +145,18 @@ cdef class Context(vsc.Context):
     cpdef ModelEvaluator mkModelEvaluator(self):
         return ModelEvaluator.mk(self.asContext().mkModelEvaluator())
     
+    cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType type, bool is_lock):
+        return TypeFieldClaim.mk(self.asContext().mkTypeFieldClaim(
+            name.encode(),
+            type._hndl,
+            is_lock), True)
+        
+    cpdef TypeFieldInOut mkTypeFieldInOut(self, name, vsc.DataType type, bool is_input):
+        return TypeFieldInOut.mk(self.asContext().mkTypeFieldInOut(
+            name.encode(),
+            type._hndl,
+            is_input), True)
+    
     cpdef TypeFieldPool mkTypeFieldPool(self, name, 
                                         vsc.DataType type, 
                                         attr, 
@@ -154,6 +166,8 @@ cdef class Context(vsc.Context):
         
         if type is not None:
             type_p = type._hndl
+        else:
+            raise Exception("Must specify a type for pool %s" % name)
         
         return TypeFieldPool.mk(self.asContext().mkTypeFieldPool(
             name.encode(),
@@ -250,6 +264,34 @@ cdef class ModelEvalIterator(object):
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):
         ret = ModelEvalIterator()
         ret._hndl = hndl
+        return ret
+    
+cdef class TypeFieldClaim(vsc.TypeField):
+    cpdef bool isLock(self):
+        return self.asClaim().isLock()
+    
+    cdef decl.ITypeFieldClaim *asClaim(self):
+        return dynamic_cast[decl.ITypeFieldClaimP](self._hndl)
+    
+    @staticmethod
+    cdef TypeFieldClaim mk(decl.ITypeFieldClaim *hndl, bool owned=True):
+        ret = TypeFieldClaim()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+    
+cdef class TypeFieldInOut(vsc.TypeField):
+    cpdef bool isInput(self):
+        return self.asInOut().isInput()
+    
+    cdef decl.ITypeFieldInOut *asInOut(self):
+        return dynamic_cast[decl.ITypeFieldInOutP](self._hndl)
+    
+    @staticmethod
+    cdef TypeFieldInOut mk(decl.ITypeFieldInOut *hndl, bool owned=True):
+        ret = TypeFieldInOut()
+        ret._hndl = hndl
+        ret._owned = owned
         return ret
     
 cdef class TypeFieldPool(vsc.TypeField):

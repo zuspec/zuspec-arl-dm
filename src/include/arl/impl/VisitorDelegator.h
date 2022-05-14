@@ -37,6 +37,16 @@ public:
 		delegate(&arl::IVisitor::visitTypeActivityStmtTraverseType, s);
 	}
 
+	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
+		delegate(&arl::IVisitor::visitTypeFieldClaim,
+				&vsc::IVisitor::visitTypeField, f);
+	}
+
+	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) override {
+		delegate(&arl::IVisitor::visitTypeFieldInOut,
+				&vsc::IVisitor::visitTypeField, f);
+	}
+
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) override {
 		delegate(&arl::IVisitor::visitTypeFieldPool,
 				&vsc::IVisitor::visitTypeField, f);

@@ -8,6 +8,8 @@ from libc.stdint cimport int32_t
 ctypedef IContext *IContextP
 ctypedef IDataTypeAction *IDataTypeActionP
 ctypedef IDataTypeComponent *IDataTypeComponentP
+ctypedef ITypeFieldClaim *ITypeFieldClaimP
+ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
 
 cdef extern from "arl/IArl.h" namespace "arl":
@@ -32,6 +34,8 @@ cdef extern from "arl/IContext.h" namespace "arl":
         IDataTypeComponent *mkDataTypeComponent(const cpp_string &)
         bool addDataTypeComponent(IDataTypeComponent *)
         IModelEvaluator *mkModelEvaluator()
+        ITypeFieldClaim *mkTypeFieldClaim(const cpp_string &, vsc.IDataType *, bool)
+        ITypeFieldInOut *mkTypeFieldInOut(const cpp_string &, vsc.IDataType *, bool)
         ITypeFieldPool *mkTypeFieldPool(const cpp_string &, vsc.IDataType *, vsc.TypeFieldAttr, int32_t)
         
 cdef extern from "arl/IDataTypeAction.h" namespace "arl":
@@ -60,6 +64,14 @@ cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
         ModelEvalNodeT type() const
         vsc.IModelField *action()
         IModelEvalIterator *iterator()
+
+cdef extern from "arl/ITypeFieldClaim.h" namespace "arl":
+    cdef cppclass ITypeFieldClaim(vsc.ITypeField):
+        bool isLock() const
+        
+cdef extern from "arl/ITypeFieldInOut.h" namespace "arl":
+    cdef cppclass ITypeFieldInOut(vsc.ITypeField):
+        bool isInput() const
 
 cdef extern from "arl/ITypeFieldPool.h" namespace "arl":
     cdef cppclass ITypeFieldPool(vsc.ITypeField):

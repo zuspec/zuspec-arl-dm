@@ -36,9 +36,22 @@ void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
 
 void TaskBuildModelComponent::visitTypeFieldPool(ITypeFieldPool *f) {
 	vsc::IModelFieldType *field = m_ctxt->mkModelFieldType(f);
-	m_field_s.back()->addField(field);
+	m_core.getFields().back()->addField(field);
 
-	field->addField(0);
+	// A Pool-type field is not an instance of the contained type,
+	// though that is the stated type.
+	// A pool-type field does require a 'size' field in order to
+	// track the specified size
+
+	vsc::IDataTypeInt *vsc_int32_t = m_ctxt->findDataTypeInt(true, 32);
+	if (!vsc_int32_t) {
+		vsc_int32_t = m_ctxt->mkDataTypeInt(true, 32);
+		m_ctxt->addDataTypeInt(vsc_int32_t);
+	}
+
+	vsc::IModelField *size = m_ctxt->mkModelFieldRoot(vsc_int32_t, "size");
+	size->val()->set_val_i(f->getDeclSize());
+	field->addField(size);
 }
 
 } /* namespace arl */

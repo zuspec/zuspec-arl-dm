@@ -21,6 +21,8 @@ cdef class Context(vsc.Context):
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)
     
     cpdef ModelEvaluator mkModelEvaluator(self)
+    cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType, bool)
+    cpdef TypeFieldInOut mkTypeFieldInOut(self, name, vsc.DataType, bool)
     cpdef TypeFieldPool mkTypeFieldPool(self, name, vsc.DataType, vsc.TypeFieldAttr, decl_size)
     
     cdef decl.IContext *asContext(self)
@@ -62,6 +64,22 @@ cdef class ModelEvalIterator(object):
     
     @staticmethod
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
+    
+cdef class TypeFieldClaim(vsc.TypeField):
+    cpdef bool isLock(self)
+    
+    cdef decl.ITypeFieldClaim *asClaim(self)
+    
+    @staticmethod
+    cdef TypeFieldClaim mk(decl.ITypeFieldClaim *hndl, bool owned=*)
+    
+cdef class TypeFieldInOut(vsc.TypeField):
+    cpdef bool isInput(self)
+    
+    cdef decl.ITypeFieldInOut *asInOut(self)
+    
+    @staticmethod
+    cdef TypeFieldInOut mk(decl.ITypeFieldInOut *hndl, bool owned=*)
 
 cdef class TypeFieldPool(vsc.TypeField):
     

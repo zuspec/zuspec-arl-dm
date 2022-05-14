@@ -11,6 +11,8 @@
 #include "arl/IDataTypeFlowObj.h"
 #include "arl/IModelEvaluator.h"
 #include "arl/ITypeActivityStmtTraverseType.h"
+#include "arl/ITypeFieldClaim.h"
+#include "arl/ITypeFieldInOut.h"
 
 namespace arl {
 
@@ -52,6 +54,16 @@ public:
 	virtual ITypeActivityStmtTraverseType *mkTypeActivityStmtTraverseType(
 			IDataTypeAction			*action_t,
 			vsc::ITypeConstraint	*constraint) = 0;
+
+	virtual ITypeFieldClaim *mkTypeFieldClaim(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					is_lock) = 0;
+
+	virtual ITypeFieldInOut *mkTypeFieldInOut(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					is_input) = 0;
 
 	virtual ITypeFieldPool *mkTypeFieldPool(
 			const std::string		&name,

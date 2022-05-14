@@ -7,10 +7,11 @@
 
 #pragma once
 #include "arl/ITypeFieldPool.h"
+#include "TypeField.h"
 
 namespace arl {
 
-class TypeFieldPool : public ITypeFieldPool {
+class TypeFieldPool : public virtual ITypeFieldPool, public TypeField {
 public:
 	TypeFieldPool(
 			const std::string			&name,
@@ -20,37 +21,11 @@ public:
 
 	virtual ~TypeFieldPool();
 
-	virtual vsc::IDataTypeStruct *getParent() override {
-		return m_parent;
-	}
-
-	virtual void setParent(vsc::IDataTypeStruct *p) override {
-		m_parent = p;
-	}
-
-	virtual const std::string &name() const { return m_name; }
-
-	virtual vsc::IDataType *getDataType() const override {
-		return m_type;
-	}
-
-	virtual void setDataType(vsc::IDataType *t) override {
-		m_type = t;
-	}
-
-	virtual vsc::TypeFieldAttr getAttr() const override {
-		return m_attr;
-	}
-
 	virtual int32_t getDeclSize() override { return m_decl_size; }
 
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
-	vsc::IDataTypeStruct				*m_parent;
-	std::string							m_name;
-	vsc::IDataType						*m_type;
-	vsc::TypeFieldAttr					m_attr;
 	int32_t								m_decl_size;
 
 };

@@ -10,7 +10,7 @@
 
 namespace arl {
 
-class ITypeFieldPool : public vsc::ITypeField {
+class ITypeFieldPool : public virtual vsc::ITypeField {
 public:
 
 	virtual ~ITypeFieldPool() { }

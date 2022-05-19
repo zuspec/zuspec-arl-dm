@@ -10,6 +10,7 @@
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
 #include "arl/IModelEvaluator.h"
+#include "arl/IModelFieldRootComponent.h"
 #include "arl/ITypeActivityStmtTraverseType.h"
 #include "arl/ITypeFieldClaim.h"
 #include "arl/ITypeFieldInOut.h"
@@ -25,7 +26,7 @@ public:
 			IDataTypeAction 	*t,
 			const std::string	&name) = 0;
 
-	virtual vsc::IModelField *buildModelComponent(
+	virtual IModelFieldRootComponent *buildModelComponent(
 			IDataTypeComponent 	*t,
 			const std::string	&name) = 0;
 

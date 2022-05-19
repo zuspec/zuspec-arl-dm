@@ -11,6 +11,7 @@
 #include "arl/IDataTypeAction.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
+#include "arl/IModelFieldRootComponent.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeActivityStmtTraverseType.h"
 #include "arl/ITypeFieldClaim.h"
@@ -38,6 +39,10 @@ public:
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override {
 		vsc::VisitorBase::visitDataTypeStruct(t);
+	}
+
+	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {
+		vsc::VisitorBase::visitModelField(f);
 	}
 
 	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) override {

@@ -13,6 +13,7 @@ namespace arl {
 class IDataTypeAction;
 class IDataTypeComponent;
 class IDataTypeFlowObj;
+class IModelFieldRootComponent;
 class ITypeActivityStmtTraverseType;
 class ITypeFieldClaim;
 class ITypeFieldInOut;
@@ -28,6 +29,8 @@ public:
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) = 0;
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
+
+	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) = 0;
 
 	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) = 0;
 

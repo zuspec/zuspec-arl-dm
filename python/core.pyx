@@ -109,9 +109,11 @@ cdef class Context(vsc.Context):
         return vsc.ModelField.mk(self.asContext().buildModelAction(
             t.asAction(), name.encode()), True)
 
-    cpdef vsc.ModelField buildModelComponent(self, DataTypeComponent t, name):
-        return vsc.ModelField.mk(self.asContext().buildModelComponent(
-            t.asComponent(), name.encode()), True)
+    cpdef ModelFieldRootComponent buildModelComponent(self, DataTypeComponent t, name):
+        return ModelFieldRootComponent.mk(
+            self.asContext().buildModelComponent(
+                t.asComponent(), name.encode()), 
+            True)
     
     cpdef DataTypeAction findDataTypeAction(self, name):
         cdef decl.IDataTypeAction *a = self.asContext().findDataTypeAction(name.encode())
@@ -264,6 +266,18 @@ cdef class ModelEvalIterator(object):
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):
         ret = ModelEvalIterator()
         ret._hndl = hndl
+        return ret
+    
+cdef class ModelFieldRootComponent(vsc.ModelField):
+    
+    cdef decl.IModelFieldRootComponent *asRootComponent(self):
+        return dynamic_cast[decl.IModelFieldRootComponentP](self._hndl)
+    
+    @staticmethod
+    cdef ModelFieldRootComponent mk(decl.IModelFieldRootComponent *hndl, bool owned=True):
+        ret = ModelFieldRootComponent()
+        ret._hndl = hndl
+        ret._owned = owned
         return ret
     
 cdef class TypeFieldClaim(vsc.TypeField):

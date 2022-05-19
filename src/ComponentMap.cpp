@@ -18,7 +18,14 @@ ComponentMap::~ComponentMap() {
 	// TODO Auto-generated destructor stub
 }
 
-void ComponentMap::addChild(int32_t parent, int32_t child) {
+int32_t ComponentMap::addComponent(vsc::IModelField *comp) {
+	int32_t id = m_components.size();
+	m_components.push_back(comp);
+
+	return id;
+}
+
+void ComponentMap::addParentChildMapping(int32_t parent, int32_t child) {
 	auto c2p_it = m_c2p_m.find(child);
 
 	if (c2p_it != m_c2p_m.end()) {
@@ -37,11 +44,11 @@ void ComponentMap::addChild(int32_t parent, int32_t child) {
 }
 
 const std::unordered_set<int32_t> &ComponentMap::getParents(int32_t child) const {
-	;
+	return m_c2p_m.find(child)->second;
 }
 
 const std::unordered_set<int32_t> &ComponentMap::getChildren(int32_t parent) const {
-	;
+	return m_p2c_m.find(parent)->second;
 }
 
 } /* namespace arl */

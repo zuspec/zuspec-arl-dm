@@ -33,6 +33,11 @@ public:
 				&vsc::IVisitor::visitDataTypeStruct, t);
 	}
 
+	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {
+		delegate(&arl::IVisitor::visitModelFieldRootComponent,
+				&vsc::IVisitor::visitModelField, f);
+	}
+
 	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) override {
 		delegate(&arl::IVisitor::visitTypeActivityStmtTraverseType, s);
 	}

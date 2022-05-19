@@ -6,7 +6,8 @@
  */
 
 #include "TestScheduleRelSet.h"
-#include "ScheduleRelSet.h"
+
+#include "../src/ScheduleSolveDataActionRel.h"
 
 namespace arl {
 
@@ -21,7 +22,7 @@ TestScheduleRelSet::~TestScheduleRelSet() {
 
 TEST_F(TestScheduleRelSet, smoke) {
 
-	ScheduleRelSet set(4);
+	ScheduleSolveDataActionRel set(4);
 	ASSERT_TRUE(set.setRel(0, 1, ScheduleRelE::SeqAB));
 	ASSERT_TRUE(set.setRel(1, 2, ScheduleRelE::SeqAB));
 	ASSERT_EQ(set.getRel(0, 2), ScheduleRelE::SeqAB);
@@ -30,7 +31,7 @@ TEST_F(TestScheduleRelSet, smoke) {
 
 TEST_F(TestScheduleRelSet, all_seq_ab) {
 
-	ScheduleRelSet set(4);
+	ScheduleSolveDataActionRel set(4);
 	ASSERT_TRUE(set.setRel(0, 1, ScheduleRelE::SeqAB));
 	ASSERT_TRUE(set.setRel(1, 2, ScheduleRelE::SeqAB));
 	ASSERT_TRUE(set.setRel(2, 3, ScheduleRelE::SeqAB));
@@ -40,7 +41,7 @@ TEST_F(TestScheduleRelSet, all_seq_ab) {
 
 TEST_F(TestScheduleRelSet, all_par_ab) {
 
-	ScheduleRelSet set(4);
+	ScheduleSolveDataActionRel set(4);
 	ASSERT_TRUE(set.setRel(0, 1, ScheduleRelE::Par));
 	ASSERT_TRUE(set.setRel(1, 2, ScheduleRelE::Par));
 	ASSERT_TRUE(set.setRel(2, 3, ScheduleRelE::Par));
@@ -49,7 +50,7 @@ TEST_F(TestScheduleRelSet, all_par_ab) {
 
 TEST_F(TestScheduleRelSet, contradiction_1) {
 
-	ScheduleRelSet set(4);
+	ScheduleSolveDataActionRel set(4);
 	ASSERT_TRUE(set.setRel(0, 1, ScheduleRelE::SeqAB));
 	ASSERT_TRUE(set.setRel(1, 2, ScheduleRelE::SeqAB));
 	ASSERT_FALSE(set.setRel(0, 1, ScheduleRelE::Par));

@@ -10,6 +10,7 @@
 #include <string>
 #include <tuple>
 #include <vector>
+#include "ScheduleSolveDataBase.h"
 
 namespace arl {
 
@@ -23,11 +24,11 @@ enum class ScheduleRelE {
 /**
  * Holds relationships between a set of actions
  */
-class ScheduleRelSet {
+class ScheduleSolveDataActionRel : public ScheduleSolveDataBase {
 public:
-	ScheduleRelSet(int32_t n_actions);
+	ScheduleSolveDataActionRel(int32_t n_actions);
 
-	virtual ~ScheduleRelSet();
+	virtual ~ScheduleSolveDataActionRel();
 
 	ScheduleRelE getRel(int32_t i1, int32_t i2) const;
 

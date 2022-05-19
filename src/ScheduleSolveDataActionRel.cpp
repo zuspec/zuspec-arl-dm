@@ -5,13 +5,14 @@
  *      Author: mballance
  */
 
+#include "ScheduleSolveDataActionRel.h"
+
 #include <stdio.h>
 #include <string.h>
-#include "ScheduleRelSet.h"
 
 namespace arl {
 
-ScheduleRelSet::ScheduleRelSet(int32_t n_actions) : m_n_actions(n_actions) {
+ScheduleSolveDataActionRel::ScheduleSolveDataActionRel(int32_t n_actions) : m_n_actions(n_actions) {
 
 	// For simplicity, create storage for all pairs
 	uint32_t n_pairs = n_actions*n_actions;
@@ -22,19 +23,19 @@ ScheduleRelSet::ScheduleRelSet(int32_t n_actions) : m_n_actions(n_actions) {
 	memset(m_rel_l, 0xFF, n_elems*sizeof(uint32_t));
 }
 
-ScheduleRelSet::~ScheduleRelSet() {
+ScheduleSolveDataActionRel::~ScheduleSolveDataActionRel() {
 	delete [] m_rel_l;
 }
 
-ScheduleRelE ScheduleRelSet::getRel(int32_t i1, int32_t i2) const {
+ScheduleRelE ScheduleSolveDataActionRel::getRel(int32_t i1, int32_t i2) const {
 	return static_cast<ScheduleRelE>(get_elem(i1, i2));
 }
 
-bool ScheduleRelSet::setRel(
+bool ScheduleSolveDataActionRel::setRel(
 		int32_t 		i1,
 		int32_t 		i2,
 		ScheduleRelE 	rel) {
-	std::vector<ScheduleRelSet::RelDeltaT>	backtrace;
+	std::vector<ScheduleSolveDataActionRel::RelDeltaT>	backtrace;
 	bool ret = setRel(backtrace, i1, i2, rel);
 
 	fprintf(stdout, "setRel: %d changes\n", backtrace.size());
@@ -54,7 +55,7 @@ bool ScheduleRelSet::setRel(
 	return ret;
 }
 
-bool ScheduleRelSet::setRel(
+bool ScheduleSolveDataActionRel::setRel(
 		std::vector<RelDeltaT>	&backtrace,
 		int32_t 				i1,
 		int32_t 				i2,
@@ -107,7 +108,7 @@ bool ScheduleRelSet::setRel(
 	return true;
 }
 
-std::string ScheduleRelSet::toString() const {
+std::string ScheduleSolveDataActionRel::toString() const {
 	char tmp[256];
 	std::string ret;
 

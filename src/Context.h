@@ -22,7 +22,7 @@ public:
 			IDataTypeAction 	*t,
 			const std::string	&name) override;
 
-	virtual vsc::IModelField *buildModelComponent(
+	virtual IModelFieldRootComponent *buildModelComponent(
 			IDataTypeComponent 	*t,
 			const std::string	&name) override;
 

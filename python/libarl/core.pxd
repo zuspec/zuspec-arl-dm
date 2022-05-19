@@ -12,7 +12,7 @@ cdef class Arl(object):
 cdef class Context(vsc.Context):
 
     cpdef vsc.ModelField buildModelAction(self, DataTypeAction t, name)
-    cpdef vsc.ModelField buildModelComponent(self, DataTypeComponent t, name)
+    cpdef ModelFieldRootComponent buildModelComponent(self, DataTypeComponent t, name)
     cpdef DataTypeAction findDataTypeAction(self, name)
     cpdef DataTypeAction mkDataTypeAction(self, name)
     cpdef bool addDataTypeAction(self, DataTypeAction)
@@ -64,6 +64,13 @@ cdef class ModelEvalIterator(object):
     
     @staticmethod
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
+    
+cdef class ModelFieldRootComponent(vsc.ModelField):
+
+    cdef decl.IModelFieldRootComponent *asRootComponent(self)
+    
+    @staticmethod
+    cdef ModelFieldRootComponent mk(decl.IModelFieldRootComponent *, bool owned=*)
     
 cdef class TypeFieldClaim(vsc.TypeField):
     cpdef bool isLock(self)

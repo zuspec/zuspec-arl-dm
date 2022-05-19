@@ -8,6 +8,7 @@ from libc.stdint cimport int32_t
 ctypedef IContext *IContextP
 ctypedef IDataTypeAction *IDataTypeActionP
 ctypedef IDataTypeComponent *IDataTypeComponentP
+ctypedef IModelFieldRootComponent *IModelFieldRootComponentP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
 ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
@@ -24,7 +25,7 @@ cdef extern from "arl/IContext.h" namespace "arl":
         vsc.IModelField *buildModelAction(
             IDataTypeAction *t,
             const cpp_string &)
-        vsc.IModelField *buildModelComponent(
+        IModelFieldRootComponent *buildModelComponent(
             IDataTypeComponent *t,
             const cpp_string &)
         IDataTypeAction *findDataTypeAction(const cpp_string &)
@@ -64,6 +65,10 @@ cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
         ModelEvalNodeT type() const
         vsc.IModelField *action()
         IModelEvalIterator *iterator()
+        
+cdef extern from "arl/IModelFieldRootComponent.h" namespace "arl":
+    cdef cppclass IModelFieldRootComponent(vsc.IModelField):
+        pass
 
 cdef extern from "arl/ITypeFieldClaim.h" namespace "arl":
     cdef cppclass ITypeFieldClaim(vsc.ITypeField):

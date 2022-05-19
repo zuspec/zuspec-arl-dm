@@ -33,7 +33,7 @@ vsc::IModelField *Context::buildModelAction(
 	return TaskBuildModelAction(this).build(t, name);
 }
 
-vsc::IModelField *Context::buildModelComponent(
+IModelFieldRootComponent *Context::buildModelComponent(
 		IDataTypeComponent 	*t,
 		const std::string	&name) {
 	return TaskBuildModelComponent(this).build(t, name);

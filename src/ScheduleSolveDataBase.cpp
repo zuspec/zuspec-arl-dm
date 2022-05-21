@@ -23,9 +23,9 @@ ScheduleSolveDataBase::~ScheduleSolveDataBase() {
  * data results in a change, a new SolveData will be returned.
  * If no change results, null will be returned
  */
-IScheduleSolveData *ScheduleSolveDataBase::applyCst(IScheduleSolveData *d) const {
-	d->accept(const_cast<ScheduleSolveDataBase *>(this));
-	return 0;
+IScheduleSolveData::Result ScheduleSolveDataBase::applyCst(IScheduleSolvePropagator *d) const {
+//	d->accept(const_cast<ScheduleSolveDataBase *>(this));
+	return IScheduleSolveData::Result(false, 0);
 }
 
 /**
@@ -33,8 +33,8 @@ IScheduleSolveData *ScheduleSolveDataBase::applyCst(IScheduleSolveData *d) const
  * changed in-place and true/false returned based on whether the
  * applied data resulted in a change.
  */
-bool ScheduleSolveDataBase::applyMut(IScheduleSolveData *d) {
-	d->accept(this);
+bool ScheduleSolveDataBase::applyMut(IScheduleSolvePropagator *d) {
+//	d->accept(this);
 	return false;
 }
 

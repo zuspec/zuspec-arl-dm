@@ -1,30 +1,31 @@
 /*
- * ScheduleSolveDataBase.h
+ * ScheduleSolveDataCompSel.h
  *
- *  Created on: May 15, 2022
+ *  Created on: May 20, 2022
  *      Author: mballance
  */
 
 #pragma once
+#include <vector>
 #include "IScheduleSolveData.h"
-#include "ScheduleSolveDataBaseVisitor.h"
 
 namespace arl {
 
-class ScheduleSolveDataBase :
-		public ScheduleSolveDataBaseVisitor,
-		public IScheduleSolveData {
+class ScheduleSolveDataCompSel : public IScheduleSolveData {
 public:
-	ScheduleSolveDataBase();
+	ScheduleSolveDataCompSel(const std::vector<int32_t> &comp_id_l);
 
-	virtual ~ScheduleSolveDataBase();
+	virtual ~ScheduleSolveDataCompSel();
 
 	/**
 	 * Apply to a const version of the schedule data. If the applied
 	 * data results in a change, a new SolveData will be returned.
 	 * If no change results, null will be returned
+	 *
+	 * Propagator is passed here, since the same type of data may
+	 * mean different things when applied
 	 */
-	virtual Result applyCst(IScheduleSolvePropagator *d) const override;
+	virtual IScheduleSolveData::Result applyCst(IScheduleSolvePropagator *p) const override;
 
 	/**
 	 * Apply to a mutable version of the schedule data. The data is
@@ -33,8 +34,9 @@ public:
 	 */
 	virtual bool applyMut(IScheduleSolvePropagator *d) override;
 
-protected:
 
+private:
+	std::vector<int32_t>		m_comp_id_l;
 };
 
 } /* namespace arl */

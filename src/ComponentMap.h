@@ -30,14 +30,17 @@ public:
 
 	const std::unordered_set<int32_t> &getChildren(int32_t parent) const;
 
+	const std::unordered_set<int32_t> &getTypeInsts(vsc::IDataType *t) const;
+
 	vsc::IModelField *getComponent(int32_t id) const {
 		return m_components.at(id);
 	}
 
 private:
-	std::vector<vsc::IModelField *>								m_components;
-	std::unordered_map<int32_t, std::unordered_set<int32_t>> 	m_c2p_m;
-	std::unordered_map<int32_t, std::unordered_set<int32_t>> 	m_p2c_m;
+	std::vector<vsc::IModelField *>										m_components;
+	std::unordered_map<vsc::IDataType *, std::unordered_set<int32_t>>	m_t2i_m;
+	std::unordered_map<int32_t, std::unordered_set<int32_t>> 			m_c2p_m;
+	std::unordered_map<int32_t, std::unordered_set<int32_t>> 			m_p2c_m;
 };
 
 } /* namespace arl */

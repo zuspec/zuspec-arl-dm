@@ -11,6 +11,7 @@
 #include "ExecGraphNode.h"
 #include "IScheduleSolveStage.h"
 #include "ModelFieldRootComponent.h"
+#include "IScheduleSolvePropagator.h"
 #include "ScheduleSolveStage.h"
 
 namespace arl {
@@ -32,7 +33,9 @@ public:
 
 private:
 	IContext								*m_ctxt;
-	std::vector<IScheduleSolveStageUP>		m_stage_stack;
+	std::vector<IScheduleSolvePropagatorUP>	m_stage_stack;
+	bool									m_complete;
+
 };
 
 } /* namespace arl */

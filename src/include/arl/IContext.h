@@ -7,6 +7,9 @@
 #pragma once
 #include "vsc/IContext.h"
 #include "arl/IDataTypeAction.h"
+#include "arl/IDataTypeActivitySchedule.h"
+#include "arl/IDataTypeActivitySequence.h"
+#include "arl/IDataTypeActivityTraverse.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
 #include "arl/IModelEvaluator.h"
@@ -35,6 +38,14 @@ public:
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) = 0;
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) = 0;
+
+	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() = 0;
+
+	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() = 0;
+
+	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
+			vsc::ITypeExprFieldRef 		*target,
+			vsc::ITypeConstraint		*with_c) = 0;
 
 	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) = 0;
 

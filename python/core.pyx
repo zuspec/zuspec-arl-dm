@@ -128,6 +128,24 @@ cdef class Context(vsc.Context):
     cpdef bool addDataTypeAction(self, DataTypeAction a):
         a._owned = False
         return self.asContext().addDataTypeAction(a.asAction())
+    
+    cpdef DataTypeActivitySchedule mkDataTypeActivitySchedule(self):
+        return DataTypeActivitySchedule.mk(self.asContext().mkDataTypeActivitySchedule(), True)
+    
+    cpdef DataTypeActivitySequence mkDataTypeActivitySequence(self):
+        return DataTypeActivitySequence.mk(self.asContext().mkDataTypeActivitySequence(), True)
+    
+    cpdef DataTypeActivityTraverse mkDataTypeActivityTraverse(self, 
+                                    vsc.TypeExprFieldRef    target, 
+                                    vsc.TypeConstraint      with_c):
+        cdef vsc_decl.ITypeConstraint *with_c_p = NULL
+        
+        if with_c is not None:
+            with_c_p = with_c._hndl
+            
+        return DataTypeActivityTraverse.mk(self.asContext().mkDataTypeActivityTraverse(
+            target.asFieldRef(),
+            with_c_p), True)
 
     cpdef DataTypeComponent findDataTypeComponent(self, name):
         cdef decl.IDataTypeComponent *c = self.asContext().findDataTypeComponent(name.encode())
@@ -190,6 +208,14 @@ cdef class Context(vsc.Context):
 
 cdef class DataTypeAction(vsc.DataTypeStruct):
 
+    cpdef DataTypeComponent getComponentType(self):
+        return DataTypeComponent.mk(
+            self.asAction().getComponentType(),
+            False)
+    
+    cpdef setComponentType(self, DataTypeComponent comp):
+        self.asAction().setComponentType(comp.asComponent())
+
     cdef decl.IDataTypeAction *asAction(self):
         return dynamic_cast[decl.IDataTypeActionP](self._hndl)
     
@@ -199,6 +225,87 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
         ret._hndl = hndl
         ret._owned = owned
         return ret
+    
+cdef class DataTypeActivity(object):
+
+    def __dealloc__(self):
+        if self._owned and self._hndl != NULL:
+            del self._hndl
+
+cdef class DataTypeActivityScope(DataTypeActivity):
+
+    cpdef name(self):
+        return self.asScope().name().decode()
+
+    cpdef addField(self, vsc.TypeField f):
+        f._owned = False
+        self.asScope().addField(f._hndl)
+        
+    cpdef getFields(self):
+        ret = []
+        for i in range(self.asScope().getFields().size()):
+            ret.append(vsc.TypeField.mk(
+                self.asScope().getFields().at(i).get(), False))
+        return ret
+    
+    cpdef vsc.TypeField getField(self, int32_t idx):
+        cdef vsc_decl.ITypeField *ret_h = self.asScope().getField(idx)
+        
+        if ret_h != NULL:
+            return vsc.TypeField.mk(ret_h, False)
+        else:
+            return None
+    
+    cpdef addConstraint(self, vsc.TypeConstraint c):
+        self.asScope().addConstraint(c._hndl)
+        pass
+    
+    cpdef getConstraints(self):
+        ret = []
+        for i in range(self.asScope().getConstraints().size()):
+            ret.append(vsc.TypeConstraint.mk(
+                self.asScope().getConstraints().at(i).get(), False))
+        return ret
+
+    cdef decl.IDataTypeActivityScope *asScope(self):
+        return dynamic_cast[decl.IDataTypeActivityScopeP](self._hndl)
+
+    
+    pass
+
+cdef class DataTypeActivitySchedule(DataTypeActivityScope):
+    cdef decl.IDataTypeActivitySchedule *asSchedule(self):
+        return dynamic_cast[decl.IDataTypeActivityScheduleP](self._hndl)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivitySchedule *hndl, bool owned=True):
+        ret = DataTypeActivitySchedule()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+    
+cdef class DataTypeActivitySequence(DataTypeActivityScope):
+    cdef decl.IDataTypeActivitySequence *asSequence(self):
+        return dynamic_cast[decl.IDataTypeActivitySequenceP](self._hndl)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivitySequence *hndl, bool owned=True):
+        ret = DataTypeActivitySequence()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+    
+cdef class DataTypeActivityTraverse(DataTypeActivity):
+
+    cdef decl.IDataTypeActivityTraverse *asTraverse(self):
+        return dynamic_cast[decl.IDataTypeActivityTraverseP](self._hndl)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivityTraverse *hndl, bool owned=True):
+        ret = DataTypeActivityTraverse()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret    
 
 cdef class DataTypeComponent(vsc.DataTypeStruct):
 

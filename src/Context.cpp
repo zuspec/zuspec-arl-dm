@@ -7,6 +7,9 @@
 
 #include "Context.h"
 #include "DataTypeAction.h"
+#include "DataTypeActivitySchedule.h"
+#include "DataTypeActivitySequence.h"
+#include "DataTypeActivityTraverse.h"
 #include "DataTypeComponent.h"
 #include "ModelEvaluator.h"
 #include "TaskBuildModelAction.h"
@@ -61,6 +64,21 @@ IDataTypeAction *Context::mkDataTypeAction(const std::string &name) {
 
 bool Context::addDataTypeAction(IDataTypeAction *t) {
 	return m_action_type_m.insert({t->name(), IDataTypeActionUP(t)}).second;
+}
+
+IDataTypeActivitySchedule *Context::mkDataTypeActivitySchedule() {
+	return new DataTypeActivitySchedule();
+
+}
+
+IDataTypeActivitySequence *Context::mkDataTypeActivitySequence() {
+	return new DataTypeActivitySequence();
+}
+
+IDataTypeActivityTraverse *Context::mkDataTypeActivityTraverse(
+		vsc::ITypeExprFieldRef	*target,
+		vsc::ITypeConstraint	*with_c) {
+	return new DataTypeActivityTraverse(target, with_c);
 }
 
 IDataTypeComponent *Context::findDataTypeComponent(const std::string &name) {

@@ -1,5 +1,7 @@
 
 from libarl cimport decl
+
+from libc.stdint cimport int32_t
 from libcpp cimport bool
 cimport libvsc.core as vsc
 
@@ -15,7 +17,10 @@ cdef class Context(vsc.Context):
     cpdef ModelFieldRootComponent buildModelComponent(self, DataTypeComponent t, name)
     cpdef DataTypeAction findDataTypeAction(self, name)
     cpdef DataTypeAction mkDataTypeAction(self, name)
+    cpdef DataTypeActivitySchedule mkDataTypeActivitySchedule(self)
+    cpdef DataTypeActivitySequence mkDataTypeActivitySequence(self)
     cpdef bool addDataTypeAction(self, DataTypeAction)
+    cpdef DataTypeActivityTraverse mkDataTypeActivityTraverse(self, vsc.TypeExprFieldRef, vsc.TypeConstraint)
     cpdef DataTypeComponent findDataTypeComponent(self, name)
     cpdef DataTypeComponent mkDataTypeComponent(self, name)
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)
@@ -32,10 +37,48 @@ cdef class Context(vsc.Context):
     
 cdef class DataTypeAction(vsc.DataTypeStruct):
 
+    cpdef DataTypeComponent getComponentType(self)
+    
+    cpdef setComponentType(self, DataTypeComponent)
+
     cdef decl.IDataTypeAction *asAction(self)
     
     @staticmethod
     cdef mk(decl.IDataTypeAction *, bool owned=*)
+    
+cdef class DataTypeActivity(object):
+    cdef decl.IDataTypeActivity         *_hndl
+    cdef bool                           _owned
+    pass
+
+cdef class DataTypeActivityScope(DataTypeActivity):
+    cpdef name(self)
+    cpdef addField(self, vsc.TypeField f)
+    cpdef getFields(self)
+    cpdef vsc.TypeField getField(self, int32_t idx)
+    cpdef addConstraint(self, vsc.TypeConstraint c)
+    cpdef getConstraints(self)
+    cdef decl.IDataTypeActivityScope *asScope(self)
+    
+cdef class DataTypeActivitySchedule(DataTypeActivityScope):
+    cdef decl.IDataTypeActivitySchedule *asSchedule(self)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivitySchedule *hndl, bool owned=*)
+    
+cdef class DataTypeActivitySequence(DataTypeActivityScope):
+    cdef decl.IDataTypeActivitySequence *asSequence(self)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivitySequence *hndl, bool owned=*)
+    
+cdef class DataTypeActivityTraverse(DataTypeActivity):
+
+    cdef decl.IDataTypeActivityTraverse *asTraverse(self)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivityTraverse *hndl, bool owned=*)
+    
     
 cdef class DataTypeComponent(vsc.DataTypeStruct):
 

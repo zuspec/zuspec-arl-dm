@@ -2,13 +2,22 @@
 cimport libvsc.decl as vsc
 
 from libcpp.string cimport string as cpp_string
+from libcpp.vector cimport vector as cpp_vector
+from libcpp.memory cimport unique_ptr
 from libcpp cimport bool
 from libc.stdint cimport int32_t
 
 ctypedef IContext *IContextP
 ctypedef IDataTypeAction *IDataTypeActionP
+ctypedef IDataTypeActivity *IDataTypeActivityP
+ctypedef IDataTypeActivityScope *IDataTypeActivityScopeP
+ctypedef IDataTypeActivitySchedule *IDataTypeActivityScheduleP
+ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
+ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IModelFieldRootComponent *IModelFieldRootComponentP
+ctypedef ITypeActivityStmt *ITypeActivityStmtP
+ctypedef unique_ptr[ITypeActivityStmt] ITypeActivityStmtUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
 ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
@@ -30,6 +39,11 @@ cdef extern from "arl/IContext.h" namespace "arl":
             const cpp_string &)
         IDataTypeAction *findDataTypeAction(const cpp_string &)
         IDataTypeAction *mkDataTypeAction(const cpp_string &)
+        IDataTypeActivitySchedule *mkDataTypeActivitySchedule()
+        IDataTypeActivitySequence *mkDataTypeActivitySequence()
+        IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
+            vsc.ITypeExprFieldRef *,
+            vsc.ITypeConstraint *)
         bool addDataTypeAction(IDataTypeAction *)
         IDataTypeComponent *findDataTypeComponent(const cpp_string &)
         IDataTypeComponent *mkDataTypeComponent(const cpp_string &)
@@ -41,7 +55,37 @@ cdef extern from "arl/IContext.h" namespace "arl":
         
 cdef extern from "arl/IDataTypeAction.h" namespace "arl":
     cdef cppclass IDataTypeAction(vsc.IDataTypeStruct):
+        IDataTypeComponent *getComponentType()
+        void setComponentType(IDataTypeComponent *)
+        const cpp_vector[ITypeActivityStmtUP] &activities() const
+        void addActivity(ITypeActivityStmt *)
+        
+cdef extern from "arl/IDataTypeActivity.h" namespace "arl":
+    cdef cppclass IDataTypeActivity:
         pass
+        
+cdef extern from "arl/IDataTypeActivityScope.h" namespace "arl":
+    cdef cppclass IDataTypeActivityScope(IDataTypeActivity, vsc.IDataTypeStruct):
+        # const cpp_string &name() const
+        # void addField(vsc.ITypeField *)
+        # vsc.ITypeField *getField(int32_t idx)
+        # const cpp_vector[unique_ptr[vsc.ITypeField]] &getFields() const
+        # void addConstraint(vsc.ITypeConstraint *)
+        # const cpp_vector[unique_ptr[vsc.ITypeConstraint]] &getConstraints() const
+        
+        pass
+        
+cdef extern from "arl/IDataTypeActivitySchedule.h" namespace "arl":
+    cdef cppclass IDataTypeActivitySchedule(IDataTypeActivityScope):
+        pass
+    
+cdef extern from "arl/IDataTypeActivitySequence.h" namespace "arl":
+    cdef cppclass IDataTypeActivitySequence(IDataTypeActivityScope):
+        pass
+    
+cdef extern from "arl/IDataTypeActivityTraverse.h" namespace "arl":
+    cdef cppclass IDataTypeActivityTraverse(IDataTypeActivity):
+        vsc.ITypeExprFieldRef *getTarget() const
     
 cdef extern from "arl/IDataTypeComponent.h" namespace "arl":
     cdef cppclass IDataTypeComponent(vsc.IDataTypeStruct):
@@ -77,6 +121,10 @@ cdef extern from "arl/ITypeFieldClaim.h" namespace "arl":
 cdef extern from "arl/ITypeFieldInOut.h" namespace "arl":
     cdef cppclass ITypeFieldInOut(vsc.ITypeField):
         bool isInput() const
+        
+cdef extern from "arl/ITypeActivityStmt.h" namespace "arl":
+    cdef cppclass ITypeActivityStmt:
+        pass
 
 cdef extern from "arl/ITypeFieldPool.h" namespace "arl":
     cdef cppclass ITypeFieldPool(vsc.ITypeField):

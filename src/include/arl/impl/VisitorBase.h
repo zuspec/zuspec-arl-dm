@@ -9,10 +9,14 @@
 #include "vsc/impl/VisitorBase.h"
 
 #include "arl/IDataTypeAction.h"
+#include "arl/IDataTypeActivitySchedule.h"
+#include "arl/IDataTypeActivitySequence.h"
+#include "arl/IDataTypeActivityTraverse.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
 #include "arl/IModelFieldRootComponent.h"
 #include "arl/IVisitor.h"
+#include "arl/ITypeActivitySequence.h"
 #include "arl/ITypeActivityStmtTraverseType.h"
 #include "arl/ITypeFieldClaim.h"
 #include "arl/ITypeFieldInOut.h"
@@ -33,6 +37,16 @@ public:
 		vsc::VisitorBase::visitDataTypeStruct(i);
 	}
 
+	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override {
+		vsc::VisitorBase::visitDataTypeStruct(t);
+	}
+
+	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) override {
+		vsc::VisitorBase::visitDataTypeStruct(t);
+	}
+
+	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { }
+
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override {
 		vsc::VisitorBase::visitDataTypeStruct(t);
 	}
@@ -43,6 +57,14 @@ public:
 
 	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {
 		vsc::VisitorBase::visitModelField(f);
+	}
+
+	virtual void visitTypeActivitySequence(ITypeActivitySequence *s) override {
+		for (std::vector<ITypeActivityStmtUP>::const_iterator
+				it=s->getStmts().begin();
+				it!=s->getStmts().end(); it++) {
+			it->get()->accept(m_this);
+		}
 	}
 
 	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) override {

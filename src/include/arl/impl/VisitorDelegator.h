@@ -23,6 +23,20 @@ public:
 				&vsc::IVisitor::visitDataTypeStruct, i);
 	}
 
+	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override {
+		delegate(&arl::IVisitor::visitDataTypeActivitySchedule,
+				&vsc::IVisitor::visitDataTypeStruct, t);
+	}
+
+	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) override {
+		delegate(&arl::IVisitor::visitDataTypeActivitySequence,
+				&vsc::IVisitor::visitDataTypeStruct, t);
+	}
+
+	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override {
+		delegate(&arl::IVisitor::visitDataTypeActivityTraverse, t);
+	}
+
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override {
 		delegate(&arl::IVisitor::visitDataTypeComponent,
 				&vsc::IVisitor::visitDataTypeStruct, t);
@@ -36,6 +50,10 @@ public:
 	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {
 		delegate(&arl::IVisitor::visitModelFieldRootComponent,
 				&vsc::IVisitor::visitModelField, f);
+	}
+
+	virtual void visitTypeActivitySequence(ITypeActivitySequence *s) override {
+		delegate(&arl::IVisitor::visitTypeActivitySequence, s);
 	}
 
 	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) override {

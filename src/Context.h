@@ -30,11 +30,19 @@ public:
 			vsc::IDataTypeStruct	*dt,
 			const std::string		&name) override;
 
-	virtual IDataTypeAction *findDataTypeAction(const std::string &name) override;
+	virtual IDataTypeAction *findDataTypeAction(const std::string &) override;
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override;
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) override;
+
+	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() override;
+
+	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() override;
+
+	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
+			vsc::ITypeExprFieldRef	*target,
+			vsc::ITypeConstraint	*with_c) override;
 
 	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) override;
 

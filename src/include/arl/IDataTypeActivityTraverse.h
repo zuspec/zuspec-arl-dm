@@ -1,0 +1,26 @@
+/*
+ * IDataTypeActivityTraverse.h
+ *
+ *  Created on: Jun 5, 2022
+ *      Author: mballance
+ */
+
+#pragma once
+#include "arl/IDataTypeActivity.h"
+#include "vsc/ITypeConstraint.h"
+#include "vsc/ITypeExprFieldRef.h"
+
+namespace arl {
+
+class IDataTypeActivityTraverse : public virtual IDataTypeActivity {
+public:
+
+	virtual ~IDataTypeActivityTraverse() { }
+
+	virtual vsc::ITypeExprFieldRef *getTarget() const = 0;
+
+	virtual vsc::ITypeConstraint *getWithC() const = 0;
+
+};
+
+}

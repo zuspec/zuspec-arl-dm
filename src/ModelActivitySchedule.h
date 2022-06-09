@@ -1,20 +1,20 @@
 /*
- * ModelActivitySequence.h
+ * ModelActivitySchedule.h
  *
- *  Created on: Jun 5, 2022
+ *  Created on: Jun 6, 2022
  *      Author: mballance
  */
 
 #pragma once
-#include "arl/IModelActivitySequence.h"
+#include "arl/IModelActivitySchedule.h"
 
 namespace arl {
 
-class ModelActivitySequence : public IModelActivitySequence {
+class ModelActivitySchedule : public IModelActivitySchedule {
 public:
-	ModelActivitySequence();
+	ModelActivitySchedule();
 
-	virtual ~ModelActivitySequence();
+	virtual ~ModelActivitySchedule();
 
 	virtual const std::vector<IModelActivityUP> &getActivities() const override {
 		return m_activities;

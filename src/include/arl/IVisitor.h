@@ -16,6 +16,11 @@ class IDataTypeActivitySequence;
 class IDataTypeActivityTraverse;
 class IDataTypeComponent;
 class IDataTypeFlowObj;
+class IModelActivityParallel;
+class IModelActivitySchedule;
+class IModelActivitySequence;
+class IModelActivityTraverse;
+class IModelFieldAction;
 class IModelFieldRootComponent;
 class ITypeActivitySequence;
 class ITypeActivityStmtTraverseType;
@@ -39,6 +44,16 @@ public:
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) = 0;
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
+
+	virtual void visitModelActivityParallel(IModelActivityParallel *a) = 0;
+
+	virtual void visitModelActivitySchedule(IModelActivitySchedule *a) = 0;
+
+	virtual void visitModelActivitySequence(IModelActivitySequence *a) = 0;
+
+	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) = 0;
+
+	virtual void visitModelFieldAction(IModelFieldAction *f) = 0;
 
 	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) = 0;
 

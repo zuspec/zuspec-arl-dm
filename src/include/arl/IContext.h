@@ -10,9 +10,15 @@
 #include "arl/IDataTypeActivitySchedule.h"
 #include "arl/IDataTypeActivitySequence.h"
 #include "arl/IDataTypeActivityTraverse.h"
+#include "arl/IDataTypeAction.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
+#include "arl/IModelActivityParallel.h"
+#include "arl/IModelActivitySchedule.h"
+#include "arl/IModelActivitySequence.h"
+#include "arl/IModelActivityTraverse.h"
 #include "arl/IModelEvaluator.h"
+#include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldRootComponent.h"
 #include "arl/ITypeActivityStmtTraverseType.h"
 #include "arl/ITypeFieldClaim.h"
@@ -25,7 +31,7 @@ public:
 
 	virtual ~IContext() { }
 
-	virtual vsc::IModelField *buildModelAction(
+	virtual IModelFieldAction *buildModelAction(
 			IDataTypeAction 	*t,
 			const std::string	&name) = 0;
 
@@ -61,7 +67,24 @@ public:
 
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
 
+	virtual IModelActivityParallel *mkModelActivityParallel() = 0;
+
+	virtual IModelActivitySchedule *mkModelActivitySchedule() = 0;
+
+	virtual IModelActivitySequence *mkModelActivitySequence() = 0;
+
+	virtual IModelActivityTraverse *mkModelActivityTraverse(
+			IModelFieldAction		*target,
+			vsc::IModelConstraint	*with_c) = 0;
+
 	virtual IModelEvaluator *mkModelEvaluator() = 0;
+
+	virtual IModelFieldAction *mkModelFieldActionRoot(
+			const std::string		&name,
+			IDataTypeAction			*type) = 0;
+
+	virtual IModelFieldAction *mkModelFieldActionType(
+			vsc::ITypeField			*type) = 0;
 
 	virtual ITypeActivityStmtTraverseType *mkTypeActivityStmtTraverseType(
 			IDataTypeAction			*action_t,

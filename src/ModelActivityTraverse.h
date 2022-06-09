@@ -27,6 +27,8 @@ public:
 		return m_with_c.get();
 	}
 
+	virtual void accept(vsc::IVisitor *v) override;
+
 private:
 	IModelFieldActionUP				m_target;
 	vsc::IModelConstraintUP			m_with_c;

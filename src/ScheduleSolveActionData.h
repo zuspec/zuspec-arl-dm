@@ -6,8 +6,10 @@
  */
 
 #pragma once
-#include "vsc/IModelField.h"
 #include <memory>
+#include "arl/IModelActivity.h"
+#include "vsc/IModelField.h"
+#include "ScheduleGraphNode.h"
 
 namespace arl {
 
@@ -16,15 +18,18 @@ using ScheduleSolveActionDataUP=std::unique_ptr<ScheduleSolveActionData>;
 class ScheduleSolveActionData {
 public:
 	ScheduleSolveActionData(
-			vsc::IModelField		*action,
+			IModelActivity			*activity,
 			bool					owned
 			);
 
 	virtual ~ScheduleSolveActionData();
 
+	ScheduleGraphNode *node() const { return m_node.get(); }
+
 private:
-	vsc::IModelField			*m_action;
+	IModelActivity				*m_activity;
 	bool						m_owned;
+	ScheduleGraphNodeUP			m_node;
 
 };
 

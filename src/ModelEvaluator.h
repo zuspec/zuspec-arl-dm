@@ -7,6 +7,7 @@
 
 #pragma once
 #include "arl/IContext.h"
+#include "arl/IModelActivity.h"
 #include "arl/IModelEvaluator.h"
 
 namespace arl {
@@ -21,8 +22,11 @@ public:
 			vsc::IModelField	*root_comp,
 			IDataTypeAction		*root_action) override;
 
+	virtual IModelEvalIterator *next();
+
 private:
-	IContext					*m_ctxt;
+	IContext						*m_ctxt;
+	std::vector<IModelActivity>		m_activities;
 
 
 };

@@ -8,6 +8,7 @@
 #pragma once
 #include <vector>
 #include "arl/IModelEvalIterator.h"
+#include "arl/IModelFieldAction.h"
 
 namespace arl {
 
@@ -17,7 +18,7 @@ public:
 	struct Elem {
 		ModelEvalNodeT		type;
 		union {
-			vsc::IModelField	*action;
+			IModelFieldAction	*action;
 			IModelEvalIterator	*iterator;
 		};
 	};

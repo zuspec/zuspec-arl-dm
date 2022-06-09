@@ -10,8 +10,8 @@
 namespace arl {
 
 ScheduleGraphNode::ScheduleGraphNode(
-		vsc::IModelField		*action,
-		int32_t					id) : m_action(action), m_id(id), m_depth(0) {
+		IModelActivity			*activity,
+		int32_t					id) : m_activity(activity), m_id(id), m_depth(0) {
 	// TODO Auto-generated constructor stub
 
 }

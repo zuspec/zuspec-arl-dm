@@ -94,7 +94,7 @@ ScheduleGraphNode *ExecGraphBuilder::processSequence(
 	while (node && node->getOutgoingArcs().size() <= 1) {
 		m_exec_s.back()->addChild(new ExecGraphNode(
 				ExecGraphNodeKindE::Traverse,
-				node->action()));
+				node->activity()));
 		if (node->getOutgoingArcs().size() == 0) {
 			node = 0;
 		} else if (node->getOutgoingArcs().size() == 1) {
@@ -266,7 +266,7 @@ ScheduleGraphNode *ExecGraphBuilder::processNodes(
 		if (node->getOutgoingArcs().size() > 1) {
 			node = processParallel(0, node);
 		} else {
-			m_exec_s.back()->addChild(new ExecGraphNode(node->action()));
+			m_exec_s.back()->addChild(new ExecGraphNode(node->activity()));
 			node = (*node->getOutgoingArcs().begin());
 		}
 	}

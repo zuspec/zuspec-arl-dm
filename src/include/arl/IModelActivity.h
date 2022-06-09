@@ -20,8 +20,10 @@ public:
 
 	virtual ~IModelActivity() { }
 
+	/*
 	virtual void getConstraintsLookahead(
 			std::vector<vsc::IModelConstraint *> &constraints) = 0;
+	 */
 
 };
 

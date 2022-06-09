@@ -18,7 +18,7 @@ TaskBuildModelAction::~TaskBuildModelAction() {
 	// TODO Auto-generated destructor stub
 }
 
-vsc::IModelField *TaskBuildModelAction::build(
+IModelFieldAction *TaskBuildModelAction::build(
 		IDataTypeAction 	*t,
 		const std::string 	&name) {
 	vsc::IModelField *ret = m_core.build(t, name);
@@ -27,12 +27,12 @@ vsc::IModelField *TaskBuildModelAction::build(
 		t->getCreateHook()->create(ret);
 	}
 
-	return ret;
+	return dynamic_cast<IModelFieldAction *>(ret);
 }
 
 void TaskBuildModelAction::visitDataTypeAction(IDataTypeAction *t) {
 	if (m_core.getFields().size() == 0) {
-		m_core.pushField(m_ctxt->mkModelFieldRoot(t, m_core.name()));
+		m_core.pushField(m_ctxt->mkModelFieldActionRoot(m_core.name(), t));
 	}
 
 //	m_ctxt->mkModelFieldRoot(type, name)

@@ -18,7 +18,7 @@ public:
 
 	virtual ~Context();
 
-	virtual vsc::IModelField *buildModelAction(
+	virtual IModelFieldAction *buildModelAction(
 			IDataTypeAction 	*t,
 			const std::string	&name) override;
 
@@ -58,7 +58,25 @@ public:
 
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) override;
 
+	virtual IModelActivityParallel *mkModelActivityParallel() override;
+
+	virtual IModelActivitySchedule *mkModelActivitySchedule() override;
+
+	virtual IModelActivitySequence *mkModelActivitySequence() override;
+
+	virtual IModelActivityTraverse *mkModelActivityTraverse(
+			IModelFieldAction		*target,
+			vsc::IModelConstraint	*with_c) override;
+
 	virtual IModelEvaluator *mkModelEvaluator() override;
+
+	virtual IModelFieldAction *mkModelFieldActionRoot(
+			const std::string		&name,
+			IDataTypeAction			*type) override;
+
+	virtual IModelFieldAction *mkModelFieldActionType(
+			vsc::ITypeField			*type) override;
+
 
 	virtual ITypeActivityStmtTraverseType *mkTypeActivityStmtTraverseType(
 			IDataTypeAction			*action_t,

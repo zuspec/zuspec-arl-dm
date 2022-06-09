@@ -9,6 +9,7 @@
 #include <memory>
 #include <unordered_set>
 #include <vector>
+#include "arl/IModelActivity.h"
 #include "vsc/IModelField.h"
 
 namespace arl {
@@ -18,13 +19,13 @@ using ScheduleGraphNodeUP=std::unique_ptr<ScheduleGraphNode>;
 class ScheduleGraphNode {
 public:
 	ScheduleGraphNode(
-			vsc::IModelField		*action,
+			IModelActivity			*activity,
 			int32_t					id
 			);
 
 	virtual ~ScheduleGraphNode();
 
-	vsc::IModelField *action() const { return m_action; }
+	IModelActivity *activity() const { return m_activity; }
 
 	int32_t id() const { return m_id; }
 
@@ -49,7 +50,7 @@ public:
 	}
 
 private:
-	vsc::IModelField									*m_action;
+	IModelActivity										*m_activity;
 	int32_t												m_id;
 	int32_t												m_depth;
 	std::unordered_set<ScheduleGraphNode *>				m_incoming_arc_s;

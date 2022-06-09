@@ -8,6 +8,11 @@
 #pragma once
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldPool.h"
+#include "arl/IModelFieldAction.h"
+#include "arl/IModelActivityParallel.h"
+#include "arl/IModelActivitySchedule.h"
+#include "arl/IModelActivitySequence.h"
+#include "arl/IModelActivityTraverse.h"
 #include "vsc/impl/VisitorDelegator.h"
 
 namespace arl {
@@ -45,6 +50,27 @@ public:
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override {
 		delegate(&arl::IVisitor::visitDataTypeFlowObj,
 				&vsc::IVisitor::visitDataTypeStruct, t);
+	}
+
+	virtual void visitModelActivityParallel(IModelActivityParallel *a) override {
+		delegate(&arl::IVisitor::visitModelActivityParallel, a);
+	}
+
+	virtual void visitModelActivitySchedule(IModelActivitySchedule *a) override {
+		delegate(&arl::IVisitor::visitModelActivitySchedule, a);
+	}
+
+	virtual void visitModelActivitySequence(IModelActivitySequence *a) override {
+		delegate(&arl::IVisitor::visitModelActivitySequence, a);
+	}
+
+	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override {
+		delegate(&arl::IVisitor::visitModelActivityTraverse, a);
+	}
+
+	virtual void visitModelFieldAction(IModelFieldAction *f) override {
+		delegate(&arl::IVisitor::visitModelFieldAction,
+				&vsc::IVisitor::visitModelField, f);
 	}
 
 	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {

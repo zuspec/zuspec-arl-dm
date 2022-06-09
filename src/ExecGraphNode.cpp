@@ -10,17 +10,17 @@
 
 namespace arl {
 
-ExecGraphNode::ExecGraphNode(ExecGraphNodeKindE kind) : m_kind(kind), m_action(0) {
+ExecGraphNode::ExecGraphNode(ExecGraphNodeKindE kind) : m_kind(kind), m_activity(0) {
 
 }
 
-ExecGraphNode::ExecGraphNode(vsc::IModelField *action) :
-		m_kind(ExecGraphNodeKindE::Traverse), m_action(action) {
+ExecGraphNode::ExecGraphNode(IModelActivity *activity) :
+		m_kind(ExecGraphNodeKindE::Traverse), m_activity(activity) {
 
 }
 
-ExecGraphNode::ExecGraphNode(ExecGraphNodeKindE kind, vsc::IModelField *action) :
-		m_kind(kind), m_action(action) {
+ExecGraphNode::ExecGraphNode(ExecGraphNodeKindE kind, IModelActivity *activity) :
+		m_kind(kind), m_activity(activity) {
 
 }
 

@@ -18,7 +18,7 @@ public:
 
 	virtual ~IModelActivityParallel() { }
 
-	virtual const std::vector<IModelActivityUP> &getBranches() const;
+	virtual const std::vector<IModelActivityUP> &getBranches() const = 0;
 
 	virtual void addBranch(IModelActivity *a) = 0;
 

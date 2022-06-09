@@ -22,10 +22,12 @@ void ScheduleGraphBuilder::build(
 			std::vector<ScheduleGraphNodeUP>		&nodes,
 			const std::vector<vsc::IModelField *>	&actions,
 			const ScheduleSolveDataActionRel					&schedrel) {
+	/*
 	for (uint32_t i=0; i<actions.size(); i++) {
 		nodes.push_back(ScheduleGraphNodeUP(
 				new ScheduleGraphNode(actions.at(i), i)));
 	}
+	 */
 
 	for (uint32_t i=0; i<actions.size(); i++) {
 		for (uint32_t j=i+1; j<actions.size(); j++) {

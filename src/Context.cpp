@@ -11,7 +11,13 @@
 #include "DataTypeActivitySequence.h"
 #include "DataTypeActivityTraverse.h"
 #include "DataTypeComponent.h"
+#include "ModelActivityParallel.h"
+#include "ModelActivitySchedule.h"
+#include "ModelActivitySequence.h"
+#include "ModelActivityTraverse.h"
 #include "ModelEvaluator.h"
+#include "ModelFieldActionRoot.h"
+#include "ModelFieldActionType.h"
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
@@ -30,7 +36,7 @@ Context::~Context() {
 
 }
 
-vsc::IModelField *Context::buildModelAction(
+IModelFieldAction *Context::buildModelAction(
 		IDataTypeAction 	*t,
 		const std::string	&name) {
 	return TaskBuildModelAction(this).build(t, name);
@@ -126,9 +132,39 @@ bool Context::addDataTypeFlowObj(IDataTypeFlowObj *t) {
 
 }
 
+IModelActivityParallel *Context::mkModelActivityParallel() {
+	return new ModelActivityParallel();
+}
+
+IModelActivitySchedule *Context::mkModelActivitySchedule() {
+	return new ModelActivitySchedule();
+}
+
+IModelActivitySequence *Context::mkModelActivitySequence() {
+	return new ModelActivitySequence();
+}
+
+IModelActivityTraverse *Context::mkModelActivityTraverse(
+		IModelFieldAction			*target,
+		vsc::IModelConstraint		*with_c) {
+	return new ModelActivityTraverse(target, with_c);
+}
+
 IModelEvaluator *Context::mkModelEvaluator() {
 	return new ModelEvaluator(this);
 }
+
+IModelFieldAction *Context::mkModelFieldActionRoot(
+			const std::string		&name,
+			IDataTypeAction			*type) {
+	return new ModelFieldActionRoot(name, type);
+}
+
+IModelFieldAction *Context::mkModelFieldActionType(
+			vsc::ITypeField			*type) {
+	return new ModelFieldActionType(type);
+}
+
 
 ITypeActivityStmtTraverseType *Context::mkTypeActivityStmtTraverseType(
 			IDataTypeAction			*action_t,

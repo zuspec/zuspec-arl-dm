@@ -7,6 +7,7 @@
 
 #pragma once
 #include <memory>
+#include "arl/IModelActivity.h"
 #include "vsc/IModelField.h"
 
 namespace arl {
@@ -24,15 +25,15 @@ public:
 
 	ExecGraphNode(ExecGraphNodeKindE kind);
 
-	ExecGraphNode(vsc::IModelField *action);
+	ExecGraphNode(IModelActivity *activity);
 
-	ExecGraphNode(ExecGraphNodeKindE kind, vsc::IModelField *action);
+	ExecGraphNode(ExecGraphNodeKindE kind, IModelActivity *activity);
 
 	virtual ~ExecGraphNode();
 
 	const ExecGraphNodeKindE kind() const { return m_kind; }
 
-	vsc::IModelField *action() const { return m_action; }
+	IModelActivity *activity() const { return m_activity; }
 
 	void addChild(ExecGraphNode *c) {
 		m_children.push_back(ExecGraphNodeUP(c));
@@ -46,7 +47,7 @@ public:
 
 protected:
 	ExecGraphNodeKindE				m_kind;
-	vsc::IModelField				*m_action;
+	IModelActivity					*m_activity;
 	std::vector<ExecGraphNodeUP>	m_children;
 };
 

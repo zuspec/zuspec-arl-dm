@@ -10,14 +10,15 @@
 namespace arl {
 
 ScheduleSolveActionData::ScheduleSolveActionData(
-		vsc::IModelField			*action,
-		bool						owned) : m_action(action), m_owned(owned) {
+		IModelActivity				*activity,
+		bool						owned) : m_activity(activity), m_owned(owned),
+				m_node(new ScheduleGraphNode(activity, 0)) {
 
 }
 
 ScheduleSolveActionData::~ScheduleSolveActionData() {
-	if (m_owned && m_action) {
-		delete m_action;
+	if (m_owned && m_activity) {
+		delete m_activity;
 	}
 }
 

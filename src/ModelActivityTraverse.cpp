@@ -5,6 +5,7 @@
  *      Author: mballance
  */
 
+#include "arl/IVisitor.h"
 #include "ModelActivityTraverse.h"
 
 namespace arl {
@@ -17,6 +18,12 @@ ModelActivityTraverse::ModelActivityTraverse(
 
 ModelActivityTraverse::~ModelActivityTraverse() {
 	// TODO Auto-generated destructor stub
+}
+
+void ModelActivityTraverse::accept(vsc::IVisitor *v) {
+	if (dynamic_cast<arl::IVisitor *>(v)) {
+		dynamic_cast<arl::IVisitor *>(v)->visitModelActivityTraverse(this);
+	}
 }
 
 } /* namespace arl */

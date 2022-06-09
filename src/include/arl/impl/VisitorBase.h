@@ -14,6 +14,11 @@
 #include "arl/IDataTypeActivityTraverse.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
+#include "arl/IModelActivityParallel.h"
+#include "arl/IModelActivitySchedule.h"
+#include "arl/IModelActivitySequence.h"
+#include "arl/IModelActivityTraverse.h"
+#include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldRootComponent.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeActivitySequence.h"
@@ -53,6 +58,44 @@ public:
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override {
 		vsc::VisitorBase::visitDataTypeStruct(t);
+	}
+
+	virtual void visitModelActivityParallel(IModelActivityParallel *a) override {
+		for (std::vector<IModelActivityUP>::const_iterator
+				it=a->getBranches().begin();
+				it!=a->getBranches().end(); it++) {
+			(*it)->accept(m_this);
+		}
+	}
+
+	virtual void visitModelActivitySchedule(IModelActivitySchedule *a) override {
+		for (std::vector<IModelActivityUP>::const_iterator
+				it=a->getActivities().begin();
+				it!=a->getActivities().end(); it++) {
+			(*it)->accept(m_this);
+		}
+	}
+
+	virtual void visitModelActivitySequence(IModelActivitySequence *a) override {
+		for (std::vector<IModelActivityUP>::const_iterator
+				it=a->getActivities().begin();
+				it!=a->getActivities().end(); it++) {
+			(*it)->accept(m_this);
+		}
+	}
+
+	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override {
+		a->getTarget()->accept(m_this);
+		if (a->getWithC()) {
+			a->getWithC()->accept(m_this);
+		}
+	}
+
+	virtual void visitModelFieldAction(IModelFieldAction *f) override {
+		vsc::VisitorBase::visitModelField(f);
+		if (f->getActivity()) {
+			f->getActivity()->accept(this);
+		}
 	}
 
 	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {

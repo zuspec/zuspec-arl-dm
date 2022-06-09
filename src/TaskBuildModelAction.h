@@ -7,6 +7,7 @@
 
 #pragma once
 #include "arl/IContext.h"
+#include "arl/IModelFieldAction.h"
 #include "include/arl/impl/VisitorDelegator.h"
 #include "vsc/IModelField.h"
 #include "vsc/impl/TaskBuildModelField.h"
@@ -19,7 +20,7 @@ public:
 
 	virtual ~TaskBuildModelAction();
 
-	vsc::IModelField *build(IDataTypeAction *t, const std::string &name);
+	IModelFieldAction *build(IDataTypeAction *t, const std::string &name);
 
 	virtual void visitDataTypeAction(IDataTypeAction *t) override;
 

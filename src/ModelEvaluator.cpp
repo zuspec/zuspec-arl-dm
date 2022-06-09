@@ -6,7 +6,7 @@
  */
 
 #include "ModelEvaluator.h"
-#include "ModelEvalIterator.h"
+#include "ModelEvalIteratorMgr.h"
 
 namespace arl {
 
@@ -22,20 +22,20 @@ ModelEvaluator::~ModelEvaluator() {
 IModelEvalIterator *ModelEvaluator::eval(
 			vsc::IModelField	*root_comp,
 			IDataTypeAction		*root_action) {
-	vsc::IModelField *action = m_ctxt->buildModelAction(
+	IModelFieldAction *action = m_ctxt->buildModelAction(
 			root_action,
 			root_action->name());
 
-	ModelEvalIterator *ret = new ModelEvalIterator({
-		{
-			ModelEvalNodeT::Action,
-			{
-					.action=action
-			}
-		}
-	});
+	// Need to do initial setup work to create list of
+	// top-level activities to solve
 
-	return ret;
+	return new ModelEvalIteratorMgr(this);
+}
+
+IModelEvalIterator *ModelEvaluator::next() {
+	// Time to determine what to do next at the top level
+
+	return 0;
 }
 
 } /* namespace arl */

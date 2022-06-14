@@ -7,7 +7,7 @@
 
 #pragma once
 #include <vector>
-#include "arl/IContext.h"
+#include "arl/IModelBuildContext.h"
 #include "include/arl/impl/VisitorBase.h"
 #include "include/arl/impl/VisitorDelegator.h"
 #include "vsc/IModelField.h"
@@ -17,7 +17,7 @@ namespace arl {
 
 class TaskBuildModelComponent : public VisitorDelegator {
 public:
-	TaskBuildModelComponent(IContext *ctxt);
+	TaskBuildModelComponent(IModelBuildContext *ctxt);
 
 	virtual ~TaskBuildModelComponent();
 
@@ -28,7 +28,7 @@ public:
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) override;
 
 private:
-	IContext							*m_ctxt;
+	IModelBuildContext					*m_ctxt;
 	std::vector<vsc::IModelField *>		m_field_s;
 	vsc::TaskBuildModelField			m_core;
 

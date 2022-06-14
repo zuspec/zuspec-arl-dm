@@ -6,17 +6,18 @@
  */
 
 #pragma once
-#include "arl/IContext.h"
+#include "arl/IModelBuildContext.h"
 #include "arl/IModelFieldAction.h"
 #include "include/arl/impl/VisitorDelegator.h"
 #include "vsc/IModelField.h"
+#include "vsc/IModelBuildContext.h"
 #include "vsc/impl/TaskBuildModelField.h"
 
 namespace arl {
 
 class TaskBuildModelAction : public VisitorDelegator {
 public:
-	TaskBuildModelAction(IContext *ctxt);
+	TaskBuildModelAction(IModelBuildContext *ctxt);
 
 	virtual ~TaskBuildModelAction();
 
@@ -25,7 +26,7 @@ public:
 	virtual void visitDataTypeAction(IDataTypeAction *t) override;
 
 private:
-	IContext					*m_ctxt;
+	IModelBuildContext			*m_ctxt;
 	vsc::TaskBuildModelField	m_core;
 
 };

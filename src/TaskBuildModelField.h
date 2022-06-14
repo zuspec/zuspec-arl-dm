@@ -8,6 +8,7 @@
 #pragma once
 #include "arl/IContext.h"
 #include "include/arl/impl/VisitorDelegator.h"
+#include "vsc/IModelBuildContext.h"
 #include "vsc/IModelField.h"
 #include "vsc/impl/TaskBuildModelField.h"
 
@@ -15,14 +16,14 @@ namespace arl {
 
 class TaskBuildModelField : public VisitorDelegator {
 public:
-	TaskBuildModelField(IContext *ctxt);
+	TaskBuildModelField(vsc::IModelBuildContext *ctxt);
 
 	virtual ~TaskBuildModelField();
 
 	virtual vsc::IModelField *build(vsc::IDataTypeStruct *type, const std::string &name);
 
 private:
-	IContext					*m_ctxt;
+	vsc::IModelBuildContext		*m_ctxt;
 	vsc::TaskBuildModelField	m_core;
 };
 

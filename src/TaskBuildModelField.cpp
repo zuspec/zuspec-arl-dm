@@ -9,7 +9,7 @@
 
 namespace arl {
 
-TaskBuildModelField::TaskBuildModelField(IContext *ctxt) :
+TaskBuildModelField::TaskBuildModelField(vsc::IModelBuildContext *ctxt) :
 	VisitorDelegator(&m_core), m_ctxt(ctxt), m_core(ctxt, this) {
 	// TODO Auto-generated constructor stub
 

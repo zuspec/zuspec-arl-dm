@@ -10,13 +10,14 @@
 #include "arl/impl/VisitorBase.h"
 #include "arl/IModelActivity.h"
 #include "arl/IDataTypeActivity.h"
+#include "vsc/IModelBuildContext.h"
 #include "vsc/IModelField.h"
 
 namespace arl {
 
 class TaskBuildModelActivity : public VisitorBase {
 public:
-	TaskBuildModelActivity();
+	TaskBuildModelActivity(vsc::IModelBuildContext *ctxt);
 
 	virtual ~TaskBuildModelActivity();
 
@@ -31,6 +32,7 @@ public:
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override;
 
 private:
+	vsc::IModelBuildContext				*m_ctxt;
 	std::vector<vsc::IModelField *>		m_ctxt_s;
 
 

@@ -15,6 +15,7 @@
 #include "ModelActivitySchedule.h"
 #include "ModelActivitySequence.h"
 #include "ModelActivityTraverse.h"
+#include "ModelBuildContext.h"
 #include "ModelEvaluator.h"
 #include "ModelFieldActionRoot.h"
 #include "ModelFieldActionType.h"
@@ -39,19 +40,22 @@ Context::~Context() {
 IModelFieldAction *Context::buildModelAction(
 		IDataTypeAction 	*t,
 		const std::string	&name) {
-	return TaskBuildModelAction(this).build(t, name);
+	ModelBuildContext ctxt(this);
+	return TaskBuildModelAction(&ctxt).build(t, name);
 }
 
 IModelFieldRootComponent *Context::buildModelComponent(
 		IDataTypeComponent 	*t,
 		const std::string	&name) {
-	return TaskBuildModelComponent(this).build(t, name);
+	ModelBuildContext ctxt(this);
+	return TaskBuildModelComponent(&ctxt).build(t, name);
 }
 
 vsc::IModelField *Context::buildModelField(
 			vsc::IDataTypeStruct	*dt,
 			const std::string		&name) {
-	return TaskBuildModelField(this).build(dt, name);
+	ModelBuildContext ctxt(this);
+	return TaskBuildModelField(&ctxt).build(dt, name);
 }
 
 IDataTypeAction *Context::findDataTypeAction(const std::string &name) {

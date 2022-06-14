@@ -18,4 +18,12 @@ ScheduleSolvePropagatorActivityPairRel::~ScheduleSolvePropagatorActivityPairRel(
 	// TODO Auto-generated destructor stub
 }
 
+bool ScheduleSolvePropagatorActivityPairRel::hasNext() {
+	return false;
+}
+
+ScheduleSolvePropagatorActivityPairRel::NextResult ScheduleSolvePropagatorActivityPairRel::next() {
+
+}
+
 } /* namespace arl */

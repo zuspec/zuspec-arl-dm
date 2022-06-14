@@ -6,10 +6,12 @@
  */
 
 #include "TaskBuildModelActivity.h"
+#include "ModelActivityTraverse.h"
 
 namespace arl {
 
-TaskBuildModelActivity::TaskBuildModelActivity() {
+TaskBuildModelActivity::TaskBuildModelActivity(
+		vsc::IModelBuildContext *ctxt) : m_ctxt(ctxt) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -27,10 +29,21 @@ IModelActivity *TaskBuildModelActivity::build(
 	return 0;
 }
 
-void TaskBuildModelActivity::visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) { }
+void TaskBuildModelActivity::visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) {
 
-void TaskBuildModelActivity::visitDataTypeActivitySequence(IDataTypeActivitySequence *t) { }
+}
 
-void TaskBuildModelActivity::visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) { }
+void TaskBuildModelActivity::visitDataTypeActivitySequence(IDataTypeActivitySequence *t) {
+
+}
+
+void TaskBuildModelActivity::visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) {
+	/*
+	ModelActivityTraverse *traverse = new ModelActivityTraverse(
+			target,
+			with_c);
+	 */
+
+}
 
 } /* namespace arl */

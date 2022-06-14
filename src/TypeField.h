@@ -37,6 +37,8 @@ public:
 		m_type = t;
 	}
 
+	virtual vsc::ITypeField *getField(int32_t idx) override;
+
 	virtual vsc::TypeFieldAttr getAttr() const override {
 		return m_attr;
 	}

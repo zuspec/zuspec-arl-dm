@@ -6,6 +6,7 @@
  */
 
 #include "TypeField.h"
+#include "vsc/IDataTypeStruct.h"
 
 namespace arl {
 
@@ -19,6 +20,15 @@ TypeField::TypeField(
 
 TypeField::~TypeField() {
 	// TODO Auto-generated destructor stub
+}
+
+vsc::ITypeField *TypeField::getField(int32_t idx) {
+	vsc::IDataTypeStruct *s = dynamic_cast<vsc::IDataTypeStruct *>(getDataType());
+	if (s) {
+		return s->getField(idx);
+	} else {
+		return 0;
+	}
 }
 
 } /* namespace arl */

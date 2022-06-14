@@ -31,8 +31,8 @@ IModelFieldAction *TaskBuildModelAction::build(
 }
 
 void TaskBuildModelAction::visitDataTypeAction(IDataTypeAction *t) {
-	if (m_core.getFields().size() == 0) {
-		m_core.pushField(m_ctxt->ctxt()->mkModelFieldActionRoot(m_core.name(), t));
+	if (m_ctxt->fieldStackSize() == 0) {
+		m_ctxt->pushField(m_ctxt->ctxt()->mkModelFieldActionRoot(m_core.name(), t));
 	}
 
 //	m_ctxt->mkModelFieldRoot(type, name)

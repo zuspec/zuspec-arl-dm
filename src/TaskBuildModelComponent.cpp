@@ -31,8 +31,8 @@ IModelFieldRootComponent *TaskBuildModelComponent::build(
 }
 
 void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
-	if (m_core.getFields().size() == 0) {
-		m_core.pushField(new ModelFieldRootComponent(
+	if (m_ctxt->fieldStackSize() == 0) {
+		m_ctxt->pushField(new ModelFieldRootComponent(
 				m_ctxt->ctxt(),
 				m_core.name(),
 				t));
@@ -44,7 +44,7 @@ void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
 
 void TaskBuildModelComponent::visitTypeFieldPool(ITypeFieldPool *f) {
 	vsc::IModelFieldType *field = m_ctxt->ctxt()->mkModelFieldType(f);
-	m_core.getFields().back()->addField(field);
+	m_ctxt->getField(-1)->addField(field);
 
 	// A Pool-type field is not an instance of the contained type,
 	// though that is the stated type.

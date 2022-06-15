@@ -10,14 +10,13 @@ from libc.stdint cimport int32_t
 ctypedef IContext *IContextP
 ctypedef IDataTypeAction *IDataTypeActionP
 ctypedef IDataTypeActivity *IDataTypeActivityP
+ctypedef unique_ptr[IDataTypeActivity] IDataTypeActivityUP
 ctypedef IDataTypeActivityScope *IDataTypeActivityScopeP
 ctypedef IDataTypeActivitySchedule *IDataTypeActivityScheduleP
 ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IModelFieldRootComponent *IModelFieldRootComponentP
-ctypedef ITypeActivityStmt *ITypeActivityStmtP
-ctypedef unique_ptr[ITypeActivityStmt] ITypeActivityStmtUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
 ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
@@ -57,8 +56,8 @@ cdef extern from "arl/IDataTypeAction.h" namespace "arl":
     cdef cppclass IDataTypeAction(vsc.IDataTypeStruct):
         IDataTypeComponent *getComponentType()
         void setComponentType(IDataTypeComponent *)
-        const cpp_vector[ITypeActivityStmtUP] &activities() const
-        void addActivity(ITypeActivityStmt *)
+        const cpp_vector[IDataTypeActivityUP] &activities() const
+        void addActivity(IDataTypeActivity *)
         
 cdef extern from "arl/IDataTypeActivity.h" namespace "arl":
     cdef cppclass IDataTypeActivity:
@@ -113,7 +112,7 @@ cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
 cdef extern from "arl/IModelFieldRootComponent.h" namespace "arl":
     cdef cppclass IModelFieldRootComponent(vsc.IModelField):
         pass
-
+    
 cdef extern from "arl/ITypeFieldClaim.h" namespace "arl":
     cdef cppclass ITypeFieldClaim(vsc.ITypeField):
         bool isLock() const
@@ -122,10 +121,6 @@ cdef extern from "arl/ITypeFieldInOut.h" namespace "arl":
     cdef cppclass ITypeFieldInOut(vsc.ITypeField):
         bool isInput() const
         
-cdef extern from "arl/ITypeActivityStmt.h" namespace "arl":
-    cdef cppclass ITypeActivityStmt:
-        pass
-
 cdef extern from "arl/ITypeFieldPool.h" namespace "arl":
     cdef cppclass ITypeFieldPool(vsc.ITypeField):
         int32_t getDeclSize()

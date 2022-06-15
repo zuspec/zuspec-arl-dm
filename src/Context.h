@@ -77,11 +77,6 @@ public:
 	virtual IModelFieldAction *mkModelFieldActionType(
 			vsc::ITypeField			*type) override;
 
-
-	virtual ITypeActivityStmtTraverseType *mkTypeActivityStmtTraverseType(
-			IDataTypeAction			*action_t,
-			vsc::ITypeConstraint	*constraint) override;
-
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,
 			vsc::IDataType			*type,

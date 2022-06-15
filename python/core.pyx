@@ -215,6 +215,19 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
     
     cpdef setComponentType(self, DataTypeComponent comp):
         self.asAction().setComponentType(comp.asComponent())
+        
+    cpdef addActivity(self, DataTypeActivity activity):
+        activity._owned = False
+        self.asAction().addActivity(activity.asActivity())
+        
+    cpdef activities(self):
+        ret = []
+        for i in range(self.asAction().activities().size()):
+            ret.append(DataTypeActivity.mk(
+                self.asAction().activities().at(i).get(),
+                False))
+        
+        return ret
 
     cdef decl.IDataTypeAction *asAction(self):
         return dynamic_cast[decl.IDataTypeActionP](self._hndl)
@@ -231,6 +244,17 @@ cdef class DataTypeActivity(object):
     def __dealloc__(self):
         if self._owned and self._hndl != NULL:
             del self._hndl
+            
+    cdef decl.IDataTypeActivity *asActivity(self):
+        return dynamic_cast[decl.IDataTypeActivityP](self._hndl)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivity *hndl, bool owned=True):
+        ret = DataTypeActivity()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+    
 
 cdef class DataTypeActivityScope(DataTypeActivity):
 

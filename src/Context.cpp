@@ -22,7 +22,6 @@
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
-#include "TypeActivityStmtTraverseType.h"
 #include "TypeFieldClaim.h"
 #include "TypeFieldInOut.h"
 #include "TypeFieldPool.h"
@@ -167,13 +166,6 @@ IModelFieldAction *Context::mkModelFieldActionRoot(
 IModelFieldAction *Context::mkModelFieldActionType(
 			vsc::ITypeField			*type) {
 	return new ModelFieldActionType(type);
-}
-
-
-ITypeActivityStmtTraverseType *Context::mkTypeActivityStmtTraverseType(
-			IDataTypeAction			*action_t,
-			vsc::ITypeConstraint	*constraint) {
-	return new TypeActivityStmtTraverseType(action_t, constraint);
 }
 
 ITypeFieldClaim *Context::mkTypeFieldClaim(

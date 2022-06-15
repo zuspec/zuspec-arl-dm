@@ -5,8 +5,9 @@
  *      Author: mballance
  */
 
+#include "sav/TypeActivitySequence.h"
+
 #include "arl/IVisitor.h"
-#include "TypeActivitySequence.h"
 
 namespace arl {
 

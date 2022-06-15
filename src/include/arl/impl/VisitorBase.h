@@ -21,8 +21,6 @@
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldRootComponent.h"
 #include "arl/IVisitor.h"
-#include "arl/ITypeActivitySequence.h"
-#include "arl/ITypeActivityStmtTraverseType.h"
 #include "arl/ITypeFieldClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
@@ -100,18 +98,6 @@ public:
 
 	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {
 		vsc::VisitorBase::visitModelField(f);
-	}
-
-	virtual void visitTypeActivitySequence(ITypeActivitySequence *s) override {
-		for (std::vector<ITypeActivityStmtUP>::const_iterator
-				it=s->getStmts().begin();
-				it!=s->getStmts().end(); it++) {
-			it->get()->accept(m_this);
-		}
-	}
-
-	virtual void visitTypeActivityStmtTraverseType(ITypeActivityStmtTraverseType *s) override {
-		s->getType()->accept(this);
 	}
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {

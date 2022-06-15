@@ -38,8 +38,9 @@ cdef class Context(vsc.Context):
 cdef class DataTypeAction(vsc.DataTypeStruct):
 
     cpdef DataTypeComponent getComponentType(self)
-    
     cpdef setComponentType(self, DataTypeComponent)
+    cpdef addActivity(self, DataTypeActivity)
+    cpdef activities(self)
 
     cdef decl.IDataTypeAction *asAction(self)
     
@@ -49,7 +50,11 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
 cdef class DataTypeActivity(object):
     cdef decl.IDataTypeActivity         *_hndl
     cdef bool                           _owned
-    pass
+    
+    cdef decl.IDataTypeActivity *asActivity(self)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivity *, bool owned=*)
 
 cdef class DataTypeActivityScope(DataTypeActivity):
     cpdef name(self)
@@ -114,7 +119,7 @@ cdef class ModelFieldRootComponent(vsc.ModelField):
     
     @staticmethod
     cdef ModelFieldRootComponent mk(decl.IModelFieldRootComponent *, bool owned=*)
-    
+
 cdef class TypeFieldClaim(vsc.TypeField):
     cpdef bool isLock(self)
     

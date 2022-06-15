@@ -7,7 +7,7 @@
 
 #pragma once
 #include "arl/IAccept.h"
-#include "arl/ITypeActivityStmt.h"
+#include "arl/IDataTypeActivity.h"
 #include "vsc/IDataTypeStruct.h"
 
 namespace arl {
@@ -23,9 +23,9 @@ public:
 
 	virtual void setComponentType(IDataTypeComponent *) = 0;
 
-	virtual const std::vector<ITypeActivityStmtUP> &activities() const = 0;
+	virtual const std::vector<IDataTypeActivityUP> &activities() const = 0;
 
-	virtual void addActivity(ITypeActivityStmt *activity) = 0;
+	virtual void addActivity(IDataTypeActivity *activity) = 0;
 
 };
 

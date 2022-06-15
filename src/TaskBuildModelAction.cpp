@@ -21,6 +21,7 @@ TaskBuildModelAction::~TaskBuildModelAction() {
 IModelFieldAction *TaskBuildModelAction::build(
 		IDataTypeAction 	*t,
 		const std::string 	&name) {
+	fprintf(stdout, "TaskBuildModelAction::build\n");
 	vsc::IModelField *ret = m_core.build(t, name);
 
 	if (t->getCreateHook()) {
@@ -31,6 +32,7 @@ IModelFieldAction *TaskBuildModelAction::build(
 }
 
 void TaskBuildModelAction::visitDataTypeAction(IDataTypeAction *t) {
+	fprintf(stdout, "visitDataTypeAction\n");
 	if (m_ctxt->fieldStackSize() == 0) {
 		m_ctxt->pushField(m_ctxt->ctxt()->mkModelFieldActionRoot(m_core.name(), t));
 	}

@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include "arl/ITypeActivityStmt.h"
+#include "sav/ITypeActivityStmt.h"
 #include "vsc/ITypeConstraint.h"
 
 namespace arl {

@@ -1,21 +1,20 @@
 /*
- * TypeActivitySequence.h
+ * TypeActivityScope.h
  *
  *  Created on: Apr 30, 2022
  *      Author: mballance
  */
 
 #pragma once
-#include <vector>
-#include "arl/ITypeActivitySequence.h"
+#include "include/arl/sav/ITypeActivityScope.h"
 
 namespace arl {
 
-class TypeActivitySequence : public ITypeActivitySequence {
+class TypeActivityScope : public ITypeActivityScope {
 public:
-	TypeActivitySequence();
+	TypeActivityScope();
 
-	virtual ~TypeActivitySequence();
+	virtual ~TypeActivityScope();
 
 	virtual const std::vector<ITypeActivityStmtUP> &getStmts() const override {
 		return m_stmts;
@@ -25,10 +24,9 @@ public:
 		m_stmts.push_back(ITypeActivityStmtUP(s));
 	}
 
-	virtual void accept(vsc::IVisitor *v) override;
+protected:
+	std::vector<ITypeActivityStmtUP>		m_stmts;
 
-private:
-	std::vector<ITypeActivityStmtUP>			m_stmts;
 };
 
 } /* namespace arl */

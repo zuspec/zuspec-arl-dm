@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include "arl/ITypeActivityStmtTraverseType.h"
-#include "TypeActivityStmtTraverse.h"
+#include "include/arl/sav/ITypeActivityStmtTraverseType.h"
+#include "sav/TypeActivityStmtTraverse.h"
 
 namespace arl {
 

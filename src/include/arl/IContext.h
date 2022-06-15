@@ -20,7 +20,6 @@
 #include "arl/IModelEvaluator.h"
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldRootComponent.h"
-#include "arl/ITypeActivityStmtTraverseType.h"
 #include "arl/ITypeFieldClaim.h"
 #include "arl/ITypeFieldInOut.h"
 
@@ -85,10 +84,6 @@ public:
 
 	virtual IModelFieldAction *mkModelFieldActionType(
 			vsc::ITypeField			*type) = 0;
-
-	virtual ITypeActivityStmtTraverseType *mkTypeActivityStmtTraverseType(
-			IDataTypeAction			*action_t,
-			vsc::ITypeConstraint	*constraint) = 0;
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,

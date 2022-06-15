@@ -8,8 +8,8 @@
 #pragma once
 #include "arl/IContext.h"
 #include "arl/IDataTypeAction.h"
-#include "arl/ITypeActivityStmt.h"
 #include "DataTypeStruct.h"
+#include "include/arl/sav/ITypeActivityStmt.h"
 
 namespace arl {
 
@@ -27,19 +27,19 @@ public:
 
 	virtual void setComponentType(IDataTypeComponent *c) override;
 
-	virtual const std::vector<ITypeActivityStmtUP> &activities() const override {
+	virtual const std::vector<IDataTypeActivityUP> &activities() const override {
 		return m_activities;
 	}
 
-	virtual void addActivity(ITypeActivityStmt *activity) {
-		m_activities.push_back(ITypeActivityStmtUP(activity));
+	virtual void addActivity(IDataTypeActivity *activity) {
+		m_activities.push_back(IDataTypeActivityUP(activity));
 	}
 
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
 	IDataTypeComponent					*m_component_t;
-	std::vector<ITypeActivityStmtUP>	m_activities;
+	std::vector<IDataTypeActivityUP>	m_activities;
 
 };
 

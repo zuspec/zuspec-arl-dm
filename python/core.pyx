@@ -140,8 +140,11 @@ cdef class Context(vsc.Context):
                                     vsc.TypeConstraint      with_c):
         cdef vsc_decl.ITypeConstraint *with_c_p = NULL
         
+        target._owned = False
+        
         if with_c is not None:
             with_c_p = with_c._hndl
+            with_c._owned = False
             
         return DataTypeActivityTraverse.mk(self.asContext().mkDataTypeActivityTraverse(
             target.asFieldRef(),
@@ -290,6 +293,12 @@ cdef class DataTypeActivityScope(DataTypeActivity):
             ret.append(vsc.TypeConstraint.mk(
                 self.asScope().getConstraints().at(i).get(), False))
         return ret
+    
+    cpdef addActivity(self, DataTypeActivity activity):
+        pass
+    
+    cpdef activities(self):
+        pass
 
     cdef decl.IDataTypeActivityScope *asScope(self):
         return dynamic_cast[decl.IDataTypeActivityScopeP](self._hndl)
@@ -309,6 +318,8 @@ cdef class DataTypeActivitySchedule(DataTypeActivityScope):
         return ret
     
 cdef class DataTypeActivitySequence(DataTypeActivityScope):
+
+    
     cdef decl.IDataTypeActivitySequence *asSequence(self):
         return dynamic_cast[decl.IDataTypeActivitySequenceP](self._hndl)
     
@@ -320,6 +331,20 @@ cdef class DataTypeActivitySequence(DataTypeActivityScope):
         return ret
     
 cdef class DataTypeActivityTraverse(DataTypeActivity):
+
+    cpdef vsc.TypeConstraint getWithC(self):
+        cdef vsc_decl.ITypeConstraint *ch = self.asTraverse().getWithC()
+        if ch != NULL:
+            return vsc.TypeConstraint.mk(ch, False)
+        else:
+            return None
+    
+    cpdef setWithC(self, vsc.TypeConstraint c):
+        if c is None:
+            self.asTraverse().setWithC(NULL)
+        else:
+            c._owned = False
+            self.asTraverse().setWithC(c._hndl)
 
     cdef decl.IDataTypeActivityTraverse *asTraverse(self):
         return dynamic_cast[decl.IDataTypeActivityTraverseP](self._hndl)

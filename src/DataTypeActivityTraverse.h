@@ -27,6 +27,10 @@ public:
 		return m_with_c.get();
 	}
 
+	virtual void setWithC(vsc::ITypeConstraint *c) override {
+		m_with_c = vsc::ITypeConstraintUP(c);
+	}
+
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:

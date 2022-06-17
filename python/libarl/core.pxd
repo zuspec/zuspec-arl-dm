@@ -63,6 +63,8 @@ cdef class DataTypeActivityScope(DataTypeActivity):
     cpdef vsc.TypeField getField(self, int32_t idx)
     cpdef addConstraint(self, vsc.TypeConstraint c)
     cpdef getConstraints(self)
+    cpdef addActivity(self, DataTypeActivity)
+    cpdef activities(self)
     cdef decl.IDataTypeActivityScope *asScope(self)
     
 cdef class DataTypeActivitySchedule(DataTypeActivityScope):
@@ -78,6 +80,10 @@ cdef class DataTypeActivitySequence(DataTypeActivityScope):
     cdef mk(decl.IDataTypeActivitySequence *hndl, bool owned=*)
     
 cdef class DataTypeActivityTraverse(DataTypeActivity):
+
+    cpdef vsc.TypeConstraint getWithC(self)
+    
+    cpdef setWithC(self, vsc.TypeConstraint c)
 
     cdef decl.IDataTypeActivityTraverse *asTraverse(self)
     

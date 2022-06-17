@@ -21,6 +21,8 @@ public:
 
 	virtual vsc::ITypeConstraint *getWithC() const = 0;
 
+	virtual void setWithC(vsc::ITypeConstraint *c) = 0;
+
 };
 
 }

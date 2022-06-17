@@ -65,6 +65,8 @@ cdef extern from "arl/IDataTypeActivity.h" namespace "arl":
         
 cdef extern from "arl/IDataTypeActivityScope.h" namespace "arl":
     cdef cppclass IDataTypeActivityScope(IDataTypeActivity, vsc.IDataTypeStruct):
+        void addActivity(IDataTypeActivity *)
+        const cpp_vector[IDataTypeActivityUP] &activities() const
         # const cpp_string &name() const
         # void addField(vsc.ITypeField *)
         # vsc.ITypeField *getField(int32_t idx)
@@ -85,6 +87,8 @@ cdef extern from "arl/IDataTypeActivitySequence.h" namespace "arl":
 cdef extern from "arl/IDataTypeActivityTraverse.h" namespace "arl":
     cdef cppclass IDataTypeActivityTraverse(IDataTypeActivity):
         vsc.ITypeExprFieldRef *getTarget() const
+        vsc.ITypeConstraint *getWithC() const
+        void setWithC(vsc.ITypeConstraint *c)
     
 cdef extern from "arl/IDataTypeComponent.h" namespace "arl":
     cdef cppclass IDataTypeComponent(vsc.IDataTypeStruct):

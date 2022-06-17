@@ -19,6 +19,8 @@ DataTypeStruct::~DataTypeStruct() {
 }
 
 void DataTypeStruct::addField(vsc::ITypeField *f) {
+	f->setIndex(m_fields.size());
+	f->setParent(this);
 	m_fields.push_back(vsc::ITypeFieldUP(f));
 }
 

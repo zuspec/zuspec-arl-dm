@@ -21,6 +21,7 @@
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldRootComponent.h"
 #include "arl/IVisitor.h"
+#include "arl/ITypeFieldActivity.h"
 #include "arl/ITypeFieldClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
@@ -38,6 +39,11 @@ public:
 
 	virtual void visitDataTypeAction(IDataTypeAction *i) override {
 		vsc::VisitorBase::visitDataTypeStruct(i);
+		for (std::vector<ITypeFieldActivity *>::const_iterator
+				it=i->activities().begin();
+				it!=i->activities().end(); it++) {
+			(*it)->accept(m_this);
+		}
 	}
 
 	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override {
@@ -59,25 +65,25 @@ public:
 	}
 
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) override {
-		for (std::vector<IModelActivityUP>::const_iterator
-				it=a->getBranches().begin();
-				it!=a->getBranches().end(); it++) {
+		for (std::vector<IModelActivity *>::const_iterator
+				it=a->branches().begin();
+				it!=a->branches().end(); it++) {
 			(*it)->accept(m_this);
 		}
 	}
 
 	virtual void visitModelActivitySchedule(IModelActivitySchedule *a) override {
-		for (std::vector<IModelActivityUP>::const_iterator
-				it=a->getActivities().begin();
-				it!=a->getActivities().end(); it++) {
+		for (std::vector<IModelActivity *>::const_iterator
+				it=a->activities().begin();
+				it!=a->activities().end(); it++) {
 			(*it)->accept(m_this);
 		}
 	}
 
 	virtual void visitModelActivitySequence(IModelActivitySequence *a) override {
-		for (std::vector<IModelActivityUP>::const_iterator
-				it=a->getActivities().begin();
-				it!=a->getActivities().end(); it++) {
+		for (std::vector<IModelActivity *>::const_iterator
+				it=a->activities().begin();
+				it!=a->activities().end(); it++) {
 			(*it)->accept(m_this);
 		}
 	}
@@ -91,13 +97,19 @@ public:
 
 	virtual void visitModelFieldAction(IModelFieldAction *f) override {
 		vsc::VisitorBase::visitModelField(f);
-		if (f->getActivity()) {
-			f->getActivity()->accept(this);
+		for (std::vector<IModelActivityScope *>::const_iterator
+				it=f->activities().begin();
+				it!=f->activities().end(); it++) {
+			(*it)->accept(m_this);
 		}
 	}
 
 	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {
 		vsc::VisitorBase::visitModelField(f);
+	}
+
+	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {
+		vsc::VisitorBase::visitTypeField(f);
 	}
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {

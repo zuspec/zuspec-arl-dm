@@ -25,6 +25,12 @@ void DataTypeAction::setComponentType(IDataTypeComponent *t) {
 	m_component_t = t;
 }
 
+void DataTypeAction::addActivity(ITypeFieldActivity *activity) {
+	activity->setIndex(m_fields.size());
+	m_fields.push_back(vsc::ITypeFieldUP(activity));
+	m_activities.push_back(activity);
+}
+
 void DataTypeAction::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<IVisitor *>(v)) {
 		dynamic_cast<IVisitor *>(v)->visitDataTypeAction(this);

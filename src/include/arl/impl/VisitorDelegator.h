@@ -78,6 +78,11 @@ public:
 				&vsc::IVisitor::visitModelField, f);
 	}
 
+	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {
+		delegate(&arl::IVisitor::visitTypeFieldActivity,
+				&vsc::IVisitor::visitTypeField, f);
+	}
+
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
 		delegate(&arl::IVisitor::visitTypeFieldClaim,
 				&vsc::IVisitor::visitTypeField, f);

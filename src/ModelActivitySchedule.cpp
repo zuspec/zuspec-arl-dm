@@ -10,7 +10,9 @@
 
 namespace arl {
 
-ModelActivitySchedule::ModelActivitySchedule() {
+ModelActivitySchedule::ModelActivitySchedule(
+		const std::string		&name,
+		IDataTypeActivity		*type) : m_name(name), m_type(type) {
 	// TODO Auto-generated constructor stub
 
 }

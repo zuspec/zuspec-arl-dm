@@ -8,17 +8,14 @@
 #pragma once
 #include <vector>
 #include "arl/IModelActivity.h"
+#include "arl/IModelActivityScope.h"
 
 namespace arl {
 
-class IModelActivitySequence : public virtual IModelActivity {
+class IModelActivitySequence : public virtual IModelActivityScope {
 public:
 
 	virtual ~IModelActivitySequence() { }
-
-	virtual const std::vector<IModelActivityUP> &getActivities() const = 0;
-
-	virtual void addActivity(IModelActivity *a) = 0;
 
 };
 

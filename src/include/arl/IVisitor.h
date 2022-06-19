@@ -22,6 +22,7 @@ class IModelActivitySequence;
 class IModelActivityTraverse;
 class IModelFieldAction;
 class IModelFieldRootComponent;
+class ITypeFieldActivity;
 class ITypeFieldClaim;
 class ITypeFieldInOut;
 class ITypeFieldPool;
@@ -54,6 +55,8 @@ public:
 	virtual void visitModelFieldAction(IModelFieldAction *f) = 0;
 
 	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) = 0;
+
+	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) = 0;
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) = 0;
 

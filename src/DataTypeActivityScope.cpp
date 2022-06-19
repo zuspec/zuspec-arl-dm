@@ -9,7 +9,8 @@
 
 namespace arl {
 
-DataTypeActivityScope::DataTypeActivityScope(const std::string &name) : m_name(name) {
+DataTypeActivityScope::DataTypeActivityScope(const std::string &name) :
+		m_name(name) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -19,6 +20,8 @@ DataTypeActivityScope::~DataTypeActivityScope() {
 }
 
 void DataTypeActivityScope::addField(vsc::ITypeField *f) {
+	f->setIndex(m_fields.size());
+	f->setParent(this);
 	m_fields.push_back(vsc::ITypeFieldUP(f));
 }
 
@@ -26,8 +29,8 @@ void DataTypeActivityScope::addConstraint(vsc::ITypeConstraint *c) {
 	m_constraints.push_back(vsc::ITypeConstraintUP(c));
 }
 
-void DataTypeActivityScope::addActivity(IDataTypeActivity *a) {
-	m_activities.push_back(IDataTypeActivityUP(a));
+void DataTypeActivityScope::addActivity(ITypeFieldActivity *a) {
+	m_activities.push_back(ITypeFieldActivityUP(a));
 }
 
 } /* namespace arl */

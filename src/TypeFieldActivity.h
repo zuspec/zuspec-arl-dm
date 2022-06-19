@@ -1,0 +1,31 @@
+/*
+ * TypeFieldActivity.h
+ *
+ *  Created on: Jun 17, 2022
+ *      Author: mballance
+ */
+
+#pragma once
+#include "arl/IDataTypeActivity.h"
+#include "arl/ITypeFieldActivity.h"
+#include "TypeField.h"
+
+namespace arl {
+
+class TypeFieldActivity : public virtual ITypeFieldActivity, public TypeField {
+public:
+	TypeFieldActivity(
+			const std::string			&name,
+			IDataTypeActivity			*type,
+			bool						owned);
+
+	virtual ~TypeFieldActivity();
+
+	virtual void accept(vsc::IVisitor *v) override;
+
+private:
+
+};
+
+} /* namespace arl */
+

@@ -77,6 +77,11 @@ public:
 	virtual IModelFieldAction *mkModelFieldActionType(
 			vsc::ITypeField			*type) override;
 
+	virtual ITypeFieldActivity *mkTypeFieldActivity(
+			const std::string		&name,
+			IDataTypeActivity		*type,
+			bool					owned) override;
+
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,
 			vsc::IDataType			*type,

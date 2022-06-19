@@ -15,7 +15,7 @@ TypeFieldPool::TypeFieldPool(
 		vsc::IDataType				*type,
 		vsc::TypeFieldAttr			attr,
 		int32_t						decl_size) :
-				TypeField(name, type, attr), m_decl_size(decl_size) {
+				TypeField(name, type, false, attr), m_decl_size(decl_size) {
 
 }
 

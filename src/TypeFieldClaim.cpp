@@ -14,7 +14,7 @@ TypeFieldClaim::TypeFieldClaim(
 			const std::string			&name,
 			vsc::IDataType				*type,
 			bool						is_lock) :
-					TypeField(name, type, vsc::TypeFieldAttr::NoAttr),
+					TypeField(name, type, false, vsc::TypeFieldAttr::NoAttr),
 					m_is_lock(is_lock) {
 
 }

@@ -7,6 +7,7 @@
 
 #pragma once
 #include "arl/IContext.h"
+#include "arl/IModelActivityScope.h"
 #include "vsc/IModelBuildContext.h"
 
 namespace arl {
@@ -17,6 +18,12 @@ public:
 	virtual ~IModelBuildContext() { }
 
 	virtual arl::IContext *ctxt() const = 0;
+
+	virtual void pushActivityScope(IModelActivityScope *a)  = 0;
+
+	virtual IModelActivityScope *getActivityScope() = 0;
+
+	virtual IModelActivityScope *popActivityScope() = 0;
 
 };
 

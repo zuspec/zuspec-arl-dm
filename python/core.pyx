@@ -168,6 +168,18 @@ cdef class Context(vsc.Context):
     cpdef ModelEvaluator mkModelEvaluator(self):
         return ModelEvaluator.mk(self.asContext().mkModelEvaluator())
     
+    cpdef TypeFieldActivity mkTypeFieldActivity(self, name, DataTypeActivity type, bool owned):
+    
+        # Ensure we don't try to delete this handle
+        if owned:
+            type._owned = False
+            
+        return TypeFieldActivity.mk(
+            self.asContext().mkTypeFieldActivity(
+                name.encode(),
+                type.asActivity(),
+                owned), True)
+    
     cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType type, bool is_lock):
         return TypeFieldClaim.mk(self.asContext().mkTypeFieldClaim(
             name.encode(),
@@ -219,15 +231,15 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
     cpdef setComponentType(self, DataTypeComponent comp):
         self.asAction().setComponentType(comp.asComponent())
         
-    cpdef addActivity(self, DataTypeActivity activity):
+    cpdef addActivity(self, TypeFieldActivity activity):
         activity._owned = False
         self.asAction().addActivity(activity.asActivity())
         
     cpdef activities(self):
         ret = []
         for i in range(self.asAction().activities().size()):
-            ret.append(DataTypeActivity.mk(
-                self.asAction().activities().at(i).get(),
+            ret.append(TypeFieldActivity.mk(
+                self.asAction().activities().at(i),
                 False))
         
         return ret
@@ -294,8 +306,9 @@ cdef class DataTypeActivityScope(DataTypeActivity):
                 self.asScope().getConstraints().at(i).get(), False))
         return ret
     
-    cpdef addActivity(self, DataTypeActivity activity):
-        pass
+    cpdef addActivity(self, TypeFieldActivity activity):
+        activity._owned = False
+        self.asScope().addActivity(activity.asActivity())
     
     cpdef activities(self):
         pass
@@ -432,6 +445,18 @@ cdef class ModelFieldRootComponent(vsc.ModelField):
     @staticmethod
     cdef ModelFieldRootComponent mk(decl.IModelFieldRootComponent *hndl, bool owned=True):
         ret = ModelFieldRootComponent()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+    
+cdef class TypeFieldActivity(vsc.TypeField):
+
+    cdef decl.ITypeFieldActivity *asActivity(self):
+        return dynamic_cast[decl.ITypeFieldActivityP](self._hndl)
+    
+    @staticmethod
+    cdef TypeFieldActivity mk(decl.ITypeFieldActivity *hndl, bool owned=True):
+        ret = TypeFieldActivity()
         ret._hndl = hndl
         ret._owned = owned
         return ret

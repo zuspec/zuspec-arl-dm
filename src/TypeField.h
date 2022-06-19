@@ -15,6 +15,7 @@ public:
 	TypeField(
 			const std::string			&name,
 			vsc::IDataType				*type,
+			bool						owned,
 			vsc::TypeFieldAttr			attr);
 
 	virtual ~TypeField();
@@ -52,6 +53,7 @@ protected:
 	int32_t								m_idx;
 	std::string							m_name;
 	vsc::IDataType						*m_type;
+	vsc::IDataTypeUP					m_type_owned;
 	vsc::TypeFieldAttr					m_attr;
 };
 

@@ -16,18 +16,18 @@ public:
 
 	virtual ~ModelActivityParallel();
 
-	virtual const std::vector<IModelActivityUP> &getBranches() const override {
+	virtual const std::vector<IModelActivity *> &branches() const override {
 		return m_branches;
 	}
 
 	virtual void addBranch(IModelActivity *a) override {
-		m_branches.push_back(IModelActivityUP(a));
+		m_branches.push_back(a);
 	}
 
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
-	std::vector<IModelActivityUP>				m_branches;
+	std::vector<IModelActivity *>				m_branches;
 
 };
 

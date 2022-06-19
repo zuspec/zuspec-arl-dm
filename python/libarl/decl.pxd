@@ -17,6 +17,8 @@ ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IModelFieldRootComponent *IModelFieldRootComponentP
+ctypedef ITypeFieldActivity *ITypeFieldActivityP
+ctypedef unique_ptr[ITypeFieldActivity] ITypeFieldActivityUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
 ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
@@ -48,6 +50,7 @@ cdef extern from "arl/IContext.h" namespace "arl":
         IDataTypeComponent *mkDataTypeComponent(const cpp_string &)
         bool addDataTypeComponent(IDataTypeComponent *)
         IModelEvaluator *mkModelEvaluator()
+        ITypeFieldActivity *mkTypeFieldActivity(const cpp_string &, IDataTypeActivity *, bool)
         ITypeFieldClaim *mkTypeFieldClaim(const cpp_string &, vsc.IDataType *, bool)
         ITypeFieldInOut *mkTypeFieldInOut(const cpp_string &, vsc.IDataType *, bool)
         ITypeFieldPool *mkTypeFieldPool(const cpp_string &, vsc.IDataType *, vsc.TypeFieldAttr, int32_t)
@@ -56,8 +59,8 @@ cdef extern from "arl/IDataTypeAction.h" namespace "arl":
     cdef cppclass IDataTypeAction(vsc.IDataTypeStruct):
         IDataTypeComponent *getComponentType()
         void setComponentType(IDataTypeComponent *)
-        const cpp_vector[IDataTypeActivityUP] &activities() const
-        void addActivity(IDataTypeActivity *)
+        const cpp_vector[ITypeFieldActivityP] &activities() const
+        void addActivity(ITypeFieldActivity *)
         
 cdef extern from "arl/IDataTypeActivity.h" namespace "arl":
     cdef cppclass IDataTypeActivity:
@@ -65,8 +68,8 @@ cdef extern from "arl/IDataTypeActivity.h" namespace "arl":
         
 cdef extern from "arl/IDataTypeActivityScope.h" namespace "arl":
     cdef cppclass IDataTypeActivityScope(IDataTypeActivity, vsc.IDataTypeStruct):
-        void addActivity(IDataTypeActivity *)
-        const cpp_vector[IDataTypeActivityUP] &activities() const
+        void addActivity(ITypeFieldActivity *)
+        const cpp_vector[ITypeFieldActivityUP] &activities() const
         # const cpp_string &name() const
         # void addField(vsc.ITypeField *)
         # vsc.ITypeField *getField(int32_t idx)
@@ -115,6 +118,10 @@ cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
         
 cdef extern from "arl/IModelFieldRootComponent.h" namespace "arl":
     cdef cppclass IModelFieldRootComponent(vsc.IModelField):
+        pass
+    
+cdef extern from "arl/ITypeFieldActivity.h" namespace "arl":
+    cdef cppclass ITypeFieldActivity(vsc.ITypeField):
         pass
     
 cdef extern from "arl/ITypeFieldClaim.h" namespace "arl":

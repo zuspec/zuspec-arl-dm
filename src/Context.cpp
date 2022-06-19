@@ -22,6 +22,7 @@
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
+#include "TypeFieldActivity.h"
 #include "TypeFieldClaim.h"
 #include "TypeFieldInOut.h"
 #include "TypeFieldPool.h"
@@ -140,11 +141,11 @@ IModelActivityParallel *Context::mkModelActivityParallel() {
 }
 
 IModelActivitySchedule *Context::mkModelActivitySchedule() {
-	return new ModelActivitySchedule();
+	return new ModelActivitySchedule("", 0);
 }
 
 IModelActivitySequence *Context::mkModelActivitySequence() {
-	return new ModelActivitySequence();
+	return new ModelActivitySequence("", 0);
 }
 
 IModelActivityTraverse *Context::mkModelActivityTraverse(
@@ -166,6 +167,13 @@ IModelFieldAction *Context::mkModelFieldActionRoot(
 IModelFieldAction *Context::mkModelFieldActionType(
 			vsc::ITypeField			*type) {
 	return new ModelFieldActionType(type);
+}
+
+ITypeFieldActivity *Context::mkTypeFieldActivity(
+			const std::string		&name,
+			IDataTypeActivity		*type,
+			bool					owned) {
+	return new TypeFieldActivity(name, type, owned);
 }
 
 ITypeFieldClaim *Context::mkTypeFieldClaim(

@@ -7,7 +7,9 @@
 
 #pragma once
 #include <vector>
+#include "vsc/ITypeExprFieldRef.h"
 #include "arl/IDataTypeActivity.h"
+#include "arl/ITypeFieldActivity.h"
 #include "vsc/IDataTypeStruct.h"
 
 namespace arl {
@@ -17,9 +19,9 @@ public:
 
 	virtual ~IDataTypeActivityScope() { }
 
-	virtual const std::vector<IDataTypeActivityUP> &getActivities() const = 0;
+	virtual const std::vector<ITypeFieldActivityUP> &getActivities() const = 0;
 
-	virtual void addActivity(IDataTypeActivity *a) = 0;
+	virtual void addActivity(ITypeFieldActivity *a) = 0;
 
 };
 

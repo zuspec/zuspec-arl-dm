@@ -9,21 +9,24 @@
 #include <vector>
 #include "arl/impl/VisitorBase.h"
 #include "arl/IModelActivity.h"
+#include "arl/IModelBuildContext.h"
 #include "arl/IDataTypeActivity.h"
 #include "vsc/IModelBuildContext.h"
 #include "vsc/IModelField.h"
 
 namespace arl {
 
+/**
+ * This builder primarily links up the activity structure to
+ * existing data models that are part of the action.
+ */
 class TaskBuildModelActivity : public VisitorBase {
 public:
-	TaskBuildModelActivity(vsc::IModelBuildContext *ctxt);
+	TaskBuildModelActivity(IModelBuildContext *ctxt);
 
 	virtual ~TaskBuildModelActivity();
 
-	IModelActivity *build(
-			vsc::IModelField	*parent_ctxt,
-			IDataTypeActivity	*activity);
+	IModelActivity *build(ITypeFieldActivity *activity);
 
 	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override;
 
@@ -31,9 +34,11 @@ public:
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override;
 
+	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override;
+
 private:
-	vsc::IModelBuildContext				*m_ctxt;
-	std::vector<vsc::IModelField *>		m_ctxt_s;
+	IModelBuildContext							*m_ctxt;
+	std::vector<vsc::IModelField *>				m_ctxt_s;
 
 
 };

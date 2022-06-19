@@ -14,7 +14,7 @@ TypeFieldInOut::TypeFieldInOut(
 			const std::string		&name,
 			vsc::IDataType			*type,
 			bool					is_input) :
-					TypeField(name, type, vsc::TypeFieldAttr::NoAttr),
+					TypeField(name, type, false, vsc::TypeFieldAttr::NoAttr),
 					m_is_input(is_input) {
 
 }

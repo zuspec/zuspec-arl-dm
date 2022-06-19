@@ -13,8 +13,12 @@ namespace arl {
 TypeField::TypeField(
 		const std::string			&name,
 		vsc::IDataType				*type,
+		bool						owned,
 		vsc::TypeFieldAttr			attr) :
 				m_parent(0), m_idx(-1), m_name(name), m_type(type), m_attr(attr) {
+	if (owned) {
+		m_type_owned = vsc::IDataTypeUP(type);
+	}
 
 }
 

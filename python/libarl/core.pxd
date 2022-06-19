@@ -26,6 +26,7 @@ cdef class Context(vsc.Context):
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)
     
     cpdef ModelEvaluator mkModelEvaluator(self)
+    cpdef TypeFieldActivity mkTypeFieldActivity(self, name, DataTypeActivity, bool)
     cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType, bool)
     cpdef TypeFieldInOut mkTypeFieldInOut(self, name, vsc.DataType, bool)
     cpdef TypeFieldPool mkTypeFieldPool(self, name, vsc.DataType, vsc.TypeFieldAttr, decl_size)
@@ -39,7 +40,7 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
 
     cpdef DataTypeComponent getComponentType(self)
     cpdef setComponentType(self, DataTypeComponent)
-    cpdef addActivity(self, DataTypeActivity)
+    cpdef addActivity(self, TypeFieldActivity)
     cpdef activities(self)
 
     cdef decl.IDataTypeAction *asAction(self)
@@ -63,7 +64,7 @@ cdef class DataTypeActivityScope(DataTypeActivity):
     cpdef vsc.TypeField getField(self, int32_t idx)
     cpdef addConstraint(self, vsc.TypeConstraint c)
     cpdef getConstraints(self)
-    cpdef addActivity(self, DataTypeActivity)
+    cpdef addActivity(self, TypeFieldActivity)
     cpdef activities(self)
     cdef decl.IDataTypeActivityScope *asScope(self)
     
@@ -125,6 +126,13 @@ cdef class ModelFieldRootComponent(vsc.ModelField):
     
     @staticmethod
     cdef ModelFieldRootComponent mk(decl.IModelFieldRootComponent *, bool owned=*)
+    
+cdef class TypeFieldActivity(vsc.TypeField):
+
+    cdef decl.ITypeFieldActivity *asActivity(self)
+    
+    @staticmethod
+    cdef TypeFieldActivity mk(decl.ITypeFieldActivity *hndl, bool owned=*)
 
 cdef class TypeFieldClaim(vsc.TypeField):
     cpdef bool isLock(self)

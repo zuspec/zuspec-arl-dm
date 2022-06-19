@@ -22,6 +22,7 @@ ModelEvaluator::~ModelEvaluator() {
 IModelEvalIterator *ModelEvaluator::eval(
 			vsc::IModelField	*root_comp,
 			IDataTypeAction		*root_action) {
+	fprintf(stdout, "ModelEvaluator::eval\n");
 	IModelFieldAction *action = m_ctxt->buildModelAction(
 			root_action,
 			root_action->name());

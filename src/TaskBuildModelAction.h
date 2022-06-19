@@ -25,9 +25,18 @@ public:
 
 	virtual void visitDataTypeAction(IDataTypeAction *t) override;
 
+	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override;
+
+	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override;
+
+	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) override;
+
+	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override;
+
 private:
-	IModelBuildContext			*m_ctxt;
-	vsc::TaskBuildModelField	m_core;
+	IModelBuildContext						*m_ctxt;
+	vsc::TaskBuildModelField				m_core;
+	std::vector<ITypeFieldActivity *>		m_activity_s;
 
 };
 

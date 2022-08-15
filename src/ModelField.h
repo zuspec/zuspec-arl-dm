@@ -59,6 +59,10 @@ public:
 		m_flags = (m_flags | flags);
 	}
 
+	virtual void setFlags(vsc::ModelFieldFlag flags) override {
+		m_flags = flags;
+	}
+
 	virtual bool isFlagSet(vsc::ModelFieldFlag flags) const override {
 		return ((m_flags & flags) == flags);
 	}

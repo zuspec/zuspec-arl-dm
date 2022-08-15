@@ -18,7 +18,7 @@
 
 namespace arl {
 
-class ModelFieldRootComponent : public IModelFieldRootComponent {
+class ModelFieldRootComponent : public virtual IModelFieldRootComponent {
 public:
 	ModelFieldRootComponent(
 			arl::IContext			*ctxt,
@@ -79,6 +79,10 @@ public:
 
 	virtual void setFlag(vsc::ModelFieldFlag flags) override {
 		m_flags = (m_flags | flags);
+	}
+
+	virtual void setFlags(vsc::ModelFieldFlag flags) override {
+		m_flags = flags;
 	}
 
 	virtual bool isFlagSet(vsc::ModelFieldFlag flags) const override {

@@ -38,6 +38,8 @@ public:
 
 private:
 	IModelBuildContext							*m_ctxt;
+	std::vector<vsc::ITypeField *>				m_field_s;
+	std::vector<IModelActivityScope *>			m_scope_s;
 	std::vector<vsc::IModelField *>				m_ctxt_s;
 
 

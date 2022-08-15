@@ -42,11 +42,13 @@ public:
 		m_create_hook = vsc::IModelStructCreateHookUP(hook);
 	}
 
-	virtual const std::vector<ITypeFieldActivityUP> &getActivities() const override {
+	virtual const std::vector<ITypeFieldActivity *> &getActivities() const override {
 		return m_activities;
 	}
 
 	virtual void addActivity(ITypeFieldActivity *a) override;
+
+	virtual void addActivityField(ITypeFieldActivity *a) override;
 
 private:
 	std::string									m_name;
@@ -54,7 +56,8 @@ private:
 	std::vector<vsc::ITypeConstraintUP>			m_constraints;
 	vsc::IModelStructCreateHookUP				m_create_hook;
 
-	std::vector<ITypeFieldActivityUP>			m_activities;
+	std::vector<ITypeFieldActivity *>			m_activities;
+	std::vector<ITypeFieldActivityUP>			m_activities_up;
 
 };
 

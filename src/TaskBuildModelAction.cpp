@@ -38,7 +38,8 @@ IModelFieldAction *TaskBuildModelAction::build(
 	m_ctxt->pushField(ret);
 	for (auto it=t->activities().begin(); it!=t->activities().end(); it++) {
 		IModelActivity *activity = TaskBuildModelActivity(m_ctxt).build(*it);
-//		ret->addActivity(activity);
+		// The activity is already a field and, thus, is already part
+		// of the action model's activity list
 	}
 
 	m_ctxt->popField();

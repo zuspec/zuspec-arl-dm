@@ -18,7 +18,7 @@ public:
 
 	virtual const std::vector<IModelActivity *> &activities() const = 0;
 
-	virtual void addActivity(IModelActivity *a)  = 0;
+	virtual void addActivity(IModelActivity *a, bool own=false)  = 0;
 
 };
 

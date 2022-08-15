@@ -32,9 +32,7 @@ public:
 		return m_activities;
 	}
 
-	virtual void addActivity(IModelActivity *a) override {
-		m_activities.push_back(a);
-	}
+	virtual void addActivity(IModelActivity *a, bool own) override;
 
 	virtual void accept(vsc::IVisitor *v) override;
 
@@ -42,6 +40,7 @@ private:
 	std::string								m_name;
 	IDataTypeActivity						*m_type;
 	std::vector<IModelActivity *>			m_activities;
+	std::vector<IModelActivityUP>			m_activities_up;
 };
 
 } /* namespace arl */

@@ -30,7 +30,17 @@ void DataTypeActivityScope::addConstraint(vsc::ITypeConstraint *c) {
 }
 
 void DataTypeActivityScope::addActivity(ITypeFieldActivity *a) {
-	m_activities.push_back(ITypeFieldActivityUP(a));
+	// A non-data-field activity. Owned by the activities collection
+	a->setParent(this);
+	m_activities.push_back(a);
+	m_activities_up.push_back(ITypeFieldActivityUP(a));
+}
+
+void DataTypeActivityScope::addActivityField(ITypeFieldActivity *a) {
+	a->setIndex(m_fields.size());
+	a->setParent(this);
+	m_activities.push_back(a);
+	m_fields.push_back(vsc::ITypeFieldUP(a));
 }
 
 } /* namespace arl */

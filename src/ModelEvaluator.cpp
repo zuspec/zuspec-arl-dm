@@ -27,6 +27,8 @@ IModelEvalIterator *ModelEvaluator::eval(
 			root_action,
 			root_action->name());
 
+
+
 	// Need to do initial setup work to create list of
 	// top-level activities to solve
 

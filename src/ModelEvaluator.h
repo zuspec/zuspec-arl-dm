@@ -6,13 +6,14 @@
  */
 
 #pragma once
+#include "arl/impl/VisitorBase.h"
 #include "arl/IContext.h"
 #include "arl/IModelActivity.h"
 #include "arl/IModelEvaluator.h"
 
 namespace arl {
 
-class ModelEvaluator : public IModelEvaluator {
+class ModelEvaluator : public IModelEvaluator, public VisitorBase {
 public:
 	ModelEvaluator(IContext *ctxt);
 
@@ -24,9 +25,15 @@ public:
 
 	virtual IModelEvalIterator *next();
 
+	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override;
+
 private:
 	IContext						*m_ctxt;
-	std::vector<IModelActivity>		m_activities;
+	IModelFieldActionUP				m_action;
+	IModelActivityTraverseUP		m_dummy_activity;
+	uint32_t						m_activity_idx;
+	std::vector<IModelActivity *>	m_activities;
+	IModelEvalIterator				*m_next;
 
 
 };

@@ -2,6 +2,7 @@
 #* setup.py for libarl
 #****************************************************************************
 import os
+import sys
 import subprocess
 import shutil
 import sysconfig
@@ -13,7 +14,11 @@ from distutils.spawn import find_executable
 from setuptools.command.build_ext import build_ext as _build_ext
 from distutils.file_util import copy_file
 
-_DEBUG = False
+if "-DDEBUG" in sys.argv:
+    sys.argv.remove("-DDEBUG")
+    _DEBUG = True
+else:
+    _DEBUG = False
 _DEBUG_LEVEL = 0
 
 # First need to establish where things are

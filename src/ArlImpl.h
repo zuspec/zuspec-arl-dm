@@ -8,6 +8,7 @@
 #pragma once
 #include <memory>
 #include "arl/IArl.h"
+#include "vsc/IDebugMgr.h"
 
 namespace arl {
 
@@ -21,9 +22,14 @@ public:
 
 	virtual IContext *mkContext(vsc::IContext *ctxt) override;
 
+	virtual void init(vsc::IDebugMgr *dbg_mgr) override;
+
+	vsc::IDebugMgr *getDebugMgr() const { return m_dbg_mgr; }
+
 	static ArlImpl *inst();
 
 private:
+	vsc::IDebugMgr				*m_dbg_mgr;
 	static ArlImplUP			m_inst;
 
 

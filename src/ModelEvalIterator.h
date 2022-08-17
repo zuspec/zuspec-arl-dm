@@ -23,6 +23,8 @@ public:
 		};
 	};
 public:
+	ModelEvalIterator(const Elem &elem);
+
 	ModelEvalIterator(const std::vector<Elem> &seq);
 
 	virtual ~ModelEvalIterator();

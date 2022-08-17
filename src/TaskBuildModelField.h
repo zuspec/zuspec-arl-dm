@@ -20,7 +20,9 @@ public:
 
 	virtual ~TaskBuildModelField();
 
-	virtual vsc::IModelField *build(vsc::IDataTypeStruct *type, const std::string &name);
+	virtual vsc::IModelField *build(
+		vsc::IDataTypeStruct *type, 
+		const std::string &name);
 
 private:
 	vsc::IModelBuildContext		*m_ctxt;

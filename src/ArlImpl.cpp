@@ -11,8 +11,7 @@
 namespace arl {
 
 ArlImpl::ArlImpl() {
-	// TODO Auto-generated constructor stub
-
+	m_dbg_mgr = 0;
 }
 
 ArlImpl::~ArlImpl() {
@@ -22,6 +21,10 @@ ArlImpl::~ArlImpl() {
 IContext *ArlImpl::mkContext(vsc::IContext *ctxt) {
 	return new Context(ctxt);
 }
+
+void ArlImpl::init(vsc::IDebugMgr *dbg_mgr) {
+	m_dbg_mgr = dbg_mgr;
+};
 
 ArlImpl *ArlImpl::inst() {
 	if (!m_inst) {

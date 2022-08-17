@@ -25,6 +25,7 @@ ctypedef ITypeFieldPool *ITypeFieldPoolP
 
 cdef extern from "arl/IArl.h" namespace "arl":
     cdef cppclass IArl:
+        void init(vsc.IDebugMgr *)
         IContext *mkContext(vsc.IContext *)
         
         

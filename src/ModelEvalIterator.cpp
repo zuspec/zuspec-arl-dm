@@ -10,6 +10,11 @@
 
 namespace arl {
 
+ModelEvalIterator::ModelEvalIterator(const ModelEvalIterator::Elem &elem) {
+	m_idx = -1;
+	m_seq.push_back(elem);
+}
+
 ModelEvalIterator::ModelEvalIterator(const std::vector<ModelEvalIterator::Elem> &seq) :
 		m_seq(seq.begin(), seq.end()), m_idx(-1) {
 	fprintf(stdout, "Size: %d\n", m_seq.size());
@@ -39,6 +44,8 @@ ModelEvalNodeT ModelEvalIterator::type() const {
 }
 
 vsc::IModelField *ModelEvalIterator::action() {
+	fprintf(stdout, "ModelEvalIterator::action %d %p\n", 
+		m_idx, m_seq.at(m_idx).action);
 	return m_seq.at(m_idx).action;
 }
 

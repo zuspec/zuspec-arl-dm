@@ -1,5 +1,6 @@
 
 import os
+import sys
 from ctypes import CDLL
 from libcpp cimport bool
 from libcpp.cast cimport dynamic_cast
@@ -87,6 +88,9 @@ cdef class Arl(object):
         
         if self._hndl == NULL:
             raise Exception("Failed to load libarl core library")        
+
+        # Initialize the library with the debug manager
+        self._hndl.init(self._vsc._hndl.getDebugMgr())
         pass
     
     cpdef Context mkContext(self):
@@ -139,7 +143,12 @@ cdef class Context(vsc.Context):
                                     vsc.TypeExprFieldRef    target, 
                                     vsc.TypeConstraint      with_c):
         cdef vsc_decl.ITypeConstraint *with_c_p = NULL
-        
+
+        print("self: %s" % str(self))
+        sys.stdout.flush()
+        if target is None:
+            raise Exception("Target is none")
+
         target._owned = False
         
         if with_c is not None:

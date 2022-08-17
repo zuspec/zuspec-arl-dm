@@ -5,6 +5,7 @@
  *      Author: mballance
  */
 
+#include "DebugMacros.h"
 #include "IsModelActivitySequence.h"
 #include "TaskBuildModelActivity.h"
 #include "TaskBuildModelConstraint.h"
@@ -17,8 +18,7 @@ namespace arl {
 
 TaskBuildModelActivity::TaskBuildModelActivity(IModelBuildContext *ctxt) :
 		m_ctxt(ctxt) {
-	// TODO Auto-generated constructor stub
-
+	DEBUG_INIT("TaskBuildModelActivity");
 }
 
 TaskBuildModelActivity::~TaskBuildModelActivity() {
@@ -26,7 +26,7 @@ TaskBuildModelActivity::~TaskBuildModelActivity() {
 }
 
 IModelActivity *TaskBuildModelActivity::build(ITypeFieldActivity *activity) {
-	fprintf(stdout, "TaskBuildModelActivity::build\n");
+	DEBUG_ENTER("build");
 
 	// We enter on a TypeField of the containing action
 
@@ -35,35 +35,38 @@ IModelActivity *TaskBuildModelActivity::build(ITypeFieldActivity *activity) {
 	// data representation
 	m_ctxt->pushField(m_ctxt->getField(-1)->getField(activity->getIndex()));
 
-	fprintf(stdout, "  Activity scope is %s\n", m_ctxt->getField(-1)->name().c_str());
+	DEBUG("  Activity scope is %s", m_ctxt->getField(-1)->name().c_str());
 
 	activity->getDataType()->accept(m_this);
 
 	m_ctxt->popField();
 
 
+	DEBUG_LEAVE("build");
 	return dynamic_cast<IModelActivity *>(
 			m_ctxt->getField(-1)->getField(activity->getIndex()));
 }
 
 void TaskBuildModelActivity::visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) {
-	fprintf(stdout, "visitDataTypeActivitySchedule\n");
+	DEBUG_ENTER("visitDataTypeActivitySchedule");
 
 	VisitorBase::visitDataTypeActivitySchedule(t);
 
+	DEBUG_LEAVE("visitDataTypeActivitySchedule");
 }
 
 void TaskBuildModelActivity::visitDataTypeActivitySequence(IDataTypeActivitySequence *t) {
-	fprintf(stdout, "visitDataTypeActivitySequence\n");
+	DEBUG_ENTER("visitDataTypeActivitySequence");
 
 	for (auto it=t->getActivities().begin(); it!=t->getActivities().end(); it++) {
 		(*it)->accept(m_this);
 	}
 
+	DEBUG_LEAVE("visitDataTypeActivitySequence");
 }
 
 void TaskBuildModelActivity::visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) {
-	fprintf(stdout, "visitDataTypeActivityTraverse\n");
+	DEBUG_ENTER("visitDataTypeActivityTraverse");
 
 	// The traverse statement doesn't have a 'field' representation
 	// Go ahead and create one now
@@ -80,7 +83,7 @@ void TaskBuildModelActivity::visitDataTypeActivityTraverse(IDataTypeActivityTrav
 		with_c = TaskBuildModelConstraint(m_ctxt).build(t->getWithC());
 	}
 
-	fprintf(stdout, "target: %s\n", target->name().c_str());
+	DEBUG("target: %s", target->name().c_str());
 	ModelActivityTraverse *traverse = new ModelActivityTraverse(
 			dynamic_cast<IModelFieldAction *>(target),
 			with_c);
@@ -88,10 +91,11 @@ void TaskBuildModelActivity::visitDataTypeActivityTraverse(IDataTypeActivityTrav
 	IModelActivityScope *pscope = m_ctxt->getFieldT<IModelActivityScope>(-1);
 	pscope->addActivity(traverse, true);
 
+	DEBUG_LEAVE("visitDataTypeActivityTraverse");
 }
 
 void TaskBuildModelActivity::visitTypeFieldActivity(ITypeFieldActivity *f) {
-	fprintf(stdout, "visitTypeFieldActivity %s %d\n", f->name().c_str(), f->getIndex());
+	DEBUG_ENTER("visitTypeFieldActivity %s %d", f->name().c_str(), f->getIndex());
 
 	if (f->getIndex() != -1) {
 		// Link in the existing activity scope
@@ -108,6 +112,8 @@ void TaskBuildModelActivity::visitTypeFieldActivity(ITypeFieldActivity *f) {
 	if (f->getIndex() != -1) {
 		m_ctxt->popField();
 	}
+
+	DEBUG_LEAVE("visitTypeFieldActivity %s %d", f->name().c_str(), f->getIndex());
 }
 
 } /* namespace arl */

@@ -14,7 +14,9 @@
 
 namespace arl {
 
-class IDataTypeActivityScope : public virtual IDataTypeActivity, public virtual vsc::IDataTypeStruct {
+class IDataTypeActivityScope : 
+	public virtual IDataTypeActivity,
+	public virtual vsc::IDataTypeStruct {
 public:
 
 	virtual ~IDataTypeActivityScope() { }

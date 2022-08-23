@@ -9,8 +9,7 @@
 
 namespace arl {
 
-DataTypeActivityScope::DataTypeActivityScope(const std::string &name) :
-		m_name(name) {
+DataTypeActivityScope::DataTypeActivityScope(const std::string &name) : m_name(name) {
 	// TODO Auto-generated constructor stub
 
 }

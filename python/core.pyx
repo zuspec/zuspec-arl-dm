@@ -4,10 +4,12 @@ import sys
 from ctypes import CDLL
 from libcpp cimport bool
 from libcpp.cast cimport dynamic_cast
+from libcpp.vector cimport vector as cpp_vector
 from enum import IntEnum
 from libarl cimport decl
 cimport libvsc.core as vsc
 cimport libvsc.decl as vsc_decl
+cimport cpython.ref as cpy_ref
 
 cdef Arl _Arl_inst = None
 cdef class Arl(object):
@@ -152,7 +154,7 @@ cdef class Context(vsc.Context):
         target._owned = False
         
         if with_c is not None:
-            with_c_p = with_c._hndl
+            with_c_p = with_c.asConstraint()
             with_c._owned = False
             
         return DataTypeActivityTraverse.mk(self.asContext().mkDataTypeActivityTraverse(
@@ -192,13 +194,13 @@ cdef class Context(vsc.Context):
     cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType type, bool is_lock):
         return TypeFieldClaim.mk(self.asContext().mkTypeFieldClaim(
             name.encode(),
-            type._hndl,
+            type.asType(),
             is_lock), True)
         
     cpdef TypeFieldInOut mkTypeFieldInOut(self, name, vsc.DataType type, bool is_input):
         return TypeFieldInOut.mk(self.asContext().mkTypeFieldInOut(
             name.encode(),
-            type._hndl,
+            type.asType(),
             is_input), True)
     
     cpdef TypeFieldPool mkTypeFieldPool(self, name, 
@@ -209,7 +211,7 @@ cdef class Context(vsc.Context):
         cdef vsc_decl.IDataType *type_p = NULL
         
         if type is not None:
-            type_p = type._hndl
+            type_p = type.asType()
         else:
             raise Exception("Must specify a type for pool %s" % name)
         
@@ -287,7 +289,7 @@ cdef class DataTypeActivityScope(DataTypeActivity):
 
     cpdef addField(self, vsc.TypeField f):
         f._owned = False
-        self.asScope().addField(f._hndl)
+        self.asScope().addField(f.asField())
         
     cpdef getFields(self):
         ret = []
@@ -305,7 +307,7 @@ cdef class DataTypeActivityScope(DataTypeActivity):
             return None
     
     cpdef addConstraint(self, vsc.TypeConstraint c):
-        self.asScope().addConstraint(c._hndl)
+        self.asScope().addConstraint(c.asConstraint())
         pass
     
     cpdef getConstraints(self):
@@ -319,8 +321,14 @@ cdef class DataTypeActivityScope(DataTypeActivity):
         activity._owned = False
         self.asScope().addActivity(activity.asActivity())
     
-    cpdef activities(self):
-        pass
+    cpdef getActivities(self):
+        ret = []
+        for i in range(self.asScope().getActivities().size()):
+            ret.append(TypeFieldActivity.mk(
+                self.asScope().getActivities().at(i),
+                False))
+            pass
+        return ret
 
     cdef decl.IDataTypeActivityScope *asScope(self):
         return dynamic_cast[decl.IDataTypeActivityScopeP](self._hndl)
@@ -366,7 +374,7 @@ cdef class DataTypeActivityTraverse(DataTypeActivity):
             self.asTraverse().setWithC(NULL)
         else:
             c._owned = False
-            self.asTraverse().setWithC(c._hndl)
+            self.asTraverse().setWithC(c.asConstraint())
 
     cdef decl.IDataTypeActivityTraverse *asTraverse(self):
         return dynamic_cast[decl.IDataTypeActivityTraverseP](self._hndl)
@@ -400,7 +408,7 @@ cdef class ModelEvaluator(object):
                         vsc.ModelField root_comp,
                         DataTypeAction root_action):
         cdef decl.IModelEvalIterator *it = self._hndl.eval(
-                root_comp._hndl,
+                root_comp.asField(),
                 root_action.asAction())
         
         return ModelEvalIterator.mk(it)
@@ -434,8 +442,8 @@ cdef class ModelEvalIterator(object):
         type_i = int(self._hndl.type())
         return ModelEvalNodeT(type_i)
     
-    cpdef vsc.ModelField action(self):
-        return vsc.ModelField.mk(self._hndl.action(), False)
+    cpdef ModelFieldAction action(self):
+        return ModelFieldAction.mk(self._hndl.action(), False)
     
     cpdef ModelEvalIterator iterator(self):
         return ModelEvalIterator.mk(self._hndl.iterator())
@@ -444,6 +452,18 @@ cdef class ModelEvalIterator(object):
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):
         ret = ModelEvalIterator()
         ret._hndl = hndl
+        return ret
+
+cdef class ModelFieldAction(vsc.ModelField):
+
+    cdef decl.IModelFieldAction *asAction(self):
+        return dynamic_cast[decl.IModelFieldActionP](self._hndl)
+
+    @staticmethod
+    cdef ModelFieldAction mk(decl.IModelFieldAction *hndl, bool owned=True):
+        ret = ModelFieldAction()
+        ret._hndl = hndl
+        ret._owned = owned
         return ret
     
 cdef class ModelFieldRootComponent(vsc.ModelField):
@@ -512,4 +532,57 @@ cdef class TypeFieldPool(vsc.TypeField):
         ret._hndl = hndl
         ret._owned = owned
         return ret
+
+cdef class VisitorBase(vsc.VisitorBase):
+
+    def __init__(self):
+        super().__init__()
+        self.proxy_l.push_back(new decl.VisitorProxy(<cpy_ref.PyObject *>(self)))
     
+    def __dealloc__(self):
+        super().__dealloc__()
+        del self._arl_proxy
+
+    cpdef visitModelFieldAction(self, ModelFieldAction a):
+        pass
+
+cdef public void VisitorProxy_visitModelFieldAction(obj, decl.IModelFieldAction *a) with gil:
+    obj.visitModelFieldAction(ModelFieldAction.mk(a, False))
+
+
+cdef class WrapperBuilder(VisitorBase):
+
+    def __init__(self):
+        super().__init__()
+        self._obj = []
+
+    cdef vsc.ObjBase mkObj(self, vsc_decl.IAccept *obj, bool owned):
+        cdef vsc.ObjBase ret = None
+
+        self._obj.append(None)
+        self.visitAccept(obj)
+        ret = self._obj.pop()
+
+        if ret is not None:
+            ret._owned = owned
+
+        return ret
+
+    cdef _set_obj(self, vsc.ObjBase obj):
+        self._obj[-1] = obj
+
+    cpdef visitModelFieldAction(self, ModelFieldAction a):
+        print("visitModelFieldAction")
+        self._set_obj(a)
+
+cdef class WrapperBuilderVsc(vsc.WrapperBuilder):
+
+    def __init__(self):
+        self._core = WrapperBuilder()
+
+    cdef vsc.ObjBase mkObj(self, vsc_decl.IAccept *obj, bool owned):
+        return self._core.mkObj(obj, owned);
+
+
+vsc.addWrapperBuilder(WrapperBuilderVsc())
+

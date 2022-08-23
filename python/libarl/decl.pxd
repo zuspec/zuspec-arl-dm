@@ -6,6 +6,7 @@ from libcpp.vector cimport vector as cpp_vector
 from libcpp.memory cimport unique_ptr
 from libcpp cimport bool
 from libc.stdint cimport int32_t
+cimport cpython.ref as cpy_ref
 
 ctypedef IContext *IContextP
 ctypedef IDataTypeAction *IDataTypeActionP
@@ -16,6 +17,7 @@ ctypedef IDataTypeActivitySchedule *IDataTypeActivityScheduleP
 ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
 ctypedef IDataTypeComponent *IDataTypeComponentP
+ctypedef IModelFieldAction *IModelFieldActionP
 ctypedef IModelFieldRootComponent *IModelFieldRootComponentP
 ctypedef ITypeFieldActivity *ITypeFieldActivityP
 ctypedef unique_ptr[ITypeFieldActivity] ITypeFieldActivityUP
@@ -64,13 +66,13 @@ cdef extern from "arl/IDataTypeAction.h" namespace "arl":
         void addActivity(ITypeFieldActivity *)
         
 cdef extern from "arl/IDataTypeActivity.h" namespace "arl":
-    cdef cppclass IDataTypeActivity:
+    cdef cppclass IDataTypeActivity(vsc.IDataType):
         pass
         
 cdef extern from "arl/IDataTypeActivityScope.h" namespace "arl":
     cdef cppclass IDataTypeActivityScope(IDataTypeActivity, vsc.IDataTypeStruct):
         void addActivity(ITypeFieldActivity *)
-        const cpp_vector[ITypeFieldActivityUP] &activities() const
+        const cpp_vector[ITypeFieldActivityP] &getActivities() const
         # const cpp_string &name() const
         # void addField(vsc.ITypeField *)
         # vsc.ITypeField *getField(int32_t idx)
@@ -114,8 +116,12 @@ cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
     cdef cppclass IModelEvalIterator:
         bool next()
         ModelEvalNodeT type() const
-        vsc.IModelField *action()
+        IModelFieldAction *action()
         IModelEvalIterator *iterator()
+
+cdef extern from "arl/IModelFieldAction.h" namespace "arl":
+    cdef cppclass IModelFieldAction(vsc.IModelField):
+        pass
         
 cdef extern from "arl/IModelFieldRootComponent.h" namespace "arl":
     cdef cppclass IModelFieldRootComponent(vsc.IModelField):
@@ -136,5 +142,12 @@ cdef extern from "arl/ITypeFieldInOut.h" namespace "arl":
 cdef extern from "arl/ITypeFieldPool.h" namespace "arl":
     cdef cppclass ITypeFieldPool(vsc.ITypeField):
         int32_t getDeclSize()
+
+cdef extern from "arl/IVisitor.h" namespace "arl":
+    cdef cppclass IVisitor(vsc.IVisitor):
+        pass
     
-    
+cdef extern from "VisitorProxy.h" namespace "arl":
+    cdef cppclass VisitorProxy(IVisitor):
+        VisitorProxy(cpy_ref.PyObject *)
+        pass

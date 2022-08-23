@@ -12,12 +12,16 @@
 namespace arl {
 
 class DataTypeActivitySchedule :
-		public IDataTypeActivitySchedule,
+		public virtual IDataTypeActivitySchedule,
 		public virtual DataTypeActivityScope {
 public:
 	DataTypeActivitySchedule();
 
 	virtual ~DataTypeActivitySchedule();
+
+	virtual IModelActivity *mkActivity(
+		vsc::IModelBuildContext		*ctxt,
+		ITypeFieldActivity			*type) override;
 
 	virtual void accept(vsc::IVisitor *v) override;
 

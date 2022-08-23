@@ -7,9 +7,12 @@
 
 #pragma once
 #include <memory>
+#include "vsc/IModelBuildContext.h"
 #include "vsc/ITypeField.h"
 
 namespace arl {
+
+class IModelActivity;
 
 class ITypeFieldActivity;
 using ITypeFieldActivityUP=std::unique_ptr<ITypeFieldActivity>;
@@ -18,6 +21,7 @@ public:
 
 	virtual ~ITypeFieldActivity() { }
 
+	virtual IModelActivity *mkActivity(vsc::IModelBuildContext *ctxt) = 0;
 
 };
 

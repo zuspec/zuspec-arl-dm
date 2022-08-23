@@ -10,7 +10,7 @@
 namespace arl {
 
 TaskBuildModelConstraint::TaskBuildModelConstraint(IModelBuildContext *ctxt) :
-	vsc::TaskBuildModelConstraint(ctxt, this) {
+	vsc::TaskBuildModelConstraint<>(ctxt, this) {
 	// TODO Auto-generated constructor stub
 
 }

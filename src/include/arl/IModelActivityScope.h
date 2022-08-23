@@ -11,7 +11,9 @@
 
 namespace arl {
 
-class IModelActivityScope : public virtual vsc::IModelField, public virtual IModelActivity {
+class IModelActivityScope : 
+	public virtual vsc::IModelField, 
+	public virtual IModelActivity {
 public:
 
 	virtual ~IModelActivityScope() { }

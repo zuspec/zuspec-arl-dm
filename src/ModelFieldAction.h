@@ -13,7 +13,9 @@
 
 namespace arl {
 
-class ModelFieldAction : public virtual IModelFieldAction, public ModelField {
+class ModelFieldAction : 
+	public virtual IModelFieldAction, 
+	public virtual ModelField {
 public:
 	ModelFieldAction();
 

@@ -11,7 +11,8 @@
 
 namespace arl {
 
-class DataTypeActivityTraverse : public IDataTypeActivityTraverse {
+class DataTypeActivityTraverse : 
+	public virtual IDataTypeActivityTraverse {
 public:
 	DataTypeActivityTraverse(
 			vsc::ITypeExprFieldRef		*target,
@@ -31,11 +32,24 @@ public:
 		m_with_c = vsc::ITypeConstraintUP(c);
 	}
 
+	virtual void setFactory(vsc::IModelFieldFactory *f) override {
+		// NOP
+	}
+
+	virtual vsc::IModelFieldFactory *getFactory() override {
+		return 0;
+	}
+
+	virtual IModelActivity *mkActivity(
+		vsc::IModelBuildContext		*ctxt,
+		ITypeFieldActivity			*type) override;
+
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
 	vsc::ITypeExprFieldRefUP				m_target;
 	vsc::ITypeConstraintUP					m_with_c;
+	vsc::IModelFieldFactoryUP				m_factory;
 };
 
 } /* namespace arl */

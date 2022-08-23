@@ -4,6 +4,7 @@ from libarl cimport decl
 from libc.stdint cimport int32_t
 from libcpp cimport bool
 cimport libvsc.core as vsc
+cimport libvsc.decl as vsc_decl
 
 cdef class Arl(object):
     cdef vsc.Vsc            _vsc
@@ -65,7 +66,7 @@ cdef class DataTypeActivityScope(DataTypeActivity):
     cpdef addConstraint(self, vsc.TypeConstraint c)
     cpdef getConstraints(self)
     cpdef addActivity(self, TypeFieldActivity)
-    cpdef activities(self)
+    cpdef getActivities(self)
     cdef decl.IDataTypeActivityScope *asScope(self)
     
 cdef class DataTypeActivitySchedule(DataTypeActivityScope):
@@ -114,11 +115,18 @@ cdef class ModelEvalIterator(object):
     
     cpdef bool next(self)
     cpdef type(self)
-    cpdef vsc.ModelField action(self)
+    cpdef ModelFieldAction action(self)
     cpdef ModelEvalIterator iterator(self)
     
     @staticmethod
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
+
+cdef class ModelFieldAction(vsc.ModelField):
+
+    cdef decl.IModelFieldAction *asAction(self)
+
+    @staticmethod
+    cdef ModelFieldAction mk(decl.IModelFieldAction *hndl, bool owned=*)
     
 cdef class ModelFieldRootComponent(vsc.ModelField):
 
@@ -158,3 +166,22 @@ cdef class TypeFieldPool(vsc.TypeField):
     
     @staticmethod
     cdef TypeFieldPool mk(decl.ITypeFieldPool *, bool owned=*)
+
+cdef class VisitorBase(vsc.VisitorBase):
+
+    cpdef visitModelFieldAction(self, ModelFieldAction a)
+
+cdef class WrapperBuilder(VisitorBase):
+    cdef list _obj
+
+    cdef vsc.ObjBase mkObj(self, vsc_decl.IAccept *obj, bool owned)
+
+    cdef _set_obj(self, vsc.ObjBase obj)
+
+cdef class WrapperBuilderVsc(vsc.WrapperBuilder):
+    cdef WrapperBuilder            _core
+
+    cdef vsc.ObjBase mkObj(self, vsc_decl.IAccept *obj, bool owned)
+
+
+

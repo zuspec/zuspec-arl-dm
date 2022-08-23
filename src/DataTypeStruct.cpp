@@ -9,7 +9,9 @@
 
 namespace arl {
 
-DataTypeStruct::DataTypeStruct(const std::string &name) : m_name(name) {
+DataTypeStruct::DataTypeStruct(
+	const std::string 			&name,
+	vsc::IModelFieldFactory		*factory) : m_name(name), m_factory(factory) {
 	// TODO Auto-generated constructor stub
 
 }

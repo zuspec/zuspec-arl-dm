@@ -7,12 +7,13 @@
 
 #pragma once
 #include "arl/IDataTypeActivitySequence.h"
+#include "vsc/IModelFieldFactory.h"
 #include "DataTypeActivityScope.h"
 
 namespace arl {
 
 class DataTypeActivitySequence :
-		public IDataTypeActivitySequence,
+		public virtual IDataTypeActivitySequence,
 		public virtual DataTypeActivityScope {
 public:
 	DataTypeActivitySequence();
@@ -23,6 +24,10 @@ public:
 	// R
 	// Ref to vector
 	//
+
+	virtual IModelActivity *mkActivity(
+		vsc::IModelBuildContext		*ctxt,
+		ITypeFieldActivity			*type) override;
 
 	virtual void accept(vsc::IVisitor *v) override;
 

@@ -22,6 +22,10 @@ TypeFieldActivity::~TypeFieldActivity() {
 	// TODO Auto-generated destructor stub
 }
 
+IModelActivity *TypeFieldActivity::mkActivity(vsc::IModelBuildContext *ctxt) {
+	return getDataTypeT<IDataTypeActivity>()->mkActivity(ctxt, this);
+}
+
 void TypeFieldActivity::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<arl::IVisitor *>(v)) {
 		dynamic_cast<arl::IVisitor *>(v)->visitTypeFieldActivity(this);

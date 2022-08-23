@@ -43,7 +43,7 @@ ModelEvalNodeT ModelEvalIterator::type() const {
 	return m_seq.at(m_idx).type;
 }
 
-vsc::IModelField *ModelEvalIterator::action() {
+IModelFieldAction *ModelEvalIterator::action() {
 	fprintf(stdout, "ModelEvalIterator::action %d %p\n", 
 		m_idx, m_seq.at(m_idx).action);
 	return m_seq.at(m_idx).action;

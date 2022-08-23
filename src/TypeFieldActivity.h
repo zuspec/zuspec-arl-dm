@@ -21,6 +21,8 @@ public:
 
 	virtual ~TypeFieldActivity();
 
+	virtual IModelActivity *mkActivity(vsc::IModelBuildContext *ctxt) override;
+
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:

@@ -7,50 +7,41 @@
 
 #pragma once
 #include "arl/IDataTypeComponent.h"
+#include "vsc/IModelFieldFactory.h"
 #include "DataTypeStruct.h"
 
 namespace arl {
 
-class DataTypeComponent : public IDataTypeComponent {
+class DataTypeComponent : 
+	public virtual IDataTypeComponent, 
+	public virtual DataTypeStruct,
+	public virtual vsc::IModelFieldFactory {
 public:
 	DataTypeComponent(const std::string &name);
 
 	virtual ~DataTypeComponent();
 
-	virtual const std::string &name() const {
-		return m_name;
-	}
-
-	virtual void addField(vsc::ITypeField *f);
-
-	virtual const std::vector<vsc::ITypeFieldUP> &getFields() const {
-		return m_fields;
-	}
-
-	virtual vsc::ITypeField *getField(int32_t idx) {
-		return m_fields.at(idx).get();
-	}
-
-	virtual void addConstraint(vsc::ITypeConstraint *c);
-
-	virtual const std::vector<vsc::ITypeConstraintUP> &getConstraints() const {
-		return m_constraints;
-	}
-
-	virtual vsc::IModelStructCreateHook *getCreateHook() const override;
-
-	virtual void setCreateHook(vsc::IModelStructCreateHook *hook) override;
-
 	virtual const std::vector<IDataTypeAction *> &getActionTypes() const override;
 
 	virtual void addActionType(IDataTypeAction *) override;
 
+    virtual vsc::IModelField *createRootField(
+        vsc::IModelBuildContext  *ctxt,
+        vsc::IDataType           *type,
+        const std::string   &name,
+        bool                is_ref) override;
+
+    virtual vsc::IModelField *createTypeField(
+        vsc::IModelBuildContext  *ctxt,
+        vsc::ITypeField          *type) override;
+
+	virtual vsc::IModelFieldFactory *getFactory() override {
+		return this;
+	}
+
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
-	std::string								m_name;
-	std::vector<vsc::ITypeFieldUP>		 	m_fields;
-	std::vector<vsc::ITypeConstraintUP>		m_constraints;
 	std::vector<IDataTypeAction *>			m_action_types;
 	vsc::IModelStructCreateHookUP			m_create_hook;
 

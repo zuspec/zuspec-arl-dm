@@ -214,7 +214,7 @@ ext = Extension("libarl.core",
             sources=[
                 os.path.join(libarl_dir, 'python', "core.pyx"), 
                 os.path.join(libarl_dir, 'python', "py_get_arl.cpp"),
-#                os.path.join(libvsc_dir, 'python', 'VisitorProxy.cpp'),
+                os.path.join(libarl_dir, 'python', 'VisitorProxy.cpp')
             ],
             language="c++",
             include_dirs=[

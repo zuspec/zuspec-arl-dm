@@ -5,11 +5,13 @@
  *      Author: mballance
  */
 
+#include "vsc/impl/ModelBuildContext.h"
 #include "DebugMacros.h"
 #include "ModelEvaluator.h"
 #include "ModelEvalIterator.h"
 #include "ModelEvalIteratorMgr.h"
 #include "ModelActivityTraverse.h"
+#include "TaskBuildModelAction.h"
 #include "TaskCollectTopLevelActivities.h"
 
 namespace arl {
@@ -28,9 +30,13 @@ IModelEvalIterator *ModelEvaluator::eval(
 			vsc::IModelField	*root_comp,
 			IDataTypeAction		*root_action) {
 	DEBUG_ENTER("eval");
-	m_action = IModelFieldActionUP(m_ctxt->buildModelAction(
+	vsc::ModelBuildContext ctxt_b(m_ctxt);
+	m_action = IModelFieldActionUP(
+		root_action->getFactory()->createRootFieldT<IModelFieldAction>(
+			&ctxt_b,
 			root_action,
-			root_action->name()));
+			root_action->name(),
+			false));
 	
 	if (m_action->activities().size() == 1) {
 		// Have activities in a sequence
@@ -55,7 +61,9 @@ IModelEvalIterator *ModelEvaluator::eval(
 }
 
 IModelEvalIterator *ModelEvaluator::next() {
+	DEBUG_ENTER("next idx=%d size=%d", m_activity_idx, m_activities.size());
 	if (m_activity_idx >= m_activities.size()) {
+		DEBUG_LEAVE("next -- no more activities");
 		return 0;
 	}
 
@@ -63,7 +71,9 @@ IModelEvalIterator *ModelEvaluator::next() {
 
 	// Time to determine what to do next at the top level
 	m_activities.at(m_activity_idx)->accept(this);
+	m_activity_idx++;
 
+	DEBUG_LEAVE("next - %p", m_next);
 	return m_next;
 }
 

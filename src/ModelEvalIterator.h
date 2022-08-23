@@ -33,7 +33,7 @@ public:
 
 	virtual ModelEvalNodeT type() const override;
 
-	virtual vsc::IModelField *action() override;
+	virtual IModelFieldAction *action() override;
 
 	virtual IModelEvalIterator *iterator() override;
 

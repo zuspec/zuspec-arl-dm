@@ -11,7 +11,7 @@
 
 namespace arl {
 
-class TaskBuildModelConstraint : public vsc::TaskBuildModelConstraint {
+class TaskBuildModelConstraint : public vsc::TaskBuildModelConstraint<> {
 public:
 	TaskBuildModelConstraint(IModelBuildContext *ctxt);
 

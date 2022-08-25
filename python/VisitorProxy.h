@@ -33,6 +33,8 @@ public:
 
 	virtual void visitModelFieldAction(IModelFieldAction *f) override;
 
+	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override;
+
 private:
     PyObject                *m_obj;
 

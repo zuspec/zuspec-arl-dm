@@ -171,6 +171,8 @@ cdef class VisitorBase(vsc.VisitorBase):
 
     cpdef visitModelFieldAction(self, ModelFieldAction a)
 
+    cpdef visitModelFieldRootComponent(self, ModelFieldRootComponent c)
+
 cdef class WrapperBuilder(VisitorBase):
     cdef list _obj
 

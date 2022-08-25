@@ -11,11 +11,9 @@
 
 namespace arl {
 
-class DataTypeActivityScope : 
-	public virtual IDataTypeActivityScope {
+class DataTypeActivityScope : public virtual IDataTypeActivityScope {
 public:
-	DataTypeActivityScope(
-		const std::string &name);
+	DataTypeActivityScope(const std::string &name);
 
 	virtual ~DataTypeActivityScope();
 
@@ -45,14 +43,6 @@ public:
 		m_create_hook = vsc::IModelStructCreateHookUP(hook);
 	}
 
-	virtual void setFactory(vsc::IModelFieldFactory *f) {
-		m_factory = vsc::IModelFieldFactoryUP(f);
-	}
-
-	virtual vsc::IModelFieldFactory *getFactory() {
-		return m_factory.get();
-	}
-
 	virtual const std::vector<ITypeFieldActivity *> &getActivities() const override {
 		return m_activities;
 	}
@@ -61,12 +51,20 @@ public:
 
 	virtual void addActivityField(ITypeFieldActivity *a) override;
 
+	virtual vsc::IModelField *mkRootField(
+		vsc::IModelBuildContext		*ctxt,
+		const std::string			&name,
+		bool						is_ref) override;
+
+	virtual vsc::IModelField *mkTypeField(
+		vsc::IModelBuildContext		*ctxt,
+		vsc::ITypeField				*type) override;
+
 private:
 	std::string									m_name;
 	std::vector<vsc::ITypeFieldUP>				m_fields;
 	std::vector<vsc::ITypeConstraintUP>			m_constraints;
 	vsc::IModelStructCreateHookUP				m_create_hook;
-	vsc::IModelFieldFactoryUP					m_factory;
 
 	std::vector<ITypeFieldActivity *>			m_activities;
 	std::vector<ITypeFieldActivityUP>			m_activities_up;

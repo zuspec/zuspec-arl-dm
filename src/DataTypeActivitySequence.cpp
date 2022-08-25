@@ -31,7 +31,7 @@ IModelActivity *DataTypeActivitySequence::mkActivity(
 	for (std::vector<vsc::ITypeFieldUP>::const_iterator
 		it=getFields().begin();
 		it!=getFields().end(); it++) {
-		ret->addField(it->get()->getDataType()->getFactory()->createTypeField(
+		ret->addField(it->get()->getDataType()->mkTypeField(
 			ctxt,
 			it->get()));
 	}

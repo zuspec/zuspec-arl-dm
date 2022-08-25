@@ -12,8 +12,7 @@
 
 namespace arl {
 
-DataTypeActivitySchedule::DataTypeActivitySchedule() : 
-	DataTypeActivityScope("") /*, DataTypeStruct("", 0)*/ {
+DataTypeActivitySchedule::DataTypeActivitySchedule() : DataTypeActivityScope("") {
 	// TODO Auto-generated constructor stub
 
 }

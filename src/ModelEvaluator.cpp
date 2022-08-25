@@ -32,9 +32,8 @@ IModelEvalIterator *ModelEvaluator::eval(
 	DEBUG_ENTER("eval");
 	vsc::ModelBuildContext ctxt_b(m_ctxt);
 	m_action = IModelFieldActionUP(
-		root_action->getFactory()->createRootFieldT<IModelFieldAction>(
+		root_action->mkRootFieldT<IModelFieldAction>(
 			&ctxt_b,
-			root_action,
 			root_action->name(),
 			false));
 	

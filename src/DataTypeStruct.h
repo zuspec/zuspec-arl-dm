@@ -8,8 +8,9 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "vsc/IContext.h"
 #include "vsc/IDataTypeStruct.h"
-#include "vsc/IModelFieldFactory.h"
+#include "vsc/IModelBuildContext.h"
 #include "vsc/IModelStructCreateHook.h"
 #include "vsc/ITypeField.h"
 #include "vsc/ITypeConstraint.h"
@@ -18,9 +19,7 @@ namespace arl {
 
 class DataTypeStruct : public virtual vsc::IDataTypeStruct {
 public:
-	DataTypeStruct(
-		const std::string 			&name,
-		vsc::IModelFieldFactory		*factory);
+	DataTypeStruct(const std::string &name);
 
 	virtual ~DataTypeStruct();
 
@@ -42,19 +41,19 @@ public:
 
 	virtual void setCreateHook(vsc::IModelStructCreateHook *hook) override;
 
-	virtual void setFactory(vsc::IModelFieldFactory *f) override {
-		m_factory = vsc::IModelFieldFactoryUP(f);
-	}
+	virtual vsc::IModelField *mkRootField(
+		vsc::IModelBuildContext		*ctxt,
+		const std::string			&name,
+		bool						is_ref) override;
 
-	virtual vsc::IModelFieldFactory *getFactory() override {
-		return m_factory.get();
-	}
+	virtual vsc::IModelField *mkTypeField(
+		vsc::IModelBuildContext		*ctxt,
+		vsc::ITypeField				*type) override;
 
 public:
 	std::string								m_name;
 	std::vector<vsc::ITypeFieldUP>		 	m_fields;
 	std::vector<vsc::ITypeConstraintUP>		m_constraints;
-	vsc::IModelFieldFactoryUP				m_factory;
 	vsc::IModelStructCreateHookUP			m_create_hook;
 
 

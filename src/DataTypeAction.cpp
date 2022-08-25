@@ -15,7 +15,7 @@ namespace arl {
 
 DataTypeAction::DataTypeAction(
 		IContext			*ctxt,
-		const std::string 	&name) : DataTypeStruct(name, 0), m_component_t(0) {
+		const std::string 	&name) : DataTypeStruct(name), m_component_t(0) {
 
 	// Add the built-in 'comp' ref
 	m_comp = ctxt->mkTypeFieldRef("comp", 0, vsc::TypeFieldAttr::NoAttr);
@@ -36,51 +36,52 @@ void DataTypeAction::addActivity(ITypeFieldActivity *activity) {
 	m_activities.push_back(activity);
 }
 
-vsc::IModelField *DataTypeAction::createRootField(
-    vsc::IModelBuildContext  *ctxt_v,
-    vsc::IDataType           *type,
-    const std::string   	 &name,
-    bool                is_ref) {
-	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt_v->ctxt());
+vsc::IModelField *DataTypeAction::mkRootField(
+		vsc::IModelBuildContext		*ctxt,
+		const std::string			&name,
+		bool						is_ref) {
+	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     IModelFieldAction *ret;
 
-	IDataTypeAction *type_a = dynamic_cast<IDataTypeAction *>(type);
-	ret = ctxt_a->mkModelFieldActionRoot(name, type_a);
+	ret = ctxt_a->mkModelFieldActionRoot(name, this);
 
     // Push the new field just for completeness
-    ctxt_v->pushField(ret);
+    ctxt->pushField(ret);
     for (std::vector<vsc::ITypeFieldUP>::const_iterator 
-        it=type_a->getFields().begin();
-        it!=type_a->getFields().end(); it++) {
-        vsc::IModelField *field = (*it)->getDataType()->getFactory()->createTypeField(
-            ctxt_v,
+        it=getFields().begin();
+        it!=getFields().end(); it++) {
+        vsc::IModelField *field = (*it)->getDataType()->mkTypeField(
+            ctxt,
             it->get());
 		ret->addField(field);
     }
-    ctxt_v->popField();
+    ctxt->popField();
 
 	// Build out any activities
-    ctxt_v->pushField(ret);
+    ctxt->pushField(ret);
 	for (std::vector<ITypeFieldActivity *>::const_iterator
-		it=type_a->activities().begin();
-		it!=type_a->activities().end(); it++) {
-        IModelActivity *activity = (*it)->mkActivity(ctxt_v);
+		it=activities().begin();
+		it!=activities().end(); it++) {
+        IModelActivity *activity = (*it)->mkActivity(ctxt);
 		ret->addActivity(dynamic_cast<IModelActivityScope *>(activity));
 	}
-    ctxt_v->popField();
+    ctxt->popField();
 
     // Finally, build out constraints on this field and sub-fields
-    vsc::TaskBuildModelFieldConstraints<> constraint_builder(ctxt_v);
-    constraint_builder.build(ret, type);
+    vsc::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
+    constraint_builder.build(ret, this);
+
+    if (getCreateHook()) {
+        getCreateHook()->create(ret);
+    }
 
     return ret;	
 }
 
-vsc::IModelField *DataTypeAction::createTypeField(
-        vsc::IModelBuildContext  *ctxt,
-        vsc::ITypeField          *type) {
+vsc::IModelField *DataTypeAction::mkTypeField(
+		vsc::IModelBuildContext		*ctxt,
+		vsc::ITypeField				*type) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
-	IDataTypeAction *type_a = dynamic_cast<IDataTypeAction *>(type->getDataType());
 
     IModelFieldAction *ret = ctxt_a->mkModelFieldActionType(type);
 
@@ -88,9 +89,9 @@ vsc::IModelField *DataTypeAction::createTypeField(
     // Push the new field just for completeness
     ctxt->pushField(ret);
     for (std::vector<vsc::ITypeFieldUP>::const_iterator 
-        it=type_a->getFields().begin();
-        it!=type_a->getFields().end(); it++) {
-        vsc::IModelField *field = (*it)->getDataType()->getFactory()->createTypeField(
+        it=getFields().begin();
+        it!=getFields().end(); it++) {
+        vsc::IModelField *field = (*it)->getDataType()->mkTypeField(
             ctxt,
             it->get());
 		ret->addField(field);
@@ -99,10 +100,10 @@ vsc::IModelField *DataTypeAction::createTypeField(
 
     // Finally, build out constraints on this field and sub-fields
     vsc::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
-    constraint_builder.build(ret, type_a);
+    constraint_builder.build(ret, this);
 
-    if (type_a->getCreateHook()) {
-        type_a->getCreateHook()->create(ret);
+    if (getCreateHook()) {
+        getCreateHook()->create(ret);
     }
 
     return ret;

@@ -407,6 +407,11 @@ cdef class ModelEvaluator(object):
     cpdef ModelEvalIterator eval(self, 
                         vsc.ModelField root_comp,
                         DataTypeAction root_action):
+        if root_comp is None:
+            raise Exception("None root_comp")
+        if root_action is None:
+            raise Exception("None root_action")
+
         cdef decl.IModelEvalIterator *it = self._hndl.eval(
                 root_comp.asField(),
                 root_action.asAction())
@@ -546,8 +551,14 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         pass
 
+    cpdef visitModelFieldRootComponent(self, ModelFieldRootComponent c):
+        pass
+
 cdef public void VisitorProxy_visitModelFieldAction(obj, decl.IModelFieldAction *a) with gil:
     obj.visitModelFieldAction(ModelFieldAction.mk(a, False))
+
+cdef public void VisitorProxy_visitModelFieldRootComponent(obj, decl.IModelFieldRootComponent *c) with gil:
+    obj.visitModelFieldRootComponent(ModelFieldRootComponent.mk(c, False))
 
 
 cdef class WrapperBuilder(VisitorBase):
@@ -574,6 +585,9 @@ cdef class WrapperBuilder(VisitorBase):
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         print("visitModelFieldAction")
         self._set_obj(a)
+
+    cpdef visitModelFieldRootComponent(self, ModelFieldRootComponent c):
+        self._set_obj(c)
 
 cdef class WrapperBuilderVsc(vsc.WrapperBuilder):
 

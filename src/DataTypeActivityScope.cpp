@@ -42,4 +42,18 @@ void DataTypeActivityScope::addActivityField(ITypeFieldActivity *a) {
 	m_fields.push_back(vsc::ITypeFieldUP(a));
 }
 
+
+vsc::IModelField *DataTypeActivityScope::mkRootField(
+		vsc::IModelBuildContext		*ctxt,
+		const std::string			&name,
+		bool						is_ref) {
+
+}
+
+vsc::IModelField *DataTypeActivityScope::mkTypeField(
+		vsc::IModelBuildContext		*ctxt,
+		vsc::ITypeField				*type) {
+			
+}
+
 } /* namespace arl */

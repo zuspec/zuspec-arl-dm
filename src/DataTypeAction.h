@@ -15,8 +15,7 @@ namespace arl {
 
 class DataTypeAction : 
 	public virtual IDataTypeAction, 
-	public virtual DataTypeStruct,
-	public virtual vsc::IModelFieldFactory {
+	public virtual DataTypeStruct {
 public:
 	DataTypeAction(
 			IContext			*ctxt,
@@ -36,19 +35,14 @@ public:
 
 	virtual void addActivity(ITypeFieldActivity *activity) override;
 
-    virtual vsc::IModelField *createRootField(
-        vsc::IModelBuildContext  *ctxt,
-        vsc::IDataType           *type,
-        const std::string   &name,
-        bool                is_ref) override;
+	virtual vsc::IModelField *mkRootField(
+		vsc::IModelBuildContext		*ctxt,
+		const std::string			&name,
+		bool						is_ref) override;
 
-    virtual vsc::IModelField *createTypeField(
-        vsc::IModelBuildContext  *ctxt,
-        vsc::ITypeField          *type) override;
-
-	virtual vsc::IModelFieldFactory *getFactory() override {
-		return this;
-	}
+	virtual vsc::IModelField *mkTypeField(
+		vsc::IModelBuildContext		*ctxt,
+		vsc::ITypeField				*type) override;
 
 	virtual void accept(vsc::IVisitor *v) override;
 

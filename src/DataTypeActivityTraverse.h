@@ -32,17 +32,18 @@ public:
 		m_with_c = vsc::ITypeConstraintUP(c);
 	}
 
-	virtual void setFactory(vsc::IModelFieldFactory *f) override {
-		// NOP
-	}
-
-	virtual vsc::IModelFieldFactory *getFactory() override {
-		return 0;
-	}
-
 	virtual IModelActivity *mkActivity(
 		vsc::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) override;
+
+	virtual vsc::IModelField *mkRootField(
+		vsc::IModelBuildContext		*ctxt,
+		const std::string			&name,
+		bool						is_ref) override { return 0; }
+
+	virtual vsc::IModelField *mkTypeField(
+		vsc::IModelBuildContext		*ctxt,
+		vsc::ITypeField				*type) override { return 0; }
 
 	virtual void accept(vsc::IVisitor *v) override;
 

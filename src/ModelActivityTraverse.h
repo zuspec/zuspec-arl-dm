@@ -20,7 +20,7 @@ public:
 	virtual ~ModelActivityTraverse();
 
 	virtual IModelFieldAction *getTarget() const {
-		return m_target.get();
+		return m_target;
 	}
 
 	virtual vsc::IModelConstraint *getWithC() const {
@@ -30,7 +30,7 @@ public:
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
-	IModelFieldActionUP				m_target;
+	IModelFieldAction				*m_target;
 	vsc::IModelConstraintUP			m_with_c;
 
 

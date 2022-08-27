@@ -26,8 +26,6 @@ TypeFieldInOut::~TypeFieldInOut() {
 void TypeFieldInOut::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<arl::IVisitor *>(v)) {
 		dynamic_cast<arl::IVisitor *>(v)->visitTypeFieldInOut(this);
-	} else {
-		v->visitTypeField(this);
 	}
 }
 

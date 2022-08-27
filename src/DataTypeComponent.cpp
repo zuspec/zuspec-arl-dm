@@ -42,11 +42,13 @@ vsc::IModelField *DataTypeComponent::mkRootField(
 		const std::string			&name,
 		bool						is_ref) {
 	vsc::IModelField *ret;
+	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
+	fprintf(stdout, "DataTypeComponent::mkRootField %s %d\n", name.c_str(), is_ref);
 	if (is_ref) {
-		ret = ctxt->ctxt()->mkModelFieldRefRoot(this, name);
+		ret = ctxt_a->mkModelFieldRefRoot(this, name);
 	} else {
-		ret = ctxt->ctxt()->mkModelFieldRoot(this, name);
+		ret = ctxt_a->mkModelFieldRootComponent(this, name);
 
 		// Need to build sub-fields and constraints
 	}
@@ -62,6 +64,7 @@ vsc::IModelField *DataTypeComponent::mkTypeField(
 		vsc::IModelBuildContext		*ctxt,
 		vsc::ITypeField				*type) {
 	vsc::IModelField *ret;
+	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
 	if (vsc::TaskIsTypeFieldRef().eval(type)) {
 		ret = ctxt->ctxt()->mkModelFieldRefType(type);

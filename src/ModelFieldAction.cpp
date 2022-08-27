@@ -28,8 +28,6 @@ void ModelFieldAction::addActivity(IModelActivityScope *a) {
 void ModelFieldAction::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<arl::IVisitor *>(v)) {
 		dynamic_cast<arl::IVisitor *>(v)->visitModelFieldAction(this);
-	} else {
-		v->visitModelField(this);
 	}
 }
 

@@ -26,10 +26,6 @@ public:
 			IDataTypeComponent 	*t,
 			const std::string	&name) override;
 
-	virtual vsc::IModelField *buildModelField(
-			vsc::IDataTypeStruct	*dt,
-			const std::string		&name) override;
-
 	virtual IDataTypeAction *findDataTypeAction(const std::string &) override;
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override;
@@ -76,6 +72,10 @@ public:
 
 	virtual IModelFieldAction *mkModelFieldActionType(
 			vsc::ITypeField			*type) override;
+
+	virtual IModelFieldRootComponent *mkModelFieldRootComponent(
+			IDataTypeComponent		*type,
+			const std::string		&name) override;
 
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,

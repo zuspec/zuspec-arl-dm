@@ -26,8 +26,6 @@ TypeFieldPool::~TypeFieldPool() {
 void TypeFieldPool::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<arl::IVisitor *>(v)) {
 		dynamic_cast<arl::IVisitor *>(v)->visitTypeFieldPool(this);
-	} else {
-		v->visitTypeField(this);
 	}
 }
 

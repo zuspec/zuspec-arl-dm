@@ -35,9 +35,7 @@ public:
 
 	virtual void addField(vsc::IModelField *field) override;
 
-	virtual vsc::IModelField *getField(int32_t idx) override {
-		return m_fields.at(idx).get();
-	}
+	virtual vsc::IModelField *getField(int32_t idx) override;
 
 	virtual const vsc::IModelVal *val() const override {
 		return m_val.get();

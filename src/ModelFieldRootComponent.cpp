@@ -40,8 +40,6 @@ void ModelFieldRootComponent::addField(vsc::IModelField *field) {
 void ModelFieldRootComponent::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<arl::IVisitor *>(v)) {
 		dynamic_cast<arl::IVisitor *>(v)->visitModelFieldRootComponent(this);
-	} else {
-		v->visitModelField(this);
 	}
 }
 

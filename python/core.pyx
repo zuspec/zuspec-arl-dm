@@ -240,6 +240,8 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
             False)
     
     cpdef setComponentType(self, DataTypeComponent comp):
+        if comp is None:
+            raise Exception("setComponentType: comp is None")
         self.asAction().setComponentType(comp.asComponent())
         
     cpdef addActivity(self, TypeFieldActivity activity):
@@ -587,6 +589,7 @@ cdef class WrapperBuilder(VisitorBase):
         self._set_obj(a)
 
     cpdef visitModelFieldRootComponent(self, ModelFieldRootComponent c):
+        print("visitModelFieldComponent")
         self._set_obj(c)
 
 cdef class WrapperBuilderVsc(vsc.WrapperBuilder):

@@ -21,7 +21,7 @@ public:
 
 	virtual ~TaskBuildModelComponent();
 
-	IModelFieldRootComponent *build(arl::IDataTypeComponent *c, const std::string &name);
+	IModelFieldComponent *build(arl::IDataTypeComponent *c, const std::string &name);
 
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override;
 

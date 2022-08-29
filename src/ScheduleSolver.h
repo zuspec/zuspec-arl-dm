@@ -10,7 +10,7 @@
 #include "arl/IContext.h"
 #include "ExecGraphNode.h"
 #include "IScheduleSolveStage.h"
-#include "ModelFieldRootComponent.h"
+#include "ModelFieldComponent.h"
 #include "IScheduleSolvePropagator.h"
 #include "ScheduleSolveStage.h"
 
@@ -27,7 +27,7 @@ public:
 	 * The graph owns all action instances
 	 */
 	std::pair<ExecGraphNode *, std::string> solve(
-			ModelFieldRootComponent			*root_comp,
+			ModelFieldComponent				*root_comp,
 			IDataTypeAction					*root_action);
 
 

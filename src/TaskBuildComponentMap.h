@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include "arl/IModelFieldRootComponent.h"
+#include "arl/IModelFieldComponent.h"
 #include "vsc/IModelField.h"
 #include "ComponentMap.h"
 

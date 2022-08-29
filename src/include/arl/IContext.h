@@ -19,7 +19,7 @@
 #include "arl/IModelActivityTraverse.h"
 #include "arl/IModelEvaluator.h"
 #include "arl/IModelFieldAction.h"
-#include "arl/IModelFieldRootComponent.h"
+#include "arl/IModelFieldComponent.h"
 #include "arl/ITypeFieldClaim.h"
 #include "arl/ITypeFieldInOut.h"
 
@@ -34,7 +34,7 @@ public:
 			IDataTypeAction 	*t,
 			const std::string	&name) = 0;
 
-	virtual IModelFieldRootComponent *buildModelComponent(
+	virtual IModelFieldComponent *buildModelComponent(
 			IDataTypeComponent 	*t,
 			const std::string	&name) = 0;
 
@@ -85,7 +85,7 @@ public:
 	virtual IModelFieldAction *mkModelFieldActionType(
 			vsc::ITypeField			*type) = 0;
 
-	virtual IModelFieldRootComponent *mkModelFieldRootComponent(
+	virtual IModelFieldComponent *mkModelFieldComponent(
 			IDataTypeComponent		*type,
 			const std::string		&name) = 0;
 

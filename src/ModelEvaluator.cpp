@@ -10,6 +10,8 @@
 #include "ModelEvaluator.h"
 #include "ModelEvalIterator.h"
 #include "ModelEvalIteratorMgr.h"
+#include "ModelEvaluatorSequence.h"
+#include "ModelEvaluatorThread.h"
 #include "ModelActivityTraverse.h"
 #include "TaskBuildModelAction.h"
 #include "TaskCollectTopLevelActivities.h"
@@ -19,6 +21,7 @@ namespace arl {
 ModelEvaluator::ModelEvaluator(IContext *ctxt) : m_ctxt(ctxt) {
 	m_activity_idx = 0;
 	m_next = 0;
+	m_randstate = 0;
 	DEBUG_INIT("ModelEvaluator");
 }
 
@@ -27,36 +30,33 @@ ModelEvaluator::~ModelEvaluator() {
 }
 
 IModelEvalIterator *ModelEvaluator::eval(
-			vsc::IModelField	*root_comp,
-			IDataTypeAction		*root_action) {
+			const vsc::IRandState		*randstate,
+			vsc::IModelField			*root_comp,
+			IDataTypeAction				*root_action) {
 	DEBUG_ENTER("eval");
 	vsc::ModelBuildContext ctxt_b(m_ctxt);
+	m_randstate = vsc::IRandStateUP(randstate->clone());
+
+	// Create a sequence containing a traversal of the 
+	// root action
 	m_action = IModelFieldActionUP(
 		root_action->mkRootFieldT<IModelFieldAction>(
 			&ctxt_b,
 			root_action->name(),
 			false));
+	ModelEvaluatorThread *root_thread = new ModelEvaluatorThread(m_randstate->next());
+	ModelEvaluatorSequence *root_seq = new ModelEvaluatorSequence(root_thread);
+	root_seq->addActivity(new ModelActivityTraverse(m_action.get(), 0), true);
+	root_thread->pushIterator(root_seq);
+
 	
-	if (m_action->activities().size() == 1) {
-		// Have activities in a sequence
-		TaskCollectTopLevelActivities().collect(
-			m_activities,
-			m_action->activities().at(0));
-	} else if (m_action->activities().size() > 1) {
-		// Need a schedule before running
-		DEBUG("TODO: need to schedule actions");
-	} else {
-		// Just have the action
-		m_dummy_activity = IModelActivityTraverseUP(
-			new ModelActivityTraverse(m_action.get(), 0));
-		m_activities.push_back(m_dummy_activity.get());
-	}
+	// TODO: must determine the component context
 
 	// Need to do initial setup work to create list of
 	// top-level activities to solve
 
 	DEBUG_LEAVE("eval");
-	return new ModelEvalIteratorMgr(this);
+	return root_thread;
 }
 
 IModelEvalIterator *ModelEvaluator::next() {
@@ -78,7 +78,21 @@ IModelEvalIterator *ModelEvaluator::next() {
 
 void ModelEvaluator::visitModelActivityTraverse(IModelActivityTraverse *a) {
 	DEBUG_ENTER("visitModelActivityTraverse");
-	// TODO: randomize action
+
+	// Randomize action
+	vsc::ICompoundSolverUP solver(m_ctxt->mkCompoundSolver());
+	std::vector<vsc::IModelConstraint *> constraints;
+
+	if (a->getWithC()) {
+		constraints.push_back(a->getWithC());
+	}
+
+	solver->solve(
+		m_randstate.get(),
+		{a->getTarget()},
+		constraints,
+		vsc::SolveFlags::Randomize|vsc::SolveFlags::RandomizeDeclRand|vsc::SolveFlags::RandomizeTopFields
+	);
 
 	DEBUG("ModelActivityTraverse: target=%p", a->getTarget());
 

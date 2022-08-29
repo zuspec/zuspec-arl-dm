@@ -115,8 +115,8 @@ cdef class Context(vsc.Context):
         return vsc.ModelField.mk(self.asContext().buildModelAction(
             t.asAction(), name.encode()), True)
 
-    cpdef ModelFieldRootComponent buildModelComponent(self, DataTypeComponent t, name):
-        return ModelFieldRootComponent.mk(
+    cpdef ModelFieldComponent buildModelComponent(self, DataTypeComponent t, name):
+        return ModelFieldComponent.mk(
             self.asContext().buildModelComponent(
                 t.asComponent(), name.encode()), 
             True)
@@ -407,6 +407,7 @@ cdef class ModelEvaluator(object):
             del self._hndl
             
     cpdef ModelEvalIterator eval(self, 
+                        vsc.RandState  randstate,
                         vsc.ModelField root_comp,
                         DataTypeAction root_action):
         if root_comp is None:
@@ -415,6 +416,7 @@ cdef class ModelEvaluator(object):
             raise Exception("None root_action")
 
         cdef decl.IModelEvalIterator *it = self._hndl.eval(
+                randstate._hndl,
                 root_comp.asField(),
                 root_action.asAction())
         
@@ -473,14 +475,17 @@ cdef class ModelFieldAction(vsc.ModelField):
         ret._owned = owned
         return ret
     
-cdef class ModelFieldRootComponent(vsc.ModelField):
+cdef class ModelFieldComponent(vsc.ModelField):
+
+    cpdef void initCompTree(self):
+        self.asComponent().initCompTree()
     
-    cdef decl.IModelFieldRootComponent *asRootComponent(self):
-        return dynamic_cast[decl.IModelFieldRootComponentP](self._hndl)
+    cdef decl.IModelFieldComponent *asComponent(self):
+        return dynamic_cast[decl.IModelFieldComponentP](self._hndl)
     
     @staticmethod
-    cdef ModelFieldRootComponent mk(decl.IModelFieldRootComponent *hndl, bool owned=True):
-        ret = ModelFieldRootComponent()
+    cdef ModelFieldComponent mk(decl.IModelFieldComponent *hndl, bool owned=True):
+        ret = ModelFieldComponent()
         ret._hndl = hndl
         ret._owned = owned
         return ret
@@ -553,14 +558,14 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         pass
 
-    cpdef visitModelFieldRootComponent(self, ModelFieldRootComponent c):
+    cpdef visitModelFieldComponent(self, ModelFieldComponent c):
         pass
 
 cdef public void VisitorProxy_visitModelFieldAction(obj, decl.IModelFieldAction *a) with gil:
     obj.visitModelFieldAction(ModelFieldAction.mk(a, False))
 
-cdef public void VisitorProxy_visitModelFieldRootComponent(obj, decl.IModelFieldRootComponent *c) with gil:
-    obj.visitModelFieldRootComponent(ModelFieldRootComponent.mk(c, False))
+cdef public void VisitorProxy_visitModelFieldComponent(obj, decl.IModelFieldComponent *c) with gil:
+    obj.visitModelFieldComponent(ModelFieldComponent.mk(c, False))
 
 
 cdef class WrapperBuilder(VisitorBase):
@@ -588,7 +593,7 @@ cdef class WrapperBuilder(VisitorBase):
         print("visitModelFieldAction")
         self._set_obj(a)
 
-    cpdef visitModelFieldRootComponent(self, ModelFieldRootComponent c):
+    cpdef visitModelFieldComponent(self, ModelFieldComponent c):
         print("visitModelFieldComponent")
         self._set_obj(c)
 

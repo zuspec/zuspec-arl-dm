@@ -1,5 +1,5 @@
 /**
- * VisitorProxy.h
+ * ModelEvaluatorParallel.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,24 +19,30 @@
  *     Author: 
  */
 #pragma once
-#include <Python.h>
-#include "arl/impl/VisitorBase.h"
+#include "arl/IModelEvalIterator.h"
 
 namespace arl {
 
+class ModelEvaluatorThread;
 
-class VisitorProxy : public VisitorBase {
+class ModelEvaluatorParallel : public virtual IModelEvalIterator {
 public:
-    VisitorProxy(PyObject *);
+    ModelEvaluatorParallel(const std::vector<ModelEvaluatorThread *> &branches);
 
-    virtual ~VisitorProxy();
+    virtual ~ModelEvaluatorParallel();
 
-	virtual void visitModelFieldAction(IModelFieldAction *f) override;
+	virtual bool next() override;
 
-	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
+	virtual ModelEvalNodeT type() const override;
+
+	virtual IModelFieldAction *action() override;
+
+	virtual IModelEvalIterator *iterator() override;
 
 private:
-    PyObject                *m_obj;
+    int32_t                                     m_idx;
+    std::vector<ModelEvaluatorThread *>         m_branches;
+
 
 };
 

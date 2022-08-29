@@ -73,8 +73,8 @@ public:
 				&vsc::IVisitor::visitModelField, f);
 	}
 
-	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {
-		delegate(&arl::IVisitor::visitModelFieldRootComponent,
+	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
+		delegate(&arl::IVisitor::visitModelFieldComponent,
 				&vsc::IVisitor::visitModelField, f);
 	}
 

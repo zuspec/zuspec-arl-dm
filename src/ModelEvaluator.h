@@ -20,8 +20,9 @@ public:
 	virtual ~ModelEvaluator();
 
 	virtual IModelEvalIterator *eval(
-			vsc::IModelField	*root_comp,
-			IDataTypeAction		*root_action) override;
+			const vsc::IRandState	*randstate,
+			vsc::IModelField		*root_comp,
+			IDataTypeAction			*root_action) override;
 
 	virtual IModelEvalIterator *next();
 
@@ -29,6 +30,7 @@ public:
 
 private:
 	IContext						*m_ctxt;
+	vsc::IRandStateUP				m_randstate;
 	IModelFieldActionUP				m_action;
 	IModelActivityTraverseUP		m_dummy_activity;
 	uint32_t						m_activity_idx;

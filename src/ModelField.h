@@ -13,6 +13,10 @@ class ModelField : public virtual vsc::IModelField {
 public:
 	ModelField();
 
+	ModelField(
+		const std::string 	&name,
+		vsc::IDataType		*type);
+
 	virtual ~ModelField();
 
 	virtual vsc::IModelField *getParent() const override {
@@ -22,6 +26,10 @@ public:
 	virtual void setParent(vsc::IModelField *p) override {
 		m_parent = p;
 	}
+
+	virtual const std::string &name() const override { return m_name; }
+
+	virtual vsc::IDataType *getDataType() const override { return m_type; }
 
 	virtual const std::vector<vsc::IModelConstraintUP> &constraints() const override {
 		return m_constraints;

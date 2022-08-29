@@ -18,7 +18,7 @@ ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IModelFieldAction *IModelFieldActionP
-ctypedef IModelFieldRootComponent *IModelFieldRootComponentP
+ctypedef IModelFieldComponent *IModelFieldComponentP
 ctypedef ITypeFieldActivity *ITypeFieldActivityP
 ctypedef unique_ptr[ITypeFieldActivity] ITypeFieldActivityUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
@@ -38,7 +38,7 @@ cdef extern from "arl/IContext.h" namespace "arl":
         vsc.IModelField *buildModelAction(
             IDataTypeAction *t,
             const cpp_string &)
-        IModelFieldRootComponent *buildModelComponent(
+        IModelFieldComponent *buildModelComponent(
             IDataTypeComponent *t,
             const cpp_string &)
         IDataTypeAction *findDataTypeAction(const cpp_string &)
@@ -103,10 +103,13 @@ cdef extern from "arl/IDataTypeComponent.h" namespace "arl":
 cdef extern from "arl/IDataTypeFlowObj.h" namespace "arl":
     cdef cppclass IDataTypeFlowObj(vsc.IDataTypeStruct):
         pass
-    
+
 cdef extern from "arl/IModelEvaluator.h" namespace "arl":
     cdef cppclass IModelEvaluator:
-        IModelEvalIterator *eval(vsc.IModelField *, IDataTypeAction *)
+        IModelEvalIterator *eval(
+            vsc.IRandState *,
+            vsc.IModelField *, 
+            IDataTypeAction *)
 
 cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
     cdef enum ModelEvalNodeT:
@@ -123,9 +126,9 @@ cdef extern from "arl/IModelFieldAction.h" namespace "arl":
     cdef cppclass IModelFieldAction(vsc.IModelField):
         pass
         
-cdef extern from "arl/IModelFieldRootComponent.h" namespace "arl":
-    cdef cppclass IModelFieldRootComponent(vsc.IModelField):
-        pass
+cdef extern from "arl/IModelFieldComponent.h" namespace "arl":
+    cdef cppclass IModelFieldComponent(vsc.IModelField):
+        void initCompTree()
     
 cdef extern from "arl/ITypeFieldActivity.h" namespace "arl":
     cdef cppclass ITypeFieldActivity(vsc.ITypeField):
@@ -150,4 +153,4 @@ cdef extern from "arl/IVisitor.h" namespace "arl":
 cdef extern from "VisitorProxy.h" namespace "arl":
     cdef cppclass VisitorProxy(IVisitor):
         VisitorProxy(cpy_ref.PyObject *)
-        pass
+

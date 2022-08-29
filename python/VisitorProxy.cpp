@@ -24,7 +24,7 @@
 
 
 namespace arl {
-VisitorProxy::VisitorProxy(PyObject *obj) : m_obj(obj) {
+VisitorProxy::VisitorProxy(PyObject *obj) : VisitorBase(false), m_obj(obj) {
     Py_INCREF(m_obj);
 }
 
@@ -36,8 +36,8 @@ void VisitorProxy::visitModelFieldAction(IModelFieldAction *f) {
     VisitorProxy_visitModelFieldAction(m_obj, f);
 }
 
-void VisitorProxy::visitModelFieldRootComponent(IModelFieldRootComponent *f) {
-    VisitorProxy_visitModelFieldRootComponent(m_obj, f);
+void VisitorProxy::visitModelFieldComponent(IModelFieldComponent *f) {
+    VisitorProxy_visitModelFieldComponent(m_obj, f);
 }
 
 }

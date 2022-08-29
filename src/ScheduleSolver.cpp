@@ -20,7 +20,7 @@ ScheduleSolver::~ScheduleSolver() {
 }
 
 std::pair<ExecGraphNode *, std::string> ScheduleSolver::solve(
-			ModelFieldRootComponent			*root_comp,
+			ModelFieldComponent				*root_comp,
 			IDataTypeAction					*root_action) {
 	ScheduleSolveEvalQueue *qn = new ScheduleSolveEvalQueue();
 	ScheduleSolveEvalQueue *qp = new ScheduleSolveEvalQueue();

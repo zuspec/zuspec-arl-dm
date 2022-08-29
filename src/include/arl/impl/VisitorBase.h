@@ -19,7 +19,7 @@
 #include "arl/IModelActivitySequence.h"
 #include "arl/IModelActivityTraverse.h"
 #include "arl/IModelFieldAction.h"
-#include "arl/IModelFieldRootComponent.h"
+#include "arl/IModelFieldComponent.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldActivity.h"
 #include "arl/ITypeFieldClaim.h"
@@ -31,7 +31,7 @@ namespace arl {
 class VisitorBase : public virtual arl::IVisitor, public vsc::VisitorBase {
 public:
 
-	VisitorBase(vsc::IVisitor *this_p=0) : vsc::VisitorBase(this_p) { }
+	VisitorBase(bool cascade=true, vsc::IVisitor *this_p=0) : vsc::VisitorBase(cascade, this_p) { }
 
 	VisitorBase(arl::IVisitor *this_p) : vsc::VisitorBase(this_p) { }
 
@@ -104,7 +104,7 @@ public:
 		}
 	}
 
-	virtual void visitModelFieldRootComponent(IModelFieldRootComponent *f) override {
+	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
 		vsc::VisitorBase::visitModelField(f);
 	}
 

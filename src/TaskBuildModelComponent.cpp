@@ -6,7 +6,7 @@
  */
 
 #include "TaskBuildModelComponent.h"
-#include "ModelFieldRootComponent.h"
+#include "ModelFieldComponent.h"
 
 namespace arl {
 
@@ -20,10 +20,10 @@ TaskBuildModelComponent::~TaskBuildModelComponent() {
 	// TODO Auto-generated destructor stub
 }
 
-IModelFieldRootComponent *TaskBuildModelComponent::build(
+IModelFieldComponent *TaskBuildModelComponent::build(
 		arl::IDataTypeComponent *c,
 		const std::string &name) {
-	ModelFieldRootComponent *root_comp = dynamic_cast<ModelFieldRootComponent *>(m_core.build(c, name));
+	ModelFieldComponent *root_comp = dynamic_cast<ModelFieldComponent *>(m_core.build(c, name));
 
 	root_comp->initCompTree();
 
@@ -32,7 +32,7 @@ IModelFieldRootComponent *TaskBuildModelComponent::build(
 
 void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
 	if (m_ctxt->fieldStackSize() == 0) {
-		m_ctxt->pushField(new ModelFieldRootComponent(
+		m_ctxt->pushField(new ModelFieldComponent(
 				m_ctxt->ctxt(),
 				m_core.name(),
 				t));

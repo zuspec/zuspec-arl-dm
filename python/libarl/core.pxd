@@ -15,7 +15,7 @@ cdef class Arl(object):
 cdef class Context(vsc.Context):
 
     cpdef vsc.ModelField buildModelAction(self, DataTypeAction t, name)
-    cpdef ModelFieldRootComponent buildModelComponent(self, DataTypeComponent t, name)
+    cpdef ModelFieldComponent buildModelComponent(self, DataTypeComponent t, name)
     cpdef DataTypeAction findDataTypeAction(self, name)
     cpdef DataTypeAction mkDataTypeAction(self, name)
     cpdef DataTypeActivitySchedule mkDataTypeActivitySchedule(self)
@@ -104,6 +104,7 @@ cdef class ModelEvaluator(object):
     cdef decl.IModelEvaluator        *_hndl
     
     cpdef ModelEvalIterator eval(self, 
+                        vsc.RandState  randstate, 
                         vsc.ModelField root_comp,
                         DataTypeAction root_action)
     
@@ -128,12 +129,14 @@ cdef class ModelFieldAction(vsc.ModelField):
     @staticmethod
     cdef ModelFieldAction mk(decl.IModelFieldAction *hndl, bool owned=*)
     
-cdef class ModelFieldRootComponent(vsc.ModelField):
+cdef class ModelFieldComponent(vsc.ModelField):
 
-    cdef decl.IModelFieldRootComponent *asRootComponent(self)
+    cpdef void initCompTree(self)
+
+    cdef decl.IModelFieldComponent *asComponent(self)
     
     @staticmethod
-    cdef ModelFieldRootComponent mk(decl.IModelFieldRootComponent *, bool owned=*)
+    cdef ModelFieldComponent mk(decl.IModelFieldComponent *, bool owned=*)
     
 cdef class TypeFieldActivity(vsc.TypeField):
 
@@ -171,7 +174,7 @@ cdef class VisitorBase(vsc.VisitorBase):
 
     cpdef visitModelFieldAction(self, ModelFieldAction a)
 
-    cpdef visitModelFieldRootComponent(self, ModelFieldRootComponent c)
+    cpdef visitModelFieldComponent(self, ModelFieldComponent c)
 
 cdef class WrapperBuilder(VisitorBase):
     cdef list _obj

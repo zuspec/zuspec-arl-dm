@@ -19,8 +19,9 @@ public:
 	virtual ~IModelEvaluator() { }
 
 	virtual IModelEvalIterator *eval(
-			vsc::IModelField	*root_comp,
-			IDataTypeAction		*root_action) = 0;
+			const vsc::IRandState	*randstate,
+			vsc::IModelField		*root_comp,
+			IDataTypeAction			*root_action) = 0;
 
 };
 

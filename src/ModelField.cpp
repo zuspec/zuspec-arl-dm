@@ -9,6 +9,13 @@
 
 namespace arl {
 
+ModelField::ModelField(
+	const std::string 	&name,
+	vsc::IDataType		*type) : m_name(name), m_type(type) {
+	m_parent = 0;
+	m_flags = vsc::ModelFieldFlag::NoFlags;
+}
+
 ModelField::ModelField() {
 	m_parent = 0;
 	m_flags = vsc::ModelFieldFlag::NoFlags;

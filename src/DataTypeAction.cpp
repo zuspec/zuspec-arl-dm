@@ -117,8 +117,8 @@ vsc::IModelField *DataTypeAction::mkTypeField(
 void DataTypeAction::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<IVisitor *>(v)) {
 		dynamic_cast<IVisitor *>(v)->visitDataTypeAction(this);
-	} else {
-		// TODO:
+	} else if (v->cascade()) {
+		v->visitDataTypeStruct(this);
 	}
 }
 

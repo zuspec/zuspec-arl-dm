@@ -115,9 +115,12 @@ vsc::IModelField *DataTypeAction::mkTypeField(
 }
 
 void DataTypeAction::accept(vsc::IVisitor *v) {
+    fprintf(stdout, "DataTypeAction::accept\n");
 	if (dynamic_cast<IVisitor *>(v)) {
+        fprintf(stdout, ".. pass on\n");
 		dynamic_cast<IVisitor *>(v)->visitDataTypeAction(this);
 	} else if (v->cascade()) {
+        fprintf(stdout, ".. wrong visitor type\n");
 		v->visitDataTypeStruct(this);
 	}
 }

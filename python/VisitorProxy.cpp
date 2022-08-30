@@ -32,6 +32,11 @@ VisitorProxy::~VisitorProxy() {
     Py_DECREF(m_obj);
 }
 
+void VisitorProxy::visitDataTypeAction(IDataTypeAction *t) {
+    fprintf(stdout, "VisitorProxy::visitDataTypeAction\n");
+    VisitorProxy_visitDataTypeAction(m_obj, t);
+}
+
 void VisitorProxy::visitModelFieldAction(IModelFieldAction *f) {
     VisitorProxy_visitModelFieldAction(m_obj, f);
 }

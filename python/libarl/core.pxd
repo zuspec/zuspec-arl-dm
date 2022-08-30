@@ -172,6 +172,8 @@ cdef class TypeFieldPool(vsc.TypeField):
 
 cdef class VisitorBase(vsc.VisitorBase):
 
+    cpdef visitDataTypeAction(self, DataTypeAction t)
+
     cpdef visitModelFieldAction(self, ModelFieldAction a)
 
     cpdef visitModelFieldComponent(self, ModelFieldComponent c)

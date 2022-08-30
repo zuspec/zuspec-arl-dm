@@ -555,11 +555,17 @@ cdef class VisitorBase(vsc.VisitorBase):
         super().__dealloc__()
         del self._arl_proxy
 
+    cpdef visitDataTypeAction(self, DataTypeAction t):
+        pass
+
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         pass
 
     cpdef visitModelFieldComponent(self, ModelFieldComponent c):
         pass
+
+cdef public void VisitorProxy_visitDataTypeAction(obj, decl.IDataTypeAction *t) with gil:
+    obj.visitDataTypeAction(DataTypeAction.mk(t, False))
 
 cdef public void VisitorProxy_visitModelFieldAction(obj, decl.IModelFieldAction *a) with gil:
     obj.visitModelFieldAction(ModelFieldAction.mk(a, False))
@@ -588,6 +594,9 @@ cdef class WrapperBuilder(VisitorBase):
 
     cdef _set_obj(self, vsc.ObjBase obj):
         self._obj[-1] = obj
+
+    cpdef visitDataTypeAction(self, DataTypeAction t):
+        self._set_obj(t)
 
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         print("visitModelFieldAction")

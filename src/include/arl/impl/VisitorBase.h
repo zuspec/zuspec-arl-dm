@@ -9,6 +9,7 @@
 #include "vsc/impl/VisitorBase.h"
 
 #include "arl/IDataTypeAction.h"
+#include "arl/IDataTypeActivityParallel.h"
 #include "arl/IDataTypeActivitySchedule.h"
 #include "arl/IDataTypeActivitySequence.h"
 #include "arl/IDataTypeActivityTraverse.h"
@@ -44,6 +45,10 @@ public:
 				it!=i->activities().end(); it++) {
 			(*it)->accept(m_this);
 		}
+	}
+
+	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) override {
+		vsc::VisitorBase::visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override {

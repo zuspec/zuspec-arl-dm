@@ -13,7 +13,7 @@ public:
 
     void collect(
         std::vector<IModelActivity *>   &activities,
-        IModelActivityScope             *activity
+        IModelActivity                  *activity
     );
 
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) override;

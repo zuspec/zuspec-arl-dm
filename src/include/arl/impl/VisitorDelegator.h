@@ -28,6 +28,11 @@ public:
 				&vsc::IVisitor::visitDataTypeStruct, i);
 	}
 
+	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) override {
+		delegate(&arl::IVisitor::visitDataTypeActivityParallel,
+				&vsc::IVisitor::visitDataTypeStruct, t);
+	}
+
 	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override {
 		delegate(&arl::IVisitor::visitDataTypeActivitySchedule,
 				&vsc::IVisitor::visitDataTypeStruct, t);
@@ -106,7 +111,7 @@ private:
 			T1 *v) {
 		if (delegate()) {
 			((*delegate()).*f1)(v);
-		} else {
+		} else if (m_delegate->cascade()) {
 			((*vsc::VisitorDelegator::delegate()).*f2)(v);
 		}
 	}

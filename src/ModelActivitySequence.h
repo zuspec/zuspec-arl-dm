@@ -12,7 +12,9 @@
 
 namespace arl {
 
-class ModelActivitySequence : public virtual IModelActivitySequence, public virtual ModelField {
+class ModelActivitySequence : 
+	public virtual IModelActivitySequence, 
+	public virtual ModelField {
 public:
 	ModelActivitySequence(
 			const std::string		&name,

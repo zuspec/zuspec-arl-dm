@@ -18,6 +18,7 @@ cdef class Context(vsc.Context):
     cpdef ModelFieldComponent buildModelComponent(self, DataTypeComponent t, name)
     cpdef DataTypeAction findDataTypeAction(self, name)
     cpdef DataTypeAction mkDataTypeAction(self, name)
+    cpdef DataTypeActivityParallel mkDataTypeActivityParallel(self)
     cpdef DataTypeActivitySchedule mkDataTypeActivitySchedule(self)
     cpdef DataTypeActivitySequence mkDataTypeActivitySequence(self)
     cpdef bool addDataTypeAction(self, DataTypeAction)
@@ -68,6 +69,12 @@ cdef class DataTypeActivityScope(DataTypeActivity):
     cpdef addActivity(self, TypeFieldActivity)
     cpdef getActivities(self)
     cdef decl.IDataTypeActivityScope *asScope(self)
+
+cdef class DataTypeActivityParallel(DataTypeActivityScope):
+    cdef decl.IDataTypeActivityParallel *asParallel(self)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivityParallel *hndl, bool owned=*)
     
 cdef class DataTypeActivitySchedule(DataTypeActivityScope):
     cdef decl.IDataTypeActivitySchedule *asSchedule(self)

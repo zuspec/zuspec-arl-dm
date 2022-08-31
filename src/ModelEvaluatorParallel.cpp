@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "DebugMacros.h"
 #include "ModelEvaluatorParallel.h"
 #include "ModelEvaluatorThread.h"
 
@@ -26,7 +27,7 @@ namespace arl {
 ModelEvaluatorParallel::ModelEvaluatorParallel(
     const std::vector<ModelEvaluatorThread *> &branches) :
     m_idx(-1), m_branches(branches.begin(), branches.end()) {
-
+    DEBUG_INIT("ModelEvaluatorParallel");
 }
 
 ModelEvaluatorParallel::~ModelEvaluatorParallel() {
@@ -35,6 +36,7 @@ ModelEvaluatorParallel::~ModelEvaluatorParallel() {
 
 bool ModelEvaluatorParallel::next() {
     m_idx++;
+    DEBUG("next: idx=%d sz=%d", m_idx, m_branches.size());
 
     if (m_idx < m_branches.size()) {
         return true;
@@ -45,14 +47,17 @@ bool ModelEvaluatorParallel::next() {
 }
 
 ModelEvalNodeT ModelEvaluatorParallel::type() const {
+    DEBUG("type: hardcoded Parallel");
     return ModelEvalNodeT::Parallel;
 }
 
 IModelFieldAction *ModelEvaluatorParallel::action() {
+    DEBUG("action: hardcoded 0");
     return 0;
 }
 
 IModelEvalIterator *ModelEvaluatorParallel::iterator() {
+    DEBUG("iterator: %p", m_branches.at(m_idx));
     return m_branches.at(m_idx);
 }
 

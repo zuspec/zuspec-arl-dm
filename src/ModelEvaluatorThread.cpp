@@ -33,12 +33,11 @@ ModelEvaluatorThread::~ModelEvaluatorThread() {
 }
 
 bool ModelEvaluatorThread::next() {
-    DEBUG_ENTER("next");
+    DEBUG_ENTER("next m_iter_s.size=%d", m_iter_s.size());
     bool ret = false;
-    while (m_iter_s.size()) {
+    while (!ret && m_iter_s.size()) {
         if (m_iter_s.back()->next()) {
             ret = true;
-            break;
         } else {
             m_iter_s.pop_back();
         }
@@ -53,14 +52,17 @@ bool ModelEvaluatorThread::next() {
 }
 
 ModelEvalNodeT ModelEvaluatorThread::type() const {
+    DEBUG("type");
     return m_iter_s.back()->type();
 }
 
 IModelFieldAction *ModelEvaluatorThread::action() {
+    DEBUG("action");
     return m_iter_s.back()->action();
 }
 
 IModelEvalIterator *ModelEvaluatorThread::iterator() {
+    DEBUG("iterator");
     return m_iter_s.back()->iterator();
 }
 

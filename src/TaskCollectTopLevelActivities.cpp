@@ -15,7 +15,7 @@ TaskCollectTopLevelActivities::~TaskCollectTopLevelActivities() {
 
 void TaskCollectTopLevelActivities::collect(
     std::vector<IModelActivity *>       &activities,
-    IModelActivityScope                 *activity) {
+    IModelActivity                      *activity) {
     DEBUG_ENTER("collect");
     m_activities = &activities;
 

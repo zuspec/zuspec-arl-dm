@@ -7,6 +7,7 @@
 #pragma once
 #include "vsc/IContext.h"
 #include "arl/IDataTypeAction.h"
+#include "arl/IDataTypeActivityParallel.h"
 #include "arl/IDataTypeActivitySchedule.h"
 #include "arl/IDataTypeActivitySequence.h"
 #include "arl/IDataTypeActivityTraverse.h"
@@ -43,6 +44,8 @@ public:
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) = 0;
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) = 0;
+
+	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() = 0;
 
 	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() = 0;
 

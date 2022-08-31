@@ -7,10 +7,13 @@
 
 #pragma once
 #include "arl/IModelActivityParallel.h"
+#include "ModelField.h"
 
 namespace arl {
 
-class ModelActivityParallel : public IModelActivityParallel {
+class ModelActivityParallel : 
+	public virtual IModelActivityParallel,
+	public virtual ModelField {
 public:
 	ModelActivityParallel();
 

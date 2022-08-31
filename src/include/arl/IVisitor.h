@@ -11,6 +11,7 @@
 namespace arl {
 
 class IDataTypeAction;
+class IDataTypeActivityParallel;
 class IDataTypeActivitySchedule;
 class IDataTypeActivitySequence;
 class IDataTypeActivityTraverse;
@@ -33,6 +34,8 @@ public:
 	virtual ~IVisitor() { }
 
 	virtual void visitDataTypeAction(IDataTypeAction *t) = 0;
+
+	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) = 0;
 
 	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) = 0;
 

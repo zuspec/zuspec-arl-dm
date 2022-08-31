@@ -19,6 +19,7 @@
  *     Author:
  */
 #include "DebugMacros.h"
+#include "ModelEvaluatorParallel.h"
 #include "ModelEvaluatorSequence.h"
 #include "TaskCollectTopLevelActivities.h"
 
@@ -64,6 +65,9 @@ bool ModelEvaluatorSequence::next() {
         return false;
     }
 
+    m_action = 0;
+    m_next_it = 0;
+
     // Process the next entry on the activities list. The resulting
     // content of 'action' and 'next_it' determines what happens
     // next
@@ -73,11 +77,23 @@ bool ModelEvaluatorSequence::next() {
         DEBUG_LEAVE("next - action to execute");
         return true;
     } else if (m_next_it) {
-        m_thread->pushIterator(m_next_it);
+        IModelEvalIterator *it = m_next_it;
+        m_thread->pushIterator(it);
 
         // The next iterator will determine what happens next
         DEBUG_LEAVE("next - pushed new iterator");
-        return m_next_it->next();
+        m_action = 0;
+        m_next_it = 0;
+        m_type = ModelEvalNodeT::Action;
+        bool ret = it->next();
+
+        if (ret) {
+            m_action = it->action();
+            m_next_it = it->iterator();
+            m_type = it->type();
+        }
+
+        return ret;
     } else {
         fprintf(stdout, "Fatal Error: unknown case\n");
         return false;
@@ -85,19 +101,37 @@ bool ModelEvaluatorSequence::next() {
 }
 
 ModelEvalNodeT ModelEvaluatorSequence::type() const {
-    return ModelEvalNodeT::Action;
+    DEBUG("type: %d", static_cast<int32_t>(m_type));
+    return m_type;
 }
 
 IModelFieldAction *ModelEvaluatorSequence::action() {
+    DEBUG("action: %p", m_action);
     return m_action;
 }
 
 IModelEvalIterator *ModelEvaluatorSequence::iterator() {
-    return 0;
+    DEBUG("iterator: %p", m_next_it);
+    return m_next_it;
 }
 
 void ModelEvaluatorSequence::visitModelActivityParallel(IModelActivityParallel *a) {
     DEBUG_ENTER("visitModelActivityParallel");
+    std::vector<ModelEvaluatorThread *>     branches;
+
+    for (std::vector<IModelActivity *>::const_iterator
+        it=a->branches().begin();
+        it!=a->branches().end(); it++) {
+        ModelEvaluatorThread *thread = new ModelEvaluatorThread(m_thread->randstate()->next());
+        std::vector<IModelActivity *> activities;
+        TaskCollectTopLevelActivities().collect(activities, *it);
+        DEBUG("Branch has %d activities", activities.size());
+        ModelEvaluatorSequence *seq = new ModelEvaluatorSequence(thread, activities);
+        thread->pushIterator(seq);
+        branches.push_back(thread);
+    }
+
+    m_next_it = new ModelEvaluatorParallel(branches);
     DEBUG_LEAVE("visitModelActivityParallel");
 }
 

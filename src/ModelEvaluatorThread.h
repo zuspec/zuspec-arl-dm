@@ -39,6 +39,8 @@ public:
 
 	virtual IModelEvalIterator *iterator() override;
 
+    vsc::IRandState *randstate() { return m_randstate.get(); }
+
     void pushIterator(IModelEvalIterator *it) { 
         m_iter_s.push_back(it);
     }

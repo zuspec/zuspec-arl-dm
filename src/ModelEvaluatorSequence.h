@@ -63,6 +63,7 @@ private:
     std::vector<IModelActivityUP>       m_activities_up;
     IModelFieldAction                   *m_action;
     IModelEvalIterator                  *m_next_it;
+    ModelEvalNodeT                      m_type;
 };
 
 }

@@ -7,6 +7,7 @@
 
 #include "Context.h"
 #include "DataTypeAction.h"
+#include "DataTypeActivityParallel.h"
 #include "DataTypeActivitySchedule.h"
 #include "DataTypeActivitySequence.h"
 #include "DataTypeActivityTraverse.h"
@@ -70,9 +71,12 @@ bool Context::addDataTypeAction(IDataTypeAction *t) {
 	return m_action_type_m.insert({t->name(), IDataTypeActionUP(t)}).second;
 }
 
+IDataTypeActivityParallel *Context::mkDataTypeActivityParallel() {
+	return new DataTypeActivityParallel();
+}
+
 IDataTypeActivitySchedule *Context::mkDataTypeActivitySchedule() {
 	return new DataTypeActivitySchedule();
-
 }
 
 IDataTypeActivitySequence *Context::mkDataTypeActivitySequence() {

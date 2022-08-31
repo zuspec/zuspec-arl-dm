@@ -32,6 +32,8 @@ public:
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) override;
 
+	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() override;
+
 	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() override;
 
 	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() override;

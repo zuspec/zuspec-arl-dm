@@ -134,6 +134,9 @@ cdef class Context(vsc.Context):
     cpdef bool addDataTypeAction(self, DataTypeAction a):
         a._owned = False
         return self.asContext().addDataTypeAction(a.asAction())
+
+    cpdef DataTypeActivityParallel mkDataTypeActivityParallel(self):
+        return DataTypeActivityParallel.mk(self.asContext().mkDataTypeActivityParallel(), True)
     
     cpdef DataTypeActivitySchedule mkDataTypeActivitySchedule(self):
         return DataTypeActivitySchedule.mk(self.asContext().mkDataTypeActivitySchedule(), True)
@@ -335,8 +338,16 @@ cdef class DataTypeActivityScope(DataTypeActivity):
     cdef decl.IDataTypeActivityScope *asScope(self):
         return dynamic_cast[decl.IDataTypeActivityScopeP](self._hndl)
 
+cdef class DataTypeActivityParallel(DataTypeActivityScope):
+    cdef decl.IDataTypeActivityParallel *asParallel(self):
+        return dynamic_cast[decl.IDataTypeActivityParallelP](self._hndl)
     
-    pass
+    @staticmethod
+    cdef mk(decl.IDataTypeActivityParallel *hndl, bool owned=True):
+        ret = DataTypeActivityParallel()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
 
 cdef class DataTypeActivitySchedule(DataTypeActivityScope):
     cdef decl.IDataTypeActivitySchedule *asSchedule(self):
@@ -440,7 +451,12 @@ cdef class ModelEvalIterator(object):
             del self._hndl
             
     cpdef bool next(self):
+        if self._hndl == NULL:
+            return False
+            raise Exception("Attempting to advance an invalid iterator")
+
         ret = self._hndl.next()
+
         # Iterator self-destructs when it's no longer valid
         if not ret:
             self._hndl = NULL 

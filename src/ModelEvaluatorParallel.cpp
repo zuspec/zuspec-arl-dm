@@ -26,7 +26,7 @@
 namespace arl {
 ModelEvaluatorParallel::ModelEvaluatorParallel(
     const std::vector<ModelEvaluatorThread *> &branches) :
-    m_idx(-1), m_branches(branches.begin(), branches.end()) {
+    m_idx(-2), m_branches(branches.begin(), branches.end()) {
     DEBUG_INIT("ModelEvaluatorParallel");
 }
 
@@ -36,19 +36,36 @@ ModelEvaluatorParallel::~ModelEvaluatorParallel() {
 
 bool ModelEvaluatorParallel::next() {
     m_idx++;
-    DEBUG("next: idx=%d sz=%d", m_idx, m_branches.size());
+    DEBUG_ENTER("next: idx=%d sz=%d", m_idx, m_branches.size());
 
-    if (m_idx < m_branches.size()) {
+    if (m_idx < 0 || m_idx < m_branches.size()) {
+        DEBUG_LEAVE("next: ret=true");
         return true;
     } else {
+        DEBUG_LEAVE("next: ret=false");
         delete this;
         return false;
     }
 }
 
+bool ModelEvaluatorParallel::valid() {
+    return (m_idx >= 0 && m_idx < m_branches.size());
+}
+
+bool ModelEvaluatorParallel::pop() {
+    // Ensure this iterator has been consumed as an iterator
+    // before indicating it's time to pop
+    return m_idx >= -1;
+}
+
 ModelEvalNodeT ModelEvaluatorParallel::type() const {
-    DEBUG("type: hardcoded Parallel");
-    return ModelEvalNodeT::Parallel;
+    if (m_idx < 0) {
+        DEBUG("type: hardcoded Parallel");
+        return ModelEvalNodeT::Parallel;
+    } else {
+        DEBUG("type: hardcoded Sequence");
+        return ModelEvalNodeT::Sequence;
+    }
 }
 
 IModelFieldAction *ModelEvaluatorParallel::action() {
@@ -57,8 +74,12 @@ IModelFieldAction *ModelEvaluatorParallel::action() {
 }
 
 IModelEvalIterator *ModelEvaluatorParallel::iterator() {
-    DEBUG("iterator: %p", m_branches.at(m_idx));
-    return m_branches.at(m_idx);
+    if (m_idx < 0) {
+        return this;
+    } else {
+        DEBUG("iterator: %p", m_branches.at(m_idx));
+        return m_branches.at(m_idx);
+    }
 }
 
 }

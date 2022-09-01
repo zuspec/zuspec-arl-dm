@@ -50,10 +50,11 @@ file(GLOB test_libarl_SRC
   )
 
 add_executable(test_libarl ${test_libarl_SRC})
+add_dependencies(test_libarl LibVSC)
 target_include_directories(test_libarl PUBLIC
     "${source_dir}/googletest/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/facade"
-	${PACKAGES_DIR}/magic_enum/include
+    ${LIBVSC_DIR}/src/include
+    ${LIBVSC_DIR}/src
     )
    
 target_link_directories(test_libarl PRIVATE
@@ -70,6 +71,7 @@ endif()
 
 target_link_libraries(test_libarl 
 	arl 
+  vsc_static
 	libgtest 
 	libgmock
 	)

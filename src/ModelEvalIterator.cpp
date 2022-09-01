@@ -39,6 +39,10 @@ bool ModelEvalIterator::next() {
 	}
 }
 
+bool ModelEvalIterator::valid() {
+	return (m_idx >= 0 && m_idx < m_seq.size());
+}
+
 ModelEvalNodeT ModelEvalIterator::type() const {
 	return m_seq.at(m_idx).type;
 }

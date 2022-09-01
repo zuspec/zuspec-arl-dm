@@ -35,10 +35,18 @@ ModelEvaluatorThread::~ModelEvaluatorThread() {
 bool ModelEvaluatorThread::next() {
     DEBUG_ENTER("next m_iter_s.size=%d", m_iter_s.size());
     bool ret = false;
+
+    // First, get rid of any entries that have expired
+    while (m_iter_s.size() && m_iter_s.back()->pop()) {
+        DEBUG("pop element");
+        m_iter_s.pop_back();
+    }
+
     while (!ret && m_iter_s.size()) {
         if (m_iter_s.back()->next()) {
             ret = true;
         } else {
+            DEBUG("pop last iterator");
             m_iter_s.pop_back();
         }
     }
@@ -49,6 +57,10 @@ bool ModelEvaluatorThread::next() {
 
     DEBUG_LEAVE("next %d", ret);
     return ret;
+}
+
+bool ModelEvaluatorThread::valid() {
+    return (m_iter_s.size() && m_iter_s.back()->valid());
 }
 
 ModelEvalNodeT ModelEvaluatorThread::type() const {
@@ -64,6 +76,10 @@ IModelFieldAction *ModelEvaluatorThread::action() {
 IModelEvalIterator *ModelEvaluatorThread::iterator() {
     DEBUG("iterator");
     return m_iter_s.back()->iterator();
+}
+
+void ModelEvaluatorThread::pushIterator(IModelEvalIterator *it) {
+    m_iter_s.push_back(it);
 }
 
 }

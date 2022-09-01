@@ -19,6 +19,8 @@ public:
 
 	virtual bool next() override;
 
+	virtual bool pop() override { return false; }
+
 	virtual ModelEvalNodeT type() const override;
 
 	virtual IModelFieldAction *action() override;

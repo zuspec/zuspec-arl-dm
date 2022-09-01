@@ -12,12 +12,9 @@ endif()
 
 if (NOT PACKAGES_DIR)
   set(PACKAGES_DIR ${CMAKE_SOURCE_DIR}/packages)
+  set(ENABLE_TESTING 1)
 
 
-  # Testing is only enabled when libvsc is the top-level project
-  enable_testing()
-
-  add_subdirectory(test)
 endif()
 
 set (LIBVSC_DIR "${PACKAGES_DIR}/libvsc")
@@ -58,5 +55,11 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
 
 add_subdirectory(src)
 
+if (ENABLE_TESTING)
+  # Testing is only enabled when libvsc is the top-level project
+  enable_testing()
+
+  add_subdirectory(test)
+endif()
 
 

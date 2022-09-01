@@ -1,5 +1,5 @@
 /**
- * ModelEvaluatorParallel.h
+ * TestModelEvalIterator.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,34 +19,16 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelEvalIterator.h"
+#include "gtest/gtest.h"
 
 namespace arl {
 
-class ModelEvaluatorThread;
 
-class ModelEvaluatorParallel : public virtual IModelEvalIterator {
+class TestModelEvalIterator : public ::testing::Test {
 public:
-    ModelEvaluatorParallel(const std::vector<ModelEvaluatorThread *> &branches);
+    TestModelEvalIterator();
 
-    virtual ~ModelEvaluatorParallel();
-
-	virtual bool next() override;
-
-	virtual bool valid() override;
-
-	virtual bool pop() override;
-
-	virtual ModelEvalNodeT type() const override;
-
-	virtual IModelFieldAction *action() override;
-
-	virtual IModelEvalIterator *iterator() override;
-
-private:
-    int32_t                                     m_idx;
-    std::vector<ModelEvaluatorThread *>         m_branches;
-
+    virtual ~TestModelEvalIterator();
 
 };
 

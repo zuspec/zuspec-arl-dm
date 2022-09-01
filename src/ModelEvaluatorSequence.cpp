@@ -100,6 +100,10 @@ bool ModelEvaluatorSequence::next() {
     }
 }
 
+bool ModelEvaluatorSequence::valid() {
+    return (m_idx >= 0 && m_idx < m_activities.size());
+}
+
 ModelEvalNodeT ModelEvaluatorSequence::type() const {
     DEBUG("type: %d", static_cast<int32_t>(m_type));
     return m_type;

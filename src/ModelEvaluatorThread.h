@@ -33,6 +33,10 @@ public:
 
 	virtual bool next() override;
 
+    virtual bool valid() override;
+
+	virtual bool pop() override { return false; }
+
 	virtual ModelEvalNodeT type() const override;
 
 	virtual IModelFieldAction *action() override;
@@ -41,9 +45,7 @@ public:
 
     vsc::IRandState *randstate() { return m_randstate.get(); }
 
-    void pushIterator(IModelEvalIterator *it) { 
-        m_iter_s.push_back(it);
-    }
+    void pushIterator(IModelEvalIterator *it);
 
 private:
     vsc::IRandStateUP                       m_randstate;

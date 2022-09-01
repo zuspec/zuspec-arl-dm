@@ -75,6 +75,7 @@ bool ModelEvaluatorSequence::next() {
 
     if (m_action) {
         DEBUG_LEAVE("next - action to execute");
+        m_type = ModelEvalNodeT::Action;
         return true;
     } else if (m_next_it) {
         IModelEvalIterator *it = m_next_it;

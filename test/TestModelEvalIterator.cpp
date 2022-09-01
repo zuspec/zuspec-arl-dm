@@ -99,4 +99,69 @@ TEST_F(TestModelEvalIterator, two_branch_parallel) {
     ASSERT_FALSE(parallel_it->next());
 }
 
+TEST_F(TestModelEvalIterator, two_branch_parallel_branch_seq) {
+
+    // ModelAction
+    // - Activity
+    //   - parallel
+    //     - traverse
+    //     - traverse
+
+    ArlImpl::inst()->init(vsc::DebugMgr::inst());
+    vsc::DebugMgr::inst()->enable(true);
+
+    IModelFieldActionUP traverse_1(new ModelFieldActionRoot("traverse_1", 0));
+    IModelFieldActionUP traverse_2(new ModelFieldActionRoot("traverse_2", 0));
+    IModelFieldActionUP root(new ModelFieldActionRoot("root", 0));
+
+    vsc::IRandStateUP rs(new vsc::RandState("0"));
+
+    IModelActivitySequence *activity = new ModelActivitySequence("", 0);
+    IModelActivityParallel *parallel = new ModelActivityParallel();
+    IModelActivitySequence *seq_1 = new ModelActivitySequence("XX", 0);
+    IModelActivitySequence *seq_2 = new ModelActivitySequence("XX", 0);
+
+    seq_1->addActivity(new ModelActivityTraverse(traverse_1.get(), 0));
+    seq_2->addActivity(new ModelActivityTraverse(traverse_2.get(), 0));
+
+    parallel->addBranch(seq_1);
+    parallel->addBranch(seq_2);
+    activity->addActivity(parallel);
+    root->addActivity(activity);
+
+    ModelEvaluatorThread *root_thread = new ModelEvaluatorThread(rs->next());
+    ModelEvaluatorSequence *root_seq = new ModelEvaluatorSequence(root_thread);
+    root_seq->addActivity(new ModelActivityTraverse(root.get(), 0), true);
+    root_thread->pushIterator(root_seq);
+
+    ASSERT_TRUE(root_thread->next());
+    ASSERT_EQ(root_thread->type(), ModelEvalNodeT::Parallel);
+    IModelEvalIterator *parallel_it = root_thread->iterator();
+    ASSERT_TRUE(parallel_it);
+
+    // Before evaluating the branches, click the parent iterator
+    // to remove clear the parallel iterator
+    ASSERT_FALSE(root_thread->next());
+
+
+    ASSERT_TRUE(parallel_it->next());
+    ASSERT_EQ(parallel_it->type(), ModelEvalNodeT::Sequence);
+
+    IModelEvalIterator *branch_it = parallel_it->iterator();
+    ASSERT_TRUE(branch_it);
+    ASSERT_TRUE(branch_it->next());
+    ASSERT_EQ(branch_it->type(), ModelEvalNodeT::Action);
+    ASSERT_FALSE(branch_it->next());
+
+    ASSERT_TRUE(parallel_it->next());
+    ASSERT_EQ(parallel_it->type(), ModelEvalNodeT::Sequence);
+    branch_it = parallel_it->iterator();
+    ASSERT_TRUE(branch_it);
+    ASSERT_TRUE(branch_it->next());
+    ASSERT_EQ(branch_it->type(), ModelEvalNodeT::Action);
+    ASSERT_FALSE(branch_it->next());
+
+    ASSERT_FALSE(parallel_it->next());
+}
+
 }

@@ -447,13 +447,13 @@ class ModelEvalNodeT(IntEnum):
 cdef class ModelEvalIterator(object):
 
     def __dealloc__(self):
-        if self._hndl != NULL:
-            del self._hndl
+        # Iterator memory is self-managed, so the
+        # facade doesn't get involved
+        pass
             
     cpdef bool next(self):
         if self._hndl == NULL:
             return False
-            raise Exception("Attempting to advance an invalid iterator")
 
         ret = self._hndl.next()
 
@@ -464,6 +464,9 @@ cdef class ModelEvalIterator(object):
             
     cpdef type(self):
         cdef int type_i
+        if self._hndl == NULL:
+            return None
+
         type_i = int(self._hndl.type())
         return ModelEvalNodeT(type_i)
     

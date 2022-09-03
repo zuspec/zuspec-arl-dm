@@ -44,7 +44,8 @@ IModelEvalIterator *ModelEvaluator::eval(
 			&ctxt_b,
 			root_action->name(),
 			false));
-	ModelEvaluatorThread *root_thread = new ModelEvaluatorThread(m_randstate->next());
+	ModelEvaluatorThread *root_thread = new ModelEvaluatorThread(
+		m_ctxt, m_randstate->next());
 	ModelEvaluatorSequence *root_seq = new ModelEvaluatorSequence(root_thread);
 	root_seq->addActivity(new ModelActivityTraverse(m_action.get(), 0), true);
 	root_thread->pushIterator(root_seq);

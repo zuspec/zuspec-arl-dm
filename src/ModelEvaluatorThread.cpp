@@ -23,8 +23,9 @@
 
 namespace arl {
 
-ModelEvaluatorThread::ModelEvaluatorThread(vsc::IRandState *randstate) :
-    m_randstate(randstate) {
+ModelEvaluatorThread::ModelEvaluatorThread(
+    IContext            *ctxt,
+    vsc::IRandState     *randstate) : m_ctxt(ctxt), m_randstate(randstate) {
     DEBUG_INIT("ModelEvaluatorThread");
 }
 

@@ -27,7 +27,9 @@ namespace arl {
 
 class ModelEvaluatorThread : public virtual IModelEvalIterator {
 public:
-    ModelEvaluatorThread(vsc::IRandState *randstate);
+    ModelEvaluatorThread(
+        IContext            *m_ctxt,
+        vsc::IRandState     *randstate);
 
     virtual ~ModelEvaluatorThread();
 
@@ -43,11 +45,14 @@ public:
 
 	virtual IModelEvalIterator *iterator() override;
 
+    IContext *ctxt() const { return m_ctxt; }
+
     vsc::IRandState *randstate() { return m_randstate.get(); }
 
     void pushIterator(IModelEvalIterator *it);
 
 private:
+    IContext                                *m_ctxt;
     vsc::IRandStateUP                       m_randstate;
     std::vector<IModelEvalIterator *>       m_iter_s;
 

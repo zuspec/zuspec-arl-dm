@@ -127,7 +127,8 @@ void ModelEvaluatorSequence::visitModelActivityParallel(IModelActivityParallel *
     for (std::vector<IModelActivity *>::const_iterator
         it=a->branches().begin();
         it!=a->branches().end(); it++) {
-        ModelEvaluatorThread *thread = new ModelEvaluatorThread(m_thread->randstate()->next());
+        ModelEvaluatorThread *thread = new ModelEvaluatorThread(
+            m_thread->ctxt(), m_thread->randstate()->next());
         std::vector<IModelActivity *> activities;
         TaskCollectTopLevelActivities().collect(activities, *it);
         DEBUG("Branch has %d activities", activities.size());
@@ -155,9 +156,6 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
     DEBUG_ENTER("visitModelActivityTraverse");
     IModelFieldAction *action = a->getTarget();
 
-    DEBUG("TODO: randomize action");
-    DEBUG("TODO: determine if inference is required");
-
     if (action->activities().size() == 1) {
         DEBUG("Single-activity compound action");
         std::vector<IModelActivity *> activities;
@@ -171,6 +169,21 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
         DEBUG("TODO: need to schedule activities");
     } else {
         DEBUG("Just a single leaf-level action");
+        std::vector<vsc::IModelConstraint *> constraints;
+        vsc::ICompoundSolverUP solver(m_thread->ctxt()->mkCompoundSolver());
+
+        if (a->getWithC()) {
+            constraints.push_back(a->getWithC());
+        }
+
+        solver->solve(
+            m_thread->randstate(),
+            {action},
+            constraints,
+            vsc::SolveFlags::Randomize
+                | vsc::SolveFlags::RandomizeDeclRand
+                | vsc::SolveFlags::RandomizeTopFields);
+
         m_action = action;
     }
 

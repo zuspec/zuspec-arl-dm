@@ -3,8 +3,8 @@ package:
   name: libarl
 
   setup-deps:
-  - name: ninja
-  - name: cython
+  - ninja
+  - cython
 
   dep-sets:
   - name: default

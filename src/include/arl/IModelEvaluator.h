@@ -7,6 +7,7 @@
 
 #pragma once
 #include "arl/IModelEvalIterator.h"
+#include "arl/IModelFieldComponent.h"
 #include "vsc/IModelField.h"
 
 namespace arl {
@@ -20,7 +21,7 @@ public:
 
 	virtual IModelEvalIterator *eval(
 			const vsc::IRandState	*randstate,
-			vsc::IModelField		*root_comp,
+			IModelFieldComponent	*root_comp,
 			IDataTypeAction			*root_action) = 0;
 
 };

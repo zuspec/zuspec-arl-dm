@@ -10,6 +10,7 @@
 #include "arl/IContext.h"
 #include "arl/IModelActivity.h"
 #include "arl/IModelEvaluator.h"
+#include "arl/IModelFieldComponent.h"
 
 namespace arl {
 
@@ -21,7 +22,7 @@ public:
 
 	virtual IModelEvalIterator *eval(
 			const vsc::IRandState	*randstate,
-			vsc::IModelField		*root_comp,
+			IModelFieldComponent	*root_comp,
 			IDataTypeAction			*root_action) override;
 
 	virtual IModelEvalIterator *next();

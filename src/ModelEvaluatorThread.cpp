@@ -83,4 +83,12 @@ void ModelEvaluatorThread::pushIterator(IModelEvalIterator *it) {
     m_iter_s.push_back(it);
 }
 
+void ModelEvaluatorThread::pushComponent(IModelFieldComponent *comp) {
+    m_component_s.push_back(comp);
+}
+
+void ModelEvaluatorThread::popComponent() {
+    m_component_s.pop_back();
+}
+
 }

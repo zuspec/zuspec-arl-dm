@@ -64,6 +64,7 @@ cdef extern from "arl/IDataTypeAction.h" namespace "arl":
     cdef cppclass IDataTypeAction(vsc.IDataTypeStruct):
         IDataTypeComponent *getComponentType()
         void setComponentType(IDataTypeComponent *)
+        vsc.ITypeFieldRef *getCompField() const
         const cpp_vector[ITypeFieldActivityP] &activities() const
         void addActivity(ITypeFieldActivity *)
         
@@ -114,7 +115,7 @@ cdef extern from "arl/IModelEvaluator.h" namespace "arl":
     cdef cppclass IModelEvaluator:
         IModelEvalIterator *eval(
             vsc.IRandState *,
-            vsc.IModelField *, 
+            IModelFieldComponent *, 
             IDataTypeAction *)
 
 cdef extern from "arl/IModelEvalIterator.h" namespace "arl":

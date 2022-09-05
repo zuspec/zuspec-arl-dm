@@ -42,6 +42,7 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
 
     cpdef DataTypeComponent getComponentType(self)
     cpdef setComponentType(self, DataTypeComponent)
+    cpdef vsc.TypeFieldRef getCompField(self)
     cpdef addActivity(self, TypeFieldActivity)
     cpdef activities(self)
 
@@ -111,9 +112,9 @@ cdef class ModelEvaluator(object):
     cdef decl.IModelEvaluator        *_hndl
     
     cpdef ModelEvalIterator eval(self, 
-                        vsc.RandState  randstate, 
-                        vsc.ModelField root_comp,
-                        DataTypeAction root_action)
+                        vsc.RandState       randstate, 
+                        ModelFieldComponent root_comp,
+                        DataTypeAction      root_action)
     
     @staticmethod
     cdef ModelEvaluator mk(decl.IModelEvaluator *)

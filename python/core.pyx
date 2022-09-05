@@ -246,6 +246,9 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
         if comp is None:
             raise Exception("setComponentType: comp is None")
         self.asAction().setComponentType(comp.asComponent())
+
+    cpdef vsc.TypeFieldRef getCompField(self):
+        return vsc.TypeFieldRef.mk(self.asAction().getCompField(), False)
         
     cpdef addActivity(self, TypeFieldActivity activity):
         activity._owned = False
@@ -418,9 +421,9 @@ cdef class ModelEvaluator(object):
             del self._hndl
             
     cpdef ModelEvalIterator eval(self, 
-                        vsc.RandState  randstate,
-                        vsc.ModelField root_comp,
-                        DataTypeAction root_action):
+                        vsc.RandState       randstate,
+                        ModelFieldComponent root_comp,
+                        DataTypeAction      root_action):
         if root_comp is None:
             raise Exception("None root_comp")
         if root_action is None:
@@ -428,7 +431,7 @@ cdef class ModelEvaluator(object):
 
         cdef decl.IModelEvalIterator *it = self._hndl.eval(
                 randstate._hndl,
-                root_comp.asField(),
+                root_comp.asComponent(),
                 root_action.asAction())
         
         return ModelEvalIterator.mk(it)

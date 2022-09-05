@@ -29,6 +29,8 @@ public:
 
 	virtual void setComponentType(IDataTypeComponent *c) override;
 
+	virtual vsc::ITypeFieldRef *getCompField() const override { return m_comp; }
+
 	virtual const std::vector<ITypeFieldActivity *> &activities() const override {
 		return m_activities;
 	}

@@ -31,7 +31,7 @@ ModelEvaluator::~ModelEvaluator() {
 
 IModelEvalIterator *ModelEvaluator::eval(
 			const vsc::IRandState		*randstate,
-			vsc::IModelField			*root_comp,
+			IModelFieldComponent		*root_comp,
 			IDataTypeAction				*root_action) {
 	DEBUG_ENTER("eval");
 	vsc::ModelBuildContext ctxt_b(m_ctxt);
@@ -46,6 +46,7 @@ IModelEvalIterator *ModelEvaluator::eval(
 			false));
 	ModelEvaluatorThread *root_thread = new ModelEvaluatorThread(
 		m_ctxt, m_randstate->next());
+	root_thread->pushComponent(root_comp);
 	ModelEvaluatorSequence *root_seq = new ModelEvaluatorSequence(root_thread);
 	root_seq->addActivity(new ModelActivityTraverse(m_action.get(), 0), true);
 	root_thread->pushIterator(root_seq);

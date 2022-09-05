@@ -9,6 +9,7 @@
 #include "arl/IAccept.h"
 #include "arl/ITypeFieldActivity.h"
 #include "vsc/IDataTypeStruct.h"
+#include "vsc/ITypeFieldRef.h"
 
 namespace arl {
 
@@ -22,6 +23,8 @@ public:
 	virtual IDataTypeComponent *getComponentType() = 0;
 
 	virtual void setComponentType(IDataTypeComponent *) = 0;
+
+	virtual vsc::ITypeFieldRef *getCompField() const = 0;
 
 	virtual const std::vector<ITypeFieldActivity *> &activities() const = 0;
 

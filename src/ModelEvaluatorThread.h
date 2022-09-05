@@ -51,8 +51,17 @@ public:
 
     void pushIterator(IModelEvalIterator *it);
 
+    void pushComponent(IModelFieldComponent *comp);
+
+    void popComponent();
+
+    IModelFieldComponent *component() const {
+        return m_component_s.back();
+    }
+
 private:
     IContext                                *m_ctxt;
+    std::vector<IModelFieldComponent *>     m_component_s;
     vsc::IRandStateUP                       m_randstate;
     std::vector<IModelEvalIterator *>       m_iter_s;
 

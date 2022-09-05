@@ -18,10 +18,8 @@ DataTypeAction::DataTypeAction(
 		const std::string 	&name) : DataTypeStruct(name), m_component_t(0) {
 
 	// Add the built-in 'comp' ref
-    /*
 	m_comp = ctxt->mkTypeFieldRef("comp", 0, vsc::TypeFieldAttr::NoAttr);
 	addField(m_comp);
-     */
 }
 
 DataTypeAction::~DataTypeAction() {
@@ -30,7 +28,7 @@ DataTypeAction::~DataTypeAction() {
 
 void DataTypeAction::setComponentType(IDataTypeComponent *t) {
 	m_component_t = t;
-//    m_comp->setDataType(t);
+    m_comp->setDataType(t);
 }
 
 void DataTypeAction::addActivity(ITypeFieldActivity *activity) {

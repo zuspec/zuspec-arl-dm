@@ -123,12 +123,14 @@ IModelEvalIterator *ModelEvaluatorSequence::iterator() {
 void ModelEvaluatorSequence::visitModelActivityParallel(IModelActivityParallel *a) {
     DEBUG_ENTER("visitModelActivityParallel");
     std::vector<ModelEvaluatorThread *>     branches;
+    IModelFieldComponent *comp = m_thread->component();
 
     for (std::vector<IModelActivity *>::const_iterator
         it=a->branches().begin();
         it!=a->branches().end(); it++) {
         ModelEvaluatorThread *thread = new ModelEvaluatorThread(
             m_thread->ctxt(), m_thread->randstate()->next());
+        thread->pushComponent(comp);
         std::vector<IModelActivity *> activities;
         TaskCollectTopLevelActivities().collect(activities, *it);
         DEBUG("Branch has %d activities", activities.size());

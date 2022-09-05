@@ -44,6 +44,15 @@ if not os.path.isdir(os.path.join(cwd, "build")):
 #if not os.path.isdir(os.path.join(libvsc_dir, "python/libvsc")):
 #    os.makedirs(os.path.join(tblink_vsc, "python/libvsc"))
 
+env = os.environ.copy()
+python_bindir = os.path.dirname(sys.executable)
+print("python_bindir: %s" % str(python_bindir))
+
+if "PATH" in env.keys():
+    env["PATH"] = python_bindir + os.pathsep + env["PATH"]
+else:
+    env["PATH"] = python_bindir
+
 # Run configure...
 result = subprocess.run(
     ["cmake", 
@@ -52,7 +61,8 @@ result = subprocess.run(
      "-DCMAKE_BUILD_TYPE=Debug",
      "-DPACKAGES_DIR=%s" % packages_dir,
      ],
-    cwd=os.path.join(cwd, "build"))
+    cwd=os.path.join(cwd, "build"),
+    env=env)
 
 if result.returncode != 0:
     raise Exception("cmake configure failed")

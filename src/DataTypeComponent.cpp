@@ -51,7 +51,22 @@ vsc::IModelField *DataTypeComponent::mkRootField(
 		ret = ctxt_a->mkModelFieldComponent(this, name);
 
 		// Need to build sub-fields and constraints
+	    // Push the new field just for completeness
+	    ctxt->pushField(ret);
+	    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
+	        it=getFields().begin();
+	        it!=getFields().end(); it++) {
+	        vsc::IModelField *field = (*it)->getDataType()->mkTypeField(
+	            ctxt,
+	            it->get());
+	        if (!field) {
+	            fprintf(stdout, "Error: Construction of field %s failed\n", (*it)->name().c_str());
+	        }
+			ret->addField(field);
+	    }
+	    ctxt->popField();
 	}
+
 
 	if (getCreateHook()) {
 		getCreateHook()->create(ret);
@@ -70,6 +85,18 @@ vsc::IModelField *DataTypeComponent::mkTypeField(
 		ret = ctxt->ctxt()->mkModelFieldRefType(type);
 	} else {
 		ret = ctxt->ctxt()->mkModelFieldType(type);
+
+	    // Push the new field just for completeness
+	    ctxt->pushField(ret);
+	    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
+	        it=getFields().begin();
+	        it!=getFields().end(); it++) {
+	        vsc::IModelField *field = (*it)->getDataType()->mkTypeField(
+	            ctxt,
+	            it->get());
+			ret->addField(field);
+	    }
+	    ctxt->popField();
 	}
 
 	if (getCreateHook()) {

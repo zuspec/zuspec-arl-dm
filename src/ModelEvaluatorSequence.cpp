@@ -185,6 +185,8 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
             vsc::SolveFlags::Randomize
                 | vsc::SolveFlags::RandomizeDeclRand
                 | vsc::SolveFlags::RandomizeTopFields);
+        action->getFieldT<vsc::IModelFieldRef>(0)->setRef(
+            m_thread->component());
 
         m_action = action;
     }

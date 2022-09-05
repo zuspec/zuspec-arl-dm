@@ -2,6 +2,10 @@
 package:
   name: libarl
 
+  setup-deps:
+  - name: ninja
+  - name: cython
+
   dep-sets:
   - name: default
     deps:
@@ -12,5 +16,9 @@ package:
     deps:
     - name: libvsc
       url: https://github.com/fvutils/libvsc.git
+    - name: ninja
+      src: pypi
+    - name: cython
+      src: pypi
 
 

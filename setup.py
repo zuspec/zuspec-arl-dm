@@ -72,7 +72,8 @@ result = subprocess.run(
      "-j",
      "%d" % os.cpu_count()
      ],
-    cwd=os.path.join(cwd, "build"))
+    cwd=os.path.join(cwd, "build"),
+    env=env)
 if result.returncode != 0:
     raise Exception("build failed")
 

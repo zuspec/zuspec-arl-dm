@@ -88,9 +88,12 @@ public:
 	virtual IModelFieldAction *mkModelFieldActionType(
 			vsc::ITypeField			*type) = 0;
 
-	virtual IModelFieldComponent *mkModelFieldComponent(
+	virtual IModelFieldComponent *mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,
 			const std::string		&name) = 0;
+
+	virtual IModelFieldComponent *mkModelFieldComponentType(
+			vsc::ITypeField			*type) = 0;
 
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,

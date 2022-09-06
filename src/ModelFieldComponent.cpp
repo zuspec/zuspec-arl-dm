@@ -11,12 +11,8 @@
 
 namespace arl {
 
-ModelFieldComponent::ModelFieldComponent(
-		IContext			*ctxt,
-		const std::string	&name,
-		vsc::IDataType		*type) :
-				ModelField(name, type), m_ctxt(ctxt) {
-
+ModelFieldComponent::ModelFieldComponent(IContext *ctxt) : m_ctxt(ctxt) {
+//	m_comp_map.init(this);
 }
 
 ModelFieldComponent::~ModelFieldComponent() {
@@ -24,7 +20,7 @@ ModelFieldComponent::~ModelFieldComponent() {
 }
 
 void ModelFieldComponent::initCompTree() {
-	m_comp_map = ComponentMapUP(TaskBuildComponentMap().build(this));
+	TaskBuildComponentMap().build(this);
 }
 
 void ModelFieldComponent::accept(vsc::IVisitor *v) {

@@ -20,27 +20,24 @@
 
 namespace arl {
 
-class ModelFieldComponent : 
-	public virtual IModelFieldComponent,
-	public virtual ModelField {
+class ModelFieldComponent : public virtual IModelFieldComponent {
 public:
-	ModelFieldComponent(
-			arl::IContext			*ctxt,
-			const std::string 		&name,
-			vsc::IDataType			*type);
+	ModelFieldComponent(arl::IContext *ctxt);
 
 	virtual ~ModelFieldComponent();
 
 	virtual void initCompTree() override;
+
+	virtual IComponentMap *getCompMap() override { return &m_comp_map; }
 
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
 	using CompTCompInstM=std::unordered_map<IDataTypeComponent *,std::vector<vsc::IModelField *>>;
 
-private:
+protected:
 	IContext								*m_ctxt;
-	ComponentMapUP							m_comp_map;
+	ComponentMap							m_comp_map;
 
 };
 

@@ -6,7 +6,7 @@
  */
 
 #include "TaskBuildModelComponent.h"
-#include "ModelFieldComponent.h"
+#include "ModelFieldComponentRoot.h"
 
 namespace arl {
 
@@ -32,7 +32,7 @@ IModelFieldComponent *TaskBuildModelComponent::build(
 
 void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
 	if (m_ctxt->fieldStackSize() == 0) {
-		m_ctxt->pushField(new ModelFieldComponent(
+		m_ctxt->pushField(new ModelFieldComponentRoot(
 				m_ctxt->ctxt(),
 				m_core.name(),
 				t));

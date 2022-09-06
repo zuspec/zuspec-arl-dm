@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include "arl/IComponentMap.h"
 #include "vsc/IModelField.h"
 
 namespace arl {
@@ -18,6 +19,8 @@ public:
 	 * Builds the component map across the tree
 	 */
 	virtual void initCompTree() = 0;
+
+	virtual IComponentMap *getCompMap() = 0;
 
 };
 

@@ -178,6 +178,17 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
             constraints.push_back(a->getWithC());
         }
 
+        // Get the active component
+        IModelFieldComponent *comp_p = m_thread->component();
+
+        // Get the 
+        std::vector<IModelFieldComponent *> comp_l = comp_p->getCompMap()->getSubContexts(
+            action->getDataTypeT<IDataTypeAction>()->getComponentType());
+        DEBUG("NOTE: %d possible comp contexts of %s in %s", 
+            comp_l.size(),
+            action->getDataTypeT<IDataTypeAction>()->getComponentType()->name().c_str(),
+            comp_p->name().c_str());
+
         solver->solve(
             m_thread->randstate(),
             {action},
@@ -186,7 +197,7 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
                 | vsc::SolveFlags::RandomizeDeclRand
                 | vsc::SolveFlags::RandomizeTopFields);
         action->getFieldT<vsc::IModelFieldRef>(0)->setRef(
-            m_thread->component());
+            comp_l.at(0));
 
         m_action = action;
     }

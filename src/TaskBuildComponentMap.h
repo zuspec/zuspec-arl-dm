@@ -7,28 +7,26 @@
 
 #pragma once
 #include "arl/IModelFieldComponent.h"
+#include "arl/impl/VisitorBase.h"
 #include "vsc/IModelField.h"
 #include "ComponentMap.h"
 
 namespace arl {
 
-class TaskBuildComponentMap {
+class TaskBuildComponentMap : public virtual VisitorBase {
 public:
 	TaskBuildComponentMap();
 
 	virtual ~TaskBuildComponentMap();
 
-	ComponentMap *build(vsc::IModelField *root);
+	void build(IModelFieldComponent *root);
+
+	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
 
 private:
 
-	void processComponent(
-			vsc::IModelField 		*comp,
-			std::vector<int32_t>	parents);
-
-
 private:
-	ComponentMapUP				m_map;
+	std::vector<std::vector<IModelFieldComponent *>>		m_component_s;
 
 };
 

@@ -5,62 +5,70 @@
  *      Author: mballance
  */
 
+#include "DebugMacros.h"
 #include "ComponentMap.h"
+#include "arl/IDataTypeComponent.h"
+#include "arl/IModelFieldComponent.h"
 
 namespace arl {
 
 ComponentMap::ComponentMap() {
-	// TODO Auto-generated constructor stub
-
+	DEBUG_INIT("ComponentMap");
 }
 
 ComponentMap::~ComponentMap() {
 	// TODO Auto-generated destructor stub
 }
 
-int32_t ComponentMap::addComponent(vsc::IModelField *comp) {
-	int32_t id = m_components.size();
-	m_components.push_back(comp);
+void ComponentMap::init(IModelFieldComponent *comp) {
+	IDataTypeComponent *comp_t = comp->getDataTypeT<IDataTypeComponent>();
+	std::vector<IModelFieldComponent *> comp_l;
+	comp_l.push_back(comp);
+	m_comp_type_inst_m.insert({comp_t, comp_l});
+	m_comp_types.push_back(comp_t);
+}
 
-	auto t2i_it = m_t2i_m.find(comp->getDataType());
-
-	if (t2i_it != m_t2i_m.end()) {
-		t2i_it->second.insert(id);
-	} else {
-		m_t2i_m.insert({comp->getDataType(), {id}});
+void ComponentMap::addSubComponentMap(const IComponentMap *m) {
+	DEBUG_ENTER("addSubComponentMap");
+	for (std::vector<IDataTypeComponent *>::const_iterator
+		it=m->getComponentTypes().begin();
+		it!=m->getComponentTypes().end(); it++) {
+		CompType2InstMapT::iterator m_it = m_comp_type_inst_m.find(*it);
+		if (m_it == m_comp_type_inst_m.end()) {
+			m_it = m_comp_type_inst_m.insert({*it, {}}).first;
+			m_comp_types.push_back(*it);
+		}
+		for (std::vector<IModelFieldComponent *>::const_iterator
+			c_it=m->getSubContexts(*it).begin();
+			c_it!=m->getSubContexts(*it).end(); c_it++) {
+			m_it->second.push_back(*c_it);
+		}
 	}
-
-	return id;
+	DEBUG_LEAVE("addSubComponentMap");
 }
 
-void ComponentMap::addParentChildMapping(int32_t parent, int32_t child) {
-	auto c2p_it = m_c2p_m.find(child);
-
-	if (c2p_it != m_c2p_m.end()) {
-		c2p_it->second.insert(parent);
+const std::vector<IModelFieldComponent *> &ComponentMap::getSubContexts(IDataTypeComponent *t) const {
+	CompType2InstMapT::const_iterator it = m_comp_type_inst_m.find(t);
+	if (it != m_comp_type_inst_m.end()) {
+		return it->second;
 	} else {
-		m_c2p_m.insert({child, {parent}});
-	}
-
-	auto p2c_it = m_p2c_m.find(parent);
-
-	if (p2c_it != m_p2c_m.end()) {
-		p2c_it->second.insert(child);
-	} else {
-		m_p2c_m.insert({parent, {child}});
+		return m_empty;
 	}
 }
 
-const std::unordered_set<int32_t> &ComponentMap::getParents(int32_t child) const {
-	return m_c2p_m.find(child)->second;
+void ComponentMap::addPoolMapping(vsc::ITypeField *claim_ref, IModelFieldPool *pool) {
+	// TODO:
+
 }
 
-const std::unordered_set<int32_t> &ComponentMap::getChildren(int32_t parent) const {
-	return m_p2c_m.find(parent)->second;
-}
+IModelFieldPool *ComponentMap::getPool(vsc::ITypeField *claim_ref) const {
+	ClaimRef2PoolMapT::const_iterator it = m_claim_ref_pool_m.find(claim_ref);
 
-const std::unordered_set<int32_t> &ComponentMap::getTypeInsts(vsc::IDataType *t) const {
-	return m_t2i_m.find(t)->second;
+	if (it == m_claim_ref_pool_m.end()) {
+		return 0;
+	} else {
+		return it->second;
+	}
 }
 
 } /* namespace arl */

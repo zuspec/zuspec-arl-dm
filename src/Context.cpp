@@ -20,7 +20,8 @@
 #include "ModelEvaluator.h"
 #include "ModelFieldActionRoot.h"
 #include "ModelFieldActionType.h"
-#include "ModelFieldComponent.h"
+#include "ModelFieldComponentRoot.h"
+#include "ModelFieldComponentType.h"
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
@@ -167,10 +168,15 @@ IModelFieldAction *Context::mkModelFieldActionType(
 	return new ModelFieldActionType(type);
 }
 
-IModelFieldComponent *Context::mkModelFieldComponent(
+IModelFieldComponent *Context::mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,
 			const std::string		&name) {
-	return new ModelFieldComponent(this, name, type);
+	return new ModelFieldComponentRoot(this, name, type);
+}
+
+IModelFieldComponent *Context::mkModelFieldComponentType(
+			vsc::ITypeField         *type) {
+	return new ModelFieldComponentType(this, type);
 }
 
 ITypeFieldActivity *Context::mkTypeFieldActivity(

@@ -48,7 +48,7 @@ vsc::IModelField *DataTypeComponent::mkRootField(
 	if (is_ref) {
 		ret = ctxt_a->mkModelFieldRefRoot(this, name);
 	} else {
-		ret = ctxt_a->mkModelFieldComponent(this, name);
+		ret = ctxt_a->mkModelFieldComponentRoot(this, name);
 
 		// Need to build sub-fields and constraints
 	    // Push the new field just for completeness
@@ -84,7 +84,7 @@ vsc::IModelField *DataTypeComponent::mkTypeField(
 	if (vsc::TaskIsTypeFieldRef().eval(type)) {
 		ret = ctxt->ctxt()->mkModelFieldRefType(type);
 	} else {
-		ret = ctxt->ctxt()->mkModelFieldType(type);
+		ret = ctxt_a->mkModelFieldComponentType(type);
 
 	    // Push the new field just for completeness
 	    ctxt->pushField(ret);

@@ -278,6 +278,7 @@ cdef class DataTypeActivity(object):
     def __dealloc__(self):
         if self._owned and self._hndl != NULL:
             del self._hndl
+            pass
             
     cdef decl.IDataTypeActivity *asActivity(self):
         return dynamic_cast[decl.IDataTypeActivityP](self._hndl)
@@ -419,6 +420,7 @@ cdef class ModelEvaluator(object):
     def __dealloc__(self):
         if self._hndl != NULL:
             del self._hndl
+            pass
             
     cpdef ModelEvalIterator eval(self, 
                         vsc.RandState       randstate,
@@ -574,8 +576,8 @@ cdef class VisitorBase(vsc.VisitorBase):
         self.proxy_l.push_back(new decl.VisitorProxy(<cpy_ref.PyObject *>(self)))
     
     def __dealloc__(self):
-        super().__dealloc__()
         del self._arl_proxy
+        pass
 
     cpdef visitDataTypeAction(self, DataTypeAction t):
         pass

@@ -16,6 +16,8 @@ ModelFieldComponent::ModelFieldComponent(IContext *ctxt) : m_ctxt(ctxt) {
 }
 
 ModelFieldComponent::~ModelFieldComponent() {
+	fprintf(stdout, "ModelFieldComponent::~ModelFieldComponent\n");
+	fflush(stdout);
 	// TODO Auto-generated destructor stub
 }
 

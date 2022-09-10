@@ -18,6 +18,8 @@
  * Created on:
  *     Author:
  */
+#include "vsc/impl/TaskUnrollModelFieldRefConstraints.h"
+
 #include "DebugMacros.h"
 #include "ModelEvaluatorParallel.h"
 #include "ModelEvaluatorSequence.h"
@@ -188,6 +190,31 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
             comp_l.size(),
             action->getDataTypeT<IDataTypeAction>()->getComponentType()->name().c_str(),
             comp_p->name().c_str());
+        std::vector<vsc::IModelField *> comp_candidates(comp_l.begin(), comp_l.end());
+        vsc::ModelFieldRefConstraintDataUP comp_data(
+            vsc::TaskUnrollModelFieldRefConstraints(m_thread->ctxt()).build(
+                action->getFieldT<vsc::IModelFieldRef>(0),
+                comp_candidates,
+                {}
+            ));
+        std::vector<vsc::IModelConstraint *> comp_constraints;
+        for (std::vector<vsc::IModelConstraintScopeUP>::const_iterator
+            it=comp_data->getSelectConstraints().begin();
+            it!=comp_data->getSelectConstraints().end(); it++) {
+            comp_constraints.push_back(it->get());
+        }
+        comp_constraints.push_back(comp_data->getValidC());
+
+        bool result = solver->solve(
+            m_thread->randstate(),
+            {comp_data->getSelector()},
+            comp_constraints,
+            vsc::SolveFlags::Randomize
+                | vsc::SolveFlags::RandomizeDeclRand
+                | vsc::SolveFlags::RandomizeTopFields);
+
+        fprintf(stdout, "Result: %d ; select=%lld\n",
+            result, comp_data->getSelector()->val()->val_i());
 
         solver->solve(
             m_thread->randstate(),
@@ -197,7 +224,7 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
                 | vsc::SolveFlags::RandomizeDeclRand
                 | vsc::SolveFlags::RandomizeTopFields);
         action->getFieldT<vsc::IModelFieldRef>(0)->setRef(
-            comp_l.at(0));
+            comp_l.at(comp_data->getSelector()->val()->val_i()));
 
         m_action = action;
     }

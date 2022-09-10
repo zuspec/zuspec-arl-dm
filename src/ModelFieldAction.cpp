@@ -15,6 +15,8 @@ ModelFieldAction::ModelFieldAction() {
 }
 
 ModelFieldAction::~ModelFieldAction() {
+	fprintf(stdout, "ModelFieldAction::~ModelFieldAction\n");
+	fflush(stdout);
 	// TODO Auto-generated destructor stub
 }
 

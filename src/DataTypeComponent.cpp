@@ -52,7 +52,7 @@ vsc::IModelField *DataTypeComponent::mkRootField(
 
 		// Need to build sub-fields and constraints
 	    // Push the new field just for completeness
-	    ctxt->pushField(ret);
+	    ctxt->pushTopDownScope(ret);
 	    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
 	        it=getFields().begin();
 	        it!=getFields().end(); it++) {
@@ -64,7 +64,7 @@ vsc::IModelField *DataTypeComponent::mkRootField(
 	        }
 			ret->addField(field);
 	    }
-	    ctxt->popField();
+	    ctxt->popTopDownScope();
 	}
 
 
@@ -87,7 +87,7 @@ vsc::IModelField *DataTypeComponent::mkTypeField(
 		ret = ctxt_a->mkModelFieldComponentType(type);
 
 	    // Push the new field just for completeness
-	    ctxt->pushField(ret);
+	    ctxt->pushTopDownScope(ret);
 	    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
 	        it=getFields().begin();
 	        it!=getFields().end(); it++) {
@@ -96,7 +96,7 @@ vsc::IModelField *DataTypeComponent::mkTypeField(
 	            it->get());
 			ret->addField(field);
 	    }
-	    ctxt->popField();
+	    ctxt->popTopDownScope();
 	}
 
 	if (getCreateHook()) {

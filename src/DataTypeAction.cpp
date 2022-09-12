@@ -46,7 +46,7 @@ vsc::IModelField *DataTypeAction::mkRootField(
 	ret = ctxt_a->mkModelFieldActionRoot(name, this);
 
     // Push the new field just for completeness
-    ctxt->pushField(ret);
+    ctxt->pushTopDownScope(ret);
     for (std::vector<vsc::ITypeFieldUP>::const_iterator 
         it=getFields().begin();
         it!=getFields().end(); it++) {
@@ -58,17 +58,14 @@ vsc::IModelField *DataTypeAction::mkRootField(
         }
 		ret->addField(field);
     }
-    ctxt->popField();
 
 	// Build out any activities
-    ctxt->pushField(ret);
 	for (std::vector<ITypeFieldActivity *>::const_iterator
 		it=activities().begin();
 		it!=activities().end(); it++) {
         IModelActivity *activity = (*it)->mkActivity(ctxt);
 		ret->addActivity(dynamic_cast<IModelActivityScope *>(activity));
 	}
-    ctxt->popField();
 
     // Finally, build out constraints on this field and sub-fields
     vsc::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
@@ -77,6 +74,7 @@ vsc::IModelField *DataTypeAction::mkRootField(
     if (getCreateHook()) {
         getCreateHook()->create(ret);
     }
+    ctxt->popTopDownScope();
 
     return ret;	
 }
@@ -90,7 +88,7 @@ vsc::IModelField *DataTypeAction::mkTypeField(
 
 
     // Push the new field just for completeness
-    ctxt->pushField(ret);
+    ctxt->pushTopDownScope(ret);
     for (std::vector<vsc::ITypeFieldUP>::const_iterator 
         it=getFields().begin();
         it!=getFields().end(); it++) {
@@ -99,7 +97,6 @@ vsc::IModelField *DataTypeAction::mkTypeField(
             it->get());
 		ret->addField(field);
     }
-    ctxt->popField();
 
     // Finally, build out constraints on this field and sub-fields
     vsc::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
@@ -109,16 +106,15 @@ vsc::IModelField *DataTypeAction::mkTypeField(
         getCreateHook()->create(ret);
     }
 
+    ctxt->popTopDownScope();
+
     return ret;
 }
 
 void DataTypeAction::accept(vsc::IVisitor *v) {
-    fprintf(stdout, "DataTypeAction::accept\n");
 	if (dynamic_cast<IVisitor *>(v)) {
-        fprintf(stdout, ".. pass on\n");
 		dynamic_cast<IVisitor *>(v)->visitDataTypeAction(this);
 	} else if (v->cascade()) {
-        fprintf(stdout, ".. wrong visitor type\n");
 		v->visitDataTypeStruct(this);
 	}
 }

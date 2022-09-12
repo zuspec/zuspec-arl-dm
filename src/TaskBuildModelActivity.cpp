@@ -33,18 +33,19 @@ IModelActivity *TaskBuildModelActivity::build(ITypeFieldActivity *activity) {
 	// Push the field corresponding to this action scope
 	// This will always be a scope, so it will always have a
 	// data representation
-	m_ctxt->pushField(m_ctxt->getField(-1)->getField(activity->getIndex()));
+	m_ctxt->pushBottomUpScope(
+		m_ctxt->getTopDownScope()->getField(activity->getIndex()));
 
-	DEBUG("  Activity scope is %s", m_ctxt->getField(-1)->name().c_str());
+	DEBUG("  Activity scope is %s", m_ctxt->getBottomUpScope()->name().c_str());
 
 	activity->getDataType()->accept(m_this);
 
-	m_ctxt->popField();
+	m_ctxt->popBottomUpScope();
 
 
 	DEBUG_LEAVE("build");
 	return dynamic_cast<IModelActivity *>(
-			m_ctxt->getField(-1)->getField(activity->getIndex()));
+			m_ctxt->getTopDownScope()->getField(activity->getIndex()));
 }
 
 void TaskBuildModelActivity::visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) {
@@ -88,7 +89,7 @@ void TaskBuildModelActivity::visitDataTypeActivityTraverse(IDataTypeActivityTrav
 			dynamic_cast<IModelFieldAction *>(target),
 			with_c);
 
-	IModelActivityScope *pscope = m_ctxt->getFieldT<IModelActivityScope>(-1);
+	IModelActivityScope *pscope = m_ctxt->getBottomUpScopeT<IModelActivityScope>();
 	pscope->addActivity(traverse, true);
 
 	DEBUG_LEAVE("visitDataTypeActivityTraverse");
@@ -99,19 +100,23 @@ void TaskBuildModelActivity::visitTypeFieldActivity(ITypeFieldActivity *f) {
 
 	if (f->getIndex() != -1) {
 		// Link in the existing activity scope
-		IModelActivityScope *pscope = m_ctxt->getFieldT<IModelActivityScope>(-1);
+		IModelActivityScope *pscope = m_ctxt->getBottomUpScopeT<IModelActivityScope>();
 		fprintf(stdout, "Link into scope %p\n", pscope);
+#ifdef UNDEFINED
 		vsc::IModelField *afield = m_ctxt->getField(-1)->getField(f->getIndex());
 		// Link in, since the object is already owned by the 'fields' list
 		pscope->addActivity(dynamic_cast<IModelActivity *>(afield), false);
 		m_ctxt->pushField(afield);
+#endif
 	}
 
 	f->getDataType()->accept(m_this);
 
+#ifdef UNDEFINED
 	if (f->getIndex() != -1) {
 		m_ctxt->popField();
 	}
+#endif
 
 	DEBUG_LEAVE("visitTypeFieldActivity %s %d", f->name().c_str(), f->getIndex());
 }

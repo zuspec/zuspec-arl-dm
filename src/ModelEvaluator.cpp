@@ -5,8 +5,8 @@
  *      Author: mballance
  */
 
-#include "vsc/impl/ModelBuildContext.h"
 #include "DebugMacros.h"
+#include "ModelBuildContext.h"
 #include "ModelEvaluator.h"
 #include "ModelEvalIterator.h"
 #include "ModelEvalIteratorMgr.h"
@@ -34,7 +34,7 @@ IModelEvalIterator *ModelEvaluator::eval(
 			IModelFieldComponent		*root_comp,
 			IDataTypeAction				*root_action) {
 	DEBUG_ENTER("eval");
-	vsc::ModelBuildContext ctxt_b(m_ctxt);
+	ModelBuildContext ctxt_b(m_ctxt);
 	m_randstate = vsc::IRandStateUP(randstate->clone());
 
 	// Create a sequence containing a traversal of the 

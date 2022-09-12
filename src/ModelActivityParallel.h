@@ -19,7 +19,7 @@ public:
 
 	virtual ~ModelActivityParallel();
 
-	virtual const std::string &name() const override { return ""; }
+	virtual const std::string &name() const override { return m_name; }
 
 	virtual vsc::IDataType *getDataType() const override { return 0; }
 
@@ -34,6 +34,7 @@ public:
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
+	std::string									m_name;
 	std::vector<IModelActivity *>				m_branches;
 
 };

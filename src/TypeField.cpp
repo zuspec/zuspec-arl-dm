@@ -26,7 +26,7 @@ TypeField::~TypeField() {
 	// TODO Auto-generated destructor stub
 }
 
-vsc::ITypeField *TypeField::getField(int32_t idx) {
+vsc::ITypeField *TypeField::getField(int32_t idx) const {
 	vsc::IDataTypeStruct *s = dynamic_cast<vsc::IDataTypeStruct *>(getDataType());
 	if (s) {
 		return s->getField(idx);

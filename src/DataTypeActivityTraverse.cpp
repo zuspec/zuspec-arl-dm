@@ -11,6 +11,7 @@
 #include "vsc/IModelBuildContext.h"
 #include "vsc/impl/TaskResolveFieldRefExpr.h"
 #include "DataTypeActivityTraverse.h"
+#include "TaskBuildModelConstraint.h"
 
 namespace arl {
 
@@ -28,7 +29,7 @@ DataTypeActivityTraverse::~DataTypeActivityTraverse() {
 IModelActivity *DataTypeActivityTraverse::mkActivity(
 		vsc::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) {
-	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
+	IModelBuildContext *ctxt_a = dynamic_cast<IModelBuildContext *>(ctxt);
 	IDataTypeActivityTraverse *type_t = dynamic_cast<IDataTypeActivityTraverse *>(type->getDataType());
 
 	// TODO: resolve the type reference
@@ -36,12 +37,17 @@ IModelActivity *DataTypeActivityTraverse::mkActivity(
 
 	vsc::IModelField *target = vsc::TaskResolveFieldRefExpr(ctxt).resolve(type_t->getTarget());
 	IModelFieldAction *target_a = dynamic_cast<IModelFieldAction *>(target);
+	vsc::IModelConstraint *with_c = 0;
 
 	fprintf(stdout, "target=%p target_a=%p\n", target, target_a);
 
-	IModelActivityTraverse *ret = ctxt_a->mkModelActivityTraverse(
+	if (type_t->getWithC()) {
+		with_c = TaskBuildModelConstraint(ctxt_a).build(type_t->getWithC());
+	}
+
+	IModelActivityTraverse *ret = ctxt_a->ctxt()->mkModelActivityTraverse(
 		target_a,
-		0
+		with_c
 	);
 
 	return ret;

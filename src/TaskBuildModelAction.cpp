@@ -29,20 +29,14 @@ IModelFieldAction *TaskBuildModelAction::build(
 	IModelFieldAction *ret = dynamic_cast<IModelFieldAction *>(m_core.build(t, name));
 
 	// Now, build out the activity
-	fprintf(stdout, "post-build: %d entries ; ret=%s\n",
-			m_ctxt->fieldStackSize(), ret->name().c_str());
-	for (std::vector<vsc::IModelFieldUP>::const_iterator
-			it=ret->fields().begin(); it!=ret->fields().end(); it++) {
-		fprintf(stdout, "  Field: %s\n", (*it)->name().c_str());
-	}
-	m_ctxt->pushField(ret);
+	m_ctxt->pushTopDownScope(ret);
 	for (auto it=t->activities().begin(); it!=t->activities().end(); it++) {
 		IModelActivity *activity = TaskBuildModelActivity(m_ctxt).build(*it);
 		// The activity is already a field and, thus, is already part
 		// of the action model's activity list
 	}
 
-	m_ctxt->popField();
+	m_ctxt->popTopDownScope();
 
 	if (t->getCreateHook()) {
 		t->getCreateHook()->create(ret);
@@ -53,9 +47,11 @@ IModelFieldAction *TaskBuildModelAction::build(
 
 void TaskBuildModelAction::visitDataTypeAction(IDataTypeAction *t) {
 	fprintf(stdout, "visitDataTypeAction\n");
+#ifdef UNDEFINED
 	if (m_ctxt->fieldStackSize() == 0) {
 		m_ctxt->pushField(m_ctxt->ctxt()->mkModelFieldActionRoot(m_core.name(), t));
 	}
+#endif
 
 	fprintf(stdout, "Activities: %d\n", t->activities().size());
 
@@ -93,20 +89,22 @@ void TaskBuildModelAction::visitDataTypeActivitySequence(IDataTypeActivitySequen
 	ModelActivitySequence *seq =
 			new ModelActivitySequence(m_activity_s.back()->name(), t);
 
+#ifdef UNDEFINED
 	if (m_ctxt->getFieldT<IModelFieldAction>(-1)) {
 		m_ctxt->getFieldT<IModelFieldAction>(-1)->addActivity(seq);
 	} else {
 		m_ctxt->getFieldT<IModelActivityScope>(-1)->addActivity(seq);
 	}
+#endif
 
 	// Only build out fields for now
-	m_ctxt->pushField(seq);
+	m_ctxt->pushBottomUpScope(seq);
 	for (std::vector<vsc::ITypeFieldUP>::const_iterator
 			it=t->getFields().begin();
 			it!=t->getFields().end(); it++) {
 		(*it)->accept(this);
 	}
-	m_ctxt->popField();
+	m_ctxt->popBottomUpScope();
 }
 
 void TaskBuildModelAction::visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) {

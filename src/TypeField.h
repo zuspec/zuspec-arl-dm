@@ -20,15 +20,15 @@ public:
 
 	virtual ~TypeField();
 
-	virtual vsc::IDataTypeStruct *getParent() override {
+	virtual vsc::ITypeField *getParent() const override {
 		return m_parent;
 	}
 
-	virtual void setParent(vsc::IDataTypeStruct *p) override {
+	virtual void setParent(vsc::ITypeField *p) override {
 		m_parent = p;
 	}
 
-	virtual int32_t getIndex() override { return m_idx; }
+	virtual int32_t getIndex() const override { return m_idx; }
 
 	virtual void setIndex(int32_t idx) override { m_idx = idx; }
 
@@ -42,14 +42,14 @@ public:
 		m_type = t;
 	}
 
-	virtual vsc::ITypeField *getField(int32_t idx) override;
+	virtual vsc::ITypeField *getField(int32_t idx) const override;
 
 	virtual vsc::TypeFieldAttr getAttr() const override {
 		return m_attr;
 	}
 
 protected:
-	vsc::IDataTypeStruct				*m_parent;
+	vsc::ITypeField						*m_parent;
 	int32_t								m_idx;
 	std::string							m_name;
 	vsc::IDataType						*m_type;

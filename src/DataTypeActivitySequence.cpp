@@ -28,6 +28,8 @@ IModelActivity *DataTypeActivitySequence::mkActivity(
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 	IModelActivitySequence *ret = ctxt_a->mkModelActivitySequence();
 
+	ctxt->pushBottomUpScope(ret);
+
 	for (std::vector<vsc::ITypeFieldUP>::const_iterator
 		it=getFields().begin();
 		it!=getFields().end(); it++) {
@@ -37,14 +39,14 @@ IModelActivity *DataTypeActivitySequence::mkActivity(
 	}
 
 	fprintf(stdout, "mkActivity: %d\n", getActivities().size());
-	ctxt->pushField(ret);
 	for (std::vector<ITypeFieldActivity *>::const_iterator
 		it=getActivities().begin();
 		it!=getActivities().end(); it++) {
 		IModelActivity *field_a = (*it)->mkActivity(ctxt);
 		ret->addActivity(field_a);
 	}
-	ctxt->popField();
+
+	ctxt->popBottomUpScope();
 
 	return ret;
 }

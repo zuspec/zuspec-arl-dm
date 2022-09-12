@@ -31,12 +31,14 @@ IModelFieldComponent *TaskBuildModelComponent::build(
 }
 
 void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
+#ifdef UNDEFINED
 	if (m_ctxt->fieldStackSize() == 0) {
 		m_ctxt->pushField(new ModelFieldComponentRoot(
 				m_ctxt->ctxt(),
 				m_core.name(),
 				t));
 	}
+#endif
 
 //	m_ctxt->mkModelFieldRoot(type, name)
 	VisitorDelegator::visitDataTypeComponent(t);
@@ -44,7 +46,7 @@ void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
 
 void TaskBuildModelComponent::visitTypeFieldPool(ITypeFieldPool *f) {
 	vsc::IModelFieldType *field = m_ctxt->ctxt()->mkModelFieldType(f);
-	m_ctxt->getField(-1)->addField(field);
+	m_ctxt->getTopDownScope()->addField(field);
 
 	// A Pool-type field is not an instance of the contained type,
 	// though that is the stated type.

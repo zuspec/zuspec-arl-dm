@@ -24,14 +24,10 @@ void ModelField::addConstraint(vsc::IModelConstraint *c) {
 }
 
 void ModelField::addField(vsc::IModelField *field) {
-	fprintf(stdout, "ModelField::addField %d %p %s\n", 
-		m_fields.size(), field, field->name().c_str());
 	m_fields.push_back(vsc::IModelFieldUP(field));
 }
 
 vsc::IModelField *ModelField::getField(int32_t idx) {
-	fprintf(stdout, "ModelField::getField: %d %p %s\n", 
-		idx, m_fields.at(idx).get(), m_fields.at(idx).get()->name().c_str());
 	return m_fields.at(idx).get();
 }
 

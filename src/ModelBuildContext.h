@@ -13,7 +13,7 @@
 
 namespace arl {
 
-class ModelBuildContext : public virtual IModelBuildContext, public vsc::ModelBuildContext {
+class ModelBuildContext : public virtual IModelBuildContext, public virtual vsc::ModelBuildContext {
 public:
 	ModelBuildContext(IContext *ctxt);
 

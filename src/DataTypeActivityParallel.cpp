@@ -48,14 +48,14 @@ IModelActivity *DataTypeActivityParallel::mkActivity(
 			it->get()));
 	}
 
-    ctxt->pushField(ret);
+    ctxt->pushBottomUpScope(ret);
     for (std::vector<ITypeFieldActivity *>::const_iterator
         it=getActivities().begin();
         it!=getActivities().end(); it++) {
         IModelActivity *activity = (*it)->mkActivity(ctxt);
         ret->addBranch(activity);
     }
-    ctxt->popField();
+    ctxt->popBottomUpScope();
 
     return ret;
 }

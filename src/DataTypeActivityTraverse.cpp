@@ -45,6 +45,8 @@ IModelActivity *DataTypeActivityTraverse::mkActivity(
 		with_c = TaskBuildModelConstraint(ctxt_a).build(type_t->getWithC());
 	}
 
+	fprintf(stdout, "DataTypeActivity::mkActivity with_c=%p (%p)\n", type_t->getWithC(), with_c);
+
 	IModelActivityTraverse *ret = ctxt_a->ctxt()->mkModelActivityTraverse(
 		target_a,
 		with_c

@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "vsc/impl/PrettyPrinter.h"
 #include "vsc/impl/TaskUnrollModelFieldRefConstraints.h"
 
 #include "DebugMacros.h"
@@ -183,27 +184,44 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
         // Get the active component
         IModelFieldComponent *comp_p = m_thread->component();
 
-        // Get the 
+        // Add in the local action constraints
+        for (std::vector<vsc::IModelConstraintUP>::const_iterator
+            it=action->constraints().begin();
+            it!=action->constraints().end(); it++) {
+            constraints.push_back(it->get());
+        }
+
         std::vector<IModelFieldComponent *> comp_l = comp_p->getCompMap()->getSubContexts(
             action->getDataTypeT<IDataTypeAction>()->getComponentType());
         DEBUG("NOTE: %d possible comp contexts of %s in %s", 
             comp_l.size(),
             action->getDataTypeT<IDataTypeAction>()->getComponentType()->name().c_str(),
             comp_p->name().c_str());
+
         std::vector<vsc::IModelField *> comp_candidates(comp_l.begin(), comp_l.end());
+
         vsc::ModelFieldRefConstraintDataUP comp_data(
             vsc::TaskUnrollModelFieldRefConstraints(m_thread->ctxt()).build(
                 action->getFieldT<vsc::IModelFieldRef>(0),
                 comp_candidates,
-                {}
+                {},
+                constraints
             ));
         std::vector<vsc::IModelConstraint *> comp_constraints;
-        for (std::vector<vsc::IModelConstraintScopeUP>::const_iterator
+        for (std::vector<vsc::IModelConstraintUP>::const_iterator
             it=comp_data->getSelectConstraints().begin();
             it!=comp_data->getSelectConstraints().end(); it++) {
-            comp_constraints.push_back(it->get());
+            if (it->get()) {
+                comp_constraints.push_back(it->get());
+            }
         }
         comp_constraints.push_back(comp_data->getValidC());
+
+        for (std::vector<vsc::IModelConstraint *>::const_iterator
+            it=comp_constraints.begin();
+            it!=comp_constraints.end(); it++) {
+            DEBUG("CompConstraint: %s", vsc::PrettyPrinter().print(*it));
+        }
 
         bool result = solver->solve(
             m_thread->randstate(),

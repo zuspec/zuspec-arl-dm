@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include "arl/IDataTypeResource.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldPool.h"
 #include "arl/IModelFieldAction.h"
@@ -57,6 +58,11 @@ public:
 				&vsc::IVisitor::visitDataTypeStruct, t);
 	}
 
+	virtual void visitDataTypeResource(IDataTypeResource *t) override {
+		delegate(&arl::IVisitor::visitDataTypeResource,
+				&vsc::IVisitor::visitDataTypeStruct, t);
+	}
+
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) override {
 		delegate(&arl::IVisitor::visitModelActivityParallel, a);
 	}
@@ -80,6 +86,11 @@ public:
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
 		delegate(&arl::IVisitor::visitModelFieldComponent,
+				&vsc::IVisitor::visitModelField, f);
+	}
+
+	virtual void visitModelFieldPool(IModelFieldPool *f) override {
+		delegate(&arl::IVisitor::visitModelFieldPool,
 				&vsc::IVisitor::visitModelField, f);
 	}
 

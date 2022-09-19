@@ -12,6 +12,8 @@
 #include "DataTypeActivitySequence.h"
 #include "DataTypeActivityTraverse.h"
 #include "DataTypeComponent.h"
+#include "DataTypeFlowObj.h"
+#include "DataTypeResource.h"
 #include "ModelActivityParallel.h"
 #include "ModelActivitySchedule.h"
 #include "ModelActivitySequence.h"
@@ -22,6 +24,7 @@
 #include "ModelFieldActionType.h"
 #include "ModelFieldComponentRoot.h"
 #include "ModelFieldComponentType.h"
+#include "ModelFieldPool.h"
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
@@ -115,24 +118,44 @@ bool Context::addDataTypeComponent(IDataTypeComponent *t) {
 	}
 }
 
-IDataTypeFlowObj *Context::findDataTypeFlowObj(const std::string &name) {
-	std::unordered_map<std::string,IDataTypeFlowObjUP>::const_iterator it;
+IDataTypeFlowObj *Context::findDataTypeFlowObj(
+		const std::string 	&name,
+		FlowObjKindE		kind) {
+	std::unordered_map<FlowObjKindE,FlowObjMapT>::const_iterator it;
 
-	if ((it=m_flowobj_type_m.find(name)) != m_flowobj_type_m.end()) {
-		return it->second.get();
-	} else {
-		return 0;
+	if ((it=m_flowobj_kind_m.find(kind)) != m_flowobj_kind_m.end()) {
+		FlowObjMapT::const_iterator t_it = it->second.find(name);
+		if (t_it != it->second.end()) {
+			return t_it->second.get();
+		} 
 	}
+	return 0;
 }
 
 IDataTypeFlowObj *Context::mkDataTypeFlowObj(
 		const std::string 	&name,
 		FlowObjKindE		kind) {
+	IDataTypeFlowObj *ret = 0;
 
+	switch (kind) {
+		case FlowObjKindE::Resource: {
+			ret = new DataTypeResource(this, name);
+		} break;
+		default:
+			ret = new DataTypeFlowObj(name, kind);
+	}
+
+	return ret;
 }
 
 bool Context::addDataTypeFlowObj(IDataTypeFlowObj *t) {
+	std::unordered_map<FlowObjKindE,FlowObjMapT>::iterator it;
 
+	if ((it=m_flowobj_kind_m.find(t->kind())) == m_flowobj_kind_m.end()) {
+		it = m_flowobj_kind_m.insert({t->kind(), FlowObjMapT()}).first;
+	}
+
+	return it->second.insert({t->name(), IDataTypeFlowObjUP(t)}).second;
 }
 
 IModelActivityParallel *Context::mkModelActivityParallel() {
@@ -179,6 +202,11 @@ IModelFieldComponent *Context::mkModelFieldComponentType(
 	return new ModelFieldComponentType(this, type);
 }
 
+IModelFieldPool *Context::mkModelFieldPoolType(
+			vsc::ITypeField			*type) {
+	return new ModelFieldPool(type->name(), type->getDataType());
+}
+
 ITypeFieldActivity *Context::mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,
@@ -203,9 +231,10 @@ ITypeFieldInOut *Context::mkTypeFieldInOut(
 ITypeFieldPool *Context::mkTypeFieldPool(
 			const std::string		&name,
 			vsc::IDataType			*type,
+			bool					own,
 			vsc::TypeFieldAttr		attr,
 			int32_t					decl_size) {
-	return new TypeFieldPool(name, type, attr, decl_size);
+	return new TypeFieldPool(this, name, type, own, attr, decl_size);
 }
 
 } /* namespace arl */

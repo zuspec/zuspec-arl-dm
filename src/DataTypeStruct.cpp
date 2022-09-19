@@ -60,6 +60,11 @@ vsc::IModelField *DataTypeStruct::mkRootField(
 		ret = ctxt->ctxt()->mkModelFieldRoot(this, name);
 
 		// Need to build sub-fields and constraints
+		for (std::vector<vsc::ITypeFieldUP>::const_iterator
+			it=getFields().begin();
+			it!=getFields().end(); it++) {
+			ret->addField((*it)->mkModelField(ctxt));
+		}
 	}
 
 	if (getCreateHook()) {
@@ -78,6 +83,12 @@ vsc::IModelField *DataTypeStruct::mkTypeField(
 		ret = ctxt->ctxt()->mkModelFieldRefType(type);
 	} else {
 		ret = ctxt->ctxt()->mkModelFieldType(type);
+
+		for (std::vector<vsc::ITypeFieldUP>::const_iterator
+			it=getFields().begin();
+			it!=getFields().end(); it++) {
+			ret->addField((*it)->mkModelField(ctxt));
+		}
 	}
 
 	if (getCreateHook()) {

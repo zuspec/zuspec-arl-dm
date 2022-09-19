@@ -9,6 +9,10 @@ public:
 
     virtual ~IModelFieldPool() { }
 
+    virtual vsc::IDataType *getDataTypePool() const = 0;
+
+    virtual void setDataTypePool(vsc::IDataType *t) = 0;
+
 
 };
 

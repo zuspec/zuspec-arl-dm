@@ -23,6 +23,7 @@
 #include "arl/IModelFieldComponent.h"
 #include "arl/ITypeFieldClaim.h"
 #include "arl/ITypeFieldInOut.h"
+#include "arl/ITypeFieldPool.h"
 
 namespace arl {
 
@@ -61,7 +62,9 @@ public:
 
 	virtual bool addDataTypeComponent(IDataTypeComponent *t) = 0;
 
-	virtual IDataTypeFlowObj *findDataTypeFlowObj(const std::string &name) = 0;
+	virtual IDataTypeFlowObj *findDataTypeFlowObj(
+			const std::string 	&name, 
+			FlowObjKindE 		kind) = 0;
 
 	virtual IDataTypeFlowObj *mkDataTypeFlowObj(
 			const std::string 	&name,
@@ -95,6 +98,9 @@ public:
 	virtual IModelFieldComponent *mkModelFieldComponentType(
 			vsc::ITypeField			*type) = 0;
 
+	virtual IModelFieldPool *mkModelFieldPoolType(
+			vsc::ITypeField			*type) = 0;
+
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,
@@ -113,6 +119,7 @@ public:
 	virtual ITypeFieldPool *mkTypeFieldPool(
 			const std::string		&name,
 			vsc::IDataType			*type,
+			bool					own,
 			vsc::TypeFieldAttr		attr,
 			int32_t					decl_size) = 0;
 

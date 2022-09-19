@@ -58,7 +58,12 @@ cdef extern from "arl/IContext.h" namespace "arl":
         ITypeFieldActivity *mkTypeFieldActivity(const cpp_string &, IDataTypeActivity *, bool)
         ITypeFieldClaim *mkTypeFieldClaim(const cpp_string &, vsc.IDataType *, bool)
         ITypeFieldInOut *mkTypeFieldInOut(const cpp_string &, vsc.IDataType *, bool)
-        ITypeFieldPool *mkTypeFieldPool(const cpp_string &, vsc.IDataType *, vsc.TypeFieldAttr, int32_t)
+        ITypeFieldPool *mkTypeFieldPool(
+            const cpp_string &, 
+            vsc.IDataType *, 
+            bool own,
+            vsc.TypeFieldAttr, 
+            int32_t)
         
 cdef extern from "arl/IDataTypeAction.h" namespace "arl":
     cdef cppclass IDataTypeAction(vsc.IDataTypeStruct):

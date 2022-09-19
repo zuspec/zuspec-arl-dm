@@ -35,4 +35,9 @@ vsc::ITypeField *TypeField::getField(int32_t idx) const {
 	}
 }
 
+vsc::IModelField *TypeField::mkModelField(
+		vsc::IModelBuildContext 			*ctxt) {
+	return getDataType()->mkTypeField(ctxt, this);
+}
+
 } /* namespace arl */

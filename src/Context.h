@@ -48,7 +48,9 @@ public:
 
 	virtual bool addDataTypeComponent(IDataTypeComponent *t) override;
 
-	virtual IDataTypeFlowObj *findDataTypeFlowObj(const std::string &name) override;
+	virtual IDataTypeFlowObj *findDataTypeFlowObj(
+			const std::string 	&name,
+			FlowObjKindE		kind) override;
 
 	virtual IDataTypeFlowObj *mkDataTypeFlowObj(
 			const std::string 	&name,
@@ -82,6 +84,9 @@ public:
 	virtual IModelFieldComponent *mkModelFieldComponentType(
 			vsc::ITypeField         *type) override;
 
+	virtual IModelFieldPool *mkModelFieldPoolType(
+			vsc::ITypeField			*type) override;
+
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,
@@ -100,13 +105,17 @@ public:
 	virtual ITypeFieldPool *mkTypeFieldPool(
 			const std::string		&name,
 			vsc::IDataType			*type,
+			bool					own,
 			vsc::TypeFieldAttr		attr,
 			int32_t					decl_size) override;
 
 private:
+	using FlowObjMapT=std::unordered_map<std::string,IDataTypeFlowObjUP>;
+
+private:
 	std::unordered_map<std::string, IDataTypeActionUP>			m_action_type_m;
 	std::unordered_map<std::string, IDataTypeComponentUP>		m_component_type_m;
-	std::unordered_map<std::string, IDataTypeFlowObjUP>			m_flowobj_type_m;
+	std::unordered_map<FlowObjKindE, FlowObjMapT>				m_flowobj_kind_m;
 
 };
 

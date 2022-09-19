@@ -15,12 +15,14 @@
 #include "arl/IDataTypeActivityTraverse.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
+#include "arl/IDataTypeResource.h"
 #include "arl/IModelActivityParallel.h"
 #include "arl/IModelActivitySchedule.h"
 #include "arl/IModelActivitySequence.h"
 #include "arl/IModelActivityTraverse.h"
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldComponent.h"
+#include "arl/IModelFieldPool.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldActivity.h"
 #include "arl/ITypeFieldClaim.h"
@@ -69,6 +71,10 @@ public:
 		vsc::VisitorBase::visitDataTypeStruct(t);
 	}
 
+	virtual void visitDataTypeResource(IDataTypeResource *t) override {
+		VisitorBase::visitDataTypeFlowObj(t);
+	}
+
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) override {
 		for (std::vector<IModelActivity *>::const_iterator
 				it=a->branches().begin();
@@ -110,6 +116,10 @@ public:
 	}
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
+		vsc::VisitorBase::visitModelField(f);
+	}
+
+	virtual void visitModelFieldPool(IModelFieldPool *f) override {
 		vsc::VisitorBase::visitModelField(f);
 	}
 

@@ -31,7 +31,7 @@ cdef class Context(vsc.Context):
     cpdef TypeFieldActivity mkTypeFieldActivity(self, name, DataTypeActivity, bool)
     cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType, bool)
     cpdef TypeFieldInOut mkTypeFieldInOut(self, name, vsc.DataType, bool)
-    cpdef TypeFieldPool mkTypeFieldPool(self, name, vsc.DataType, vsc.TypeFieldAttr, decl_size)
+    cpdef TypeFieldPool mkTypeFieldPool(self, name, vsc.DataType, bool, vsc.TypeFieldAttr, decl_size)
     
     cdef decl.IContext *asContext(self)
     

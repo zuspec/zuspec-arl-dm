@@ -208,6 +208,7 @@ cdef class Context(vsc.Context):
     
     cpdef TypeFieldPool mkTypeFieldPool(self, name, 
                                         vsc.DataType type, 
+                                        bool own,
                                         attr, 
                                         decl_size):
         cdef int attr_i = int(attr)
@@ -221,6 +222,7 @@ cdef class Context(vsc.Context):
         return TypeFieldPool.mk(self.asContext().mkTypeFieldPool(
             name.encode(),
             type_p,
+            own,
             <vsc_decl.TypeFieldAttr>(attr_i),
             decl_size), True)
     

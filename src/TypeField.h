@@ -38,8 +38,11 @@ public:
 		return m_type;
 	}
 
-	virtual void setDataType(vsc::IDataType *t) override {
+	virtual void setDataType(vsc::IDataType *t, bool own=false) override {
 		m_type = t;
+		if (own) {
+			m_type_owned = vsc::IDataTypeUP(t);
+		}
 	}
 
 	virtual vsc::ITypeField *getField(int32_t idx) const override;
@@ -47,6 +50,9 @@ public:
 	virtual vsc::TypeFieldAttr getAttr() const override {
 		return m_attr;
 	}
+
+	virtual vsc::IModelField *mkModelField(
+		vsc::IModelBuildContext 			*ctxt) override;
 
 protected:
 	vsc::ITypeField						*m_parent;

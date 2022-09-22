@@ -34,6 +34,13 @@ DataTypeResource::DataTypeResource(
         ctxt->addDataTypeInt(ui32_t);
     }
 
+    vsc::IDataTypeInt *ui1_t = ctxt->findDataTypeInt(false, 1);
+
+    if (!ui1_t) {
+        ui1_t = ctxt->mkDataTypeInt(false, 1);
+        ctxt->addDataTypeInt(ui1_t);
+    }
+
     m_instance_id = ctxt->mkTypeFieldPhy(
         "instance_id",
         ui32_t,
@@ -41,6 +48,14 @@ DataTypeResource::DataTypeResource(
         vsc::TypeFieldAttr::Rand,
         0);
     addField(m_instance_id);
+
+    m_initial = ctxt->mkTypeFieldPhy(
+        "initial",
+        ui1_t,
+        false,
+        vsc::TypeFieldAttr::Rand,
+        0);
+    addField(m_initial);
 }
 
 DataTypeResource::~DataTypeResource() {

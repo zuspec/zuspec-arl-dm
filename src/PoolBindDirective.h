@@ -1,5 +1,5 @@
 /**
- * DataTypeResource.h
+ * PoolBindDirective.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,33 +19,34 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IContext.h"
-#include "arl/IDataTypeResource.h"
-#include "vsc/ITypeField.h"
-#include "DataTypeFlowObj.h"
+#include "arl/IPoolBindDirective.h"
 
 namespace arl {
 
 
-class DataTypeResource : 
-    public virtual IDataTypeResource, 
-    public virtual DataTypeFlowObj {
+class PoolBindDirective : public virtual IPoolBindDirective {
 public:
-    DataTypeResource(
-        IContext            *ctxt,
-        const std::string   &name);
+    PoolBindDirective(
+        PoolBindKind                kind,
+        vsc::ITypeExprFieldRef      *pool,
+        vsc::ITypeExprFieldRef      *target);
 
-    virtual ~DataTypeResource();
+    virtual ~PoolBindDirective();
 
-    virtual vsc::ITypeField *getInstanceId() const override {
-        return m_instance_id;
+    virtual PoolBindKind kind() const override { return m_kind; }
+
+    virtual vsc::ITypeExprFieldRef *getPool() const override {
+        return m_pool.get();
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual vsc::ITypeExprFieldRef *getTarget() const override {
+        return m_target.get();
+    }
 
 private:
-    vsc::ITypeField             *m_instance_id;
-    vsc::ITypeField             *m_initial;
+    PoolBindKind                            m_kind;
+    vsc::ITypeExprFieldRefUP                m_pool;
+    vsc::ITypeExprFieldRefUP                m_target;
 
 };
 

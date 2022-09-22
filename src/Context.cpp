@@ -25,6 +25,7 @@
 #include "ModelFieldComponentRoot.h"
 #include "ModelFieldComponentType.h"
 #include "ModelFieldPool.h"
+#include "PoolBindDirective.h"
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
@@ -205,6 +206,13 @@ IModelFieldComponent *Context::mkModelFieldComponentType(
 IModelFieldPool *Context::mkModelFieldPoolType(
 			vsc::ITypeField			*type) {
 	return new ModelFieldPool(type->name(), type->getDataType());
+}
+
+IPoolBindDirective *Context::mkPoolBindDirective(
+			PoolBindKind			kind,
+			vsc::ITypeExprFieldRef	*pool,
+			vsc::ITypeExprFieldRef	*target) {
+	return new PoolBindDirective(kind, pool, target);
 }
 
 ITypeFieldActivity *Context::mkTypeFieldActivity(

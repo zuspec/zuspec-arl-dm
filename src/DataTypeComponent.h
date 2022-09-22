@@ -24,6 +24,14 @@ public:
 
 	virtual void addActionType(IDataTypeAction *) override;
 
+	virtual void addPoolBindDirective(IPoolBindDirective *bind) override {
+		m_pool_binds.push_back(IPoolBindDirectiveUP(bind));
+	};
+
+	virtual const std::vector<IPoolBindDirectiveUP> &getPoolBindDirectives() const override {
+		return m_pool_binds;
+	}
+
 	virtual vsc::IModelField *mkRootField(
 		vsc::IModelBuildContext		*ctxt,
 		const std::string			&name,
@@ -37,6 +45,7 @@ public:
 
 private:
 	std::vector<IDataTypeAction *>			m_action_types;
+	std::vector<IPoolBindDirectiveUP>		m_pool_binds;
 	vsc::IModelStructCreateHookUP			m_create_hook;
 
 };

@@ -8,6 +8,7 @@
 #include "arl/IVisitor.h"
 #include "ModelFieldComponent.h"
 #include "TaskBuildComponentMap.h"
+#include "TaskPopulateResourcePools.h"
 
 namespace arl {
 
@@ -16,13 +17,12 @@ ModelFieldComponent::ModelFieldComponent(IContext *ctxt) : m_ctxt(ctxt) {
 }
 
 ModelFieldComponent::~ModelFieldComponent() {
-	fprintf(stdout, "ModelFieldComponent::~ModelFieldComponent\n");
-	fflush(stdout);
 	// TODO Auto-generated destructor stub
 }
 
 void ModelFieldComponent::initCompTree() {
 	TaskBuildComponentMap().build(this);
+	TaskPopulateResourcePools(m_ctxt).populate(this);
 }
 
 void ModelFieldComponent::accept(vsc::IVisitor *v) {

@@ -45,6 +45,7 @@ vsc::IModelField *TypeFieldPool::mkModelField(
 		vsc::IModelBuildContext 			*ctxt) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 	IModelFieldPool *pool = ctxt_a->mkModelFieldPoolType(this);
+	fprintf(stdout, "TypeFieldPool::mkModelField\n");
 
 	pool->setDataTypePool(m_pool_t);
 

@@ -26,8 +26,12 @@ cdef class Context(vsc.Context):
     cpdef DataTypeComponent findDataTypeComponent(self, name)
     cpdef DataTypeComponent mkDataTypeComponent(self, name)
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)
+    cpdef DataTypeFlowObj findDataTypeFlowObj(self, name, kind)
+    cpdef DataTypeFlowObj mkDataTypeFlowObj(self, name, kind)
+    cpdef bool addDataTypeFlowObj(self, DataTypeFlowObj obj_t)
     
     cpdef ModelEvaluator mkModelEvaluator(self)
+    cpdef PoolBindDirective mkPoolBindDirective(self, kind, vsc.TypeExprFieldRef pool, vsc.TypeExprFieldRef target)
     cpdef TypeFieldActivity mkTypeFieldActivity(self, name, DataTypeActivity, bool)
     cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType, bool)
     cpdef TypeFieldInOut mkTypeFieldInOut(self, name, vsc.DataType, bool)
@@ -103,10 +107,28 @@ cdef class DataTypeActivityTraverse(DataTypeActivity):
     
 cdef class DataTypeComponent(vsc.DataTypeStruct):
 
+    cpdef getActionTypes(self)
+
+    cpdef addActionType(self, DataTypeAction action)
+
+    cpdef addPoolBindDirective(self, PoolBindDirective bind)
+
+    cpdef getPoolBindDirectives(self)
+
     cdef decl.IDataTypeComponent *asComponent(self)
     
     @staticmethod
     cdef DataTypeComponent mk(decl.IDataTypeComponent *, bool owned=*)
+
+cdef class DataTypeFlowObj(vsc.DataTypeStruct):
+
+    cpdef kind(self)
+
+    cdef decl.IDataTypeFlowObj *asFlowObj(self)
+
+    @staticmethod
+    cdef DataTypeFlowObj mk(decl.IDataTypeFlowObj *hndl, bool owned=*)
+
 
 cdef class ModelEvaluator(object):    
     cdef decl.IModelEvaluator        *_hndl
@@ -145,6 +167,27 @@ cdef class ModelFieldComponent(vsc.ModelField):
     
     @staticmethod
     cdef ModelFieldComponent mk(decl.IModelFieldComponent *, bool owned=*)
+
+cdef class ModelFieldPool(vsc.ModelField):
+
+    cdef decl.IModelFieldPool *asPool(self)
+
+    @staticmethod
+    cdef ModelFieldPool mk(decl.IModelFieldPool *hndl, bool owned=*)
+
+
+cdef class PoolBindDirective(object):
+    cdef decl.IPoolBindDirective         *_hndl
+    cdef bool                            _owned
+
+    cpdef kind(self)
+
+    cpdef vsc.TypeExprFieldRef getPool(self)
+
+    cpdef vsc.TypeExprFieldRef getTarget(self)
+
+    @staticmethod
+    cdef mk(decl.IPoolBindDirective *hndl, bool owned=*)
     
 cdef class TypeFieldActivity(vsc.TypeField):
 
@@ -182,9 +225,14 @@ cdef class VisitorBase(vsc.VisitorBase):
 
     cpdef visitDataTypeAction(self, DataTypeAction t)
 
+    cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t)
+
     cpdef visitModelFieldAction(self, ModelFieldAction a)
 
     cpdef visitModelFieldComponent(self, ModelFieldComponent c)
+
+
+    cpdef visitModelFieldPool(self, ModelFieldPool f)
 
 cdef class WrapperBuilder(VisitorBase):
     cdef list _obj

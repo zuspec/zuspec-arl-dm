@@ -6,11 +6,11 @@
  */
 
 #pragma once
-#include "vsc/ITypeField.h"
+#include "vsc/ITypeFieldRef.h"
 
 namespace arl {
 
-class ITypeFieldInOut : public virtual vsc::ITypeField {
+class ITypeFieldInOut : public virtual vsc::ITypeFieldRef {
 public:
 
 	virtual ~ITypeFieldInOut() { }

@@ -101,6 +101,11 @@ public:
 	virtual IModelFieldPool *mkModelFieldPoolType(
 			vsc::ITypeField			*type) = 0;
 
+	virtual IPoolBindDirective *mkPoolBindDirective(
+			PoolBindKind				kind,
+			vsc::ITypeExprFieldRef		*pool,
+			vsc::ITypeExprFieldRef		*target) = 0;
+
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,

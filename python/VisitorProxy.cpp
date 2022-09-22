@@ -37,12 +37,20 @@ void VisitorProxy::visitDataTypeAction(IDataTypeAction *t) {
     VisitorProxy_visitDataTypeAction(m_obj, t);
 }
 
+void VisitorProxy::visitDataTypeFlowObj(IDataTypeFlowObj *t) {
+    VisitorProxy_visitDataTypeFlowObj(m_obj, t);
+}
+
 void VisitorProxy::visitModelFieldAction(IModelFieldAction *f) {
     VisitorProxy_visitModelFieldAction(m_obj, f);
 }
 
 void VisitorProxy::visitModelFieldComponent(IModelFieldComponent *f) {
     VisitorProxy_visitModelFieldComponent(m_obj, f);
+}
+
+void VisitorProxy::visitModelFieldPool(IModelFieldPool *f) {
+    VisitorProxy_visitModelFieldPool(m_obj, f);
 }
 
 }

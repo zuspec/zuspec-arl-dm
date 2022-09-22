@@ -56,9 +56,7 @@ vsc::IModelField *DataTypeComponent::mkRootField(
 	    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
 	        it=getFields().begin();
 	        it!=getFields().end(); it++) {
-	        vsc::IModelField *field = (*it)->getDataType()->mkTypeField(
-	            ctxt,
-	            it->get());
+	        vsc::IModelField *field = (*it)->mkModelField(ctxt);
 	        if (!field) {
 	            fprintf(stdout, "Error: Construction of field %s failed\n", (*it)->name().c_str());
 	        }
@@ -91,9 +89,7 @@ vsc::IModelField *DataTypeComponent::mkTypeField(
 	    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
 	        it=getFields().begin();
 	        it!=getFields().end(); it++) {
-	        vsc::IModelField *field = (*it)->getDataType()->mkTypeField(
-	            ctxt,
-	            it->get());
+	        vsc::IModelField *field = (*it)->mkModelField(ctxt);
 			ret->addField(field);
 	    }
 	    ctxt->popTopDownScope();

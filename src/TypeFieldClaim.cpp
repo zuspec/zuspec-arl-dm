@@ -26,6 +26,8 @@ TypeFieldClaim::~TypeFieldClaim() {
 void TypeFieldClaim::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<arl::IVisitor *>(v)) {
 		dynamic_cast<arl::IVisitor *>(v)->visitTypeFieldClaim(this);
+	} else if (v->cascade()) {
+		v->visitTypeFieldRef(this);
 	}
 }
 

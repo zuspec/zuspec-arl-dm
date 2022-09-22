@@ -18,8 +18,12 @@ ctypedef IDataTypeActivitySchedule *IDataTypeActivityScheduleP
 ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
 ctypedef IDataTypeComponent *IDataTypeComponentP
+ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
 ctypedef IModelFieldAction *IModelFieldActionP
 ctypedef IModelFieldComponent *IModelFieldComponentP
+ctypedef IModelFieldPool *IModelFieldPoolP
+ctypedef IPoolBindDirective *IPoolBindDirectiveP
+ctypedef unique_ptr[IPoolBindDirective] IPoolBindDirectiveUP
 ctypedef ITypeFieldActivity *ITypeFieldActivityP
 ctypedef unique_ptr[ITypeFieldActivity] ITypeFieldActivityUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
@@ -54,7 +58,14 @@ cdef extern from "arl/IContext.h" namespace "arl":
         IDataTypeComponent *findDataTypeComponent(const cpp_string &)
         IDataTypeComponent *mkDataTypeComponent(const cpp_string &)
         bool addDataTypeComponent(IDataTypeComponent *)
+        IDataTypeFlowObj *findDataTypeFlowObj(const cpp_string &name, FlowObjKindE kind)
+        IDataTypeFlowObj *mkDataTypeFlowObj(const cpp_string &name, FlowObjKindE kind)
+        bool addDataTypeFlowObj(IDataTypeFlowObj *)
         IModelEvaluator *mkModelEvaluator()
+        IPoolBindDirective *mkPoolBindDirective(
+            PoolBindKind                kind,
+            vsc.ITypeExprFieldRef       *pool,
+            vsc.ITypeExprFieldRef       *target)
         ITypeFieldActivity *mkTypeFieldActivity(const cpp_string &, IDataTypeActivity *, bool)
         ITypeFieldClaim *mkTypeFieldClaim(const cpp_string &, vsc.IDataType *, bool)
         ITypeFieldInOut *mkTypeFieldInOut(const cpp_string &, vsc.IDataType *, bool)
@@ -110,11 +121,21 @@ cdef extern from "arl/IDataTypeActivityTraverse.h" namespace "arl":
     
 cdef extern from "arl/IDataTypeComponent.h" namespace "arl":
     cdef cppclass IDataTypeComponent(vsc.IDataTypeStruct):
+        const cpp_vector[IDataTypeActionP] &getActionTypes() const
+        void addActionType(IDataTypeAction *)
+        void addPoolBindDirective(IPoolBindDirective *)
+        cpp_vector[IPoolBindDirectiveUP] &getPoolBindDirectives() const
         pass
     
 cdef extern from "arl/IDataTypeFlowObj.h" namespace "arl":
+    cdef enum FlowObjKindE:
+        Buffer   "arl::FlowObjKindE::Buffer"
+        Resource "arl::FlowObjKindE::Resource"
+        State    "arl::FlowObjKindE::State"
+        Stream   "arl::FlowObjKindE::Stream"
+
     cdef cppclass IDataTypeFlowObj(vsc.IDataTypeStruct):
-        pass
+        FlowObjKindE kind() const
 
 cdef extern from "arl/IModelEvaluator.h" namespace "arl":
     cdef cppclass IModelEvaluator:
@@ -141,6 +162,20 @@ cdef extern from "arl/IModelFieldAction.h" namespace "arl":
 cdef extern from "arl/IModelFieldComponent.h" namespace "arl":
     cdef cppclass IModelFieldComponent(vsc.IModelField):
         void initCompTree()
+
+cdef extern from "arl/IModelFieldPool.h" namespace "arl":
+    cdef cppclass IModelFieldPool(vsc.IModelField):
+        pass
+
+cdef extern from "arl/IPoolBindDirective.h" namespace "arl":
+    cdef enum PoolBindKind:
+        All "arl::PoolBindKind::All"
+        Ref "arl::PoolBindKind::Ref"
+
+    cdef cppclass IPoolBindDirective:
+        PoolBindKind kind() const
+        vsc.ITypeExprFieldRef *getPool() const
+        vsc.ITypeExprFieldRef *getTarget() const
     
 cdef extern from "arl/ITypeFieldActivity.h" namespace "arl":
     cdef cppclass ITypeFieldActivity(vsc.ITypeField):

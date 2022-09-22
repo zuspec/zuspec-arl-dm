@@ -128,11 +128,11 @@ public:
 	}
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
-		vsc::VisitorBase::visitTypeField(f);
+		vsc::VisitorBase::visitTypeFieldRef(f);
 	}
 
 	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) override {
-		vsc::VisitorBase::visitTypeField(f);
+		vsc::VisitorBase::visitTypeFieldRef(f);
 	}
 
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) override {

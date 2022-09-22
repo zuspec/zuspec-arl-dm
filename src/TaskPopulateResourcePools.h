@@ -1,5 +1,5 @@
 /**
- * DataTypeResource.h
+ * TaskPopulateResourcePools.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -20,33 +20,28 @@
  */
 #pragma once
 #include "arl/IContext.h"
-#include "arl/IDataTypeResource.h"
-#include "vsc/ITypeField.h"
-#include "DataTypeFlowObj.h"
+#include "arl/impl/VisitorBase.h"
 
 namespace arl {
 
 
-class DataTypeResource : 
-    public virtual IDataTypeResource, 
-    public virtual DataTypeFlowObj {
+class TaskPopulateResourcePools : public virtual VisitorBase {
 public:
-    DataTypeResource(
-        IContext            *ctxt,
-        const std::string   &name);
+    TaskPopulateResourcePools(IContext *ctxt);
 
-    virtual ~DataTypeResource();
+    virtual ~TaskPopulateResourcePools();
 
-    virtual vsc::ITypeField *getInstanceId() const override {
-        return m_instance_id;
-    }
+    void populate(IModelFieldComponent *root);
 
-    virtual void accept(vsc::IVisitor *v) override;
+	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
+
+	virtual void visitModelFieldPool(IModelFieldPool *f) override;
+
+	virtual void visitDataTypeResource(IDataTypeResource *t) override;
 
 private:
-    vsc::ITypeField             *m_instance_id;
-    vsc::ITypeField             *m_initial;
-
+    IContext                            *m_ctxt;
+    IModelFieldPool                     *m_pool;
 };
 
 }

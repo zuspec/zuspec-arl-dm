@@ -1,5 +1,5 @@
 /*
- * ModelFieldPool.cpp
+ * PoolBindDirective.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -18,27 +18,20 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
-#include "ModelFieldPool.h"
+#include "PoolBindDirective.h"
 
 
 namespace arl {
-ModelFieldPool::ModelFieldPool(
-    const std::string       &name,
-    vsc::IDataType          *type) : m_name(name), m_type(type), m_type_pool(0) {
+
+PoolBindDirective::PoolBindDirective(
+    PoolBindKind                kind,
+    vsc::ITypeExprFieldRef      *pool,
+    vsc::ITypeExprFieldRef      *target) : 
+        m_kind(kind), m_pool(pool), m_target(target) {
 
 }
 
-ModelFieldPool::~ModelFieldPool() {
-
-}
-
-void ModelFieldPool::accept(vsc::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitModelFieldPool(this);
-    } else if (v->cascade()) {
-        v->visitModelField(this);
-    }
+PoolBindDirective::~PoolBindDirective() {
 
 }
 

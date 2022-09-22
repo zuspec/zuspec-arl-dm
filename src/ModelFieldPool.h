@@ -20,6 +20,7 @@
  */
 #pragma once
 #include <string>
+#include <vector>
 #include "arl/IModelFieldPool.h"
 #include "vsc/IDataType.h"
 #include "ModelField.h"
@@ -51,12 +52,21 @@ public:
         m_type_pool = t;
     }
 
+    virtual void addObject(vsc::IModelField *obj) override {
+        m_objects.push_back(vsc::IModelFieldUP(obj));
+    }
+
+    virtual const std::vector<vsc::IModelFieldUP> &getObjects() const override {
+        return m_objects;
+    }
+
     virtual void accept(vsc::IVisitor *v) override;
 
 private:
-    std::string                 m_name;
-    vsc::IDataType              *m_type;
-    vsc::IDataType              *m_type_pool;
+    std::string                         m_name;
+    vsc::IDataType                      *m_type;
+    vsc::IDataType                      *m_type_pool;
+    std::vector<vsc::IModelFieldUP>     m_objects;
 
 };
 

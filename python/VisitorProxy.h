@@ -33,9 +33,13 @@ public:
 
     virtual void visitDataTypeAction(IDataTypeAction *t) override;
 
+	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override;
+
 	virtual void visitModelFieldAction(IModelFieldAction *f) override;
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
+
+	virtual void visitModelFieldPool(IModelFieldPool *f) override;
 
 private:
     PyObject                *m_obj;

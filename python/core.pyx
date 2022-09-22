@@ -3,7 +3,7 @@ import os
 import sys
 from ctypes import CDLL
 from libcpp cimport bool
-from libcpp.cast cimport dynamic_cast
+from libcpp.cast cimport dynamic_cast, static_cast
 from libcpp.vector cimport vector as cpp_vector
 from enum import IntEnum
 from libarl cimport decl
@@ -178,9 +178,46 @@ cdef class Context(vsc.Context):
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t):
         comp_t._owned = False
         return self.asContext().addDataTypeComponent(comp_t.asComponent())
+
+    cpdef DataTypeFlowObj findDataTypeFlowObj(self, name, kind):
+        cdef int kind_i = int(kind)
+        cdef decl.IDataTypeFlowObj *obj = self.asContext().findDataTypeFlowObj(
+            name.encode(), 
+            <decl.FlowObjKindE>(kind_i))
+        
+        if obj != NULL:
+            return DataTypeFlowObj.mk(obj, False)
+        else:
+            return None
+
+    cpdef DataTypeFlowObj mkDataTypeFlowObj(self, name, kind):
+        cdef int kind_i = int(kind)
+        return DataTypeFlowObj.mk(self.asContext().mkDataTypeFlowObj(
+            name.encode(),
+            <decl.FlowObjKindE>(kind_i)), True)
+
+    cpdef bool addDataTypeFlowObj(self, DataTypeFlowObj obj_t):
+        obj_t._owned = False
+        return self.asContext().addDataTypeFlowObj(obj_t.asFlowObj())
     
     cpdef ModelEvaluator mkModelEvaluator(self):
         return ModelEvaluator.mk(self.asContext().mkModelEvaluator())
+
+    cpdef PoolBindDirective mkPoolBindDirective(self, kind, vsc.TypeExprFieldRef pool, vsc.TypeExprFieldRef target):
+        cdef int kind_i = int(kind)
+        cdef vsc_decl.ITypeExprFieldRef *tp = NULL
+
+        pool._owned = False
+
+        if target is not None:
+            target._owned = False
+            tp = target.asFieldRef()
+
+        return PoolBindDirective.mk(self.asContext().mkPoolBindDirective(
+            <decl.PoolBindKind>(kind_i),
+            pool.asFieldRef(),
+            tp), True)
+        
     
     cpdef TypeFieldActivity mkTypeFieldActivity(self, name, DataTypeActivity type, bool owned):
     
@@ -407,12 +444,55 @@ cdef class DataTypeActivityTraverse(DataTypeActivity):
 
 cdef class DataTypeComponent(vsc.DataTypeStruct):
 
+    cpdef getActionTypes(self):
+        cdef const cpp_vector[decl.IDataTypeActionP] *atv = &self.asComponent().getActionTypes()
+        ret = []
+        for i in range(atv.size()):
+            ret.append(DataTypeAction.mk(atv.at(i), False))
+        return ret
+
+    cpdef addActionType(self, DataTypeAction action):
+        self.asComponent().addActionType(action.asAction())
+
+    cpdef addPoolBindDirective(self, PoolBindDirective bind):
+        bind._owned = False
+        self.asComponent().addPoolBindDirective(bind._hndl)
+
+    cpdef getPoolBindDirectives(self):
+        cdef const cpp_vector[decl.IPoolBindDirectiveUP] *bv = &self.asComponent().getPoolBindDirectives()
+        ret = []
+        for i in range(bv.size()):
+            ret.append(PoolBindDirective.mk(bv.at(i).get(), False))
+        return ret
+
     cdef decl.IDataTypeComponent *asComponent(self):
         return dynamic_cast[decl.IDataTypeComponentP](self._hndl)
     
     @staticmethod
     cdef DataTypeComponent mk(decl.IDataTypeComponent *hndl, bool owned=True):
         ret = DataTypeComponent()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+class FlowObjKindE(IntEnum):
+    Buffer = decl.FlowObjKindE.Buffer
+    Resource = decl.FlowObjKindE.Resource
+    State = decl.FlowObjKindE.State
+    Stream = decl.FlowObjKindE.Stream
+
+cdef class DataTypeFlowObj(vsc.DataTypeStruct):
+
+    cpdef kind(self):
+        cdef int kind_i = int(self.asFlowObj().kind())
+        return FlowObjKindE(kind_i)
+
+    cdef decl.IDataTypeFlowObj *asFlowObj(self):
+        return dynamic_cast[decl.IDataTypeFlowObjP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeFlowObj mk(decl.IDataTypeFlowObj *hndl, bool owned=True):
+        ret = DataTypeFlowObj()
         ret._hndl = hndl
         ret._owned = owned
         return ret
@@ -515,6 +595,51 @@ cdef class ModelFieldComponent(vsc.ModelField):
         ret._hndl = hndl
         ret._owned = owned
         return ret
+
+cdef class ModelFieldPool(vsc.ModelField):
+    cdef decl.IModelFieldPool *asPool(self):
+        return dynamic_cast[decl.IModelFieldPoolP](self._hndl)
+
+    @staticmethod
+    cdef ModelFieldPool mk(decl.IModelFieldPool *hndl, bool owned=True):
+        ret = ModelFieldPool()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+
+class PoolBindKind(IntEnum):
+    All = decl.PoolBindKind.All
+    Ref = decl.PoolBindKind.Ref
+
+cdef class PoolBindDirective(object):
+
+    def __dealloc__(self):
+        if self._owned:
+            del self._hndl
+
+    cpdef kind(self):
+        cdef int kind_i
+        kind_i = int(self._hndl.kind())
+        return PoolBindKind(kind_i)
+
+    cpdef vsc.TypeExprFieldRef getPool(self):
+        return vsc.TypeExprFieldRef.mk(self._hndl.getPool(), False)
+
+    cpdef vsc.TypeExprFieldRef getTarget(self):
+        cdef vsc_decl.ITypeExprFieldRef *tp = self._hndl.getTarget()
+        if tp != NULL:
+            return vsc.TypeExprFieldRef.mk(tp, False)
+        else:
+            return None
+
+    @staticmethod
+    cdef mk(decl.IPoolBindDirective *hndl, bool owned=True):
+        ret = PoolBindDirective()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+    
     
 cdef class TypeFieldActivity(vsc.TypeField):
 
@@ -584,20 +709,33 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitDataTypeAction(self, DataTypeAction t):
         pass
 
+    cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t):
+        pass
+
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         pass
 
     cpdef visitModelFieldComponent(self, ModelFieldComponent c):
         pass
 
+    cpdef visitModelFieldPool(self, ModelFieldPool f):
+        pass
+
 cdef public void VisitorProxy_visitDataTypeAction(obj, decl.IDataTypeAction *t) with gil:
     obj.visitDataTypeAction(DataTypeAction.mk(t, False))
+
+cdef public void VisitorProxy_visitDataTypeFlowObj(obj, decl.IDataTypeFlowObj *t) with gil:
+    obj.visitDataTypeFlowObj(DataTypeFlowObj.mk(t, False))
 
 cdef public void VisitorProxy_visitModelFieldAction(obj, decl.IModelFieldAction *a) with gil:
     obj.visitModelFieldAction(ModelFieldAction.mk(a, False))
 
 cdef public void VisitorProxy_visitModelFieldComponent(obj, decl.IModelFieldComponent *c) with gil:
     obj.visitModelFieldComponent(ModelFieldComponent.mk(c, False))
+
+
+cdef public void VisitorProxy_visitModelFieldPool(obj, decl.IModelFieldPool *c) with gil:
+    obj.visitModelFieldPool(ModelFieldPool.mk(c, False))
 
 
 cdef class WrapperBuilder(VisitorBase):
@@ -624,6 +762,9 @@ cdef class WrapperBuilder(VisitorBase):
     cpdef visitDataTypeAction(self, DataTypeAction t):
         self._set_obj(t)
 
+    cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t):
+        self._set_obj(t)
+
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         print("visitModelFieldAction")
         self._set_obj(a)
@@ -631,6 +772,10 @@ cdef class WrapperBuilder(VisitorBase):
     cpdef visitModelFieldComponent(self, ModelFieldComponent c):
         print("visitModelFieldComponent")
         self._set_obj(c)
+
+    cpdef visitModelFieldPool(self, ModelFieldPool f):
+        print("visitModelFieldPool")
+        self._set_obj(f)
 
 cdef class WrapperBuilderVsc(vsc.WrapperBuilder):
 

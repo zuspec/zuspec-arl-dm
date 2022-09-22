@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include <unordered_map>
 #include "arl/IModelFieldComponent.h"
 #include "arl/impl/VisitorBase.h"
 #include "vsc/IModelField.h"
@@ -23,10 +24,23 @@ public:
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
 
-private:
+	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override;
+
+	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) override;
 
 private:
-	std::vector<std::vector<IModelFieldComponent *>>		m_component_s;
+	using TypePoolMapT=std::unordered_map<vsc::IDataType *, IModelFieldPool *>;
+	using FieldPoolMapT=std::unordered_map<vsc::ITypeField *, IModelFieldPool *>;
+
+	struct TypePoolMapFrame {
+		TypePoolMapT						m_wildcard_m;
+		FieldPoolMapT						m_field_m;
+	};
+
+private:
+	IModelFieldComponent										*m_comp;
+	std::vector<std::vector<IModelFieldComponent *>>			m_component_s;
+	std::vector<TypePoolMapFrame>								m_type_pool_map_s;
 
 };
 

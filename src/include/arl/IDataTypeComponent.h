@@ -8,6 +8,7 @@
 #pragma once
 #include <vector>
 #include "arl/IAccept.h"
+#include "arl/IPoolBindDirective.h"
 #include "vsc/IDataTypeStruct.h"
 
 namespace arl {
@@ -24,6 +25,10 @@ public:
 	virtual const std::vector<IDataTypeAction *> &getActionTypes() const = 0;
 
 	virtual void addActionType(IDataTypeAction *) = 0;
+
+	virtual void addPoolBindDirective(IPoolBindDirective *bind) = 0;
+
+	virtual const std::vector<IPoolBindDirectiveUP> &getPoolBindDirectives() const = 0;
 
 };
 

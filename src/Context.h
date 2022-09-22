@@ -87,6 +87,11 @@ public:
 	virtual IModelFieldPool *mkModelFieldPoolType(
 			vsc::ITypeField			*type) override;
 
+	virtual IPoolBindDirective *mkPoolBindDirective(
+			PoolBindKind			kind,
+			vsc::ITypeExprFieldRef	*pool,
+			vsc::ITypeExprFieldRef	*target) override;
+
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,

@@ -5,6 +5,7 @@
  *      Author: mballance
  */
 
+#include "DebugMacros.h"
 #include "arl/IContext.h"
 #include "vsc/IModelBuildContext.h"
 #include "vsc/impl/TaskBuildModelFieldConstraints.h"
@@ -16,6 +17,7 @@ namespace arl {
 DataTypeAction::DataTypeAction(
 		IContext			*ctxt,
 		const std::string 	&name) : DataTypeStruct(name), m_component_t(0) {
+    DEBUG_INIT("DataTypeAction");
 
 	// Add the built-in 'comp' ref
 	m_comp = ctxt->mkTypeFieldRef("comp", 0, vsc::TypeFieldAttr::NoAttr);
@@ -40,6 +42,7 @@ vsc::IModelField *DataTypeAction::mkRootField(
 		vsc::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) {
+    DEBUG_ENTER("mkRootField %s", name.c_str());
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     IModelFieldAction *ret;
 
@@ -50,9 +53,8 @@ vsc::IModelField *DataTypeAction::mkRootField(
     for (std::vector<vsc::ITypeFieldUP>::const_iterator 
         it=getFields().begin();
         it!=getFields().end(); it++) {
-        vsc::IModelField *field = (*it)->getDataType()->mkTypeField(
-            ctxt,
-            it->get());
+        vsc::IModelField *field = (*it)->mkModelField(ctxt);
+
         if (!field) {
             fprintf(stdout, "Error: Construction of field %s failed\n", (*it)->name().c_str());
         }
@@ -76,12 +78,14 @@ vsc::IModelField *DataTypeAction::mkRootField(
     }
     ctxt->popTopDownScope();
 
+    DEBUG_LEAVE("mkRootField %s", name.c_str());
     return ret;	
 }
 
 vsc::IModelField *DataTypeAction::mkTypeField(
 		vsc::IModelBuildContext		*ctxt,
 		vsc::ITypeField				*type) {
+    DEBUG_ENTER("mkTypeField %s", type->name().c_str());
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
     IModelFieldAction *ret = ctxt_a->mkModelFieldActionType(type);
@@ -92,9 +96,7 @@ vsc::IModelField *DataTypeAction::mkTypeField(
     for (std::vector<vsc::ITypeFieldUP>::const_iterator 
         it=getFields().begin();
         it!=getFields().end(); it++) {
-        vsc::IModelField *field = (*it)->getDataType()->mkTypeField(
-            ctxt,
-            it->get());
+        vsc::IModelField *field = (*it)->mkModelField(ctxt);
 		ret->addField(field);
     }
 
@@ -108,6 +110,7 @@ vsc::IModelField *DataTypeAction::mkTypeField(
 
     ctxt->popTopDownScope();
 
+    DEBUG_LEAVE("mkTypeField %s", type->name().c_str());
     return ret;
 }
 

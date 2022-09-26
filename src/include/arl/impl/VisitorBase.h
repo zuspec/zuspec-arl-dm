@@ -72,7 +72,7 @@ public:
 	}
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {
-		VisitorBase::visitDataTypeFlowObj(t);
+		visitDataTypeFlowObj(t);
 	}
 
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) override {

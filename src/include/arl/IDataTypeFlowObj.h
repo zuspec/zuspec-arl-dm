@@ -6,7 +6,6 @@
  */
 
 #pragma once
-#include "arl/IAccept.h"
 #include "vsc/IDataTypeStruct.h"
 
 namespace arl {
@@ -20,7 +19,7 @@ enum class FlowObjKindE {
 
 class IDataTypeFlowObj;
 using IDataTypeFlowObjUP=std::unique_ptr<IDataTypeFlowObj>;
-class IDataTypeFlowObj : public virtual vsc::IDataTypeStruct, public virtual IAccept {
+class IDataTypeFlowObj : public virtual vsc::IDataTypeStruct {
 public:
 
 	virtual ~IDataTypeFlowObj() { }

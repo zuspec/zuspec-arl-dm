@@ -25,6 +25,7 @@
 #include "ModelEvaluatorParallel.h"
 #include "ModelEvaluatorSequence.h"
 #include "TaskCollectTopLevelActivities.h"
+#include "TaskSolveActionSet.h"
 
 
 namespace arl {
@@ -183,6 +184,8 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
 
         // Get the active component
         IModelFieldComponent *comp_p = m_thread->component();
+
+        TaskSolveActionSet(m_thread->ctxt(), comp_p).solve({a});
 
         // Add in the local action constraints
         for (std::vector<vsc::IModelConstraintUP>::const_iterator

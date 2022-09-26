@@ -21,15 +21,7 @@ public:
 
 	virtual FlowObjKindE kind() const override { return m_kind; }
 
-	virtual void accept(vsc::IVisitor *v) override {
-		if (dynamic_cast<IVisitor *>(v)) {
-			dynamic_cast<IVisitor *>(v)->visitDataTypeFlowObj(this);
-		} else {
-			v->visitDataTypeStruct(this);
-		}
-	}
-
-	virtual void accept(IVisitor *v) override { v->visitDataTypeFlowObj(this); }
+	virtual void accept(vsc::IVisitor *v) override;
 
 private:
 	FlowObjKindE					m_kind;

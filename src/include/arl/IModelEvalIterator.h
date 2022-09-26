@@ -29,6 +29,8 @@ enum class ModelEvalNodeT {
 
 };
 
+class IModelEvalIterator;
+using IModelEvalIteratorUP=std::unique_ptr<IModelEvalIterator>;
 class IModelEvalIterator {
 public:
 

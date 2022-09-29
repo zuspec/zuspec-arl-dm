@@ -57,8 +57,7 @@ const std::vector<IModelFieldComponent *> &ComponentMap::getSubContexts(IDataTyp
 }
 
 void ComponentMap::addPoolMapping(vsc::ITypeField *claim_ref, IModelFieldPool *pool) {
-	// TODO:
-
+	m_claim_ref_pool_m.insert({claim_ref, pool});
 }
 
 IModelFieldPool *ComponentMap::getPool(vsc::ITypeField *claim_ref) const {

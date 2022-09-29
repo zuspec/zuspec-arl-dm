@@ -20,6 +20,7 @@
  */
 #include <stdio.h>
 #include "vsc/impl/ModelBuildContext.h"
+#include "vsc/impl/TaskSetUsedRand.h"
 #include "DebugMacros.h"
 #include "TaskPopulateResourcePools.h"
 
@@ -71,7 +72,9 @@ void TaskPopulateResourcePools::visitDataTypeResource(IDataTypeResource *t) {
                 &build_ctxt,
                 tmp,
                 false);
+            obj->getField(0)->setFlags(vsc::ModelFieldFlag::Resolved);
             obj->getField(0)->val()->set_val_i(i);
+            vsc::TaskSetUsedRand().apply(obj, true);
             m_pool->addObject(obj);
         }
     }

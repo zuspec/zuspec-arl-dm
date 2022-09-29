@@ -176,16 +176,20 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
     } else {
         DEBUG("Just a single leaf-level action");
         std::vector<vsc::IModelConstraint *> constraints;
-        vsc::ICompoundSolverUP solver(m_thread->ctxt()->mkCompoundSolver());
 
-        if (a->getWithC()) {
-            constraints.push_back(a->getWithC());
-        }
 
         // Get the active component
         IModelFieldComponent *comp_p = m_thread->component();
 
-        TaskSolveActionSet(m_thread->ctxt(), comp_p).solve({a});
+        TaskSolveActionSet(
+            m_thread->ctxt(), 
+            m_thread->randstate(),
+            comp_p).solve({a});
+
+#ifdef UNDEFINED
+        if (a->getWithC()) {
+            constraints.push_back(a->getWithC());
+        }
 
         // Add in the local action constraints
         for (std::vector<vsc::IModelConstraintUP>::const_iterator
@@ -246,6 +250,7 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
                 | vsc::SolveFlags::RandomizeTopFields);
         action->getFieldT<vsc::IModelFieldRef>(0)->setRef(
             comp_l.at(comp_data->getSelector()->val()->val_i()));
+#endif // UNDEFINED
 
         m_action = action;
     }

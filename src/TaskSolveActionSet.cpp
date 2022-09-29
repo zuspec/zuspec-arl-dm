@@ -22,16 +22,23 @@
 #include "arl/IDataTypeComponent.h"
 #include "arl/IModelFieldPool.h"
 #include "vsc/impl/TaskUnrollModelFieldRefConstraints.h"
-#include "DebugMacros.h"
-#include "TaskSolveActionSet.h"
+#include "vsc/impl/TaskBuildRefConstraintMap.h"
+#include "vsc/impl/TaskBuildRefSelector.h"
+#include "vsc/impl/PrettyPrinter.h"
+#include "TaskCollectFlowObjFields.h"
 #include "TaskIsDataTypeFlowObj.h"
+#include "TaskSolveActionSet.h"
+
+#include "DebugMacros.h"
 
 
 namespace arl {
 
 TaskSolveActionSet::TaskSolveActionSet(
     IContext                *ctxt,
-    IModelFieldComponent    *comp) : m_ctxt(ctxt), m_comp(comp) {
+    vsc::IRandState         *randstate,
+    IModelFieldComponent    *comp) : 
+    m_ctxt(ctxt), m_randstate(randstate), m_comp(comp) {
     DEBUG_INIT("TaskSolveActionSet");
     m_action_data = 0;
 }
@@ -45,6 +52,7 @@ bool TaskSolveActionSet::solve(
     DEBUG_ENTER("solve - %d traversals", traversals.size());
     bool ret = true;
 
+
     m_all_comp_m.clear();
     m_all_comp_l.clear();
 
@@ -53,7 +61,18 @@ bool TaskSolveActionSet::solve(
     for (std::vector<IModelActivityTraverse *>::const_iterator
         it=traversals.begin(); 
         it!=traversals.end(); it++) {
-        m_action_data_l.push_back(ActionData());
+        m_action_data_l.push_back(ActionData(*it));
+
+        for (std::vector<vsc::IModelConstraintUP>::const_iterator
+            c_it=(*it)->getTarget()->constraints().begin();
+            c_it!=(*it)->getTarget()->constraints().end(); c_it++) {
+            DEBUG("Action constraint: %s", vsc::PrettyPrinter().print(c_it->get()));
+            m_constraints.push_back(c_it->get());
+        }
+
+        if ((*it)->getWithC()) {
+            m_constraints.push_back((*it)->getWithC());
+        }
     }
 
     build_comp_map(traversals);
@@ -70,25 +89,180 @@ bool TaskSolveActionSet::solve(
         (*it)->getTarget()->getDataType()->accept(m_this);
     }
 
-    // Now that we've built the proper data, process the objects
+    /****************************************************************
+     * At this point, we have:
+     * - Action/component map information
+     * - List of all valid actions
+     * - Pool information about all resource types used by the actions
+     * - 
+     * 
+     * We now need to analyze the refs against the constraints to 
+     * determine how to unroll the selector constraints
+     ****************************************************************/
+
+    // Build out the component constraints for each action
+    for (std::vector<ActionData>::iterator
+        it=m_action_data_l.begin();
+        it!=m_action_data_l.end(); it++) {
+
+        std::vector<vsc::IModelField *> candidates(m_all_comp_l.size());
+        for (std::vector<uint32_t>::const_iterator
+            comp_it=it->m_comp_ctxt_l.begin();
+            comp_it!=it->m_comp_ctxt_l.end(); comp_it++) {
+            candidates[*comp_it] = m_all_comp_l[*comp_it];
+        }
+
+        m_ref_l.push_back(vsc::RefSelectorUP(vsc::TaskBuildRefSelector(m_ctxt).build(
+                it->m_traversal->getTarget()->getFieldT<vsc::IModelFieldRef>(0),
+                candidates)));
+    }
+
+    // Visit each action to build out selectors for the claims and refs
     for (uint32_t i=0; i<traversals.size(); i++) {
         m_action_data = &m_action_data_l.at(i);
         traversals.at(i)->getTarget()->accept(m_this);
     }
 
-    // TODO: Collect fields and constraints to solve for
+    /****************************************************************
+     * Okay, we now have all the selectors built. We need to collect
+     * just the refs so we can reason about cross-selector dependeices
+     ****************************************************************/
+    std::vector<vsc::IModelField *>      ref_fields;
+    std::vector<vsc::IModelConstraint *> ref_constraints;
+    for (std::vector<vsc::RefSelectorUP>::const_iterator
+        it=m_ref_l.begin();
+        it!=m_ref_l.end(); it++) {
+        ref_fields.push_back(it->get()->m_ref);
+    }
+
+    // Collect the constraints we need to reason about 
+    // cross-selector dependencise
+    // TODO: this should probably include constraints from above
+    for (std::vector<IModelActivityTraverse *>::const_iterator
+        it=traversals.begin(); 
+        it!=traversals.end(); it++) {
+        if ((*it)->getWithC()) {
+            ref_constraints.push_back((*it)->getWithC());
+        }
+        for (std::vector<vsc::IModelConstraintUP>::const_iterator
+            c_it=(*it)->getTarget()->constraints().begin();
+            c_it!=(*it)->getTarget()->constraints().end(); c_it++) {
+            ref_constraints.push_back(c_it->get());
+        }
+    }
+
+    std::vector<vsc::RefConstraintSet> ref_constraint_m = 
+        vsc::TaskBuildRefConstraintMap(m_ctxt).build(
+            ref_fields,
+            m_constraints);
+
+    DEBUG("ref_constraint_m: %d", ref_constraint_m.size());
+
+    std::vector<vsc::IModelConstraintUP> selector_constraints;
+
+    /****************************************************************
+     * We now have a list of [ref_idx][constraints] pairs. 
+     * 
+     * Transform this into a list of [RefSelector],[constraints] pairs
+     ****************************************************************/
+    for (std::vector<vsc::RefConstraintSet>::const_iterator
+        it=ref_constraint_m.begin();
+        it!=ref_constraint_m.end(); it++) {
+        std::vector<vsc::RefSelector *> selectors;
+        for (std::vector<int32_t>::const_iterator
+            s_it=it->first.begin();
+            s_it!=it->first.end(); s_it++) {
+            selectors.push_back(m_ref_l.at(*s_it).get());
+        }
+        vsc::TaskUnrollModelFieldRefConstraints(m_ctxt).build(
+            selector_constraints,
+            selectors,
+            it->second);
+    }
+
+    /****************************************************************
+     * We should now have a list of selector constraints that handle
+     * all cross-dependencies between the selector variables.
+     * 
+     * Now, we need to add in the cross constraints from resources
+     ****************************************************************/
+    build_resource_constraints(selector_constraints);
+
+
+    // Now, solve out ref assignments
+    vsc::ICompoundSolverUP solver(m_ctxt->mkCompoundSolver());
+
+    std::vector<vsc::IModelConstraint *> sel_constraints;
+    std::vector<vsc::IModelField *> sel_fields;
+    for (std::vector<vsc::IModelConstraintUP>::const_iterator
+        it=selector_constraints.begin();
+        it!=selector_constraints.end(); it++) {
+        DEBUG("Constraint: %s", vsc::PrettyPrinter().print(it->get()));
+        sel_constraints.push_back(it->get());
+    }
+    for (std::vector<vsc::RefSelectorUP>::const_iterator
+        it=m_ref_l.begin();
+        it!=m_ref_l.end(); it++) {
+        sel_fields.push_back(it->get()->m_selector.get());
+        for (std::vector<vsc::IModelConstraintUP>::const_iterator
+            c_it=it->get()->m_selector.get()->constraints().begin();
+            c_it!=it->get()->m_selector.get()->constraints().end(); c_it++) {
+            DEBUG("Sel Constraint: %s", vsc::PrettyPrinter().print(c_it->get()));
+        }
+        DEBUG("Valid C: %s", vsc::PrettyPrinter().print((*it)->m_valid_c.get()));
+        sel_constraints.push_back((*it)->m_valid_c.get());
+    }
+
+    ret = solver->solve(
+            m_randstate,
+            sel_fields,
+            sel_constraints,
+            vsc::SolveFlags::Randomize
+                | vsc::SolveFlags::RandomizeDeclRand
+                | vsc::SolveFlags::RandomizeTopFields);
+
+    DEBUG("ret=%d", ret);
 
     // Assign action refs if we were able to solve properly
     if (ret) {
-        for (std::vector<ActionData>::const_iterator
-            action_it=m_action_data_l.begin();
-            action_it!=m_action_data_l.end(); action_it++) {
-            for (std::vector<RefSelPairT>::const_iterator
-                ref_sel_it=action_it->m_refs.begin();
-                ref_sel_it!=action_it->m_refs.end(); ref_sel_it++) {
-                ref_sel_it->first->setRef(ref_sel_it->second->getSelected());
+        for (std::vector<vsc::RefSelectorUP>::const_iterator
+            it=m_ref_l.begin();
+            it!=m_ref_l.end(); it++) {
+            vsc::IModelFieldRef *ref = dynamic_cast<vsc::IModelFieldRef *>((*it)->m_ref);
+            uint32_t idx = (*it)->m_selector->val()->val_u();
+            DEBUG("ref %s ; idx=%d", ref->name().c_str(), idx);
+            if (idx < (*it)->m_candidates.size()) {
+                ref->setRef((*it)->m_candidates.at(idx));
+            } else {
+                DEBUG("Error: not setting ref");
             }
         }
+    }
+
+    /****************************************************************
+     * Once the refs are assigned, solve out the rest of the action
+     ****************************************************************/
+    std::vector<vsc::IModelField *> actions;
+    std::vector<vsc::IModelConstraint *> action_constraints;
+
+    if (ret) {
+        for (std::vector<IModelActivityTraverse *>::const_iterator
+            it=traversals.begin();
+            it!=traversals.end(); it++) {
+            actions.push_back((*it)->getTarget());
+            if ((*it)->getWithC()) {
+                action_constraints.push_back((*it)->getWithC());
+            }
+        }
+
+        ret = solver->solve(
+                m_randstate,
+                actions,
+                action_constraints,
+                vsc::SolveFlags::Randomize
+                    | vsc::SolveFlags::RandomizeDeclRand
+                    | vsc::SolveFlags::RandomizeTopFields);
+        DEBUG("Action Solve: %d", ret);
     }
 
     DEBUG_LEAVE("solve - ret=%d", ret);
@@ -124,8 +298,42 @@ void TaskSolveActionSet::build_comp_map(
                 idx = it->second;
             }
 
-            m_action_data_l.at(i).comp_ctxt_l.push_back(idx);
+            m_action_data_l.at(i).m_comp_ctxt_l.push_back(idx);
         }
+    }
+}
+
+void TaskSolveActionSet::build_resource_constraints(
+        std::vector<vsc::IModelConstraintUP> &constraints) {
+    // Build resource constraints
+    for (std::vector<ResourceClaimData *>::const_iterator
+        it=m_res_type_l.begin();
+        it!=m_res_type_l.end(); it++) {
+        DEBUG("Resource: %s lock=%d share=%d", 
+            dynamic_cast<vsc::IDataTypeStruct *>((*it)->m_res_t)->name().c_str(),
+            (*it)->m_lock_claims.size(), (*it)->m_share_claims.size());
+        for (uint32_t i=0; i<(*it)->m_lock_claims.size(); i++) {
+            for (uint32_t j=i+1; j<(*it)->m_lock_claims.size(); j++) {
+                vsc::IModelConstraintExpr *distinct_c = m_ctxt->mkModelConstraintExpr(
+                    m_ctxt->mkModelExprBin(
+                        m_ctxt->mkModelExprFieldRef((*it)->m_lock_claims.at(i)->m_selector.get()),
+                        vsc::BinOp::Ne,
+                        m_ctxt->mkModelExprFieldRef((*it)->m_lock_claims.at(j)->m_selector.get())
+                    ));
+                constraints.push_back(vsc::IModelConstraintExprUP(distinct_c));
+            }
+        }
+        for (uint32_t i=0; i<(*it)->m_lock_claims.size(); i++) {
+            for (uint32_t j=0; j<(*it)->m_share_claims.size(); j++) {
+                vsc::IModelConstraintExpr *distinct_c = m_ctxt->mkModelConstraintExpr(
+                    m_ctxt->mkModelExprBin(
+                        m_ctxt->mkModelExprFieldRef((*it)->m_lock_claims.at(i)->m_selector.get()),
+                        vsc::BinOp::Ne,
+                        m_ctxt->mkModelExprFieldRef((*it)->m_lock_claims.at(j)->m_selector.get())
+                    ));
+                constraints.push_back(vsc::IModelConstraintExprUP(distinct_c));
+            }
+        } 
     }
 }
 
@@ -145,7 +353,9 @@ void TaskSolveActionSet::visitModelFieldRef(vsc::IModelFieldRef *f) {
             for (std::vector<std::pair<int32_t,int32_t>>::const_iterator
                 it=res_t->second.m_comp_sz_l.begin();
                 it!=res_t->second.m_comp_sz_l.end(); it++) {
-                bool valid = (m_action_data->comp_ctxt_l.at(comp_ctxt_idx) == it->first);
+                bool valid = (m_action_data->m_comp_ctxt_l.at(comp_ctxt_idx) == it->first);
+
+                DEBUG("Resource: %d %d", it->first, it->second);
 
                 for (uint32_t i=0; i<it->second; i++) {
                     if (valid) {
@@ -161,27 +371,19 @@ void TaskSolveActionSet::visitModelFieldRef(vsc::IModelFieldRef *f) {
                 }
             }
 
-            vsc::ModelFieldRefConstraintData *data = 
-                vsc::TaskUnrollModelFieldRefConstraints(m_ctxt).build(
-                    f, 
-                    candidates,
-                    {},
-                    m_constraints);
-            
+            vsc::RefSelector *selector = vsc::TaskBuildRefSelector(m_ctxt).build(
+                f,
+                candidates);
+            m_ref_l.push_back(vsc::RefSelectorUP(selector));
+
             // Store the data on the action as well as in the 
             bool is_lock = true; // TODO:
 
             if (is_lock) {
-                res_t->second.m_lock_claims.push_back(data);
+                res_t->second.m_lock_claims.push_back(selector);
             } else {
-                res_t->second.m_share_claims.push_back(data);
+                res_t->second.m_share_claims.push_back(selector);
             }
-
-            m_action_data->m_refs.push_back({f, vsc::ModelFieldRefConstraintDataUP(data)});
-            
-
-
-
         } else {
             // TODO:
 
@@ -201,7 +403,8 @@ void TaskSolveActionSet::visitTypeFieldClaim(ITypeFieldClaim *f) {
     ResTypeMapT::iterator it = m_res_type_m.find(claim_t);
 
     if (it == m_res_type_m.end()) {
-        it = m_res_type_m.insert({claim_t, ResourceClaimData()}).first;
+        it = m_res_type_m.insert({claim_t, ResourceClaimData(claim_t)}).first;
+        m_res_type_l.push_back(&it->second);
 
         for (uint32_t comp_idx=0; comp_idx<m_all_comp_l.size(); comp_idx++) {
             IModelFieldPool *pool = m_all_comp_l.at(comp_idx)->getCompMap()->getPool(f);
@@ -209,11 +412,17 @@ void TaskSolveActionSet::visitTypeFieldClaim(ITypeFieldClaim *f) {
             if (pool) {
                 it->second.m_comp_sz_l.push_back({comp_idx, pool->getObjects().size()});
 
+                if (pool->getObjects().size() == 0) {
+                    DEBUG("Error: zero-sized pool %s", pool->name().c_str());
+                }
+
                 for (std::vector<vsc::IModelFieldUP>::const_iterator
                     o_it=pool->getObjects().begin();
                     o_it!=pool->getObjects().end(); o_it++) {
                     it->second.m_resource_l.push_back(o_it->get());
                 }
+            } else {
+                DEBUG("Error: no pool for resource claim %s", f->name().c_str());
             }
         }
     }

@@ -12,7 +12,7 @@
 
 namespace arl {
 
-class Context : public virtual arl::IContext, public vsc::ContextDelegator {
+class Context : public virtual IContext, public vsc::ContextDelegator {
 public:
 	Context(vsc::IContext *ctxt);
 

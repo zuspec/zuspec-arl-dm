@@ -49,7 +49,6 @@ TEST_F(TestModelEvalIterator, two_branch_parallel) {
     //     - traverse
 
     ArlImpl::inst()->init(vsc::DebugMgr::inst());
-    vsc::DebugMgr::inst()->enable(true);
 
     IModelFieldActionUP traverse_1(new ModelFieldActionRoot("traverse_1", 0));
     IModelFieldActionUP traverse_2(new ModelFieldActionRoot("traverse_2", 0));
@@ -64,7 +63,7 @@ TEST_F(TestModelEvalIterator, two_branch_parallel) {
     activity->addActivity(parallel);
     root->addActivity(activity);
 
-    ModelEvaluatorThread *root_thread = new ModelEvaluatorThread(rs->next());
+    ModelEvaluatorThread *root_thread = new ModelEvaluatorThread(0, rs->next());
     ModelEvaluatorSequence *root_seq = new ModelEvaluatorSequence(root_thread);
     root_seq->addActivity(new ModelActivityTraverse(root.get(), 0), true);
     root_thread->pushIterator(root_seq);
@@ -129,7 +128,7 @@ TEST_F(TestModelEvalIterator, two_branch_parallel_branch_seq) {
     activity->addActivity(parallel);
     root->addActivity(activity);
 
-    ModelEvaluatorThread *root_thread = new ModelEvaluatorThread(rs->next());
+    ModelEvaluatorThread *root_thread = new ModelEvaluatorThread(0, rs->next());
     ModelEvaluatorSequence *root_seq = new ModelEvaluatorSequence(root_thread);
     root_seq->addActivity(new ModelActivityTraverse(root.get(), 0), true);
     root_thread->pushIterator(root_seq);

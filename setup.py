@@ -244,7 +244,10 @@ setup(
   package_dir = {'' : 'python'},
   author = "Matthew Ballance",
   author_email = "matt.ballance@gmail.com",
-  description = ("Provides the core TbLink-RPC library"),
+  description = ("Core ARL model evaluator library"),
+  long_description = """
+  Provides a library interface for creating and evaluating ARL models at an API level
+  """,
   license = "Apache 2.0",
   keywords = ["SystemVerilog", "Verilog", "RTL", "Python"],
   url = "https://github.com/fvutils/libarl",

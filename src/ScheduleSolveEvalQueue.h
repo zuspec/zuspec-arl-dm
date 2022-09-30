@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include <stdint.h>
 #include <vector>
 #include <unordered_set>
 #include "IScheduleSolveEvalQueue.h"

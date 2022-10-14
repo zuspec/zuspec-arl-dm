@@ -29,6 +29,7 @@ class IModelFieldExecutorClaim;
 class IModelFieldPool;
 class ITypeFieldActivity;
 class ITypeFieldClaim;
+class ITypeFieldExecutor;
 class ITypeFieldExecutorClaim;
 class ITypeFieldInOut;
 class ITypeFieldPool;
@@ -75,6 +76,8 @@ public:
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) = 0;
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) = 0;
+
+	virtual void visitTypeFieldExecutor(ITypeFieldExecutor *f) = 0;
 
 	virtual void visitTypeFieldExecutorClaim(ITypeFieldExecutorClaim *f) = 0;
 

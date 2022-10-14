@@ -33,6 +33,7 @@
 #include "TaskBuildModelField.h"
 #include "TypeFieldActivity.h"
 #include "TypeFieldClaim.h"
+#include "TypeFieldExecutor.h"
 #include "TypeFieldExecutorClaim.h"
 #include "TypeFieldInOut.h"
 #include "TypeFieldPool.h"
@@ -242,6 +243,13 @@ ITypeFieldClaim *Context::mkTypeFieldClaim(
 			vsc::IDataType			*type,
 			bool					is_lock) {
 	return new TypeFieldClaim(name, type, is_lock);
+}
+
+ITypeFieldExecutor *Context::mkTypeFieldExecutor(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					owned) {
+	return new TypeFieldExecutor(name, type, owned);
 }
 
 ITypeFieldExecutorClaim *Context::mkTypeFieldExecutorClaim(

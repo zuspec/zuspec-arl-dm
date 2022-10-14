@@ -108,6 +108,11 @@ public:
 			vsc::IDataType			*type,
 			bool					is_lock) override;
 
+	virtual ITypeFieldExecutor *mkTypeFieldExecutor(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					owned) override;
+
 	virtual ITypeFieldExecutorClaim *mkTypeFieldExecutorClaim(
 			const std::string		&name,
 			vsc::IDataType			*type,

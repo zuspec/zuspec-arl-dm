@@ -24,6 +24,7 @@
 #include "arl/IModelFieldExecutor.h"
 #include "arl/IModelFieldExecutorClaim.h"
 #include "arl/ITypeFieldClaim.h"
+#include "arl/ITypeFieldExecutor.h"
 #include "arl/ITypeFieldExecutorClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
@@ -126,6 +127,11 @@ public:
 			const std::string		&name,
 			vsc::IDataType			*type,
 			bool					is_lock) = 0;
+
+	virtual ITypeFieldExecutor *mkTypeFieldExecutor(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					owned) = 0;
 
 	virtual ITypeFieldExecutorClaim *mkTypeFieldExecutorClaim(
 			const std::string		&name,

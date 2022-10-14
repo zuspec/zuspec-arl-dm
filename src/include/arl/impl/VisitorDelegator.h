@@ -8,6 +8,7 @@
 #pragma once
 #include "arl/IDataTypeResource.h"
 #include "arl/IVisitor.h"
+#include "arl/ITypeFieldExecutor.h"
 #include "arl/ITypeFieldPool.h"
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldExecutor.h"
@@ -112,6 +113,11 @@ public:
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
 		delegate(&arl::IVisitor::visitTypeFieldClaim,
+				&vsc::IVisitor::visitTypeField, f);
+	}
+
+	virtual void visitTypeFieldExecutor(ITypeFieldExecutor *f) override {
+		delegate(&arl::IVisitor::visitTypeFieldExecutor,
 				&vsc::IVisitor::visitTypeField, f);
 	}
 

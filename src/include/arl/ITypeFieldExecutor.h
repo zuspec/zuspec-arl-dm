@@ -1,5 +1,5 @@
-/*
- * ModelFieldExecutorClaim.cpp
+/**
+ * ITypeFieldExecutor.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,31 +16,20 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-#include "arl/IVisitor.h"
-#include "ModelFieldExecutorClaim.h"
-
+#pragma once
+#include "vsc/ITypeField.h"
 
 namespace arl {
 
+class ITypeFieldExecutor : public virtual vsc::ITypeField {
+public:
 
-ModelFieldExecutorClaim::ModelFieldExecutorClaim(
-    const std::string       &name,
-    vsc::IDataType          *type) : m_name(name), m_type(type), m_ref(0) {
+    virtual ~ITypeFieldExecutor() { }
 
-}
+};
 
-ModelFieldExecutorClaim::~ModelFieldExecutorClaim() {
+} /* namespace arl */
 
-}
 
-void ModelFieldExecutorClaim::accept(vsc::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitModelFieldExecutorClaim(this);
-    } else if (v->cascade()) {
-        v->visitModelFieldRef(this);
-    }
-}
-
-}

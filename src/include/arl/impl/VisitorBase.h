@@ -28,6 +28,7 @@
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldActivity.h"
 #include "arl/ITypeFieldClaim.h"
+#include "arl/ITypeFieldExecutor.h"
 #include "arl/ITypeFieldExecutorClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
@@ -140,6 +141,10 @@ public:
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
 		vsc::VisitorBase::visitTypeFieldRef(f);
+	}
+
+	virtual void visitTypeFieldExecutor(ITypeFieldExecutor *f) override {
+		vsc::VisitorBase::visitTypeField(f);
 	}
 
 	virtual void visitTypeFieldExecutorClaim(ITypeFieldExecutorClaim *f) override {

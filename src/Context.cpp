@@ -24,6 +24,8 @@
 #include "ModelFieldActionType.h"
 #include "ModelFieldComponentRoot.h"
 #include "ModelFieldComponentType.h"
+#include "ModelFieldExecutor.h"
+#include "ModelFieldExecutorClaim.h"
 #include "ModelFieldPool.h"
 #include "PoolBindDirective.h"
 #include "TaskBuildModelAction.h"
@@ -31,6 +33,7 @@
 #include "TaskBuildModelField.h"
 #include "TypeFieldActivity.h"
 #include "TypeFieldClaim.h"
+#include "TypeFieldExecutorClaim.h"
 #include "TypeFieldInOut.h"
 #include "TypeFieldPool.h"
 
@@ -203,6 +206,18 @@ IModelFieldComponent *Context::mkModelFieldComponentType(
 	return new ModelFieldComponentType(this, type);
 }
 
+IModelFieldExecutor *Context::mkModelFieldExecutor(
+			vsc::ITypeField			*type) {
+	return new ModelFieldExecutor(type->name(), type->getDataType());
+}
+
+IModelFieldExecutorClaim *Context::mkModelFieldExecutorClaim(
+			vsc::ITypeField			*type) {
+	return new ModelFieldExecutorClaim(
+		type->name(),
+		type->getDataType());
+}
+
 IModelFieldPool *Context::mkModelFieldPoolType(
 			vsc::ITypeField			*type) {
 	return new ModelFieldPool(type->name(), type->getDataType());
@@ -227,6 +242,13 @@ ITypeFieldClaim *Context::mkTypeFieldClaim(
 			vsc::IDataType			*type,
 			bool					is_lock) {
 	return new TypeFieldClaim(name, type, is_lock);
+}
+
+ITypeFieldExecutorClaim *Context::mkTypeFieldExecutorClaim(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					owned) {
+	return new TypeFieldExecutorClaim(name, type, owned);
 }
 
 ITypeFieldInOut *Context::mkTypeFieldInOut(

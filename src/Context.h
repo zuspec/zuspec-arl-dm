@@ -84,6 +84,12 @@ public:
 	virtual IModelFieldComponent *mkModelFieldComponentType(
 			vsc::ITypeField         *type) override;
 
+	virtual IModelFieldExecutor *mkModelFieldExecutor(
+			vsc::ITypeField			*type) override;
+
+	virtual IModelFieldExecutorClaim *mkModelFieldExecutorClaim(
+			vsc::ITypeField			*type) override;
+
 	virtual IModelFieldPool *mkModelFieldPoolType(
 			vsc::ITypeField			*type) override;
 
@@ -101,6 +107,11 @@ public:
 			const std::string		&name,
 			vsc::IDataType			*type,
 			bool					is_lock) override;
+
+	virtual ITypeFieldExecutorClaim *mkTypeFieldExecutorClaim(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					owned) override;
 
 	virtual ITypeFieldInOut *mkTypeFieldInOut(
 			const std::string		&name,

@@ -44,3 +44,7 @@ target_link_directories(arl_static PRIVATE
 
 add_dependencies(arl_static LibVSC)
 
+install(TARGETS arl_static
+    DESTINATION lib
+    EXPORT libarl-targets)
+

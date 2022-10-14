@@ -22,10 +22,13 @@
 #include "arl/IModelActivityTraverse.h"
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldComponent.h"
+#include "arl/IModelFieldExecutor.h"
+#include "arl/IModelFieldExecutorClaim.h"
 #include "arl/IModelFieldPool.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldActivity.h"
 #include "arl/ITypeFieldClaim.h"
+#include "arl/ITypeFieldExecutorClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
 
@@ -119,6 +122,14 @@ public:
 		vsc::VisitorBase::visitModelField(f);
 	}
 
+	virtual void visitModelFieldExecutor(IModelFieldExecutor *f) override {
+		vsc::VisitorBase::visitModelField(f);
+	}
+
+	virtual void visitModelFieldExecutorClaim(IModelFieldExecutorClaim *f) override {
+		vsc::VisitorBase::visitModelFieldRef(f);
+	}
+
 	virtual void visitModelFieldPool(IModelFieldPool *f) override {
 		vsc::VisitorBase::visitModelField(f);
 	}
@@ -128,6 +139,10 @@ public:
 	}
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
+		vsc::VisitorBase::visitTypeFieldRef(f);
+	}
+
+	virtual void visitTypeFieldExecutorClaim(ITypeFieldExecutorClaim *f) override {
 		vsc::VisitorBase::visitTypeFieldRef(f);
 	}
 

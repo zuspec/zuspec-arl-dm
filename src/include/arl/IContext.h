@@ -21,12 +21,17 @@
 #include "arl/IModelEvaluator.h"
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldComponent.h"
+#include "arl/IModelFieldExecutor.h"
+#include "arl/IModelFieldExecutorClaim.h"
 #include "arl/ITypeFieldClaim.h"
+#include "arl/ITypeFieldExecutorClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
 
 namespace arl {
 
+class IContext;
+using IContextUP=std::unique_ptr<IContext>;
 class IContext : public virtual vsc::IContext {
 public:
 
@@ -98,6 +103,12 @@ public:
 	virtual IModelFieldComponent *mkModelFieldComponentType(
 			vsc::ITypeField			*type) = 0;
 
+	virtual IModelFieldExecutor *mkModelFieldExecutor(
+			vsc::ITypeField			*type) = 0;
+
+	virtual IModelFieldExecutorClaim *mkModelFieldExecutorClaim(
+			vsc::ITypeField			*type) = 0;
+
 	virtual IModelFieldPool *mkModelFieldPoolType(
 			vsc::ITypeField			*type) = 0;
 
@@ -115,6 +126,11 @@ public:
 			const std::string		&name,
 			vsc::IDataType			*type,
 			bool					is_lock) = 0;
+
+	virtual ITypeFieldExecutorClaim *mkTypeFieldExecutorClaim(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					owned) = 0;
 
 	virtual ITypeFieldInOut *mkTypeFieldInOut(
 			const std::string		&name,

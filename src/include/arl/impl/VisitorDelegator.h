@@ -10,6 +10,7 @@
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldPool.h"
 #include "arl/IModelFieldAction.h"
+#include "arl/IModelFieldExecutor.h"
 #include "arl/IModelActivityParallel.h"
 #include "arl/IModelActivitySchedule.h"
 #include "arl/IModelActivitySequence.h"
@@ -89,6 +90,16 @@ public:
 				&vsc::IVisitor::visitModelField, f);
 	}
 
+	virtual void visitModelFieldExecutor(IModelFieldExecutor *f) override {
+		delegate(&arl::IVisitor::visitModelFieldExecutor,
+				&vsc::IVisitor::visitModelField, f);
+	}
+
+	virtual void visitModelFieldExecutorClaim(IModelFieldExecutorClaim *f) override {
+		delegate(&arl::IVisitor::visitModelFieldExecutorClaim,
+				&vsc::IVisitor::visitModelFieldRef, f);
+	}
+
 	virtual void visitModelFieldPool(IModelFieldPool *f) override {
 		delegate(&arl::IVisitor::visitModelFieldPool,
 				&vsc::IVisitor::visitModelField, f);
@@ -102,6 +113,11 @@ public:
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
 		delegate(&arl::IVisitor::visitTypeFieldClaim,
 				&vsc::IVisitor::visitTypeField, f);
+	}
+
+	virtual void visitTypeFieldExecutorClaim(ITypeFieldExecutorClaim *f) override {
+		delegate(&arl::IVisitor::visitTypeFieldExecutorClaim,
+				&vsc::IVisitor::visitTypeFieldRef, f);
 	}
 
 	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) override {

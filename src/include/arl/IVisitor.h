@@ -24,9 +24,12 @@ class IModelActivitySequence;
 class IModelActivityTraverse;
 class IModelFieldAction;
 class IModelFieldComponent;
+class IModelFieldExecutor;
+class IModelFieldExecutorClaim;
 class IModelFieldPool;
 class ITypeFieldActivity;
 class ITypeFieldClaim;
+class ITypeFieldExecutorClaim;
 class ITypeFieldInOut;
 class ITypeFieldPool;
 
@@ -63,11 +66,17 @@ public:
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) = 0;
 
+	virtual void visitModelFieldExecutor(IModelFieldExecutor *f) = 0;
+
+	virtual void visitModelFieldExecutorClaim(IModelFieldExecutorClaim *f) = 0;
+
 	virtual void visitModelFieldPool(IModelFieldPool *f) = 0;
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) = 0;
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) = 0;
+
+	virtual void visitTypeFieldExecutorClaim(ITypeFieldExecutorClaim *f) = 0;
 
 	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) = 0;
 

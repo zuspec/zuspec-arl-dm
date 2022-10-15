@@ -136,6 +136,50 @@ public:
 				&vsc::IVisitor::visitTypeField, f);
 	}
 
+	virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtBreak, s);
+	}
+
+	virtual void visitTypeProcStmtContinue(ITypeProcStmtContinue *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtContinue, s);
+	}
+
+	virtual void visitTypeProcStmtForeach(ITypeProcStmtForeach *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtForeach, s);
+	}
+
+	virtual void visitTypeProcStmtIfElse(ITypeProcStmtIfElse *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtIfElse, s);
+	}
+
+	virtual void visitTypeProcStmtMatch(ITypeProcStmtMatch *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtMatch, s);
+	}
+
+	virtual void visitTypeProcStmtRepeat(ITypeProcStmtRepeat *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtRepeat, s);
+	}
+
+	virtual void visitTypeProcStmtRepeatWhile(ITypeProcStmtRepeatWhile *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtRepeatWhile, s);
+	}
+
+	virtual void visitTypeProcStmtReturn(ITypeProcStmtReturn *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtReturn, s);
+	}
+
+	virtual void visitTypeProcStmtScope(ITypeProcStmtScope *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtScope, s);
+	}
+
+	virtual void visitTypeProcStmtVarDecl(ITypeProcStmtVarDecl *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtVarDecl, s);
+	}
+
+	virtual void visitTypeProcStmtWhile(ITypeProcStmtWhile *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtWhile, s);
+	}
+
 private:
 
 	template <class T1, class T2> void delegate(

@@ -130,6 +130,44 @@ public:
 			vsc::TypeFieldAttr		attr,
 			int32_t					decl_size) override;
 
+	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() override;
+
+	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() override;
+
+	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(
+			vsc::ITypeExpr		*target,
+			ITypeProcStmt		*body) override;
+
+	virtual ITypeProcStmtIfElse *mkTypeProcStmtIfElse(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*true_s,
+			ITypeProcStmt		*false_s) override;
+	
+	virtual ITypeProcStmtMatch *mkTypeProcStmtMatch(
+			vsc::ITypeExpr		*cond) override;
+
+	virtual ITypeProcStmtRepeat *mkTypeProcStmtRepeat(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*body) override;
+
+	virtual ITypeProcStmtRepeatWhile *mkTypeProcStmtRepeatWhile(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*body) override;
+
+	virtual ITypeProcStmtReturn *mkTypeProcStmtReturn(
+			vsc::ITypeExpr		*expr) override;
+
+	virtual ITypeProcStmtScope *mkTypeProcStmtScope() override;
+
+	virtual ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(
+			const std::string	 &name,
+			vsc::IDataType		 *type,
+			bool				 own) override;
+
+	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*body) override;
+
 private:
 	using FlowObjMapT=std::unordered_map<std::string,IDataTypeFlowObjUP>;
 

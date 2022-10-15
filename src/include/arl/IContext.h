@@ -28,6 +28,17 @@
 #include "arl/ITypeFieldExecutorClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
+#include "arl/ITypeProcStmtBreak.h"
+#include "arl/ITypeProcStmtContinue.h"
+#include "arl/ITypeProcStmtForeach.h"
+#include "arl/ITypeProcStmtIfElse.h"
+#include "arl/ITypeProcStmtMatch.h"
+#include "arl/ITypeProcStmtRepeat.h"
+#include "arl/ITypeProcStmtRepeatWhile.h"
+#include "arl/ITypeProcStmtReturn.h"
+#include "arl/ITypeProcStmtScope.h"
+#include "arl/ITypeProcStmtVarDecl.h"
+#include "arl/ITypeProcStmtWhile.h"
 
 namespace arl {
 
@@ -149,6 +160,44 @@ public:
 			bool					own,
 			vsc::TypeFieldAttr		attr,
 			int32_t					decl_size) = 0;
+
+	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() = 0;
+
+	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() = 0;
+
+	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(
+			vsc::ITypeExpr		*target,
+			ITypeProcStmt		*body) = 0;
+
+	virtual ITypeProcStmtIfElse *mkTypeProcStmtIfElse(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*true_s,
+			ITypeProcStmt		*false_s) = 0;
+	
+	virtual ITypeProcStmtMatch *mkTypeProcStmtMatch(
+			vsc::ITypeExpr		*cond) = 0;
+
+	virtual ITypeProcStmtRepeat *mkTypeProcStmtRepeat(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*body) = 0;
+
+	virtual ITypeProcStmtRepeatWhile *mkTypeProcStmtRepeatWhile(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*body) = 0;
+
+	virtual ITypeProcStmtReturn *mkTypeProcStmtReturn(
+			vsc::ITypeExpr		*expr) = 0;
+
+	virtual ITypeProcStmtScope *mkTypeProcStmtScope() = 0;
+
+	virtual ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(
+			const std::string	 &name,
+			vsc::IDataType		 *type,
+			bool				 own) = 0;
+
+	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*body) = 0;
 
 };
 

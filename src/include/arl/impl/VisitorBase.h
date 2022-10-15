@@ -32,6 +32,17 @@
 #include "arl/ITypeFieldExecutorClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
+#include "arl/ITypeProcStmtBreak.h"
+#include "arl/ITypeProcStmtContinue.h"
+#include "arl/ITypeProcStmtForeach.h"
+#include "arl/ITypeProcStmtIfElse.h"
+#include "arl/ITypeProcStmtMatch.h"
+#include "arl/ITypeProcStmtRepeat.h"
+#include "arl/ITypeProcStmtRepeatWhile.h"
+#include "arl/ITypeProcStmtReturn.h"
+#include "arl/ITypeProcStmtScope.h"
+#include "arl/ITypeProcStmtVarDecl.h"
+#include "arl/ITypeProcStmtWhile.h"
 
 namespace arl {
 
@@ -157,6 +168,66 @@ public:
 
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) override {
 		vsc::VisitorBase::visitTypeField(f);
+	}
+
+	virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) override {
+
+	}
+
+	virtual void visitTypeProcStmtContinue(ITypeProcStmtContinue *s) override {
+
+	}
+
+	virtual void visitTypeProcStmtForeach(ITypeProcStmtForeach *s) override {
+
+	}
+
+	virtual void visitTypeProcStmtIfElse(ITypeProcStmtIfElse *s) override {
+		s->getCond()->accept(m_this);
+		s->getTrue()->accept(m_this);
+		if (s->getFalse()) {
+			s->getFalse()->accept(m_this);
+		}
+	}
+
+	virtual void visitTypeProcStmtMatch(ITypeProcStmtMatch *s) override {
+		s->getCond()->accept(m_this);
+	}
+
+	virtual void visitTypeProcStmtRepeat(ITypeProcStmtRepeat *s) override {
+		s->getExpr()->accept(m_this);
+		s->getBody()->accept(m_this);
+	}
+
+	virtual void visitTypeProcStmtRepeatWhile(ITypeProcStmtRepeatWhile *s) override {
+		s->getExpr()->accept(m_this);
+		s->getBody()->accept(m_this);
+	}
+
+	virtual void visitTypeProcStmtReturn(ITypeProcStmtReturn *s) override {
+		if (s->getExpr()) {
+			s->getExpr()->accept(m_this);
+		}
+	}
+
+	virtual void visitTypeProcStmtScope(ITypeProcStmtScope *s) override {
+		for (std::vector<ITypeProcStmtUP>::const_iterator
+			it=s->getStatements().begin();
+			it!=s->getStatements().end(); it++) {
+			(*it)->accept(m_this);
+		}
+	}
+
+	virtual void visitTypeProcStmtVarDecl(ITypeProcStmtVarDecl *s) override {
+		s->getDataType()->accept(m_this);
+		if (s->getInit()) {
+			s->getInit()->accept(m_this);
+		}
+	}
+
+	virtual void visitTypeProcStmtWhile(ITypeProcStmtWhile *s) override {
+		s->getExpr()->accept(m_this);
+		s->getBody()->accept(m_this);
 	}
 };
 

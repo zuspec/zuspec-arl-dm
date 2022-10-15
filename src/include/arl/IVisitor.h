@@ -33,6 +33,17 @@ class ITypeFieldExecutor;
 class ITypeFieldExecutorClaim;
 class ITypeFieldInOut;
 class ITypeFieldPool;
+class ITypeProcStmtBreak;
+class ITypeProcStmtContinue;
+class ITypeProcStmtForeach;
+class ITypeProcStmtIfElse;
+class ITypeProcStmtMatch;
+class ITypeProcStmtRepeat;
+class ITypeProcStmtRepeatWhile;
+class ITypeProcStmtReturn;
+class ITypeProcStmtScope;
+class ITypeProcStmtVarDecl;
+class ITypeProcStmtWhile;
 
 class IVisitor : public virtual vsc::IVisitor {
 public:
@@ -84,6 +95,28 @@ public:
 	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) = 0;
 
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) = 0;
+
+	virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) = 0;
+
+	virtual void visitTypeProcStmtContinue(ITypeProcStmtContinue *s) = 0;
+
+	virtual void visitTypeProcStmtForeach(ITypeProcStmtForeach *s) = 0;
+
+	virtual void visitTypeProcStmtIfElse(ITypeProcStmtIfElse *s) = 0;
+
+	virtual void visitTypeProcStmtMatch(ITypeProcStmtMatch *s) = 0;
+
+	virtual void visitTypeProcStmtRepeat(ITypeProcStmtRepeat *s) = 0;
+
+	virtual void visitTypeProcStmtRepeatWhile(ITypeProcStmtRepeatWhile *s) = 0;
+
+	virtual void visitTypeProcStmtReturn(ITypeProcStmtReturn *s) = 0;
+
+	virtual void visitTypeProcStmtScope(ITypeProcStmtScope *s) = 0;
+
+	virtual void visitTypeProcStmtVarDecl(ITypeProcStmtVarDecl *s) = 0;
+
+	virtual void visitTypeProcStmtWhile(ITypeProcStmtWhile *s) = 0;
 
 };
 

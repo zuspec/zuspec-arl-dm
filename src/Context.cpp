@@ -37,6 +37,17 @@
 #include "TypeFieldExecutorClaim.h"
 #include "TypeFieldInOut.h"
 #include "TypeFieldPool.h"
+#include "TypeProcStmtBreak.h"
+#include "TypeProcStmtContinue.h"
+#include "TypeProcStmtForeach.h"
+#include "TypeProcStmtIfElse.h"
+#include "TypeProcStmtMatch.h"
+#include "TypeProcStmtRepeat.h"
+#include "TypeProcStmtRepeatWhile.h"
+#include "TypeProcStmtReturn.h"
+#include "TypeProcStmtScope.h"
+#include "TypeProcStmtVarDecl.h"
+#include "TypeProcStmtWhile.h"
 
 namespace arl {
 
@@ -273,6 +284,66 @@ ITypeFieldPool *Context::mkTypeFieldPool(
 			vsc::TypeFieldAttr		attr,
 			int32_t					decl_size) {
 	return new TypeFieldPool(this, name, type, own, attr, decl_size);
+}
+
+ITypeProcStmtBreak *Context::mkTypeProcStmtBreak() { 
+	return new TypeProcStmtBreak();
+}
+
+ITypeProcStmtContinue *Context::mkTypeProcStmtContinue() { 
+	return new TypeProcStmtContinue();
+}
+
+ITypeProcStmtForeach *Context::mkTypeProcStmtForeach(
+			vsc::ITypeExpr		*target,
+			ITypeProcStmt		*body) { 
+
+}
+
+ITypeProcStmtIfElse *Context::mkTypeProcStmtIfElse(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*true_s,
+			ITypeProcStmt		*false_s) { 
+	return new TypeProcStmtIfElse(cond, true_s, false_s);
+}
+	
+ITypeProcStmtMatch *Context::mkTypeProcStmtMatch(
+			vsc::ITypeExpr		*cond) { 
+	return new TypeProcStmtMatch(cond);
+}
+
+ITypeProcStmtRepeat *Context::mkTypeProcStmtRepeat(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*body) { 
+
+}
+
+ITypeProcStmtRepeatWhile *Context::mkTypeProcStmtRepeatWhile(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*body) { 
+
+}
+
+ITypeProcStmtReturn *Context::mkTypeProcStmtReturn(
+			vsc::ITypeExpr		*expr) { 
+
+}
+
+ITypeProcStmtScope *Context::mkTypeProcStmtScope() { 
+
+}
+
+ITypeProcStmtVarDecl *Context::mkTypeProcStmtVarDecl(
+			const std::string	 &name,
+			vsc::IDataType		 *type,
+			bool				 own) { 
+
+}
+
+ITypeProcStmtWhile *Context::mkTypeProcStmtWhile(
+			vsc::ITypeExpr		*cond,
+			ITypeProcStmt		*body) { 
+
 }
 
 } /* namespace arl */

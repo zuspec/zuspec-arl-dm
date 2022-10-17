@@ -1,5 +1,5 @@
 /**
- * TypeProcStmtVarDecl.h
+ * TypeFunctionParamDecl.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,20 +19,21 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmtVarDecl.h"
+#include "arl/IDataTypeFunctionParamDecl.h"
 
 namespace arl {
 
 
-class TypeProcStmtVarDecl : public virtual ITypeProcStmtVarDecl {
-public:
-    TypeProcStmtVarDecl(
-        const std::string           &name,
-        vsc::IDataType              *type,
-        bool                        own,
-        vsc::ITypeExpr              *init);
 
-    virtual ~TypeProcStmtVarDecl();
+class DataTypeFunctionParamDecl : public virtual IDataTypeFunctionParamDecl {
+public:
+    DataTypeFunctionParamDecl(
+        const std::string       &name,
+        vsc::IDataType          *type,
+        bool                    own,
+        vsc::ITypeExpr          *init);
+
+    virtual ~DataTypeFunctionParamDecl();
 
     virtual const std::string &name() const override {
         return m_name;
@@ -42,17 +43,15 @@ public:
         return m_type;
     }
 
-    virtual vsc::ITypeExpr *getInit() const override {
-        return m_init.get();
+    virtual vsc::ITypeExpr *getDefault() const override {
+        return m_default.get();
     }
-
-    virtual void accept(vsc::IVisitor *v) override;
 
 private:
     std::string                     m_name;
     vsc::IDataType                  *m_type;
     vsc::IDataTypeUP                m_type_u;
-    vsc::ITypeExprUP                m_init;
+    vsc::ITypeExprUP                m_default;
 };
 
 }

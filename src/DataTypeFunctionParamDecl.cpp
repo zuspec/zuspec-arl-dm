@@ -1,5 +1,5 @@
 /*
- * TypeProcStmtReturn.cpp
+ * TypeFunctionParamDecl.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -18,25 +18,24 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
-#include "TypeProcStmtReturn.h"
+#include "DataTypeFunctionParamDecl.h"
 
 
 namespace arl {
 
 
-TypeProcStmtReturn::TypeProcStmtReturn(vsc::ITypeExpr *expr) : m_expr(expr) {
+DataTypeFunctionParamDecl::DataTypeFunctionParamDecl(
+        const std::string       &name,
+        vsc::IDataType          *type,
+        bool                    own,
+        vsc::ITypeExpr          *init) : 
+        m_name(name), m_type(type), m_type_u(own?type:0), m_default(init) {
+
 
 }
 
-TypeProcStmtReturn::~TypeProcStmtReturn() {
+DataTypeFunctionParamDecl::~DataTypeFunctionParamDecl() {
 
-}
-
-void TypeProcStmtReturn::accept(vsc::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtReturn(this);
-    }
 }
 
 }

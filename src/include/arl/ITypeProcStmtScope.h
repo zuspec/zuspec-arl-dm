@@ -19,11 +19,14 @@
  *     Author: 
  */
 #pragma once
+#include <memory>
 #include <vector>
 #include "arl/ITypeProcStmt.h"
 
 namespace arl {
 
+class ITypeProcStmtScope;
+using ITypeProcStmtScopeUP=std::unique_ptr<ITypeProcStmtScope>;
 class ITypeProcStmtScope : public virtual ITypeProcStmt {
 public:
 

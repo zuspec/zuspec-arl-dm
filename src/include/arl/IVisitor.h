@@ -17,6 +17,7 @@ class IDataTypeActivitySequence;
 class IDataTypeActivityTraverse;
 class IDataTypeComponent;
 class IDataTypeFlowObj;
+class IDataTypeFunction;
 class IDataTypeResource;
 class IModelActivityParallel;
 class IModelActivitySchedule;
@@ -63,6 +64,8 @@ public:
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) = 0;
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
+
+	virtual void visitDataTypeFunction(IDataTypeFunction *t) = 0;
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) = 0;
 

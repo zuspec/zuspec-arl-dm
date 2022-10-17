@@ -18,18 +18,30 @@
  * Created on:
  *     Author:
  */
+#include "arl/IVisitor.h"
 #include "TypeProcStmtVarDecl.h"
 
 
 namespace arl {
 
 
-TypeProcStmtVarDecl::TypeProcStmtVarDecl() {
+TypeProcStmtVarDecl::TypeProcStmtVarDecl(
+    const std::string               &name,
+    vsc::IDataType                  *type,
+    bool                            own,
+    vsc::ITypeExpr                  *init) : 
+    m_name(name), m_type(type), m_type_u(own?type:0), m_init(init) {
 
 }
 
 TypeProcStmtVarDecl::~TypeProcStmtVarDecl() {
 
+}
+
+void TypeProcStmtVarDecl::accept(vsc::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtVarDecl(this);
+    }
 }
 
 }

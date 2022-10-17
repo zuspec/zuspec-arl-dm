@@ -19,17 +19,28 @@
  *     Author: 
  */
 #pragma once
+#include "arl/ITypeProcStmtScope.h"
 
 namespace arl {
 
 
 
-class TypeProcStmtScope {
+class TypeProcStmtScope : public virtual ITypeProcStmtScope {
 public:
     TypeProcStmtScope();
 
     virtual ~TypeProcStmtScope();
 
+    virtual void addStatement(ITypeProcStmt *stmt) override;
+
+    virtual const std::vector<ITypeProcStmtUP> &getStatements() const override {
+        return m_statements;
+    }
+
+    virtual void accept(vsc::IVisitor *v) override;
+
+private:
+    std::vector<ITypeProcStmtUP>                m_statements;
 };
 
 }

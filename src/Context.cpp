@@ -13,6 +13,8 @@
 #include "DataTypeActivityTraverse.h"
 #include "DataTypeComponent.h"
 #include "DataTypeFlowObj.h"
+#include "DataTypeFunction.h"
+#include "DataTypeFunctionParamDecl.h"
 #include "DataTypeResource.h"
 #include "ModelActivityParallel.h"
 #include "ModelActivitySchedule.h"
@@ -89,6 +91,40 @@ IDataTypeAction *Context::mkDataTypeAction(const std::string &name) {
 
 bool Context::addDataTypeAction(IDataTypeAction *t) {
 	return m_action_type_m.insert({t->name(), IDataTypeActionUP(t)}).second;
+}
+
+IDataTypeFunction *Context::findDataTypeFunction(const std::string &name) {
+	std::unordered_map<std::string,IDataTypeFunctionUP>::const_iterator it;
+
+	if ((it=m_function_type_m.find(name)) != m_function_type_m.end()) {
+		return it->second.get();
+	} else {
+		return 0;
+	}
+}
+
+IDataTypeFunction *Context::mkDataTypeFunction(
+		const std::string		&name,
+		vsc::IDataType			*rtype,
+		bool					own) {
+	return new DataTypeFunction(this, name, rtype, own);
+}
+
+bool Context::addDataTypeFunction(IDataTypeFunction *f) {
+	if (m_function_type_m.find(f->name()) != m_function_type_m.end()) {
+		m_function_type_m.insert({f->name(), IDataTypeFunctionUP(f)});
+		return true;
+	} else {
+		return false;
+	}
+}
+
+IDataTypeFunctionParamDecl *Context::mkDataTypeFunctionParamDecl(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					own,
+			vsc::ITypeExpr			*init) {
+	return new DataTypeFunctionParamDecl(name, type, own, init);
 }
 
 IDataTypeActivityParallel *Context::mkDataTypeActivityParallel() {
@@ -326,18 +362,19 @@ ITypeProcStmtRepeatWhile *Context::mkTypeProcStmtRepeatWhile(
 
 ITypeProcStmtReturn *Context::mkTypeProcStmtReturn(
 			vsc::ITypeExpr		*expr) { 
-
+	return new TypeProcStmtReturn(expr);
 }
 
 ITypeProcStmtScope *Context::mkTypeProcStmtScope() { 
-
+	return new TypeProcStmtScope();
 }
 
 ITypeProcStmtVarDecl *Context::mkTypeProcStmtVarDecl(
 			const std::string	 &name,
 			vsc::IDataType		 *type,
-			bool				 own) { 
-
+			bool				 own,
+			vsc::ITypeExpr		 *init) { 
+	return new TypeProcStmtVarDecl(name, type, own, init);
 }
 
 ITypeProcStmtWhile *Context::mkTypeProcStmtWhile(

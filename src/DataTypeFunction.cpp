@@ -1,5 +1,5 @@
 /*
- * TypeProcStmtReturn.cpp
+ * DataTypeFunction.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,23 +19,32 @@
  *     Author:
  */
 #include "arl/IVisitor.h"
-#include "TypeProcStmtReturn.h"
+#include "DataTypeFunction.h"
 
 
 namespace arl {
 
 
-TypeProcStmtReturn::TypeProcStmtReturn(vsc::ITypeExpr *expr) : m_expr(expr) {
+DataTypeFunction::DataTypeFunction(
+    IContext                    *ctxt,
+    const std::string           &name,
+    vsc::IDataType              *rtype,
+    bool                        own_rtype) : 
+        m_name(name), m_ret_type(rtype), m_ret_type_u(own_rtype?rtype:0),
+        m_body(ctxt->mkTypeProcStmtScope()) {
+}
+
+DataTypeFunction::~DataTypeFunction() {
 
 }
 
-TypeProcStmtReturn::~TypeProcStmtReturn() {
-
+void DataTypeFunction::addParameter(IDataTypeFunctionParamDecl *p) {
+    m_parameters.push_back(IDataTypeFunctionParamDeclUP(p));
 }
 
-void TypeProcStmtReturn::accept(vsc::IVisitor *v) {
+void DataTypeFunction::accept(vsc::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtReturn(this);
+        dynamic_cast<IVisitor *>(v)->visitDataTypeFunction(this);
     }
 }
 

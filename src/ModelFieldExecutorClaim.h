@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include <string>
 #include "arl/IModelFieldExecutorClaim.h"
 #include "ModelField.h"
 

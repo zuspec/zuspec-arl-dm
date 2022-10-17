@@ -15,6 +15,7 @@
 #include "arl/IDataTypeActivityTraverse.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
+#include "arl/IDataTypeFunction.h"
 #include "arl/IDataTypeResource.h"
 #include "arl/IModelActivityParallel.h"
 #include "arl/IModelActivitySchedule.h"
@@ -84,6 +85,10 @@ public:
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override {
 		vsc::VisitorBase::visitDataTypeStruct(t);
+	}
+
+	virtual void visitDataTypeFunction(IDataTypeFunction *t) override {
+
 	}
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {

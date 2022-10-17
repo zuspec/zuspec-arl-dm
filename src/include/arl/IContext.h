@@ -14,6 +14,8 @@
 #include "arl/IDataTypeAction.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IDataTypeFlowObj.h"
+#include "arl/IDataTypeFunction.h"
+#include "arl/IDataTypeFunctionParamDecl.h"
 #include "arl/IModelActivityParallel.h"
 #include "arl/IModelActivitySchedule.h"
 #include "arl/IModelActivitySequence.h"
@@ -62,6 +64,21 @@ public:
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) = 0;
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) = 0;
+
+	virtual IDataTypeFunction *findDataTypeFunction(const std::string &name) = 0;
+
+	virtual IDataTypeFunction *mkDataTypeFunction(
+			const std::string		&name,
+			vsc::IDataType			*rtype,
+			bool					own_rtype) = 0;
+
+	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					own,
+			vsc::ITypeExpr			*init) = 0;
+
+	virtual bool addDataTypeFunction(IDataTypeFunction *f) = 0;
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() = 0;
 
@@ -193,7 +210,8 @@ public:
 	virtual ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(
 			const std::string	 &name,
 			vsc::IDataType		 *type,
-			bool				 own) = 0;
+			bool				 own,
+			vsc::ITypeExpr		 *init) = 0;
 
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
 			vsc::ITypeExpr		*cond,

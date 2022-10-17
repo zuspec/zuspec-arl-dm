@@ -1,5 +1,5 @@
 /**
- * ITypeFunctionDecl.h
+ * IDataTypeFunction.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,23 +19,30 @@
  *     Author: 
  */
 #pragma once
+#include <memory>
+#include <string>
 #include <vector>
-#include "arl/ITypeFunctionParamDecl.h"
+#include "arl/IDataTypeFunctionParamDecl.h"
 #include "arl/ITypeProcStmtScope.h"
+#include "vsc/IAccept.h"
 #include "vsc/IDataType.h"
 
 namespace arl {
 
-class ITypeFunctionDecl {
+class IDataTypeFunction;
+using IDataTypeFunctionUP=std::unique_ptr<IDataTypeFunction>;
+class IDataTypeFunction : public vsc::IAccept {
 public:
 
-    virtual ~ITypeFunctionDecl() { }
+    virtual ~IDataTypeFunction() { }
 
     virtual const std::string &name() const = 0;
 
     virtual vsc::IDataType *getReturnType() const = 0;
 
-    virtual const std::vector<ITypeFunctionParamDeclUP> &getParameters() const = 0;
+    virtual const std::vector<IDataTypeFunctionParamDeclUP> &getParameters() const = 0;
+
+    virtual void addParameter(IDataTypeFunctionParamDecl *p) = 0;
 
     virtual ITypeProcStmtScope *getBody() const = 0;
 

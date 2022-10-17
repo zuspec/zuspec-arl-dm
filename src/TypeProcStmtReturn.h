@@ -19,17 +19,26 @@
  *     Author: 
  */
 #pragma once
+#include "arl/ITypeProcStmtReturn.h"
 
 namespace arl {
 
 
 
-class TypeProcStmtReturn {
+class TypeProcStmtReturn : public virtual ITypeProcStmtReturn {
 public:
-    TypeProcStmtReturn();
+    TypeProcStmtReturn(vsc::ITypeExpr *expr);
 
     virtual ~TypeProcStmtReturn();
 
+    virtual vsc::ITypeExpr *getExpr() const override {
+        return m_expr.get();
+    }
+
+    virtual void accept(vsc::IVisitor *v) override;
+
+private:
+    vsc::ITypeExprUP            m_expr;
 };
 
 }

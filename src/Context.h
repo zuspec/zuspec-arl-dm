@@ -32,6 +32,21 @@ public:
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) override;
 
+	virtual IDataTypeFunction *findDataTypeFunction(const std::string &name) override;
+
+	virtual IDataTypeFunction *mkDataTypeFunction(
+			const std::string		&name,
+			vsc::IDataType			*rtype,
+			bool					own_rtype) override;
+
+	virtual bool addDataTypeFunction(IDataTypeFunction *f) override;
+
+	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
+			const std::string		&name,
+			vsc::IDataType			*type,
+			bool					own,
+			vsc::ITypeExpr			*init) override;
+
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() override;
 
 	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() override;
@@ -162,7 +177,8 @@ public:
 	virtual ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(
 			const std::string	 &name,
 			vsc::IDataType		 *type,
-			bool				 own) override;
+			bool				 own,
+			vsc::ITypeExpr		 *init) override;
 
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
 			vsc::ITypeExpr		*cond,
@@ -174,6 +190,7 @@ private:
 private:
 	std::unordered_map<std::string, IDataTypeActionUP>			m_action_type_m;
 	std::unordered_map<std::string, IDataTypeComponentUP>		m_component_type_m;
+	std::unordered_map<std::string, IDataTypeFunctionUP>		m_function_type_m;
 	std::unordered_map<FlowObjKindE, FlowObjMapT>				m_flowobj_kind_m;
 
 };

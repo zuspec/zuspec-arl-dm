@@ -1,5 +1,5 @@
 /**
- * ITypeFunctionParamDecl.h
+ * ITypeFieldMethod.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,22 +19,13 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
-#include <string>
-#include "vsc/IDataType.h"
 
 namespace arl {
 
-class ITypeFunctionParamDecl;
-using ITypeFunctionParamDeclUP=std::unique_ptr<ITypeFunctionParamDecl>;
-class ITypeFunctionParamDecl {
+class ITypeFieldMethod {
 public:
 
-    virtual ~ITypeFunctionParamDecl() { }
-
-    virtual const std::string &name() const = 0;
-
-    virtual vsc::IDataType *getDataType() const = 0;
+    virtual ~ITypeFieldMethod() { }
 
 };
 

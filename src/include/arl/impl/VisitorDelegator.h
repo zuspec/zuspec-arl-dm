@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include "arl/IDataTypeFunction.h"
 #include "arl/IDataTypeResource.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldExecutor.h"
@@ -58,6 +59,10 @@ public:
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override {
 		delegate(&arl::IVisitor::visitDataTypeFlowObj,
 				&vsc::IVisitor::visitDataTypeStruct, t);
+	}
+
+	virtual void visitDataTypeFunction(IDataTypeFunction *t) override {
+		delegate(&arl::IVisitor::visitDataTypeFunction, t);
 	}
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {

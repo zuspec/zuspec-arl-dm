@@ -30,6 +30,7 @@
 #include "arl/ITypeFieldExecutorClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
+#include "arl/ITypeProcStmtAssign.h"
 #include "arl/ITypeProcStmtBreak.h"
 #include "arl/ITypeProcStmtContinue.h"
 #include "arl/ITypeProcStmtForeach.h"
@@ -177,6 +178,11 @@ public:
 			bool					own,
 			vsc::TypeFieldAttr		attr,
 			int32_t					decl_size) = 0;
+
+	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
+			vsc::ITypeExprFieldRef		*lhs,
+			TypeProcStmtAssignOp		op,
+			vsc::ITypeExpr				*rhs) = 0;
 
 	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() = 0;
 

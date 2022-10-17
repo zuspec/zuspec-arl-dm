@@ -141,6 +141,10 @@ public:
 				&vsc::IVisitor::visitTypeField, f);
 	}
 
+	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override {
+		delegate(&arl::IVisitor::visitTypeProcStmtAssign, s);
+	}
+
 	virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) override {
 		delegate(&arl::IVisitor::visitTypeProcStmtBreak, s);
 	}

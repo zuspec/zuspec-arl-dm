@@ -34,6 +34,7 @@ class ITypeFieldExecutor;
 class ITypeFieldExecutorClaim;
 class ITypeFieldInOut;
 class ITypeFieldPool;
+class ITypeProcStmtAssign;
 class ITypeProcStmtBreak;
 class ITypeProcStmtContinue;
 class ITypeProcStmtForeach;
@@ -98,6 +99,8 @@ public:
 	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) = 0;
 
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) = 0;
+
+	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) = 0;
 
 	virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) = 0;
 

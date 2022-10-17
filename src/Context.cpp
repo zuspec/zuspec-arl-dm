@@ -39,6 +39,7 @@
 #include "TypeFieldExecutorClaim.h"
 #include "TypeFieldInOut.h"
 #include "TypeFieldPool.h"
+#include "TypeProcStmtAssign.h"
 #include "TypeProcStmtBreak.h"
 #include "TypeProcStmtContinue.h"
 #include "TypeProcStmtForeach.h"
@@ -320,6 +321,13 @@ ITypeFieldPool *Context::mkTypeFieldPool(
 			vsc::TypeFieldAttr		attr,
 			int32_t					decl_size) {
 	return new TypeFieldPool(this, name, type, own, attr, decl_size);
+}
+
+ITypeProcStmtAssign *Context::mkTypeProcStmtAssign(
+			vsc::ITypeExprFieldRef		*lhs,
+			TypeProcStmtAssignOp		op,
+			vsc::ITypeExpr				*rhs) {
+	return new TypeProcStmtAssign(lhs, op, rhs);
 }
 
 ITypeProcStmtBreak *Context::mkTypeProcStmtBreak() { 

@@ -33,6 +33,7 @@
 #include "arl/ITypeFieldExecutorClaim.h"
 #include "arl/ITypeFieldInOut.h"
 #include "arl/ITypeFieldPool.h"
+#include "arl/ITypeProcStmtAssign.h"
 #include "arl/ITypeProcStmtBreak.h"
 #include "arl/ITypeProcStmtContinue.h"
 #include "arl/ITypeProcStmtForeach.h"
@@ -173,6 +174,11 @@ public:
 
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) override {
 		vsc::VisitorBase::visitTypeField(f);
+	}
+
+	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override {
+		s->getLhs()->accept(m_this);
+		s->getRhs()->accept(m_this);
 	}
 
 	virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) override {

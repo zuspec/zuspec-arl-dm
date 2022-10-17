@@ -145,6 +145,11 @@ public:
 			vsc::TypeFieldAttr		attr,
 			int32_t					decl_size) override;
 
+	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
+			vsc::ITypeExprFieldRef		*lhs,
+			TypeProcStmtAssignOp		op,
+			vsc::ITypeExpr				*rhs) override;
+
 	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() override;
 
 	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() override;

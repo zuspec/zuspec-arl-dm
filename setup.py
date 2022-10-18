@@ -21,6 +21,11 @@ else:
     _DEBUG = False
 _DEBUG_LEVEL = 0
 
+version="0.0.1"
+
+if "BUILD_NUM" in os.environ.keys():
+    version += ".%s" % os.environ["BUILD_NUM"]
+
 # First need to establish where things are
 libarl_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -240,6 +245,7 @@ ext.cython_directives={'language_level' : '3'}
 
 setup(
   name = "libarl",
+  version=version,
   packages=['libarl'],
   package_dir = {'' : 'python'},
   author = "Matthew Ballance",

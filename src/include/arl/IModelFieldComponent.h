@@ -11,6 +11,8 @@
 
 namespace arl {
 
+class IModelFieldComponent;
+using IModelFieldComponentUP=std::unique_ptr<IModelFieldComponent>;
 class IModelFieldComponent : public virtual vsc::IModelField {
 public:
 	virtual ~IModelFieldComponent() { }

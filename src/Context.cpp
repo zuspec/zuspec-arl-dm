@@ -20,7 +20,7 @@
 #include "ModelActivitySchedule.h"
 #include "ModelActivitySequence.h"
 #include "ModelActivityTraverse.h"
-#include "ModelBuildContext.h"
+#include "arl/impl/ModelBuildContext.h"
 #include "ModelEvaluator.h"
 #include "ModelFieldActionRoot.h"
 #include "ModelFieldActionType.h"

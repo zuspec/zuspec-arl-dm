@@ -1,5 +1,5 @@
 /**
- * TestModelEvalIterator.h
+ * TaskBuildActivityTraverseData.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,20 +19,29 @@
  *     Author: 
  */
 #pragma once
-#include "gtest/gtest.h"
+#include <memory>
+#include "arl/IModelActivityTraverse.h"
 
 namespace arl {
 
+struct ActivityTraverseData {
+    ActivityTraverseData(IModelActivityTraverse *t) : traversal(t) {}
 
-class TestModelEvalIterator : public ::testing::Test {
+    IModelActivityTraverse                            *traversal;
+    std::vector<uint32_t>                             comp_ctxt_l;
+
+};
+using ActivityTraverseDataUP=std::unique_ptr<ActivityTraverseData>;
+
+
+class TaskBuildActivityTraverseData {
 public:
-    TestModelEvalIterator();
+    TaskBuildActivityTraverseData();
 
-    virtual ~TestModelEvalIterator();
-
-
+    virtual ~TaskBuildActivityTraverseData();
 
 };
 
 }
+
 

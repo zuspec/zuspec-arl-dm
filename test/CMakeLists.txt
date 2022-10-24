@@ -71,7 +71,7 @@ endif()
 
 target_link_libraries(test_libarl 
 	arl 
-  vsc_static
+  vsc
 	libgtest 
 	libgmock
 	)

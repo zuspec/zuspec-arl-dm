@@ -27,11 +27,20 @@ public:
 		return m_with_c.get();
 	}
 
+	virtual IModelFieldPool *getParentPool() const override {
+		return m_parent_pool;
+	}
+
+	virtual void setParentPool(IModelFieldPool *p) override {
+		m_parent_pool = p;
+	}
+
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
 	IModelFieldAction				*m_target;
 	vsc::IModelConstraintUP			m_with_c;
+	IModelFieldPool					*m_parent_pool;
 
 
 };

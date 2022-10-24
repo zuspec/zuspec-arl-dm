@@ -1,5 +1,5 @@
 /**
- * TestModelEvalIterator.h
+ * TestBase.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -20,19 +20,26 @@
  */
 #pragma once
 #include "gtest/gtest.h"
+#include "arl/IContext.h"
+
 
 namespace arl {
 
 
-class TestModelEvalIterator : public ::testing::Test {
+class TestBase : public ::testing::Test {
 public:
-    TestModelEvalIterator();
+    TestBase();
 
-    virtual ~TestModelEvalIterator();
+    virtual ~TestBase();
 
+    virtual void SetUp() override;
 
+    virtual void TearDown() override;
 
+protected:
+    IContextUP                  m_ctxt;
 };
 
 }
+
 

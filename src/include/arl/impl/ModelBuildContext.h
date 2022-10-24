@@ -15,9 +15,9 @@ namespace arl {
 
 class ModelBuildContext : public virtual IModelBuildContext, public virtual vsc::ModelBuildContext {
 public:
-	ModelBuildContext(IContext *ctxt);
+	ModelBuildContext(IContext *ctxt) : vsc::ModelBuildContext(ctxt) { }
 
-	virtual ~ModelBuildContext();
+	virtual ~ModelBuildContext() { }
 
 	virtual void pushActivityScope(IModelActivityScope *a) override {
 		m_activity_scope_s.push_back(a);

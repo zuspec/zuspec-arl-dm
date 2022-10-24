@@ -1,5 +1,5 @@
-/**
- * TestModelEvalIterator.h
+/*
+ * TaskBuildActivityTraverseData.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,23 +16,20 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "gtest/gtest.h"
+#include "TaskBuildActivityTraverseData.h"
+
 
 namespace arl {
 
 
-class TestModelEvalIterator : public ::testing::Test {
-public:
-    TestModelEvalIterator();
-
-    virtual ~TestModelEvalIterator();
-
-
-
-};
+TaskBuildActivityTraverseData::TaskBuildActivityTraverseData() {
 
 }
 
+TaskBuildActivityTraverseData::~TaskBuildActivityTraverseData() {
+
+}
+
+}

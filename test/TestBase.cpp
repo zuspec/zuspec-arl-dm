@@ -1,5 +1,5 @@
-/**
- * TestModelEvalIterator.h
+/*
+ * TestBase.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,23 +16,33 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "gtest/gtest.h"
+#include "TestBase.h"
+#include "VscImpl.h"
+#include "ArlImpl.h"
+
 
 namespace arl {
 
 
-class TestModelEvalIterator : public ::testing::Test {
-public:
-    TestModelEvalIterator();
-
-    virtual ~TestModelEvalIterator();
-
-
-
-};
+TestBase::TestBase() {
 
 }
 
+TestBase::~TestBase() {
+
+}
+
+void TestBase::SetUp() {
+    ArlImpl::inst()->init(vsc::VscImpl::inst()->getDebugMgr());
+    m_ctxt = IContextUP(
+        ArlImpl::inst()->mkContext(
+            vsc::VscImpl::inst()->mkContext()));
+}
+
+void TestBase::TearDown() {
+    m_ctxt.reset();
+}
+
+}

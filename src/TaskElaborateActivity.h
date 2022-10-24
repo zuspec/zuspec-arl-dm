@@ -1,5 +1,5 @@
 /**
- * TestModelEvalIterator.h
+ * TaskElaborateActivity.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,20 +19,28 @@
  *     Author: 
  */
 #pragma once
-#include "gtest/gtest.h"
+#include "arl/IContext.h"
 
 namespace arl {
 
 
-class TestModelEvalIterator : public ::testing::Test {
+
+class TaskElaborateActivity {
 public:
-    TestModelEvalIterator();
+    TaskElaborateActivity(IContext *ctxt);
 
-    virtual ~TestModelEvalIterator();
+    virtual ~TaskElaborateActivity();
 
+    IModelActivity *elaborate(
+        IModelFieldComponent        *root_comp,
+        IDataTypeAction             *root_action);
 
+private:
+    IContext                        *m_ctxt;
+    IModelActivityUP                m_activity;
 
 };
 
 }
+
 

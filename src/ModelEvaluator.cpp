@@ -6,7 +6,7 @@
  */
 
 #include "DebugMacros.h"
-#include "ModelBuildContext.h"
+#include "arl/impl/ModelBuildContext.h"
 #include "ModelEvaluator.h"
 #include "ModelEvalIterator.h"
 #include "ModelEvalIteratorMgr.h"

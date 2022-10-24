@@ -1,5 +1,5 @@
-/**
- * TestModelEvalIterator.h
+/*
+ * TaskBuildActivityComponentMap.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,23 +16,21 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "gtest/gtest.h"
+#include "TaskBuildActivityComponentMap.h"
+
 
 namespace arl {
 
 
-class TestModelEvalIterator : public ::testing::Test {
-public:
-    TestModelEvalIterator();
-
-    virtual ~TestModelEvalIterator();
-
-
-
-};
+TaskBuildActivityComponentMap::TaskBuildActivityComponentMap(
+    IModelFieldComponent        *root_comp) {
 
 }
 
+TaskBuildActivityComponentMap::~TaskBuildActivityComponentMap() {
+
+}
+
+}

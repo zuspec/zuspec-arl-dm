@@ -1,5 +1,5 @@
 /**
- * TestModelEvalIterator.h
+ * TestActivitySolveModel.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,20 +19,19 @@
  *     Author: 
  */
 #pragma once
-#include "gtest/gtest.h"
+#include "TestBase.h"
 
 namespace arl {
 
 
-class TestModelEvalIterator : public ::testing::Test {
+class TestActivitySolveModel : public TestBase {
 public:
-    TestModelEvalIterator();
+    TestActivitySolveModel();
 
-    virtual ~TestModelEvalIterator();
-
-
+    virtual ~TestActivitySolveModel();
 
 };
 
 }
+
 

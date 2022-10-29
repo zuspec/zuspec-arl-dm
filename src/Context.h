@@ -83,7 +83,8 @@ public:
 			IModelFieldAction		*target,
 			vsc::IModelConstraint	*with_c) override;
 
-	virtual IModelEvaluator *mkModelEvaluator() override;
+	virtual IModelEvaluator *mkModelEvaluator(
+			ModelEvaluatorKind		kind) override;
 
 	virtual IModelFieldAction *mkModelFieldActionRoot(
 			const std::string		&name,

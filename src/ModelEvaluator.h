@@ -16,7 +16,9 @@ namespace arl {
 
 class ModelEvaluator : public IModelEvaluator, public VisitorBase {
 public:
-	ModelEvaluator(IContext *ctxt);
+	ModelEvaluator(
+		IContext 				*ctxt,
+		ModelEvaluatorKind		kind);
 
 	virtual ~ModelEvaluator();
 
@@ -25,18 +27,11 @@ public:
 			IModelFieldComponent	*root_comp,
 			IDataTypeAction			*root_action) override;
 
-	virtual IModelEvalIterator *next();
-
-	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override;
-
 private:
 	IContext						*m_ctxt;
-	vsc::IRandStateUP				m_randstate;
-	IModelFieldActionUP				m_action;
-	IModelActivityTraverseUP		m_dummy_activity;
-	uint32_t						m_activity_idx;
-	std::vector<IModelActivity *>	m_activities;
-	IModelEvalIterator				*m_next;
+	IModelEvaluatorUP				m_impl;
+
+
 
 
 };

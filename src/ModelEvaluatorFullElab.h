@@ -1,5 +1,5 @@
 /**
- * TaskElaborateActivity.h
+ * ModelEvaluatorFullElab.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -20,32 +20,25 @@
  */
 #pragma once
 #include "arl/IContext.h"
+#include "arl/IModelEvaluator.h"
 
 namespace arl {
 
 
-
-class TaskElaborateActivity {
+class ModelEvaluatorFullElab : public virtual IModelEvaluator {
 public:
-    TaskElaborateActivity(IContext *ctxt);
+    ModelEvaluatorFullElab(IContext *ctxt);
 
-    virtual ~TaskElaborateActivity();
+    virtual ~ModelEvaluatorFullElab();
 
-    /**
-     * @brief Builds an activity from a component tree and action type
-     * 
-     * @param root_comp 
-     * @param root_action 
-     * @return IModelActivity* 
-     */
-    IModelActivity *elaborate(
-        IModelFieldComponent        *root_comp,
-        IDataTypeAction             *root_action);
+    virtual IModelEvalIterator *eval(
+        const vsc::IRandState           *randstate,
+        IModelFieldComponent            *root_comp,
+        IDataTypeAction                 *root_action) override;
 
 private:
-    IContext                        *m_ctxt;
-    IModelActivityUP                m_activity;
-
+    static vsc::IDebug          *m_dbg;
+    IContext                    *m_ctxt;
 };
 
 }

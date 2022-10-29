@@ -14,6 +14,13 @@ namespace arl {
 
 class IDataTypeAction;
 
+enum class ModelEvaluatorKind {
+	FullElab,
+	IncrElab
+};
+
+class IModelEvaluator;
+using IModelEvaluatorUP=std::unique_ptr<IModelEvaluator>;
 class IModelEvaluator {
 public:
 

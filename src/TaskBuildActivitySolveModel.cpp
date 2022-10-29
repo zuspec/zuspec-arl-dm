@@ -19,13 +19,14 @@
  *     Author:
  */
 #include "TaskBuildActivitySolveModel.h"
+#include "TaskBuildActivityTraverseData.h"
 
 
 namespace arl {
 
 
 TaskBuildActivitySolveModel::TaskBuildActivitySolveModel(IContext *ctxt) : m_ctxt(ctxt) {
-
+    m_root_comp = 0;
 }
 
 TaskBuildActivitySolveModel::~TaskBuildActivitySolveModel() {
@@ -36,6 +37,7 @@ ActivitySolveModel *TaskBuildActivitySolveModel::build(
     IModelFieldComponent           *root_comp,
     IModelActivity                 *root_activity) {
     m_model = ActivitySolveModelUP(new ActivitySolveModel());
+    m_root_comp = root_comp;
 
     m_component_s.push_back(root_comp);
     root_activity->accept(m_this);
@@ -93,9 +95,29 @@ void TaskBuildActivitySolveModel::visitModelActivitySequence(
 
 void TaskBuildActivitySolveModel::visitModelActivityTraverse(
     IModelActivityTraverse *a) {
+    // Update the component map with information for this traversal
+    ActivityTraverseData *t_data = TaskBuildActivityTraverseData(
+        m_ctxt, m_model.get()).build(m_root_comp, a);
+    IDataTypeAction *action_t = a->getTarget()->getDataTypeT<IDataTypeAction>();
+
+
+
+
     // TODO: create traversal data
 
 }
 
+uint32_t ActivitySolveModel::getComponentId(IModelFieldComponent *c) {
+    ActivitySolveModel::AllCompMapT::const_iterator it = all_comp_m.find(c);
+
+    if (it != all_comp_m.end()) {
+        return it->second;
+    } else {
+        uint32_t ret = all_comp_l.size();
+        all_comp_l.push_back(c);
+        all_comp_m.insert({c, ret});
+        return ret;
+    }
+} 
 
 }

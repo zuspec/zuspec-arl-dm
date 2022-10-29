@@ -1,24 +1,24 @@
 /*
- * ModelEvalIteratorMgr.cpp
+ * ModelEvalIteratorIncrElabMgr.cpp
  *
  *  Created on: Jun 6, 2022
  *      Author: mballance
  */
 
-#include "ModelEvalIteratorMgr.h"
+#include "ModelEvalIteratorIncrElabMgr.h"
 
 namespace arl {
 
-ModelEvalIteratorMgr::ModelEvalIteratorMgr(
-		ModelEvaluator			*eval) : m_eval(eval) {
+ModelEvalIteratorIncrElabMgr::ModelEvalIteratorIncrElabMgr(
+		ModelEvaluatorIncrElab *eval) : m_eval(eval) {
 
 }
 
-ModelEvalIteratorMgr::~ModelEvalIteratorMgr() {
+ModelEvalIteratorIncrElabMgr::~ModelEvalIteratorIncrElabMgr() {
 	// TODO Auto-generated destructor stub
 }
 
-bool ModelEvalIteratorMgr::next() {
+bool ModelEvalIteratorIncrElabMgr::next() {
 	bool ret = false;
 
 	while (m_eval_s.size() > 0) {
@@ -45,15 +45,15 @@ bool ModelEvalIteratorMgr::next() {
 	return ret;
 }
 
-ModelEvalNodeT ModelEvalIteratorMgr::type() const {
+ModelEvalNodeT ModelEvalIteratorIncrElabMgr::type() const {
 	return m_eval_s.back()->type();
 }
 
-IModelFieldAction *ModelEvalIteratorMgr::action() {
+IModelFieldAction *ModelEvalIteratorIncrElabMgr::action() {
 	return dynamic_cast<IModelFieldAction *>(m_eval_s.back()->action());
 }
 
-IModelEvalIterator *ModelEvalIteratorMgr::iterator() {
+IModelEvalIterator *ModelEvalIteratorIncrElabMgr::iterator() {
 	return m_eval_s.back()->iterator();
 }
 

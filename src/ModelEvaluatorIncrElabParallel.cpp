@@ -1,5 +1,5 @@
 /*
- * ModelEvaluatorParallel.cpp
+ * ModelEvaluatorIncrElabParallel.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,22 +19,22 @@
  *     Author:
  */
 #include "DebugMacros.h"
-#include "ModelEvaluatorParallel.h"
+#include "ModelEvaluatorIncrElabParallel.h"
 #include "ModelEvaluatorThread.h"
 
 
 namespace arl {
-ModelEvaluatorParallel::ModelEvaluatorParallel(
+ModelEvaluatorIncrElabParallel::ModelEvaluatorIncrElabParallel(
     const std::vector<ModelEvaluatorThread *> &branches) :
     m_idx(-2), m_branches(branches.begin(), branches.end()) {
-    DEBUG_INIT("ModelEvaluatorParallel");
+    DEBUG_INIT("ModelEvaluatorIncrElabParallel");
 }
 
-ModelEvaluatorParallel::~ModelEvaluatorParallel() {
+ModelEvaluatorIncrElabParallel::~ModelEvaluatorIncrElabParallel() {
 
 }
 
-bool ModelEvaluatorParallel::next() {
+bool ModelEvaluatorIncrElabParallel::next() {
     m_idx++;
     DEBUG_ENTER("next: idx=%d sz=%d", m_idx, m_branches.size());
 
@@ -48,17 +48,17 @@ bool ModelEvaluatorParallel::next() {
     }
 }
 
-bool ModelEvaluatorParallel::valid() {
+bool ModelEvaluatorIncrElabParallel::valid() {
     return (m_idx >= 0 && m_idx < m_branches.size());
 }
 
-bool ModelEvaluatorParallel::pop() {
+bool ModelEvaluatorIncrElabParallel::pop() {
     // Ensure this iterator has been consumed as an iterator
     // before indicating it's time to pop
     return m_idx >= -1;
 }
 
-ModelEvalNodeT ModelEvaluatorParallel::type() const {
+ModelEvalNodeT ModelEvaluatorIncrElabParallel::type() const {
     if (m_idx < 0) {
         DEBUG("type: hardcoded Parallel");
         return ModelEvalNodeT::Parallel;
@@ -68,12 +68,12 @@ ModelEvalNodeT ModelEvaluatorParallel::type() const {
     }
 }
 
-IModelFieldAction *ModelEvaluatorParallel::action() {
+IModelFieldAction *ModelEvaluatorIncrElabParallel::action() {
     DEBUG("action: hardcoded 0");
     return 0;
 }
 
-IModelEvalIterator *ModelEvaluatorParallel::iterator() {
+IModelEvalIterator *ModelEvaluatorIncrElabParallel::iterator() {
     if (m_idx < 0) {
         return this;
     } else {

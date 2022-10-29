@@ -12,9 +12,26 @@
 
 namespace arl {
 
-DataTypeComponent::DataTypeComponent(const std::string &name) : DataTypeStruct(name) {
-	// TODO Auto-generated constructor stub
+DataTypeComponent::DataTypeComponent(
+	IContext			*ctxt,
+	const std::string 	&name) : DataTypeStruct(name) {
 
+	// Could back-patch this once we know the number of 
+	// instances
+	vsc::IDataTypeInt *ui32 = ctxt->findDataTypeInt(false, 32);
+
+	if (!ui32) {
+		ui32 = ctxt->mkDataTypeInt(false, 32);
+		ctxt->addDataTypeInt(ui32);
+	}
+
+	m_comp_id = ctxt->mkTypeFieldPhy(
+		"comp_id", 
+		ui32, 
+		false, 
+		vsc::TypeFieldAttr::Rand,
+		0);
+	addField(m_comp_id);
 }
 
 DataTypeComponent::~DataTypeComponent() {

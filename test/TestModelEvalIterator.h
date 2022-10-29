@@ -19,12 +19,13 @@
  *     Author: 
  */
 #pragma once
+#include "TestBase.h"
 #include "gtest/gtest.h"
 
 namespace arl {
 
 
-class TestModelEvalIterator : public ::testing::Test {
+class TestModelEvalIterator : public TestBase {
 public:
     TestModelEvalIterator();
 

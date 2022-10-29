@@ -1,5 +1,5 @@
 /*
- * ModelEvaluatorSequence.cpp
+ * ModelEvaluatorIncrElabSequence.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -22,19 +22,20 @@
 #include "vsc/impl/TaskUnrollModelFieldRefConstraints.h"
 
 #include "DebugMacros.h"
-#include "ModelEvaluatorParallel.h"
-#include "ModelEvaluatorSequence.h"
+#include "ModelEvaluatorIncrElabParallel.h"
+#include "ModelEvaluatorIncrElabSequence.h"
 #include "TaskCollectTopLevelActivities.h"
 #include "TaskSolveActionSet.h"
 
 
 namespace arl {
-ModelEvaluatorSequence::ModelEvaluatorSequence(ModelEvaluatorThread *thread) 
+ModelEvaluatorIncrElabSequence::ModelEvaluatorIncrElabSequence(ModelEvaluatorThread *thread) 
     : m_idx(-1), m_thread(thread), m_action(0), m_next_it(0) {
-    DEBUG_INIT("ModelEvaluatorSequence");
+    DEBUG_INIT("ModelEvaluatorIncrElabSequence");
+    m_action = 0;
 }
 
-ModelEvaluatorSequence::ModelEvaluatorSequence(
+ModelEvaluatorIncrElabSequence::ModelEvaluatorIncrElabSequence(
         ModelEvaluatorThread                *thread,
         const std::vector<IModelActivity *> &activities,
         bool                                owned) : m_idx(-1), m_thread(thread),
@@ -49,18 +50,18 @@ ModelEvaluatorSequence::ModelEvaluatorSequence(
     }
 }
 
-ModelEvaluatorSequence::~ModelEvaluatorSequence() {
+ModelEvaluatorIncrElabSequence::~ModelEvaluatorIncrElabSequence() {
 
 }
 
-void ModelEvaluatorSequence::addActivity(IModelActivity *activity, bool owned) {
+void ModelEvaluatorIncrElabSequence::addActivity(IModelActivity *activity, bool owned) {
     m_activities.push_back(activity);
     if (owned) {
         m_activities_up.push_back(IModelActivityUP(activity));
     }
 }
 
-bool ModelEvaluatorSequence::next() {
+bool ModelEvaluatorIncrElabSequence::next() {
     DEBUG_ENTER("next m_idx=%d sz=%d", (m_idx+1), m_activities.size());
     m_idx++;
 
@@ -105,26 +106,26 @@ bool ModelEvaluatorSequence::next() {
     }
 }
 
-bool ModelEvaluatorSequence::valid() {
+bool ModelEvaluatorIncrElabSequence::valid() {
     return (m_idx >= 0 && m_idx < m_activities.size());
 }
 
-ModelEvalNodeT ModelEvaluatorSequence::type() const {
+ModelEvalNodeT ModelEvaluatorIncrElabSequence::type() const {
     DEBUG("type: %d", static_cast<int32_t>(m_type));
     return m_type;
 }
 
-IModelFieldAction *ModelEvaluatorSequence::action() {
+IModelFieldAction *ModelEvaluatorIncrElabSequence::action() {
     DEBUG("action: %p", m_action);
     return m_action;
 }
 
-IModelEvalIterator *ModelEvaluatorSequence::iterator() {
+IModelEvalIterator *ModelEvaluatorIncrElabSequence::iterator() {
     DEBUG("iterator: %p", m_next_it);
     return m_next_it;
 }
 
-void ModelEvaluatorSequence::visitModelActivityParallel(IModelActivityParallel *a) {
+void ModelEvaluatorIncrElabSequence::visitModelActivityParallel(IModelActivityParallel *a) {
     DEBUG_ENTER("visitModelActivityParallel");
     std::vector<ModelEvaluatorThread *>     branches;
     IModelFieldComponent *comp = m_thread->component();
@@ -138,27 +139,27 @@ void ModelEvaluatorSequence::visitModelActivityParallel(IModelActivityParallel *
         std::vector<IModelActivity *> activities;
         TaskCollectTopLevelActivities().collect(activities, *it);
         DEBUG("Branch has %d activities", activities.size());
-        ModelEvaluatorSequence *seq = new ModelEvaluatorSequence(thread, activities);
+        ModelEvaluatorIncrElabSequence *seq = new ModelEvaluatorIncrElabSequence(thread, activities);
         thread->pushIterator(seq);
         branches.push_back(thread);
     }
 
-    m_next_it = new ModelEvaluatorParallel(branches);
+    m_next_it = new ModelEvaluatorIncrElabParallel(branches);
     DEBUG_LEAVE("visitModelActivityParallel");
 }
 
-void ModelEvaluatorSequence::visitModelActivitySchedule(IModelActivitySchedule *a) {
+void ModelEvaluatorIncrElabSequence::visitModelActivitySchedule(IModelActivitySchedule *a) {
     DEBUG_ENTER("visitModelActivitySchedule");
     DEBUG_LEAVE("visitModelActivitySchedule");
 }
 
-void ModelEvaluatorSequence::visitModelActivitySequence(IModelActivitySequence *a) {
+void ModelEvaluatorIncrElabSequence::visitModelActivitySequence(IModelActivitySequence *a) {
     DEBUG_ENTER("visitModelActivitySequence");
     // Unclear if we'll really hit this...
     DEBUG_LEAVE("visitModelActivitySequence");
 }
 
-void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *a) {
+void ModelEvaluatorIncrElabSequence::visitModelActivityTraverse(IModelActivityTraverse *a) {
     DEBUG_ENTER("visitModelActivityTraverse");
     IModelFieldAction *action = a->getTarget();
 
@@ -168,7 +169,7 @@ void ModelEvaluatorSequence::visitModelActivityTraverse(IModelActivityTraverse *
         TaskCollectTopLevelActivities().collect(
             activities,
             action->activities().at(0));
-        ModelEvaluatorSequence *seq = new ModelEvaluatorSequence(
+        ModelEvaluatorIncrElabSequence *seq = new ModelEvaluatorIncrElabSequence(
             m_thread, activities);
         m_next_it = seq;
     } else if (action->activities().size() > 1) {

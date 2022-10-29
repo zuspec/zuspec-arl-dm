@@ -1,5 +1,5 @@
 /*
- * ModelEvalIteratorSeq.h
+ * ModelEvalIteratorIncrElab.h
  *
  *  Created on: Apr 29, 2022
  *      Author: mballance
@@ -13,7 +13,7 @@
 namespace arl {
 
 
-class ModelEvalIterator : public IModelEvalIterator {
+class ModelEvalIteratorIncrElab : public IModelEvalIterator {
 public:
 	struct Elem {
 		ModelEvalNodeT		type;
@@ -23,11 +23,11 @@ public:
 		};
 	};
 public:
-	ModelEvalIterator(const Elem &elem);
+	ModelEvalIteratorIncrElab(const Elem &elem);
 
-	ModelEvalIterator(const std::vector<Elem> &seq);
+	ModelEvalIteratorIncrElab(const std::vector<Elem> &seq);
 
-	virtual ~ModelEvalIterator();
+	virtual ~ModelEvalIteratorIncrElab();
 
 	virtual bool next() override;
 

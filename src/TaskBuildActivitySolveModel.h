@@ -35,18 +35,35 @@ struct ResourceClaimData {
     std::vector<vsc::IModelField *>                 resource_l;
 };
 
+struct ActivityTraverseData;
+using ActivityTraverseDataUP=std::unique_ptr<ActivityTraverseData>;
+
 struct ActivitySolveModel {
     std::vector<vsc::IModelConstraintUP>            constraints;
 
     using AllCompMapT=std::unordered_map<IModelFieldComponent *, uint32_t>;
     using ResTypeMapT=std::unordered_map<vsc::IDataType *, ResourceClaimData>;
+    using TraversalDataMapT=std::unordered_map<IModelActivityTraverse *, ActivityTraverseData *>;
 
     AllCompMapT                                     all_comp_m;
     std::vector<IModelFieldComponent *>             all_comp_l;
+
     ResTypeMapT                                     res_type_m;
     std::vector<ResourceClaimData *>                res_type_l;
 
+    TraversalDataMapT                               traversal_m;
+    std::vector<ActivityTraverseDataUP>             traversal_l;
+
+    // TODO: need per-buffer-type data
+
+    // TODO: need per-stream-type data
+
+    // TODO: need per-state-type data
+
+
     std::vector<vsc::RefSelectorUP>                 ref_l;
+
+    uint32_t getComponentId(IModelFieldComponent *c);
 };
 using ActivitySolveModelUP=std::unique_ptr<ActivitySolveModel>;
 
@@ -72,6 +89,7 @@ public:
 private:
     IContext                                *m_ctxt;
     ActivitySolveModelUP                    m_model;
+    IModelFieldComponent                    *m_root_comp;
     std::vector<IModelFieldComponent *>     m_component_s;
 
 };

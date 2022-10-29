@@ -45,7 +45,7 @@ TEST_F(TestActivitySolveModel, par_single_resource) {
     IDataTypeComponentUP pss_top_t(m_ctxt->mkDataTypeComponent("pss_top"));
     pss_top_t->addField(m_ctxt->mkTypeFieldPool("rsrc_p", rsrc_t.get(), false, vsc::TypeFieldAttr::NoAttr, 2));
     ref = m_ctxt->mkTypeExprFieldRef();
-    ref->addIdxRef(0);
+    ref->addIdxRef(1);
     ref->addRootRef();
     pss_top_t->addPoolBindDirective(m_ctxt->mkPoolBindDirective(
         PoolBindKind::All,
@@ -91,9 +91,16 @@ TEST_F(TestActivitySolveModel, par_single_resource) {
     par->addActivity(m_ctxt->mkTypeFieldActivity(
         "", m_ctxt->mkDataTypeActivityTraverse(ref, 0), true));
 
+    // Root activity is always expected to be a scope
+    IDataTypeActivitySequence *activity_root = m_ctxt->mkDataTypeActivitySequence();
+    activity_root->addActivity(m_ctxt->mkTypeFieldActivity(
+        "", 
+        par,
+        true));
+
     entry_t->addActivity(m_ctxt->mkTypeFieldActivity(
         "activity", 
-        par,
+        activity_root,
         true));
 
     ModelBuildContext build_ctxt(m_ctxt.get());
@@ -108,7 +115,17 @@ TEST_F(TestActivitySolveModel, par_single_resource) {
         pss_top.get(),
         entry_t.get()));
     ASSERT_TRUE(activity.get());
-
+    {
+        IModelActivitySequence *seq = dynamic_cast<IModelActivitySequence *>(activity.get());
+        ASSERT_TRUE(seq);
+        ASSERT_EQ(seq->activities().size(), 1);
+        // TODO: Really shouldn't have two levels of 'sequence' here...
+        seq = dynamic_cast<IModelActivitySequence *>(seq->activities().at(0));
+        ASSERT_TRUE(seq);
+        IModelActivityParallel *par = dynamic_cast<IModelActivityParallel *>(seq->activities().at(0));
+//        ASSERT_TRUE(par);
+        ASSERT_EQ(par->branches().size(), 2);
+    }
 
 }
 

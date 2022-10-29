@@ -52,6 +52,7 @@ public:
 
 	virtual IModelEvalIterator *iterator() = 0;
 
+
 };
 
 }

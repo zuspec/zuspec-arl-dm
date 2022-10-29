@@ -1,5 +1,5 @@
 /*
- * ModelEvalIteratorMgr.h
+ * ModelEvalIteratorIncrElabMgr.h
  *
  *  Created on: Jun 6, 2022
  *      Author: mballance
@@ -7,15 +7,15 @@
 
 #pragma once
 #include "arl/IModelEvalIterator.h"
-#include "ModelEvaluator.h"
+#include "ModelEvaluatorIncrElab.h"
 
 namespace arl {
 
-class ModelEvalIteratorMgr : public IModelEvalIterator {
+class ModelEvalIteratorIncrElabMgr : public IModelEvalIterator {
 public:
-	ModelEvalIteratorMgr(ModelEvaluator		*eval);
+	ModelEvalIteratorIncrElabMgr(ModelEvaluatorIncrElab *eval);
 
-	virtual ~ModelEvalIteratorMgr();
+	virtual ~ModelEvalIteratorIncrElabMgr();
 
 	virtual bool next() override;
 
@@ -28,7 +28,7 @@ public:
 	virtual IModelEvalIterator *iterator() override;
 
 private:
-	ModelEvaluator							*m_eval;
+	ModelEvaluatorIncrElab				*m_eval;
 	std::vector<IModelEvalIterator *>		m_eval_s;
 
 };

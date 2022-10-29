@@ -1,5 +1,5 @@
 /**
- * ModelEvaluatorParallel.h
+ * ModelEvaluatorIncrElabParallel.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -25,11 +25,11 @@ namespace arl {
 
 class ModelEvaluatorThread;
 
-class ModelEvaluatorParallel : public virtual IModelEvalIterator {
+class ModelEvaluatorIncrElabParallel : public virtual IModelEvalIterator {
 public:
-    ModelEvaluatorParallel(const std::vector<ModelEvaluatorThread *> &branches);
+    ModelEvaluatorIncrElabParallel(const std::vector<ModelEvaluatorThread *> &branches);
 
-    virtual ~ModelEvaluatorParallel();
+    virtual ~ModelEvaluatorIncrElabParallel();
 
 	virtual bool next() override;
 

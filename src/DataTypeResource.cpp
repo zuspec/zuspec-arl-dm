@@ -26,7 +26,7 @@ namespace arl {
 
 DataTypeResource::DataTypeResource(
         IContext            *ctxt,
-        const std::string   &name) : DataTypeFlowObj(name, FlowObjKindE::Resource) {
+        const std::string   &name) : DataTypeFlowObj(ctxt, name, FlowObjKindE::Resource) {
     vsc::IDataTypeInt *ui32_t = ctxt->findDataTypeInt(false, 32);
 
     if (!ui32_t) {

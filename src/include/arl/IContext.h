@@ -117,7 +117,8 @@ public:
 			IModelFieldAction		*target,
 			vsc::IModelConstraint	*with_c) = 0;
 
-	virtual IModelEvaluator *mkModelEvaluator() = 0;
+	virtual IModelEvaluator *mkModelEvaluator(
+			ModelEvaluatorKind		kind) = 0;
 
 	virtual IModelFieldAction *mkModelFieldActionRoot(
 			const std::string		&name,

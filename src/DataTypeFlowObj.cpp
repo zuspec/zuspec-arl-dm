@@ -10,9 +10,29 @@
 namespace arl {
 
 DataTypeFlowObj::DataTypeFlowObj(
+		IContext			*ctxt,
 		const std::string	&name,
 		FlowObjKindE 		kind) : DataTypeStruct(name), m_kind(kind) {
-	// TODO Auto-generated constructor stub
+    vsc::IDataTypeInt *ui32_t = ctxt->findDataTypeInt(false, 32);
+
+    if (!ui32_t) {
+        ui32_t = ctxt->mkDataTypeInt(false, 32);
+        ctxt->addDataTypeInt(ui32_t);
+    }
+
+    vsc::IDataTypeInt *ui1_t = ctxt->findDataTypeInt(false, 1);
+
+    if (!ui1_t) {
+        ui1_t = ctxt->mkDataTypeInt(false, 1);
+        ctxt->addDataTypeInt(ui1_t);
+    }
+
+    m_poolid = ctxt->mkTypeFieldPhy(
+        "pool_id",
+        ui32_t,
+        false,
+        vsc::TypeFieldAttr::Rand,
+        0);
 
 }
 

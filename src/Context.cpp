@@ -157,7 +157,7 @@ IDataTypeComponent *Context::findDataTypeComponent(const std::string &name) {
 }
 
 IDataTypeComponent *Context::mkDataTypeComponent(const std::string &name) {
-	return new DataTypeComponent(name);
+	return new DataTypeComponent(this, name);
 }
 
 bool Context::addDataTypeComponent(IDataTypeComponent *t) {
@@ -195,7 +195,7 @@ IDataTypeFlowObj *Context::mkDataTypeFlowObj(
 			ret = new DataTypeResource(this, name);
 		} break;
 		default:
-			ret = new DataTypeFlowObj(name, kind);
+			ret = new DataTypeFlowObj(this, name, kind);
 	}
 
 	return ret;
@@ -229,8 +229,9 @@ IModelActivityTraverse *Context::mkModelActivityTraverse(
 	return new ModelActivityTraverse(target, with_c);
 }
 
-IModelEvaluator *Context::mkModelEvaluator() {
-	return new ModelEvaluator(this);
+IModelEvaluator *Context::mkModelEvaluator(
+		ModelEvaluatorKind			kind) {
+	return new ModelEvaluator(this, kind);
 }
 
 IModelFieldAction *Context::mkModelFieldActionRoot(

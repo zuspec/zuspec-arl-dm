@@ -18,18 +18,51 @@
  * Created on:
  *     Author:
  */
+#include "TaskBuildActivitySolveModel.h"
 #include "TaskBuildActivityTraverseData.h"
 
 
 namespace arl {
 
 
-TaskBuildActivityTraverseData::TaskBuildActivityTraverseData() {
-
+TaskBuildActivityTraverseData::TaskBuildActivityTraverseData(
+    IContext                *ctxt,
+    ActivitySolveModel      *solve_model) : m_ctxt(ctxt), m_solve_model(solve_model) {
+    m_root_comp = 0;
 }
 
 TaskBuildActivityTraverseData::~TaskBuildActivityTraverseData() {
 
+}
+
+ActivityTraverseData *TaskBuildActivityTraverseData::build(
+    IModelFieldComponent        *root_comp,
+    IModelActivityTraverse      *t) {
+    // Get all the component instances where this action could execute
+    m_root_comp = root_comp;
+
+    IDataTypeAction *action_t = t->getTarget()->getDataTypeT<IDataTypeAction>();
+    std::vector<IModelFieldComponent *> contexts = m_root_comp->getCompMap()->getSubContexts(
+        action_t->getComponentType());
+    
+    m_data = ActivityTraverseDataUP(new ActivityTraverseData(t));
+
+    // Ensure all available contexts are added 
+    for (std::vector<IModelFieldComponent *>::const_iterator
+        it=contexts.begin();
+        it!=contexts.end(); it++) {
+        // Ensure all components up the hierarchy are added
+        IModelFieldComponent *c = *it;
+        m_data->comp_ctxt_l.push_back(m_solve_model->getComponentId(c));
+
+        // Ensure all components up the tree exist
+        while (c->getParent()) {
+            c = c->getParentT<IModelFieldComponent>();
+            m_solve_model->getComponentId(c);
+        }
+    }
+
+//    ActivitySolveModel::AllCompMapT::const_iterator it = m_model->all_comp_m.find()
 }
 
 }

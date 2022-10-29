@@ -1,5 +1,5 @@
 /**
- * ModelEvaluatorSequence.h
+ * ModelEvaluatorIncrElabSequence.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -25,18 +25,18 @@
 
 namespace arl {
 
-class ModelEvaluatorSequence : 
+class ModelEvaluatorIncrElabSequence : 
     public virtual IModelEvalIterator,
     public virtual VisitorBase {
 public:
-    ModelEvaluatorSequence(ModelEvaluatorThread *thread);
+    ModelEvaluatorIncrElabSequence(ModelEvaluatorThread *thread);
 
-    ModelEvaluatorSequence(
+    ModelEvaluatorIncrElabSequence(
         ModelEvaluatorThread                *thread,
         const std::vector<IModelActivity *> &activities,
         bool                                owned=false);
 
-    virtual ~ModelEvaluatorSequence();
+    virtual ~ModelEvaluatorIncrElabSequence();
 
     void addActivity(IModelActivity *activity, bool owned);
 

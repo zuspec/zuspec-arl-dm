@@ -20,9 +20,13 @@
  */
 #pragma once
 #include <memory>
+#include "arl/IContext.h"
 #include "arl/IModelActivityTraverse.h"
+#include "arl/IModelFieldComponent.h"
 
 namespace arl {
+
+struct ActivitySolveModel;
 
 struct ActivityTraverseData {
     ActivityTraverseData(IModelActivityTraverse *t) : traversal(t) {}
@@ -36,10 +40,21 @@ using ActivityTraverseDataUP=std::unique_ptr<ActivityTraverseData>;
 
 class TaskBuildActivityTraverseData {
 public:
-    TaskBuildActivityTraverseData();
+    TaskBuildActivityTraverseData(
+        IContext                *ctxt,
+        ActivitySolveModel      *solve_model);
 
     virtual ~TaskBuildActivityTraverseData();
 
+    ActivityTraverseData *build(
+        IModelFieldComponent        *root_comp,
+        IModelActivityTraverse      *t);
+
+private:
+    IContext                            *m_ctxt;
+    ActivitySolveModel                  *m_solve_model;
+    IModelFieldComponent                *m_root_comp;
+    ActivityTraverseDataUP              m_data;
 };
 
 }

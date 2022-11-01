@@ -129,6 +129,9 @@ cdef class DataTypeFlowObj(vsc.DataTypeStruct):
     @staticmethod
     cdef DataTypeFlowObj mk(decl.IDataTypeFlowObj *hndl, bool owned=*)
 
+cdef class ModelBuildContext(vsc.ModelBuildContext):
+    pass
+
 
 cdef class ModelEvaluator(object):    
     cdef decl.IModelEvaluator        *_hndl
@@ -224,6 +227,8 @@ cdef class TypeFieldPool(vsc.TypeField):
 cdef class VisitorBase(vsc.VisitorBase):
 
     cpdef visitDataTypeAction(self, DataTypeAction t)
+
+    cpdef visitDataTypeComponent(self, DataTypeComponent t)
 
     cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t)
 

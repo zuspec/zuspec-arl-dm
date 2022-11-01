@@ -167,8 +167,10 @@ cdef class Context(vsc.Context):
     cpdef DataTypeComponent findDataTypeComponent(self, name):
         cdef decl.IDataTypeComponent *c = self.asContext().findDataTypeComponent(name.encode())
         if c != NULL:
+            print("Component is non-null")
             return DataTypeComponent.mk(c, False)
         else:
+            print("Component is null")
             return None
 
     cpdef DataTypeComponent mkDataTypeComponent(self, name):
@@ -497,6 +499,12 @@ cdef class DataTypeFlowObj(vsc.DataTypeStruct):
         ret._owned = owned
         return ret
 
+cdef class ModelBuildContext(vsc.ModelBuildContext):
+
+    def __init__(self, Context ctxt):
+        self._hndl = decl.mkModelBuildContextArl(ctxt.asContext())
+
+
 cdef class ModelEvaluator(object):
     
     def __dealloc__(self):
@@ -709,6 +717,9 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitDataTypeAction(self, DataTypeAction t):
         pass
 
+    cpdef visitDataTypeComponent(self, DataTypeComponent t):
+        pass
+
     cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t):
         pass
 
@@ -723,6 +734,9 @@ cdef class VisitorBase(vsc.VisitorBase):
 
 cdef public void VisitorProxy_visitDataTypeAction(obj, decl.IDataTypeAction *t) with gil:
     obj.visitDataTypeAction(DataTypeAction.mk(t, False))
+
+cdef public void VisitorProxy_visitDataTypeComponent(obj, decl.IDataTypeComponent *t) with gil:
+    obj.visitDataTypeComponent(DataTypeComponent.mk(t, False))
 
 cdef public void VisitorProxy_visitDataTypeFlowObj(obj, decl.IDataTypeFlowObj *t) with gil:
     obj.visitDataTypeFlowObj(DataTypeFlowObj.mk(t, False))
@@ -760,6 +774,9 @@ cdef class WrapperBuilder(VisitorBase):
         self._obj[-1] = obj
 
     cpdef visitDataTypeAction(self, DataTypeAction t):
+        self._set_obj(t)
+
+    cpdef visitDataTypeComponent(self, DataTypeComponent t):
         self._set_obj(t)
 
     cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t):

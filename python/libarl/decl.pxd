@@ -137,6 +137,11 @@ cdef extern from "arl/IDataTypeFlowObj.h" namespace "arl":
     cdef cppclass IDataTypeFlowObj(vsc.IDataTypeStruct):
         FlowObjKindE kind() const
 
+cdef extern from "arl/IModelBuildContext.h" namespace "arl":
+    cdef cppclass IModelBuildContext:
+        IContext *ctxt()
+        pass
+
 cdef extern from "arl/IModelEvaluator.h" namespace "arl":
     cdef cppclass IModelEvaluator:
         IModelEvalIterator *eval(
@@ -200,4 +205,6 @@ cdef extern from "arl/IVisitor.h" namespace "arl":
 cdef extern from "VisitorProxy.h" namespace "arl":
     cdef cppclass VisitorProxy(IVisitor):
         VisitorProxy(cpy_ref.PyObject *)
+
+cdef extern IModelBuildContext *mkModelBuildContextArl(IContext *ctxt)
 

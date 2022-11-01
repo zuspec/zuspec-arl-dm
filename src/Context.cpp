@@ -163,7 +163,7 @@ IDataTypeComponent *Context::mkDataTypeComponent(const std::string &name) {
 bool Context::addDataTypeComponent(IDataTypeComponent *t) {
 	std::unordered_map<std::string,IDataTypeComponentUP>::const_iterator it;
 
-	if ((it=m_component_type_m.find(t->name())) != m_component_type_m.end()) {
+	if ((it=m_component_type_m.find(t->name())) == m_component_type_m.end()) {
 		m_component_type_m.insert({t->name(), IDataTypeComponentUP(t)});
 		return true;
 	} else {

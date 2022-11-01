@@ -37,6 +37,10 @@ void VisitorProxy::visitDataTypeAction(IDataTypeAction *t) {
     VisitorProxy_visitDataTypeAction(m_obj, t);
 }
 
+void VisitorProxy::visitDataTypeComponent(IDataTypeComponent *t) {
+    VisitorProxy_visitDataTypeComponent(m_obj, t);
+}
+
 void VisitorProxy::visitDataTypeFlowObj(IDataTypeFlowObj *t) {
     VisitorProxy_visitDataTypeFlowObj(m_obj, t);
 }

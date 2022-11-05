@@ -18,6 +18,7 @@
 #include "arl/IDataTypeFunctionParamDecl.h"
 #include "arl/IModelActivityParallel.h"
 #include "arl/IModelActivitySchedule.h"
+#include "arl/IModelActivityScope.h"
 #include "arl/IModelActivitySequence.h"
 #include "arl/IModelActivityTraverse.h"
 #include "arl/IModelEvaluator.h"
@@ -110,6 +111,8 @@ public:
 	virtual IModelActivityParallel *mkModelActivityParallel() = 0;
 
 	virtual IModelActivitySchedule *mkModelActivitySchedule() = 0;
+
+	virtual IModelActivityScope *mkModelActivityScope(ModelActivityScopeT t) = 0;
 
 	virtual IModelActivitySequence *mkModelActivitySequence() = 0;
 

@@ -20,6 +20,12 @@ public:
 
 	virtual ~ModelActivitySchedule();
 
+	virtual ModelActivityScopeT getType() const override {
+		return ModelActivityScopeT::Schedule;
+	}
+
+	virtual void setType(ModelActivityScopeT t) override { }
+
 	virtual const std::string &name() const { return m_name; }
 
 	virtual vsc::IDataType *getDataType() const { return m_type; }

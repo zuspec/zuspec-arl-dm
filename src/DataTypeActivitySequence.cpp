@@ -26,7 +26,8 @@ IModelActivity *DataTypeActivitySequence::mkActivity(
 		vsc::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
-	IModelActivitySequence *ret = ctxt_a->mkModelActivitySequence();
+	IModelActivityScope *ret = ctxt_a->mkModelActivityScope(
+		ModelActivityScopeT::Sequence);
 
 	ctxt->pushBottomUpScope(ret);
 

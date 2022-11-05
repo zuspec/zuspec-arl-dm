@@ -1,5 +1,5 @@
 /**
- * ModelEvaluatorFullElabSequence.h
+ * ModelEvaluatorFullElabScope.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -20,7 +20,7 @@
  */
 #pragma once
 #include "arl/IContext.h"
-#include "arl/IModelActivitySequence.h"
+#include "arl/IModelActivityScope.h"
 #include "arl/IModelEvalIterator.h"
 #include "arl/impl/VisitorBase.h"
 #include "vsc/IRandState.h"
@@ -28,17 +28,17 @@
 namespace arl {
 
 
-
-class ModelEvaluatorFullElabSequence : 
+class ModelEvaluatorFullElabScope :
     public virtual IModelEvalIterator,
     public virtual VisitorBase {
 public:
-    ModelEvaluatorFullElabSequence(
-        IContext                    *ctxt,
-        vsc::IRandState             *randstate,
-        IModelActivitySequence      *seq);
+    ModelEvaluatorFullElabScope(
+        IContext                *ctxt,
+        vsc::IRandState         *randstat,
+        IModelActivityScope     *scope
+    );
 
-    virtual ~ModelEvaluatorFullElabSequence();
+    virtual ~ModelEvaluatorFullElabScope();
 
 	virtual bool next() override;
 
@@ -52,9 +52,7 @@ public:
 
 	virtual IModelEvalIterator *iterator() override;
 
-    virtual void visitModelActivityParallel(IModelActivityParallel *a) override;
-
-	virtual void visitModelActivitySequence(IModelActivitySequence *a) override;
+	virtual void visitModelActivityScope(IModelActivityScope *a) override;
 
 	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override;
 
@@ -62,12 +60,13 @@ private:
     static vsc::IDebug              *m_dbg;
     IContext                        *m_ctxt;
     vsc::IRandStateUP               m_randstate;
-    IModelActivitySequence          *m_seq;
+    IModelActivityScope             *m_scope;
     int32_t                         m_idx;
 
-    ModelEvalNodeT                  m_next_type;
+    ModelEvalNodeT                  m_type;
     IModelFieldAction               *m_action;
     IModelEvalIterator              *m_iterator;
+
 };
 
 }

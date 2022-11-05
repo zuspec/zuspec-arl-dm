@@ -21,15 +21,15 @@
 #include "arl/IDataTypeAction.h"
 #include "arl/IDataTypeComponent.h"
 #include "arl/IModelFieldPool.h"
+#include "vsc/impl/DebugMacros.h"
+#include "vsc/impl/PrettyPrinter.h"
 #include "vsc/impl/TaskUnrollModelFieldRefConstraints.h"
 #include "vsc/impl/TaskBuildRefConstraintMap.h"
 #include "vsc/impl/TaskBuildRefSelector.h"
-#include "vsc/impl/PrettyPrinter.h"
 #include "TaskCollectFlowObjFields.h"
 #include "TaskIsDataTypeFlowObj.h"
 #include "TaskSolveActionSet.h"
 
-#include "DebugMacros.h"
 
 
 namespace arl {
@@ -39,7 +39,7 @@ TaskSolveActionSet::TaskSolveActionSet(
     vsc::IRandState         *randstate,
     IModelFieldComponent    *comp) : 
     m_ctxt(ctxt), m_randstate(randstate), m_comp(comp) {
-    DEBUG_INIT("TaskSolveActionSet");
+    DEBUG_INIT("TaskSolveActionSet", ctxt->getDebugMgr());
     m_action_data = 0;
 }
 
@@ -433,5 +433,7 @@ void TaskSolveActionSet::visitTypeFieldClaim(ITypeFieldClaim *f) {
 void TaskSolveActionSet::visitTypeFieldInOut(ITypeFieldInOut *f) {
 
 }
+
+vsc::IDebug *TaskSolveActionSet::m_dbg = 0;
 
 }

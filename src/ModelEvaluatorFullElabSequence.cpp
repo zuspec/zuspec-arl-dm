@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "vsc/impl/DebugMacros.h"
 #include "ModelEvaluatorFullElabParallel.h"
 #include "ModelEvaluatorFullElabSequence.h"
 
@@ -29,6 +30,7 @@ ModelEvaluatorFullElabSequence::ModelEvaluatorFullElabSequence(
     IContext                    *ctxt,
     vsc::IRandState             *randstate,
     IModelActivitySequence      *seq) : m_ctxt(ctxt), m_randstate(randstate), m_seq(seq) {
+    DEBUG_INIT("ModelEvaluatorFullElabSequence", ctxt->getDebugMgr());
 
     m_idx = -1;
     m_action = 0;
@@ -40,15 +42,18 @@ ModelEvaluatorFullElabSequence::~ModelEvaluatorFullElabSequence() {
 }
 
 bool ModelEvaluatorFullElabSequence::next() {
+    DEBUG_ENTER("next idx=%d sz=%d", (m_idx+1), m_seq->activities().size());
     m_idx++;
 
     if (m_idx >= m_seq->activities().size()) {
         delete this;
+        DEBUG_LEAVE("next - false");
         return false;
     }
 
     m_seq->activities().at(m_idx)->accept(m_this);
 
+    DEBUG_LEAVE("next - %d", m_next_type);
     return true;
 }
 
@@ -73,6 +78,7 @@ IModelEvalIterator *ModelEvaluatorFullElabSequence::iterator() {
 }
 
 void ModelEvaluatorFullElabSequence::visitModelActivityParallel(IModelActivityParallel *a) {
+    DEBUG_ENTER("visitModelActivityParallel");
     ModelEvaluatorFullElabParallel *par = new ModelEvaluatorFullElabParallel(
         m_ctxt, 
         m_randstate->next());
@@ -86,9 +92,11 @@ void ModelEvaluatorFullElabSequence::visitModelActivityParallel(IModelActivityPa
 
     m_next_type = ModelEvalNodeT::Parallel;
     m_iterator = par;
+    DEBUG_LEAVE("visitModelActivityParallel");
 }
 
 void ModelEvaluatorFullElabSequence::visitModelActivitySequence(IModelActivitySequence *a) {
+    DEBUG_ENTER("visitModelActivitySequence");
     // Return a
     ModelEvaluatorFullElabSequence *seq = new ModelEvaluatorFullElabSequence(
         m_ctxt,
@@ -96,9 +104,11 @@ void ModelEvaluatorFullElabSequence::visitModelActivitySequence(IModelActivitySe
         a);
     m_iterator = seq;
     m_next_type = ModelEvalNodeT::Sequence;
+    DEBUG_LEAVE("visitModelActivitySequence");
 }
 
 void ModelEvaluatorFullElabSequence::visitModelActivityTraverse(IModelActivityTraverse *a) {
+    DEBUG_ENTER("visitModelActivityTraverse");
     std::vector<vsc::IModelConstraint *> constraints;
 
     if (a->getWithC()) {
@@ -124,6 +134,10 @@ void ModelEvaluatorFullElabSequence::visitModelActivityTraverse(IModelActivityTr
 
     m_next_type = ModelEvalNodeT::Action;
     m_action = a->getTarget();
+
+    DEBUG_LEAVE("visitModelActivityTraverse");
 }
+
+vsc::IDebug *ModelEvaluatorFullElabSequence::m_dbg = 0;
 
 }

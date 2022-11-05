@@ -62,12 +62,21 @@ vsc::IModelField *DataTypeAction::mkRootField(
     }
 
 	// Build out any activities
-	for (std::vector<ITypeFieldActivity *>::const_iterator
-		it=activities().begin();
-		it!=activities().end(); it++) {
-        IModelActivity *activity = (*it)->mkActivity(ctxt);
-		ret->addActivity(dynamic_cast<IModelActivityScope *>(activity));
-	}
+    if (activities().size() == 1) {
+        ret->setActivity(dynamic_cast<IModelActivityScope *>(
+            activities().at(0)->mkActivity(ctxt)));
+    } else if (activities().size() > 1) {
+        IModelActivityScope *schedule = ctxt_a->mkModelActivityScope(
+            ModelActivityScopeT::Schedule);
+    	// Build out any activities
+    	for (std::vector<ITypeFieldActivity *>::const_iterator
+    		it=activities().begin();
+    		it!=activities().end(); it++) {
+            IModelActivity *activity = (*it)->mkActivity(ctxt);
+    		schedule->addActivity(activity);
+    	}
+        ret->setActivity(schedule);
+    }
 
     // Finally, build out constraints on this field and sub-fields
     vsc::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
@@ -98,6 +107,22 @@ vsc::IModelField *DataTypeAction::mkTypeField(
         it!=getFields().end(); it++) {
         vsc::IModelField *field = (*it)->mkModelField(ctxt);
 		ret->addField(field);
+    }
+
+    if (activities().size() == 1) {
+        ret->setActivity(dynamic_cast<IModelActivityScope *>(
+            activities().at(0)->mkActivity(ctxt)));
+
+    } else if (activities().size() > 1) {
+        IModelActivityScope *schedule = ctxt_a->mkModelActivityScope(
+            ModelActivityScopeT::Schedule);
+    	// Build out any activities
+    	for (std::vector<ITypeFieldActivity *>::const_iterator
+    		it=activities().begin();
+    		it!=activities().end(); it++) {
+            IModelActivity *activity = (*it)->mkActivity(ctxt);
+    		schedule->addActivity(dynamic_cast<IModelActivityScope *>(activity));
+    	}
     }
 
     // Finally, build out constraints on this field and sub-fields

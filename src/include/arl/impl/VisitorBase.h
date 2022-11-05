@@ -19,6 +19,7 @@
 #include "arl/IDataTypeResource.h"
 #include "arl/IModelActivityParallel.h"
 #include "arl/IModelActivitySchedule.h"
+#include "arl/IModelActivityScope.h"
 #include "arl/IModelActivitySequence.h"
 #include "arl/IModelActivityTraverse.h"
 #include "arl/IModelFieldAction.h"
@@ -111,6 +112,14 @@ public:
 			(*it)->accept(m_this);
 		}
 	}
+	
+	virtual void visitModelActivityScope(IModelActivityScope *a) override {
+		for (std::vector<IModelActivity *>::const_iterator
+				it=a->activities().begin();
+				it!=a->activities().end(); it++) {
+			(*it)->accept(m_this);
+		}
+	}
 
 	virtual void visitModelActivitySequence(IModelActivitySequence *a) override {
 		for (std::vector<IModelActivity *>::const_iterator
@@ -129,10 +138,8 @@ public:
 
 	virtual void visitModelFieldAction(IModelFieldAction *f) override {
 		vsc::VisitorBase::visitModelField(f);
-		for (std::vector<IModelActivityScope *>::const_iterator
-				it=f->activities().begin();
-				it!=f->activities().end(); it++) {
-			(*it)->accept(m_this);
+		if (f->getActivity()) {
+			f->getActivity()->accept(m_this);
 		}
 	}
 

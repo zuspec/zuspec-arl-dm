@@ -51,6 +51,8 @@ public:
 
 	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() override;
 
+	virtual IModelActivityScope *mkModelActivityScope(ModelActivityScopeT t) override;
+
 	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() override;
 
 	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(

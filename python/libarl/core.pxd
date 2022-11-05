@@ -157,6 +157,8 @@ cdef class ModelEvalIterator(object):
 
 cdef class ModelFieldAction(vsc.ModelField):
 
+    cpdef bool isCompound(self)
+
     cdef decl.IModelFieldAction *asAction(self)
 
     @staticmethod

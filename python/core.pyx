@@ -579,6 +579,9 @@ cdef class ModelEvalIterator(object):
 
 cdef class ModelFieldAction(vsc.ModelField):
 
+    cpdef bool isCompound(self):
+        return self.asAction().isCompound()
+
     cdef decl.IModelFieldAction *asAction(self):
         return dynamic_cast[decl.IModelFieldActionP](self._hndl)
 
@@ -710,10 +713,6 @@ cdef class VisitorBase(vsc.VisitorBase):
         super().__init__()
         self.proxy_l.push_back(new decl.VisitorProxy(<cpy_ref.PyObject *>(self)))
     
-    def __dealloc__(self):
-        del self._arl_proxy
-        pass
-
     cpdef visitDataTypeAction(self, DataTypeAction t):
         pass
 

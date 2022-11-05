@@ -21,6 +21,7 @@ class IDataTypeFunction;
 class IDataTypeResource;
 class IModelActivityParallel;
 class IModelActivitySchedule;
+class IModelActivityScope;
 class IModelActivitySequence;
 class IModelActivityTraverse;
 class IModelFieldAction;
@@ -73,6 +74,8 @@ public:
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) = 0;
 
 	virtual void visitModelActivitySchedule(IModelActivitySchedule *a) = 0;
+
+	virtual void visitModelActivityScope(IModelActivityScope *a) = 0;
 
 	virtual void visitModelActivitySequence(IModelActivitySequence *a) = 0;
 

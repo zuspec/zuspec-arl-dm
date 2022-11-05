@@ -21,6 +21,7 @@
 #include "vsc/impl/DebugMacros.h"
 #include "ModelEvaluatorFullElab.h"
 #include "ModelEvaluatorFullElabActivity.h"
+#include "ModelEvaluatorFullElabScope.h"
 #include "TaskElaborateActivity.h"
 
 
@@ -40,11 +41,11 @@ IModelEvalIterator *ModelEvaluatorFullElab::eval(
         const vsc::IRandState           *randstate,
         IModelFieldComponent            *root_comp,
         IDataTypeAction                 *root_action) {
-    IModelActivity *exec_activity = TaskElaborateActivity(m_ctxt).elaborate(
+    IModelActivityScope *exec_activity = TaskElaborateActivity(m_ctxt).elaborate(
         root_comp,
         root_action);
 
-    return new ModelEvaluatorFullElabActivity(
+    return new ModelEvaluatorFullElabScope(
         m_ctxt, 
         randstate->clone(),
         exec_activity);

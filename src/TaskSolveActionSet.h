@@ -85,6 +85,7 @@ private:
 
 
 private:
+    static vsc::IDebug                                      *m_dbg;
     IContext                                                *m_ctxt;
     vsc::IRandState                                         *m_randstate;
     IModelFieldComponent                                    *m_comp;

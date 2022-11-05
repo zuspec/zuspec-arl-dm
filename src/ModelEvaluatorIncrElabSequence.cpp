@@ -18,10 +18,10 @@
  * Created on:
  *     Author:
  */
+#include "vsc/impl/DebugMacros.h"
 #include "vsc/impl/PrettyPrinter.h"
 #include "vsc/impl/TaskUnrollModelFieldRefConstraints.h"
 
-#include "DebugMacros.h"
 #include "ModelEvaluatorIncrElabParallel.h"
 #include "ModelEvaluatorIncrElabSequence.h"
 #include "TaskCollectTopLevelActivities.h"
@@ -31,7 +31,7 @@
 namespace arl {
 ModelEvaluatorIncrElabSequence::ModelEvaluatorIncrElabSequence(ModelEvaluatorThread *thread) 
     : m_idx(-1), m_thread(thread), m_action(0), m_next_it(0) {
-    DEBUG_INIT("ModelEvaluatorIncrElabSequence");
+    DEBUG_INIT("ModelEvaluatorIncrElabSequence", thread->ctxt()->getDebugMgr());
     m_action = 0;
 }
 
@@ -163,6 +163,7 @@ void ModelEvaluatorIncrElabSequence::visitModelActivityTraverse(IModelActivityTr
     DEBUG_ENTER("visitModelActivityTraverse");
     IModelFieldAction *action = a->getTarget();
 
+#ifdef UNDEFINED
     if (action->activities().size() == 1) {
         DEBUG("Single-activity compound action");
         std::vector<IModelActivity *> activities;
@@ -187,7 +188,6 @@ void ModelEvaluatorIncrElabSequence::visitModelActivityTraverse(IModelActivityTr
             m_thread->randstate(),
             comp_p).solve({a});
 
-#ifdef UNDEFINED
         if (a->getWithC()) {
             constraints.push_back(a->getWithC());
         }
@@ -251,16 +251,18 @@ void ModelEvaluatorIncrElabSequence::visitModelActivityTraverse(IModelActivityTr
                 | vsc::SolveFlags::RandomizeTopFields);
         action->getFieldT<vsc::IModelFieldRef>(0)->setRef(
             comp_l.at(comp_data->getSelector()->val()->val_i()));
-#endif // UNDEFINED
 
         m_action = action;
     }
+#endif // UNDEFINED
 
     // TODO: determine if inference is required
     // TODO: if so, perform and (possibly) push new iterator
 
     DEBUG_LEAVE("visitModelActivityTraverse");
 }
+
+vsc::IDebug *ModelEvaluatorIncrElabSequence::m_dbg = 0;
 
 }
 

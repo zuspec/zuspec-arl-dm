@@ -35,7 +35,7 @@ TaskElaborateActivity::~TaskElaborateActivity() {
 
 }
 
-IModelActivity *TaskElaborateActivity::elaborate(
+IModelActivityScope *TaskElaborateActivity::elaborate(
     IModelFieldComponent            *root_comp,
     IDataTypeAction                 *root_action) {
     bool ret = true;
@@ -47,32 +47,12 @@ IModelActivity *TaskElaborateActivity::elaborate(
         false
     );
 
-    IModelActivitySequence *seq = m_ctxt->mkModelActivitySequence();
-    if (root_action_f->activities().size() == 0) {
-        // Traveral of a leaf-level action
-        // Need to add a synthetic traveral to the root sequence
-        seq->addActivity(m_ctxt->mkModelActivityTraverse(root_action_f, 0), true);
-    } else if (root_action_f->activities().size() == 1) {
-
-        // Add a traversal for the compound activity
-        seq->addActivity(m_ctxt->mkModelActivityTraverse(root_action_f, 0), true);
-
-        // Add the root activities inside the sequence
-        seq->addActivity(root_action_f->activities().at(0), false);
-    } else {
-        // Multiple activities. Add a schedule block inside the top-level sequence
-        IModelActivitySchedule *sched = m_ctxt->mkModelActivitySchedule();
-        for (std::vector<IModelActivityScope *>::const_iterator
-            it=root_action_f->activities().begin();
-            it!=root_action_f->activities().end(); it++) {
-            sched->addActivity(*it, false);
-        }
-        seq->addActivity(sched, true);
-    }
+    IModelActivityScope *seq = m_ctxt->mkModelActivityScope(ModelActivityScopeT::Sequence);
+    seq->addActivity(m_ctxt->mkModelActivityTraverse(root_action_f, 0), true);
 
     // The activity owns the root action
     seq->addField(root_action_f);
-    m_activity = IModelActivityUP(seq);
+    m_activity = IModelActivityScopeUP(seq);
     
     // 1.) Build solve model for resource and flow-object assignments
     //     a.) Need to know full set of valid component instances, 

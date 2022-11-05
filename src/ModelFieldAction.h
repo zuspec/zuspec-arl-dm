@@ -21,17 +21,23 @@ public:
 
 	virtual ~ModelFieldAction();
 
-	virtual const std::vector<IModelActivityScope *> &activities() const override {
-		return m_activities;
+	virtual bool isCompound() const override {
+		return getActivity();
 	}
 
-	virtual void addActivity(IModelActivityScope *a) override;
+	virtual IModelActivityScope *getActivity() const override {
+		return m_activity.get();
+	}
+
+	virtual void setActivity(IModelActivityScope *a) override {
+		m_activity = IModelActivityScopeUP(a);
+	}
 
 	virtual void accept(vsc::IVisitor *v) override;
 
 
 protected:
-	std::vector<IModelActivityScope *>				m_activities;
+	IModelActivityScopeUP							m_activity;
 
 };
 

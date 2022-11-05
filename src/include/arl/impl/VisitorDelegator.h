@@ -78,6 +78,10 @@ public:
 		delegate(&arl::IVisitor::visitModelActivitySchedule, a);
 	}
 
+	virtual void visitModelActivityScope(IModelActivityScope *a) override {
+		delegate(&arl::IVisitor::visitModelActivityScope, a);
+	}
+
 	virtual void visitModelActivitySequence(IModelActivitySequence *a) override {
 		delegate(&arl::IVisitor::visitModelActivitySequence, a);
 	}

@@ -18,9 +18,11 @@ public:
 
 	virtual ~IModelFieldAction() { }
 
-	virtual const std::vector<IModelActivityScope *> &activities() const = 0;
+	virtual bool isCompound() const = 0;
 
-	virtual void addActivity(IModelActivityScope *a) = 0;
+	virtual IModelActivityScope *getActivity() const = 0;
+
+	virtual void setActivity(IModelActivityScope *a) = 0;
 
 };
 

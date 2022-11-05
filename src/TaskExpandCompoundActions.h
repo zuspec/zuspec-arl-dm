@@ -1,5 +1,5 @@
 /**
- * TaskElaborateActivity.h
+ * TaskExpandCompoundActions.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -25,28 +25,19 @@
 namespace arl {
 
 
-
-class TaskElaborateActivity : public VisitorBase {
+class TaskExpandCompoundActions : public VisitorBase {
 public:
-    TaskElaborateActivity(IContext *ctxt);
+    TaskExpandCompoundActions(IContext *ctxt);
 
-    virtual ~TaskElaborateActivity();
+    virtual ~TaskExpandCompoundActions();
 
-    /**
-     * @brief Builds an activity from a component tree and action type
-     * 
-     * @param root_comp 
-     * @param root_action 
-     * @return IModelActivity* 
-     */
-    IModelActivityScope *elaborate(
-        IModelFieldComponent        *root_comp,
-        IDataTypeAction             *root_action);
+    void expand(
+        IModelActivitySequence      *seq,
+        IModelFieldAction           *action);
 
 private:
-    IContext                        *m_ctxt;
-    IModelActivityScopeUP            m_activity;
-
+    static vsc::IDebug                  *m_dbg;
+    IContext                            *m_ctxt;
 };
 
 }

@@ -66,6 +66,7 @@ public:
 	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override;
 
 private:
+    static vsc::IDebug                          *m_dbg;
     IContext                                    *m_ctxt;
     vsc::IRandStateUP                           m_randstate;
     int32_t                                     m_idx;

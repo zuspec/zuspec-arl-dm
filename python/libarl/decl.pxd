@@ -162,6 +162,7 @@ cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
 
 cdef extern from "arl/IModelFieldAction.h" namespace "arl":
     cdef cppclass IModelFieldAction(vsc.IModelField):
+        bool isCompound() const
         pass
         
 cdef extern from "arl/IModelFieldComponent.h" namespace "arl":

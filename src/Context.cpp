@@ -18,6 +18,7 @@
 #include "DataTypeResource.h"
 #include "ModelActivityParallel.h"
 #include "ModelActivitySchedule.h"
+#include "ModelActivityScope.h"
 #include "ModelActivitySequence.h"
 #include "ModelActivityTraverse.h"
 #include "arl/impl/ModelBuildContext.h"
@@ -217,6 +218,10 @@ IModelActivityParallel *Context::mkModelActivityParallel() {
 
 IModelActivitySchedule *Context::mkModelActivitySchedule() {
 	return new ModelActivitySchedule("", 0);
+}
+
+IModelActivityScope *Context::mkModelActivityScope(ModelActivityScopeT t) {
+	return new ModelActivityScope(t);
 }
 
 IModelActivitySequence *Context::mkModelActivitySequence() {

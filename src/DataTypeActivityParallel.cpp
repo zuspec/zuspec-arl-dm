@@ -38,7 +38,8 @@ IModelActivity *DataTypeActivityParallel::mkActivity(
 		vsc::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) {
     IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
-    IModelActivityParallel *ret = ctxt_a->mkModelActivityParallel();
+    IModelActivityScope *ret = ctxt_a->mkModelActivityScope(
+        ModelActivityScopeT::Parallel);
 
 	for (std::vector<vsc::ITypeFieldUP>::const_iterator
 		it=getFields().begin();
@@ -48,12 +49,14 @@ IModelActivity *DataTypeActivityParallel::mkActivity(
 			it->get()));
 	}
 
+    fprintf(stdout, "Parallel: %d activities\n", getActivities().size());
+
     ctxt->pushBottomUpScope(ret);
     for (std::vector<ITypeFieldActivity *>::const_iterator
         it=getActivities().begin();
         it!=getActivities().end(); it++) {
         IModelActivity *activity = (*it)->mkActivity(ctxt);
-        ret->addBranch(activity);
+        ret->addActivity(activity);
     }
     ctxt->popBottomUpScope();
 

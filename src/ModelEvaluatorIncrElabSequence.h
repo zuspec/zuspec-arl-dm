@@ -61,6 +61,7 @@ public:
 	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override;
 
 private:
+    static vsc::IDebug                  *m_dbg;
     ModelEvaluatorThread                *m_thread;
     int32_t                             m_idx;
     std::vector<IModelActivity *>       m_activities;

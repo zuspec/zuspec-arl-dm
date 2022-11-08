@@ -36,6 +36,10 @@ public:
 
 	virtual void setParentPool(IModelFieldPool *p) = 0;
 
+	virtual bool getProcessed() const = 0;
+
+	virtual void setProcessed(bool p) = 0;
+
 };
 }
 

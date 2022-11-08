@@ -28,3 +28,45 @@ scope, so the root action must be enclosed in one.
 The original activity view is structural and mirrors that captured in the
 type model.
 
+# Evaluation process
+
+Expand and perform local scheduling on the way down. Perform final scheduling
+on the way back once all sub-scheduling has been resolved.
+
+Prioritize claim/flow object over schedule.
+
+Next step: perform some activity manipulation using replicate
+
+## Handling of Replicate
+- Each replicate has a variable corresponding to its size
+- Each replicate has a variable corresponding to the current iteration
+
+Note: replicate unrolling must occur before evaluation of the activity
+statements.
+
+- When processing the activities inside a compound action, the value of
+  the replicate size must be solved.
+- After solving the size, the replicate is unrolled -- which, potentially,
+  involves expansion of nested replicate statements.
+
+- After all replicates in the current scope (not hidden by compound actions),
+  evaluation of the expanded statements continues.
+
+replicate (2) : L[] {
+    a: do A;
+    replicate (2) L[] {
+      b: do B;
+    }
+}
+
+Must result in:
+L[0].a;
+L[0].L[0].b;
+L[0].L[1].b;
+L[1].a;
+L[1].L[0].b;
+L[1].L[1].b;
+
+Note: perhaps a good ideal to have an anonymous label array? 
+
+Must implement replicate inside-out. 

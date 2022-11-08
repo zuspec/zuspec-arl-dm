@@ -14,6 +14,7 @@ ctypedef IDataTypeActivity *IDataTypeActivityP
 ctypedef unique_ptr[IDataTypeActivity] IDataTypeActivityUP
 ctypedef IDataTypeActivityScope *IDataTypeActivityScopeP
 ctypedef IDataTypeActivityParallel *IDataTypeActivityParallelP
+ctypedef IDataTypeActivityReplicate *IDataTypeActivityReplicateP
 ctypedef IDataTypeActivitySchedule *IDataTypeActivityScheduleP
 ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
@@ -49,6 +50,7 @@ cdef extern from "arl/IContext.h" namespace "arl":
         IDataTypeAction *findDataTypeAction(const cpp_string &)
         IDataTypeAction *mkDataTypeAction(const cpp_string &)
         IDataTypeActivityParallel *mkDataTypeActivityParallel()
+        IDataTypeActivityReplicate *mkDataTypeActivityReplicate(vsc.ITypeExpr *)
         IDataTypeActivitySchedule *mkDataTypeActivitySchedule()
         IDataTypeActivitySequence *mkDataTypeActivitySequence()
         IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
@@ -100,6 +102,10 @@ cdef extern from "arl/IDataTypeActivityScope.h" namespace "arl":
         # const cpp_vector[unique_ptr[vsc.ITypeConstraint]] &getConstraints() const
         
         pass
+
+cdef extern from "arl/IDataTypeActivityReplicate.h" namespace "arl":
+    cdef cppclass IDataTypeActivityReplicate(IDataTypeActivityScope):
+        vsc.ITypeExpr *getCount() const
 
 cdef extern from "arl/IDataTypeActivityParallel.h" namespace "arl":
     cdef cppclass IDataTypeActivityParallel(IDataTypeActivityScope):

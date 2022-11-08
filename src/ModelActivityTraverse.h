@@ -35,12 +35,21 @@ public:
 		m_parent_pool = p;
 	}
 
+	virtual bool getProcessed() const override {
+		return m_processed;
+	}
+
+	virtual void setProcessed(bool p) override {
+		m_processed = p;
+	}
+
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
 	IModelFieldAction				*m_target;
 	vsc::IModelConstraintUP			m_with_c;
 	IModelFieldPool					*m_parent_pool;
+	bool							m_processed;
 
 
 };

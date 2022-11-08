@@ -19,6 +19,7 @@ cdef class Context(vsc.Context):
     cpdef DataTypeAction findDataTypeAction(self, name)
     cpdef DataTypeAction mkDataTypeAction(self, name)
     cpdef DataTypeActivityParallel mkDataTypeActivityParallel(self)
+    cpdef DataTypeActivityReplicate mkDataTypeActivityReplicate(self, vsc.TypeExpr count)
     cpdef DataTypeActivitySchedule mkDataTypeActivitySchedule(self)
     cpdef DataTypeActivitySequence mkDataTypeActivitySequence(self)
     cpdef bool addDataTypeAction(self, DataTypeAction)
@@ -74,6 +75,14 @@ cdef class DataTypeActivityScope(DataTypeActivity):
     cpdef addActivity(self, TypeFieldActivity)
     cpdef getActivities(self)
     cdef decl.IDataTypeActivityScope *asScope(self)
+
+cdef class DataTypeActivityReplicate(DataTypeActivityScope):
+    cpdef vsc.TypeExpr getCount(self)
+
+    cdef decl.IDataTypeActivityReplicate *asReplicate(self)
+
+    @staticmethod
+    cdef mk(decl.IDataTypeActivityReplicate *hndl, bool owned=*)
 
 cdef class DataTypeActivityParallel(DataTypeActivityScope):
     cdef decl.IDataTypeActivityParallel *asParallel(self)

@@ -1,4 +1,6 @@
-
+#****************************************************************************
+#* core.pyx
+#****************************************************************************
 import os
 import sys
 from ctypes import CDLL
@@ -134,6 +136,12 @@ cdef class Context(vsc.Context):
     cpdef bool addDataTypeAction(self, DataTypeAction a):
         a._owned = False
         return self.asContext().addDataTypeAction(a.asAction())
+        
+    cpdef DataTypeActivityReplicate mkDataTypeActivityReplicate(self, vsc.TypeExpr count):
+        count._owned = False
+        return DataTypeActivityReplicate.mk(
+            self.asContext().mkDataTypeActivityReplicate(count.asExpr()), 
+            True)
 
     cpdef DataTypeActivityParallel mkDataTypeActivityParallel(self):
         return DataTypeActivityParallel.mk(self.asContext().mkDataTypeActivityParallel(), True)
@@ -382,6 +390,23 @@ cdef class DataTypeActivityScope(DataTypeActivity):
 
     cdef decl.IDataTypeActivityScope *asScope(self):
         return dynamic_cast[decl.IDataTypeActivityScopeP](self._hndl)
+
+cdef class DataTypeActivityReplicate(DataTypeActivityScope):
+
+    cpdef vsc.TypeExpr getCount(self):
+        return vsc.TypeExpr.mk(
+            self.asReplicate().getCount(),
+            False)
+
+    cdef decl.IDataTypeActivityReplicate *asReplicate(self):
+        return dynamic_cast[decl.IDataTypeActivityReplicateP](self._hndl)
+    
+    @staticmethod
+    cdef mk(decl.IDataTypeActivityReplicate *hndl, bool owned=True):
+        ret = DataTypeActivityReplicate()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
 
 cdef class DataTypeActivityParallel(DataTypeActivityScope):
     cdef decl.IDataTypeActivityParallel *asParallel(self):

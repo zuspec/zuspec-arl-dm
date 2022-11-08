@@ -49,6 +49,9 @@ public:
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() override;
 
+	virtual IDataTypeActivityReplicate *mkDataTypeActivityReplicate(
+			vsc::ITypeExpr			*count) override;
+
 	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() override;
 
 	virtual IModelActivityScope *mkModelActivityScope(ModelActivityScopeT t) override;

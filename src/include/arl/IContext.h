@@ -84,6 +84,9 @@ public:
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() = 0;
 
+	virtual IDataTypeActivityReplicate *mkDataTypeActivityReplicate(
+			vsc::ITypeExpr			*count) = 0;
+
 	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() = 0;
 
 	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() = 0;

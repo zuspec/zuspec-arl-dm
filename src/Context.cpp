@@ -8,6 +8,7 @@
 #include "Context.h"
 #include "DataTypeAction.h"
 #include "DataTypeActivityParallel.h"
+#include "DataTypeActivityReplicate.h"
 #include "DataTypeActivitySchedule.h"
 #include "DataTypeActivitySequence.h"
 #include "DataTypeActivityTraverse.h"
@@ -131,6 +132,11 @@ IDataTypeFunctionParamDecl *Context::mkDataTypeFunctionParamDecl(
 
 IDataTypeActivityParallel *Context::mkDataTypeActivityParallel() {
 	return new DataTypeActivityParallel();
+}
+
+IDataTypeActivityReplicate *Context::mkDataTypeActivityReplicate(
+			vsc::ITypeExpr			*count) {
+	return new DataTypeActivityReplicate(this, count);
 }
 
 IDataTypeActivitySchedule *Context::mkDataTypeActivitySchedule() {

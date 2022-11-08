@@ -14,6 +14,7 @@ namespace arl {
 
 enum class ModelActivityScopeT {
 	Parallel,
+	Replicate,
 	Schedule,
 	Sequence
 };

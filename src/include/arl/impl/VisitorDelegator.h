@@ -8,6 +8,7 @@
 #pragma once
 #include "arl/IDataTypeFunction.h"
 #include "arl/IDataTypeResource.h"
+#include "arl/IDataTypeActivityReplicate.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldExecutor.h"
 #include "arl/ITypeFieldPool.h"
@@ -34,6 +35,11 @@ public:
 
 	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) override {
 		delegate(&arl::IVisitor::visitDataTypeActivityParallel,
+				&vsc::IVisitor::visitDataTypeStruct, t);
+	}
+
+	virtual void visitDataTypeActivityReplicate(IDataTypeActivityReplicate *t) override {
+		delegate(&arl::IVisitor::visitDataTypeActivityReplicate,
 				&vsc::IVisitor::visitDataTypeStruct, t);
 	}
 

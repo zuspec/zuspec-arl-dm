@@ -41,6 +41,10 @@ IModelActivity *DataTypeActivityTraverse::mkActivity(
 
 	fprintf(stdout, "target=%p target_a=%p\n", target, target_a);
 
+	if (!target_a) {
+		throw "Error";
+	}
+
 	if (type_t->getWithC()) {
 		with_c = TaskBuildModelConstraint(ctxt_a).build(type_t->getWithC());
 	}

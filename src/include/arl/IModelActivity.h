@@ -20,6 +20,10 @@ public:
 
 	virtual ~IModelActivity() { }
 
+	virtual int32_t getNext() const = 0;
+
+	virtual void setNext(int32_t n) = 0;
+
 	/*
 	virtual void getConstraintsLookahead(
 			std::vector<vsc::IModelConstraint *> &constraints) = 0;

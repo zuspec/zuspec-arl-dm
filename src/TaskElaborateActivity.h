@@ -24,7 +24,11 @@
 
 namespace arl {
 
-
+struct ElabActivity {
+    std::vector<IModelActivityScopeUP>      activity_s;
+    IModelActivityScope                     *root;
+};
+using ElabActivityUP=std::unique_ptr<ElabActivity>;
 
 class TaskElaborateActivity : public VisitorBase {
 public:
@@ -39,13 +43,31 @@ public:
      * @param root_action 
      * @return IModelActivity* 
      */
-    IModelActivityScope *elaborate(
+    ElabActivity *elaborate(
         IModelFieldComponent        *root_comp,
         IDataTypeAction             *root_action);
 
+	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override;
+
+private:
+    enum class StepT {
+
+    };
+
+private:
+
+    void process_scope(IModelActivityScope *s);
+
+    void process_traversal(IModelActivityTraverse *t);
+
 private:
     IContext                        *m_ctxt;
-    IModelActivityScopeUP            m_activity;
+    ElabActivityUP                  m_activity;
+    int32_t                         m_scope_search_depth;
+    int32_t                         m_action_depth;
+    int32_t                         m_action_target_depth;
+    bool                            m_more_work;
+    bool                            m_changed;
 
 };
 

@@ -21,6 +21,7 @@ class IDataTypeFlowObj;
 class IDataTypeFunction;
 class IDataTypeResource;
 class IModelActivityParallel;
+class IModelActivityReplicate;
 class IModelActivitySchedule;
 class IModelActivityScope;
 class IModelActivitySequence;
@@ -75,6 +76,8 @@ public:
 	virtual void visitDataTypeResource(IDataTypeResource *t) = 0;
 
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) = 0;
+
+	virtual void visitModelActivityReplicate(IModelActivityReplicate *a) = 0;
 
 	virtual void visitModelActivitySchedule(IModelActivitySchedule *a) = 0;
 

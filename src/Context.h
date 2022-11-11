@@ -80,6 +80,9 @@ public:
 
 	virtual IModelActivityParallel *mkModelActivityParallel() override;
 
+	virtual IModelActivityReplicate *mkModelActivityReplicate(
+			vsc::IModelExpr			*count) override;
+
 	virtual IModelActivitySchedule *mkModelActivitySchedule() override;
 
 	virtual IModelActivitySequence *mkModelActivitySequence() override;

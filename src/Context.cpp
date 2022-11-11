@@ -18,6 +18,7 @@
 #include "DataTypeFunctionParamDecl.h"
 #include "DataTypeResource.h"
 #include "ModelActivityParallel.h"
+#include "ModelActivityReplicate.h"
 #include "ModelActivitySchedule.h"
 #include "ModelActivityScope.h"
 #include "ModelActivitySequence.h"
@@ -220,6 +221,11 @@ bool Context::addDataTypeFlowObj(IDataTypeFlowObj *t) {
 
 IModelActivityParallel *Context::mkModelActivityParallel() {
 	return new ModelActivityParallel();
+}
+
+IModelActivityReplicate *Context::mkModelActivityReplicate(
+			vsc::IModelExpr			*count) {
+	return new ModelActivityReplicate(this, count);
 }
 
 IModelActivitySchedule *Context::mkModelActivitySchedule() {

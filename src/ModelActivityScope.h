@@ -47,6 +47,24 @@ public:
 
 	virtual void addActivity(IModelActivity *a, bool own) override;
 
+	virtual int32_t getNext() const override {
+		return m_next;
+	}
+
+	virtual void setNext(int32_t n) override {
+		m_next = n;
+	}
+
+	virtual IModelActivity *getActivity(int32_t i) { return m_activities.at(i); }
+
+	virtual const std::vector<int32_t> &getRoots() const {
+		return m_roots;
+	}
+
+	virtual void addRoot(int32_t r) {
+		m_roots.push_back(r);
+	}
+
 	virtual void accept(vsc::IVisitor *v) override;
 
 
@@ -55,6 +73,8 @@ ModelActivityScopeT                         m_type;
 	std::string								m_name;
 	std::vector<IModelActivity *>			m_activities;
 	std::vector<IModelActivityUP>			m_activities_up;
+	int32_t									m_next;
+	std::vector<int32_t>					m_roots;
 
 };
 

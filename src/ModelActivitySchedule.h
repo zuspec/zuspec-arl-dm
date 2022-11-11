@@ -8,11 +8,14 @@
 #pragma once
 #include "arl/IDataTypeActivity.h"
 #include "arl/IModelActivitySchedule.h"
+#include "ModelActivityScope.h"
 #include "ModelField.h"
 
 namespace arl {
 
-class ModelActivitySchedule : public virtual IModelActivitySchedule, public ModelField {
+class ModelActivitySchedule : 
+	public virtual IModelActivitySchedule, 
+	public ModelActivityScope {
 public:
 	ModelActivitySchedule(
 			const std::string		&name,

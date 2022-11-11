@@ -1,5 +1,5 @@
-/*
- * ModelActivityScope.cpp
+/**
+ * ModelActivity.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,34 +16,32 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-#include "arl/IVisitor.h"
-#include "ModelActivityScope.h"
-
+#pragma once
+#include "arl/IModelActivity.h"
 
 namespace arl {
 
 
-ModelActivityScope::ModelActivityScope(ModelActivityScopeT type) : m_type(type) {
-    m_next = -1;
-}
+class ModelActivity : public virtual IModelActivity {
+public:
+    ModelActivity();
 
-ModelActivityScope::~ModelActivityScope() {
+    virtual ~ModelActivity();
 
-}
-
-void ModelActivityScope::addActivity(IModelActivity *a, bool own) {
-    m_activities.push_back(a);
-    if (own) {
-        m_activities_up.push_back(IModelActivityUP(a));
+	virtual int32_t getNext() const override {
+        return m_next;
     }
-}
 
-void ModelActivityScope::accept(vsc::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitModelActivityScope(this);
+	virtual void setNext(int32_t n) override {
+        m_next = n;
     }
-}
+
+private:
+    int32_t             m_next;
+};
 
 }
+
+

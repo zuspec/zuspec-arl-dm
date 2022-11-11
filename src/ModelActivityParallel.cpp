@@ -10,7 +10,8 @@
 
 namespace arl {
 
-ModelActivityParallel::ModelActivityParallel() {
+ModelActivityParallel::ModelActivityParallel() : 
+	ModelActivityScope(ModelActivityScopeT::Parallel) {
 	// TODO Auto-generated constructor stub
 
 }

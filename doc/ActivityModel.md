@@ -70,3 +70,67 @@ L[1].L[1].b;
 Note: perhaps a good ideal to have an anonymous label array? 
 
 Must implement replicate inside-out. 
+
+# Activity Processing End Result
+The result of activity processing is a series of sequence, parallel, and choice blocks containing actions. 
+Processing a child node may result in 
+
+replicate (2) : L[] {
+    a: do A;
+    replicate (2) L[] {
+      b: do B;
+    }
+}
+
+- sequence
+  - do Entry
+    - sequence
+      - replicate
+        - do A
+          - sequence
+            - replicate
+              - do B
+
+- Evaluate replicate going down
+
+- sequence
+  - do Entry 
+    - sequence
+      - replicate (2)
+        - ...
+
+- sequence
+  - do Entry 
+    - sequence
+      - do A //<- evaluation of replicate yields two blocks
+        - sequence
+          - replicate (2)
+            - do B
+      - do A
+        - sequence
+          - replicate (2)
+            - do B
+
+- sequence
+  - do Entry 
+    - sequence
+      - do A 
+        - sequence // <- evaluation of replicate yields two blocks
+          - do B
+          - do B
+      - do A
+        - sequence
+          - do B
+          - do B
+
+- Evaluate connections as we go, respecting schedule constraints
+
+- Evaluate schedule in a second pass
+  - If a schedule block contains schedule elements, recurse first
+  - Schedule elements according to their relationships:
+    - required by an object relationship
+    - 
+
+
+
+

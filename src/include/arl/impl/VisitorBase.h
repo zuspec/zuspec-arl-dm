@@ -19,6 +19,7 @@
 #include "arl/IDataTypeFunction.h"
 #include "arl/IDataTypeResource.h"
 #include "arl/IModelActivityParallel.h"
+#include "arl/IModelActivityReplicate.h"
 #include "arl/IModelActivitySchedule.h"
 #include "arl/IModelActivityScope.h"
 #include "arl/IModelActivitySequence.h"
@@ -109,6 +110,11 @@ public:
 				it!=a->branches().end(); it++) {
 			(*it)->accept(m_this);
 		}
+	}
+
+	virtual void visitModelActivityReplicate(IModelActivityReplicate *a) override {
+		a->getCountExpr()->accept(m_this);
+		visitModelActivityScope(a);
 	}
 
 	virtual void visitModelActivitySchedule(IModelActivitySchedule *a) override {

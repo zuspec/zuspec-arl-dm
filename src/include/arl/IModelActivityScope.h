@@ -36,6 +36,12 @@ public:
 
 	virtual void addActivity(IModelActivity *a, bool own=false)  = 0;
 
+	virtual IModelActivity *getActivity(int32_t i) = 0;
+
+	virtual const std::vector<int32_t> &getRoots() const = 0;
+
+	virtual void addRoot(int32_t r) = 0;
+
 };
 
 }

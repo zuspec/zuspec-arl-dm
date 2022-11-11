@@ -8,13 +8,14 @@
 #pragma once
 #include "arl/IDataTypeActivity.h"
 #include "arl/IModelActivitySequence.h"
+#include "ModelActivityScope.h"
 #include "ModelField.h"
 
 namespace arl {
 
 class ModelActivitySequence : 
 	public virtual IModelActivitySequence, 
-	public virtual ModelField {
+	public virtual ModelActivityScope {
 public:
 	ModelActivitySequence(
 			const std::string		&name,

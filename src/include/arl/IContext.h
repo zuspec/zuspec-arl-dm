@@ -113,6 +113,9 @@ public:
 
 	virtual IModelActivityParallel *mkModelActivityParallel() = 0;
 
+	virtual IModelActivityReplicate *mkModelActivityReplicate(
+			vsc::IModelExpr			*count) = 0;
+
 	virtual IModelActivitySchedule *mkModelActivitySchedule() = 0;
 
 	virtual IModelActivityScope *mkModelActivityScope(ModelActivityScopeT t) = 0;

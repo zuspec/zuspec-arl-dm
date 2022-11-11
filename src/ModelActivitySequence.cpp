@@ -12,7 +12,9 @@ namespace arl {
 
 ModelActivitySequence::ModelActivitySequence(
 		const std::string		&name,
-		IDataTypeActivity		*type) : m_name(name), m_type(type) {
+		IDataTypeActivity		*type) : 
+		ModelActivityScope(ModelActivityScopeT::Sequence),
+		m_name(name), m_type(type) {
 	// TODO Auto-generated constructor stub
 
 }

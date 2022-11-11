@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "arl/IVisitor.h"
 #include "vsc/IDataTypeInt.h"
 #include "ModelActivityReplicate.h"
 
@@ -30,6 +31,7 @@ ModelActivityReplicate::ModelActivityReplicate(
     vsc::IModelExpr     *count) : 
         ModelActivityScope(ModelActivityScopeT::Replicate), m_count_expr(count) {
 
+/*
     vsc::IDataTypeInt *ui16 = ctxt->findDataTypeInt(false, 16);
     if (!ui16) {
         ui16 = ctxt->mkDataTypeInt(false, 16);
@@ -42,10 +44,17 @@ ModelActivityReplicate::ModelActivityReplicate(
 
     m_index_field = ctxt->mkModelFieldRoot(ui16, "__index");
     addField(m_index_field);
+ */
 }
 
 ModelActivityReplicate::~ModelActivityReplicate() {
 
+}
+
+void ModelActivityReplicate::accept(vsc::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitModelActivityReplicate(this);
+    }
 }
 
 }

@@ -15,6 +15,7 @@
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldExecutor.h"
 #include "arl/IModelActivityParallel.h"
+#include "arl/IModelActivityReplicate.h"
 #include "arl/IModelActivitySchedule.h"
 #include "arl/IModelActivitySequence.h"
 #include "arl/IModelActivityTraverse.h"
@@ -80,6 +81,10 @@ public:
 		delegate(&arl::IVisitor::visitModelActivityParallel, a);
 	}
 
+	virtual void visitModelActivityReplicate(IModelActivityReplicate *a) override {
+		delegate(&arl::IVisitor::visitModelActivityReplicate, a);
+	}
+
 	virtual void visitModelActivitySchedule(IModelActivitySchedule *a) override {
 		delegate(&arl::IVisitor::visitModelActivitySchedule, a);
 	}
@@ -91,6 +96,7 @@ public:
 	virtual void visitModelActivitySequence(IModelActivitySequence *a) override {
 		delegate(&arl::IVisitor::visitModelActivitySequence, a);
 	}
+
 
 	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override {
 		delegate(&arl::IVisitor::visitModelActivityTraverse, a);

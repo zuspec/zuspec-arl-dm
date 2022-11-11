@@ -48,6 +48,8 @@ public:
         return m_index_field;
     }
 
+    virtual void accept(vsc::IVisitor *v) override;
+
 private:
     vsc::IModelExprUP                  m_count_expr;
     vsc::IModelField                   *m_count_field;

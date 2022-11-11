@@ -8,10 +8,13 @@
 #pragma once
 #include "arl/IModelActivityTraverse.h"
 #include "arl/IModelFieldAction.h"
+#include "ModelActivity.h"
 
 namespace arl {
 
-class ModelActivityTraverse : public IModelActivityTraverse {
+class ModelActivityTraverse : 
+	public virtual IModelActivityTraverse,
+	public virtual ModelActivity {
 public:
 	ModelActivityTraverse(
 			IModelFieldAction		*target,

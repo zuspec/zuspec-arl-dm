@@ -51,10 +51,31 @@ IModelActivity *DataTypeActivityReplicate::mkActivity(
 		vsc::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
-    return new ModelActivityReplicate(
-        ctxt_a,
+    IModelActivityScope *ret = ctxt_a->mkModelActivityReplicate(
         vsc::TaskBuildModelExpr(ctxt).build(m_count.get())
     );
+
+    ctxt->pushBottomUpScope(ret);
+
+	for (std::vector<vsc::ITypeFieldUP>::const_iterator
+		it=getFields().begin();
+		it!=getFields().end(); it++) {
+		ret->addField(it->get()->getDataType()->mkTypeField(
+			ctxt,
+			it->get()));
+	}
+
+	fprintf(stdout, "mkActivity: %d\n", getActivities().size());
+	for (std::vector<ITypeFieldActivity *>::const_iterator
+		it=getActivities().begin();
+		it!=getActivities().end(); it++) {
+		IModelActivity *field_a = (*it)->mkActivity(ctxt);
+		ret->addActivity(field_a);
+	}
+
+    ctxt->popBottomUpScope();
+
+    return ret;
 }
 
 void DataTypeActivityReplicate::accept(vsc::IVisitor *v) {

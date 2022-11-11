@@ -1,5 +1,5 @@
 /*
- * ModelActivityScope.cpp
+ * ModelActivity.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -18,32 +18,18 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
-#include "ModelActivityScope.h"
+#include "ModelActivity.h"
 
 
 namespace arl {
 
 
-ModelActivityScope::ModelActivityScope(ModelActivityScopeT type) : m_type(type) {
-    m_next = -1;
-}
-
-ModelActivityScope::~ModelActivityScope() {
+ModelActivity::ModelActivity() : m_next(-1) {
 
 }
 
-void ModelActivityScope::addActivity(IModelActivity *a, bool own) {
-    m_activities.push_back(a);
-    if (own) {
-        m_activities_up.push_back(IModelActivityUP(a));
-    }
-}
+ModelActivity::~ModelActivity() {
 
-void ModelActivityScope::accept(vsc::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitModelActivityScope(this);
-    }
 }
 
 }

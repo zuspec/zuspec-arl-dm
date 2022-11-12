@@ -60,7 +60,12 @@ IModelEvalIterator *ModelEvaluatorIncrElab::eval(
 		m_ctxt, m_randstate->next());
 	root_thread->pushComponent(root_comp);
 	ModelEvaluatorIncrElabSequence *root_seq = new ModelEvaluatorIncrElabSequence(root_thread);
-	root_seq->addActivity(new ModelActivityTraverse(m_action.get(), 0), true);
+	root_seq->addActivity(new ModelActivityTraverse(
+		m_action.get(), 
+		0, 
+		false,
+		0, 
+		false), true);
 	root_thread->pushIterator(root_seq);
 
 	

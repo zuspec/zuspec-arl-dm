@@ -21,6 +21,7 @@
 #include "vsc/impl/DebugMacros.h"
 #include "ModelEvaluatorFullElabActivity.h"
 #include "ModelEvaluatorFullElabParallel.h"
+#include "ModelEvaluatorFullElabScope.h"
 #include "ModelEvaluatorFullElabSequence.h"
 
 
@@ -123,6 +124,13 @@ void ModelEvaluatorFullElabActivity::visitModelActivityTraverse(IModelActivityTr
 
     m_type = ModelEvalNodeT::Action;
     m_action = a->getTarget();
+
+    if (a->getActivity()) {
+        m_iterator = new ModelEvaluatorFullElabScope(
+            m_ctxt, 
+            m_randstate->next(),
+            dynamic_cast<IModelActivityScope *>(a->getActivity()));
+    }
 
     DEBUG_LEAVE("visitModelActivityTraverse");
 }

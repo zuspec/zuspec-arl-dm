@@ -594,7 +594,11 @@ cdef class ModelEvalIterator(object):
         return ModelFieldAction.mk(self._hndl.action(), False)
     
     cpdef ModelEvalIterator iterator(self):
-        return ModelEvalIterator.mk(self._hndl.iterator())
+        cdef decl.IModelEvalIterator *it = self._hndl.iterator()
+        if it != NULL:
+            return ModelEvalIterator.mk(self._hndl.iterator())
+        else:
+            return None
 
     @staticmethod
     cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):

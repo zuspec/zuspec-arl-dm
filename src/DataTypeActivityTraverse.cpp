@@ -53,7 +53,10 @@ IModelActivity *DataTypeActivityTraverse::mkActivity(
 
 	IModelActivityTraverse *ret = ctxt_a->ctxt()->mkModelActivityTraverse(
 		target_a,
-		with_c
+		with_c,
+		true,
+		target_a->getActivity(),
+		false
 	);
 
 	return ret;

@@ -35,7 +35,7 @@ public:
     virtual ~DataTypeActivityReplicate();
 
     virtual vsc::ITypeExpr *getCount() const override {
-        return m_count.get();
+        return m_count;
     }
 
 	virtual IModelActivity *mkActivity(
@@ -45,7 +45,7 @@ public:
     virtual void accept(vsc::IVisitor *v) override;
 
 private:
-    vsc::ITypeExprUP                    m_count;
+    vsc::ITypeExpr                    *m_count;
 
 };
 

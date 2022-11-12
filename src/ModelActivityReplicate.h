@@ -41,7 +41,7 @@ public:
     }
 
     virtual vsc::IModelField *getCountField() const override {
-        return m_count_field;
+        return fields().at(0).get();
     }
 
     virtual vsc::IModelField *getIndexField() const override {

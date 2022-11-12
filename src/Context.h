@@ -89,7 +89,10 @@ public:
 
 	virtual IModelActivityTraverse *mkModelActivityTraverse(
 			IModelFieldAction		*target,
-			vsc::IModelConstraint	*with_c) override;
+			vsc::IModelConstraint	*with_c,
+			bool					own_with_c,
+			IModelActivity			*activity,
+			bool					owned) override;
 
 	virtual IModelEvaluator *mkModelEvaluator(
 			ModelEvaluatorKind		kind) override;

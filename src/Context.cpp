@@ -242,8 +242,16 @@ IModelActivitySequence *Context::mkModelActivitySequence() {
 
 IModelActivityTraverse *Context::mkModelActivityTraverse(
 		IModelFieldAction			*target,
-		vsc::IModelConstraint		*with_c) {
-	return new ModelActivityTraverse(target, with_c);
+		vsc::IModelConstraint		*with_c,
+		bool						own_with_c,
+		IModelActivity				*activity,
+		bool						owned) {
+	return new ModelActivityTraverse(
+		target, 
+		with_c,
+		own_with_c,
+		activity,
+		owned);
 }
 
 IModelEvaluator *Context::mkModelEvaluator(

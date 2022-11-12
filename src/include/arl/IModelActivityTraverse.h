@@ -26,6 +26,8 @@ public:
 
 	virtual vsc::IModelConstraint *getWithC() const = 0;
 
+	virtual IModelActivity *getActivity() const = 0;
+
 	/**
 	 * @brief Get the Parent Pool object. This will be non-null
 	 *        when this traversal is inferred. 

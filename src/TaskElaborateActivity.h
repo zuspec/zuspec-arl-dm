@@ -44,6 +44,7 @@ public:
      * @return IModelActivity* 
      */
     ElabActivity *elaborate(
+        vsc::IRandState             *randstate,
         IModelFieldComponent        *root_comp,
         IDataTypeAction             *root_action);
 

@@ -21,6 +21,7 @@
 #include "arl/IContext.h"
 #include "arl/IVisitor.h"
 #include "vsc/impl/TaskBuildModelExpr.h"
+#include "vsc/impl/TaskBuildModelConstraint.h"
 #include "DataTypeActivityReplicate.h"
 #include "ModelActivityReplicate.h"
 
@@ -41,6 +42,17 @@ DataTypeActivityReplicate::DataTypeActivityReplicate(
         vsc::TypeFieldAttr::Rand, 0));
     addField(ctxt->mkTypeFieldPhy("__index", ui16, false,
         vsc::TypeFieldAttr::NoAttr, 0));
+
+    vsc::ITypeExprFieldRef *count_r = ctxt->mkTypeExprFieldRef();
+    count_r->addIdxRef(0);
+    count_r->addActiveScopeRef(-1);
+    addConstraint(ctxt->mkTypeConstraintExpr(
+        ctxt->mkTypeExprBin(
+            count_r,
+            vsc::BinOp::Eq,
+            count
+        )
+    ));
 }
 
 DataTypeActivityReplicate::~DataTypeActivityReplicate() {
@@ -52,7 +64,7 @@ IModelActivity *DataTypeActivityReplicate::mkActivity(
 		ITypeFieldActivity			*type) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     IModelActivityScope *ret = ctxt_a->mkModelActivityReplicate(
-        vsc::TaskBuildModelExpr(ctxt).build(m_count.get())
+        vsc::TaskBuildModelExpr(ctxt).build(m_count)
     );
 
     ctxt->pushBottomUpScope(ret);
@@ -64,6 +76,12 @@ IModelActivity *DataTypeActivityReplicate::mkActivity(
 			ctxt,
 			it->get()));
 	}
+
+    for (std::vector<vsc::ITypeConstraintUP>::const_iterator
+        it=getConstraints().begin();
+        it!=getConstraints().end(); it++) {
+        ret->addConstraint(vsc::TaskBuildModelConstraint<>(ctxt).build(it->get()));
+    }
 
 	fprintf(stdout, "mkActivity: %d\n", getActivities().size());
 	for (std::vector<ITypeFieldActivity *>::const_iterator

@@ -41,13 +41,15 @@ IModelEvalIterator *ModelEvaluatorFullElab::eval(
         const vsc::IRandState           *randstate,
         IModelFieldComponent            *root_comp,
         IDataTypeAction                 *root_action) {
+    vsc::IRandState *randstate_l = randstate->clone();
     ElabActivity *exec_activity = TaskElaborateActivity(m_ctxt).elaborate(
+        randstate_l,
         root_comp,
         root_action);
 
     return new ModelEvaluatorFullElabScope(
         m_ctxt, 
-        randstate->clone(),
+        randstate_l,
         exec_activity->root);
 }
 

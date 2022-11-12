@@ -121,11 +121,11 @@ void ModelEvaluatorFullElabScope::visitModelActivityTraverse(IModelActivityTrave
     m_type = ModelEvalNodeT::Action;
     m_action = a->getTarget();
 
-    if (m_action->isCompound()) {
+    if (a->getActivity()) {
         m_iterator = new ModelEvaluatorFullElabScope(
             m_ctxt,
             m_randstate->next(),
-            m_action->getActivity()
+            dynamic_cast<IModelActivityScope *>(a->getActivity())
         );
     }
 

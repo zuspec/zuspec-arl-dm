@@ -18,7 +18,10 @@ class ModelActivityTraverse :
 public:
 	ModelActivityTraverse(
 			IModelFieldAction		*target,
-			vsc::IModelConstraint	*with_c);
+			vsc::IModelConstraint	*with_c,
+			bool					own_with_c,
+			IModelActivity			*activity,
+			bool					owned);
 
 	virtual ~ModelActivityTraverse();
 
@@ -27,7 +30,11 @@ public:
 	}
 
 	virtual vsc::IModelConstraint *getWithC() const {
-		return m_with_c.get();
+		return m_with_c;
+	}
+
+	virtual IModelActivity *getActivity() const override {
+		return m_activity;
 	}
 
 	virtual IModelFieldPool *getParentPool() const override {
@@ -50,8 +57,11 @@ public:
 
 private:
 	IModelFieldAction				*m_target;
-	vsc::IModelConstraintUP			m_with_c;
+	vsc::IModelConstraint			*m_with_c;
+	vsc::IModelConstraintUP			m_with_c_u;
 	IModelFieldPool					*m_parent_pool;
+	IModelActivity					*m_activity;
+	IModelActivityUP				m_activity_u;
 	bool							m_processed;
 
 

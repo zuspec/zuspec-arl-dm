@@ -124,7 +124,10 @@ public:
 
 	virtual IModelActivityTraverse *mkModelActivityTraverse(
 			IModelFieldAction		*target,
-			vsc::IModelConstraint	*with_c) = 0;
+			vsc::IModelConstraint	*with_c,
+			bool					own_with_c,
+			IModelActivity			*activity,
+			bool					owned) = 0;
 
 	virtual IModelEvaluator *mkModelEvaluator(
 			ModelEvaluatorKind		kind=ModelEvaluatorKind::FullElab) = 0;

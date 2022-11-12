@@ -1,5 +1,5 @@
 /**
- * TaskElaborateActivityExpandReplicate.h
+ * TaskElaborateActivitySelectReplicateSizes.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,36 +19,31 @@
  *     Author: 
  */
 #pragma once
-#include <vector>
 #include "arl/IContext.h"
 #include "arl/impl/VisitorBase.h"
+#include "vsc/impl/DebugMacros.h"
 
 namespace arl {
 
 
 
-class TaskElaborateActivityExpandReplicate : public VisitorBase {
+class TaskElaborateActivitySelectReplicateSizes : public VisitorBase {
 public:
-    TaskElaborateActivityExpandReplicate(IContext *ctxt);
+    TaskElaborateActivitySelectReplicateSizes(IContext *ctxt);
 
-    virtual ~TaskElaborateActivityExpandReplicate();
+    virtual ~TaskElaborateActivitySelectReplicateSizes();
 
-    IModelActivityScope *elab(
+    bool eval(
         vsc::IRandState     *randstate,
-        IModelActivityScope *root);
+        IModelActivity      *root);
 
 	virtual void visitModelActivityReplicate(IModelActivityReplicate *a) override;
 
-	virtual void visitModelActivityScope(IModelActivityScope *a) override;
-
-	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override;
-
 private:
-    static vsc::IDebug                  *m_dbg;
-    IContext                            *m_ctxt;
-    IModelActivityScopeUP               m_result;
-    std::vector<IModelActivityScope *>  m_scope_s;
-
+    static vsc::IDebug                          *m_dbg;
+    IContext                                    *m_ctxt;
+    std::vector<vsc::IModelField *>             m_count_fields;
+    std::vector<vsc::IModelConstraint *>        m_constraints;
 };
 
 }

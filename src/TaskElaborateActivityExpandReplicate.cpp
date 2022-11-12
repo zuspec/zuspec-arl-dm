@@ -21,6 +21,7 @@
 #include "vsc/impl/DebugMacros.h"
 #include "arl/impl/CopyVisitor.h"
 #include "TaskElaborateActivityExpandReplicate.h"
+#include "TaskElaborateActivitySelectReplicateSizes.h"
 
 
 namespace arl {
@@ -37,7 +38,8 @@ TaskElaborateActivityExpandReplicate::~TaskElaborateActivityExpandReplicate() {
 }
 
 IModelActivityScope *TaskElaborateActivityExpandReplicate::elab(
-    IModelActivityScope *root) {
+    vsc::IRandState         *randstate,
+    IModelActivityScope     *root) {
     DEBUG_ENTER("elab");
     m_result = IModelActivityScopeUP(
         m_ctxt->mkModelActivityScope(ModelActivityScopeT::Sequence));
@@ -69,10 +71,25 @@ void TaskElaborateActivityExpandReplicate::visitModelActivityTraverse(
     IModelActivityTraverse *a) {
     DEBUG_ENTER("visitModelActivityTraverse");
     // Just gets added 
-    m_scope_s.back()->addActivity(a, false);
 
     if (a->getTarget()->isCompound()) {
+        // We need to clone a compound activity, since we will be
+        // changing the contained compound activity
+
+        IModelActivityScope *scope = m_ctxt->mkModelActivityScope(
+            a->getTarget()->getActivity()->getType());
+        IModelActivityTraverse *traverse = m_ctxt->mkModelActivityTraverse(
+            a->getTarget(),
+            a->getWithC(),
+            false,
+            scope,
+            true);
+        m_scope_s.back()->addActivity(traverse, true);
+        m_scope_s.push_back(scope);
         a->getTarget()->getActivity()->accept(m_this);
+        m_scope_s.pop_back();
+    } else {
+        m_scope_s.back()->addActivity(a, false);
     }
     DEBUG_LEAVE("visitModelActivityTraverse");
 }
@@ -91,6 +108,8 @@ void TaskElaborateActivityExpandReplicate::visitModelActivityReplicate(
     // }
     // m_scope_s.pop_back();
     CopyVisitor cv(m_ctxt);
+
+    DEBUG("Replicate size: %lld\n", a->getCountField()->val()->val_u());
 
     // Copy any local fields, skipping __count and __index
     for (uint32_t i=2; i<a->fields().size(); i++) {

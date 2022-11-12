@@ -37,6 +37,7 @@ TaskElaborateActivity::~TaskElaborateActivity() {
 }
 
 ElabActivity *TaskElaborateActivity::elaborate(
+    vsc::IRandState                 *randstate,
     IModelFieldComponent            *root_comp,
     IDataTypeAction                 *root_action) {
     bool ret = true;
@@ -49,7 +50,12 @@ ElabActivity *TaskElaborateActivity::elaborate(
     );
 
     IModelActivityScope *seq = m_ctxt->mkModelActivityScope(ModelActivityScopeT::Sequence);
-    seq->addActivity(m_ctxt->mkModelActivityTraverse(root_action_f, 0), true);
+    seq->addActivity(m_ctxt->mkModelActivityTraverse(
+        root_action_f, 
+        0,
+        false,
+        root_action_f->getActivity(),
+        false), true);
 
     // The activity owns the root action
     seq->addField(root_action_f);
@@ -60,6 +66,7 @@ ElabActivity *TaskElaborateActivity::elaborate(
     // Gen2: expand all replicate scopes
     m_activity->activity_s.push_back(IModelActivityScopeUP(
         TaskElaborateActivityExpandReplicate(m_ctxt).elab(
+            randstate,
             m_activity->activity_s.back().get()
         )));
 

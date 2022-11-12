@@ -12,8 +12,12 @@ namespace arl {
 
 ModelActivityTraverse::ModelActivityTraverse(
 		IModelFieldAction		*target,
-		vsc::IModelConstraint	*with_c) : 
-		m_target(target), m_with_c(with_c), m_parent_pool(0),
+		vsc::IModelConstraint	*with_c,
+		bool					own_with_c,
+		IModelActivity			*activity,
+		bool					owned) : 
+		m_target(target), m_with_c(with_c), m_with_c_u(own_with_c?with_c:0),
+		m_parent_pool(0), m_activity(activity), m_activity_u(owned?activity:0),
 		m_processed(false) {
 
 }

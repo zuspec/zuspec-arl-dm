@@ -113,9 +113,18 @@ public:
 
         DEBUG("target=%p target_c=%p", 
             a->getTarget(), get_copyT<IModelFieldAction>(a->getTarget()));
+
+        IModelActivity *activity = 0;
+        if (a->getActivity()) {
+            activity = copyT<IModelActivity>(a->getActivity());
+        }
+
         IModelActivityTraverse *ac = m_ctxt->mkModelActivityTraverse(
             get_copyT<IModelFieldAction>(a->getTarget()),
-            with_c
+            with_c,
+            true,
+            activity,
+            true
         );
 
         ret(ac);

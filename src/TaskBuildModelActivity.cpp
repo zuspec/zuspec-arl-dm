@@ -87,7 +87,10 @@ void TaskBuildModelActivity::visitDataTypeActivityTraverse(IDataTypeActivityTrav
 	DEBUG("target: %s", target->name().c_str());
 	ModelActivityTraverse *traverse = new ModelActivityTraverse(
 			dynamic_cast<IModelFieldAction *>(target),
-			with_c);
+			with_c,
+			false,
+			0,
+			false);
 
 	IModelActivityScope *pscope = m_ctxt->getBottomUpScopeT<IModelActivityScope>();
 	pscope->addActivity(traverse, true);

@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include <unordered_set>
 #include "arl/IContext.h"
 #include "arl/impl/VisitorBase.h"
 #include "vsc/impl/DebugMacros.h"
@@ -39,10 +40,15 @@ public:
 
 	virtual void visitModelActivityReplicate(IModelActivityReplicate *a) override;
 
+	virtual void visitModelActivityScope(IModelActivityScope *a) override;
+
+	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override;
+
 private:
     static vsc::IDebug                          *m_dbg;
     IContext                                    *m_ctxt;
     std::vector<vsc::IModelField *>             m_count_fields;
+    std::unordered_set<vsc::IModelConstraint *> m_constraint_s;
     std::vector<vsc::IModelConstraint *>        m_constraints;
 };
 

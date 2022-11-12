@@ -53,6 +53,8 @@ DataTypeActivityReplicate::DataTypeActivityReplicate(
             count
         )
     ));
+
+    fprintf(stdout, "EQ=%d\n", vsc::BinOp::Eq);
 }
 
 DataTypeActivityReplicate::~DataTypeActivityReplicate() {

@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "vsc/impl/PrettyPrinter.h"
 #include "TaskElaborateActivitySelectReplicateSizes.h"
 
 
@@ -44,6 +45,8 @@ bool TaskElaborateActivitySelectReplicateSizes::eval(
     // consistent result
     vsc::ICompoundSolverUP solver(m_ctxt->mkCompoundSolver());
 
+    DEBUG("Fields: %d ; Constraints: %d", m_count_fields.size(), m_constraints.size());
+
     bool ret = solver->solve(
         randstate,
         m_count_fields,
@@ -59,11 +62,56 @@ bool TaskElaborateActivitySelectReplicateSizes::eval(
 void TaskElaborateActivitySelectReplicateSizes::visitModelActivityReplicate(
     IModelActivityReplicate *a) {
     m_count_fields.push_back(a->getCountField());
+    DEBUG_ENTER("visitModelActivityReplicate");
     for (std::vector<vsc::IModelConstraintUP>::const_iterator
         it=a->constraints().begin();
         it!=a->constraints().end(); it++) {
-        m_constraints.push_back(it->get());
+        if (m_constraint_s.insert(it->get()).second) {
+            DEBUG("Add constraint");
+            m_constraints.push_back(it->get());
+        }
     }
+    DEBUG_LEAVE("visitModelActivityReplicate");
+}
+
+void TaskElaborateActivitySelectReplicateSizes::visitModelActivityScope(
+    IModelActivityScope *a) {
+    DEBUG_ENTER("visitModelActivityScope");
+    for (std::vector<vsc::IModelConstraintUP>::const_iterator
+        it=a->constraints().begin();
+        it!=a->constraints().end(); it++) {
+        if (m_constraint_s.insert(it->get()).second) {
+            DEBUG("Add constraint");
+            m_constraints.push_back(it->get());
+        }
+    }
+
+    for (std::vector<IModelActivity *>::const_iterator
+        it=a->activities().begin();
+        it!=a->activities().end(); it++) {
+        (*it)->accept(m_this);
+    }
+    DEBUG_LEAVE("visitModelActivityScope");
+}
+
+void TaskElaborateActivitySelectReplicateSizes::visitModelActivityTraverse(
+    IModelActivityTraverse *a) {
+    DEBUG_ENTER("visitModelActivityTraverse");
+
+    for (std::vector<vsc::IModelConstraintUP>::const_iterator
+        it=a->getTarget()->constraints().begin();
+        it!=a->getTarget()->constraints().end(); it++) {
+        if (m_constraint_s.insert(it->get()).second) {
+            DEBUG("Add constraint:\n%s", vsc::PrettyPrinter().print(it->get()));
+            m_constraints.push_back(it->get());
+        }
+    }
+
+    if (a->getActivity()) {
+        a->getActivity()->accept(m_this);
+    }
+
+    DEBUG_LEAVE("visitModelActivityTraverse");
 }
 
 vsc::IDebug *TaskElaborateActivitySelectReplicateSizes::m_dbg = 0;

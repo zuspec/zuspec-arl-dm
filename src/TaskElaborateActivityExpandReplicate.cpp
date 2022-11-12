@@ -41,6 +41,15 @@ IModelActivityScope *TaskElaborateActivityExpandReplicate::elab(
     vsc::IRandState         *randstate,
     IModelActivityScope     *root) {
     DEBUG_ENTER("elab");
+
+    // Before expanding, take a pass through the tree to select 
+    // replicate sizes
+    bool ret = TaskElaborateActivitySelectReplicateSizes(m_ctxt).eval(
+        randstate,
+        root);
+
+    DEBUG("Result of ReplicateSizes: %d", ret);
+
     m_result = IModelActivityScopeUP(
         m_ctxt->mkModelActivityScope(ModelActivityScopeT::Sequence));
     m_scope_s.push_back(m_result.get());
@@ -117,12 +126,10 @@ void TaskElaborateActivityExpandReplicate::visitModelActivityReplicate(
             cv.copyT<vsc::IModelField>(a->fields().at(i).get()));
     }
 
-    // TODO: need to replace count/index with values
+    // TODO: need to propagate the replicate constraint such that 
+    // it is respected during re-randomization
 
-    // TODO: establish the replicate range
-    int32_t count = 2;
-
-    for (int32_t i=0; i<count; i++) {
+    for (int32_t i=0; i<a->getCountField()->val()->val_u(); i++) {
 
         // Sub-elements must be replicated N times and added to the
         // containing scope

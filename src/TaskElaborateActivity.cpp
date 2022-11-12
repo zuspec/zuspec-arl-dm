@@ -19,6 +19,7 @@
  *     Author:
  */
 #include "arl/impl/ModelBuildContext.h"
+#include "vsc/impl/TaskSetUsedRand.h"
 #include "TaskBuildActivitySolveModel.h"
 #include "TaskBuildActivityTraverseData.h"
 #include "TaskElaborateActivity.h"
@@ -48,6 +49,9 @@ ElabActivity *TaskElaborateActivity::elaborate(
         root_action->name(),
         false
     );
+
+    // Mark all declared-random fields as used-random
+    vsc::TaskSetUsedRand().apply(root_action_f, true);
 
     IModelActivityScope *seq = m_ctxt->mkModelActivityScope(ModelActivityScopeT::Sequence);
     seq->addActivity(m_ctxt->mkModelActivityTraverse(

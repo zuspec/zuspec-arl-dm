@@ -21,6 +21,9 @@ public:
 
 	virtual bool isLock() const override { return m_is_lock; }
 
+	virtual vsc::IModelField *mkModelField(
+		vsc::IModelBuildContext 			*ctxt) override;
+
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:

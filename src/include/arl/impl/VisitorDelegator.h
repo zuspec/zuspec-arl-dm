@@ -13,7 +13,9 @@
 #include "arl/ITypeFieldExecutor.h"
 #include "arl/ITypeFieldPool.h"
 #include "arl/IModelFieldAction.h"
+#include "arl/IModelFieldClaim.h"
 #include "arl/IModelFieldExecutor.h"
+#include "arl/IModelFieldInOut.h"
 #include "arl/IModelActivityParallel.h"
 #include "arl/IModelActivityReplicate.h"
 #include "arl/IModelActivitySchedule.h"
@@ -32,6 +34,10 @@ public:
 	virtual void visitDataTypeAction(IDataTypeAction *i) override {
 		delegate(&arl::IVisitor::visitDataTypeAction,
 				&vsc::IVisitor::visitDataTypeStruct, i);
+	}
+
+	virtual void visitDataTypeActivityBind(IDataTypeActivityBind *t) override {
+		delegate(&arl::IVisitor::visitDataTypeActivityBind, t);
 	}
 
 	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) override {
@@ -77,6 +83,10 @@ public:
 				&vsc::IVisitor::visitDataTypeStruct, t);
 	}
 
+	virtual void visitModelActivityBind(IModelActivityBind *a) override {
+		delegate(&arl::IVisitor::visitModelActivityBind, a);
+	}
+
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) override {
 		delegate(&arl::IVisitor::visitModelActivityParallel, a);
 	}
@@ -107,6 +117,11 @@ public:
 				&vsc::IVisitor::visitModelField, f);
 	}
 
+	virtual void visitModelFieldClaim(IModelFieldClaim *f) override { 
+		delegate(&arl::IVisitor::visitModelFieldClaim,
+				&vsc::IVisitor::visitModelField, f);
+	}
+
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
 		delegate(&arl::IVisitor::visitModelFieldComponent,
 				&vsc::IVisitor::visitModelField, f);
@@ -119,6 +134,11 @@ public:
 
 	virtual void visitModelFieldExecutorClaim(IModelFieldExecutorClaim *f) override {
 		delegate(&arl::IVisitor::visitModelFieldExecutorClaim,
+				&vsc::IVisitor::visitModelFieldRef, f);
+	}
+
+	virtual void visitModelFieldInOut(IModelFieldInOut *f) override {
+		delegate(&arl::IVisitor::visitModelFieldInOut,
 				&vsc::IVisitor::visitModelFieldRef, f);
 	}
 

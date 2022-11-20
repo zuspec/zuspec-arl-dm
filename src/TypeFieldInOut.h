@@ -9,7 +9,13 @@
 #include "arl/ITypeFieldInOut.h"
 #include "TypeField.h"
 
+namespace vsc {
+	class IModelField;
+	class IModelBuildContext;
+}
+
 namespace arl {
+
 
 class TypeFieldInOut : public virtual ITypeFieldInOut, public TypeField {
 public:
@@ -21,6 +27,9 @@ public:
 	virtual ~TypeFieldInOut();
 
 	virtual bool isInput() const override { return m_is_input; }
+
+	virtual vsc::IModelField *mkModelField(
+		vsc::IModelBuildContext 			*ctxt) override;
 
 	virtual void accept(vsc::IVisitor *v) override;
 

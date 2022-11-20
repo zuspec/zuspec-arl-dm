@@ -4,7 +4,7 @@
  *  Created on: May 13, 2022
  *      Author: mballance
  */
-
+#include "arl/IContext.h"
 #include "arl/IVisitor.h"
 #include "TypeFieldClaim.h"
 
@@ -21,6 +21,11 @@ TypeFieldClaim::TypeFieldClaim(
 
 TypeFieldClaim::~TypeFieldClaim() {
 	// TODO Auto-generated destructor stub
+}
+
+vsc::IModelField *TypeFieldClaim::mkModelField(
+		vsc::IModelBuildContext 			*ctxt) {
+	return ctxt->ctxt()->mkModelFieldRefType(this);
 }
 
 void TypeFieldClaim::accept(vsc::IVisitor *v) {

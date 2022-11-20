@@ -11,6 +11,7 @@
 namespace arl {
 
 class IDataTypeAction;
+class IDataTypeActivityBind;
 class IDataTypeActivityParallel;
 class IDataTypeActivityReplicate;
 class IDataTypeActivitySchedule;
@@ -20,6 +21,7 @@ class IDataTypeComponent;
 class IDataTypeFlowObj;
 class IDataTypeFunction;
 class IDataTypeResource;
+class IModelActivityBind;
 class IModelActivityParallel;
 class IModelActivityReplicate;
 class IModelActivitySchedule;
@@ -30,6 +32,8 @@ class IModelFieldAction;
 class IModelFieldComponent;
 class IModelFieldExecutor;
 class IModelFieldExecutorClaim;
+class IModelFieldClaim;
+class IModelFieldInOut;
 class IModelFieldPool;
 class ITypeFieldActivity;
 class ITypeFieldClaim;
@@ -57,6 +61,8 @@ public:
 
 	virtual void visitDataTypeAction(IDataTypeAction *t) = 0;
 
+	virtual void visitDataTypeActivityBind(IDataTypeActivityBind *t) = 0;
+
 	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) = 0;
 
 	virtual void visitDataTypeActivityReplicate(IDataTypeActivityReplicate *t) = 0;
@@ -75,6 +81,8 @@ public:
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) = 0;
 
+	virtual void visitModelActivityBind(IModelActivityBind *a) = 0;
+
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) = 0;
 
 	virtual void visitModelActivityReplicate(IModelActivityReplicate *a) = 0;
@@ -89,11 +97,15 @@ public:
 
 	virtual void visitModelFieldAction(IModelFieldAction *f) = 0;
 
+	virtual void visitModelFieldClaim(IModelFieldClaim *f) = 0;
+
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) = 0;
 
 	virtual void visitModelFieldExecutor(IModelFieldExecutor *f) = 0;
 
 	virtual void visitModelFieldExecutorClaim(IModelFieldExecutorClaim *f) = 0;
+
+	virtual void visitModelFieldInOut(IModelFieldInOut *f) = 0;
 
 	virtual void visitModelFieldPool(IModelFieldPool *f) = 0;
 

@@ -4,8 +4,10 @@
  *  Created on: May 13, 2022
  *      Author: mballance
  */
-
+#include "arl/IContext.h"
 #include "arl/IVisitor.h"
+#include "vsc/IModelBuildContext.h"
+#include "ModelFieldInOut.h"
 #include "TypeFieldInOut.h"
 
 namespace arl {
@@ -21,6 +23,11 @@ TypeFieldInOut::TypeFieldInOut(
 
 TypeFieldInOut::~TypeFieldInOut() {
 	// TODO Auto-generated destructor stub
+}
+
+vsc::IModelField *TypeFieldInOut::mkModelField(
+		vsc::IModelBuildContext 			*ctxt) {
+	return ctxt->ctxt()->mkModelFieldRefType(this);
 }
 
 void TypeFieldInOut::accept(vsc::IVisitor *v) {

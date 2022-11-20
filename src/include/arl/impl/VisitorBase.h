@@ -9,6 +9,7 @@
 #include "vsc/impl/VisitorBase.h"
 
 #include "arl/IDataTypeAction.h"
+#include "arl/IDataTypeActivityBind.h"
 #include "arl/IDataTypeActivityParallel.h"
 #include "arl/IDataTypeActivityReplicate.h"
 #include "arl/IDataTypeActivitySchedule.h"
@@ -18,6 +19,7 @@
 #include "arl/IDataTypeFlowObj.h"
 #include "arl/IDataTypeFunction.h"
 #include "arl/IDataTypeResource.h"
+#include "arl/IModelActivityBind.h"
 #include "arl/IModelActivityParallel.h"
 #include "arl/IModelActivityReplicate.h"
 #include "arl/IModelActivitySchedule.h"
@@ -25,9 +27,11 @@
 #include "arl/IModelActivitySequence.h"
 #include "arl/IModelActivityTraverse.h"
 #include "arl/IModelFieldAction.h"
+#include "arl/IModelFieldClaim.h"
 #include "arl/IModelFieldComponent.h"
 #include "arl/IModelFieldExecutor.h"
 #include "arl/IModelFieldExecutorClaim.h"
+#include "arl/IModelFieldInOut.h"
 #include "arl/IModelFieldPool.h"
 #include "arl/IVisitor.h"
 #include "arl/ITypeFieldActivity.h"
@@ -69,6 +73,14 @@ public:
 		}
 	}
 
+	virtual void visitDataTypeActivityBind(IDataTypeActivityBind *t) override {
+		for (std::vector<vsc::ITypeExprFieldRefUP>::const_iterator
+			it=t->getTargets().begin();
+			it!=t->getTargets().end(); it++) {
+			(*it)->accept(m_this);
+		}
+	}
+
 	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) override {
 		vsc::VisitorBase::visitDataTypeStruct(t);
 	}
@@ -102,6 +114,14 @@ public:
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {
 		visitDataTypeFlowObj(t);
+	}
+
+	virtual void visitModelActivityBind(IModelActivityBind *a) override {
+		for (std::vector<vsc::IModelExprUP>::const_iterator
+			it=a->getTargets().begin();
+			it!=a->getTargets().end(); it++) {
+			(*it)->accept(m_this);
+		}
 	}
 
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) override {
@@ -155,6 +175,8 @@ public:
 		}
 	}
 
+	virtual void visitModelFieldClaim(IModelFieldClaim *f) override { }
+
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
 		vsc::VisitorBase::visitModelField(f);
 	}
@@ -166,6 +188,8 @@ public:
 	virtual void visitModelFieldExecutorClaim(IModelFieldExecutorClaim *f) override {
 		vsc::VisitorBase::visitModelFieldRef(f);
 	}
+
+	virtual void visitModelFieldInOut(IModelFieldInOut *f) override { }
 
 	virtual void visitModelFieldPool(IModelFieldPool *f) override {
 		vsc::VisitorBase::visitModelField(f);

@@ -33,10 +33,20 @@ public:
 	virtual void accept(vsc::IVisitor *v) override;
 
 private:
+	using CompTCompIdM=std::unordered_map<IDataTypeComponent *, std::vector<int32_t>>;
 	using CompTCompInstM=std::unordered_map<IDataTypeComponent *,std::vector<vsc::IModelField *>>;
+	using RefTPoolIdM=std::unordered_map<ITypeFieldInOut *,int32_t>;
+
 
 protected:
 	IContext								*m_ctxt;
+	int32_t									m_id;
+
+	// Map from the field-type handle of an action declared in
+	// this component type to the global pool-id that it is
+	// associated with.
+	RefTPoolIdM								m_ref_pool_id_m;
+
 	ComponentMap							m_comp_map;
 
 };

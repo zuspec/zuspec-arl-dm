@@ -223,3 +223,76 @@ Have:
 Ideally, we would incrementally change the solve data during
 inferencing instead of rebuilding from scratch
 
+
+# Computing Action Component
+
+The set of component contexts available to an action is determined by its
+type and where it is launched. Specifically, what context component its
+parent is associated with. There are two scenarios to account for:
+- Action is explicitly started by another (the parent) action
+- Action is inferred by a (the parent) pool
+
+## Explicit Launch
+In this case, the parent action has a component type Claunch_t and has
+a selector variable (Claunch_id_sel) that selects one of the component
+context instances (Claunch_inst_l) available to it. The target action
+has a component type Ctarget_t and has a selector variable 
+(Ctarget_id_sel) that selects one of the component context instances
+(Ctarget_inst_l) available to it. A constant mapping exists between 
+a component instance of a given type and the sub-instances within
+it of a given type. 
+
+Note: Explicitly-launched actions always exist in a narrowing scope.
+An action may only start actions on its component context or a 
+sub-context. Makes sense to try to optimize selection based on this
+knowledge.
+
+foreach Claunch_inst in Claunch_inst_l:
+  (Claunch_id_sel == CLaunch_inst) -> Ctarget_id_sel in CLaunch_inst.component_contexts[Ctarget_t]
+
+## Inferred Action Launch
+The parent component context of an inferred action is the component context
+of the pool to which it outputs. 
+
+# Representing Pools
+For each flow-object type, there are a set of pools in the component tree.
+Each object instance is associated with one of these pools over the course
+of its lifetime. Each pool instance is given an identifier that is unique
+across pools of the same type. 
+
+# Representing Static Bind Information
+Each flow-object reference on an action is associated with, at most, one
+pool for each component context that the action may be associated with.
+This mapping info is per-action and per-ref. 
+
+(CTarget_inst == X) -> (Pool_id)
+
+# Representing Dynamic Flow-Object Binds
+There are several relationships that must hold in order for two or more
+actions to be connected by a flow object:
+- The relevant refs must agree on the pool in which the object lives
+- The relevant refs must agree with respect to constraints
+
+Each flow object has a *pool_id* attribute that is used to ensure 
+ref agreement on pool. All actions add constraints to relate the
+component context and the associated per-type pool. These constraints
+reference the selected object via the ref, such that these equality
+constraints will be expanded.
+
+Each action may impose constraints on the object via the ref field. 
+These constraints will also be expanded as part of selector evaluation.
+
+
+# Representing the Component Tree
+
+Must be able to answer, at each component level, what sub-components
+of a given type exists inside. This information should be stored in
+terms of global indices into the array of same-type component instances.
+
+Each component instance has a per-type id corresponding to its location
+in the global per-type instance list.
+
+Each component instance has a map of component_t -> id_list capturing
+the valid contexts contained inside. For self type, the list is always
+a single self-ref.
+

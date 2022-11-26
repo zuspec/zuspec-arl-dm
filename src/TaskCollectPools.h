@@ -1,5 +1,5 @@
-/*
- * ModelFieldComponentType.cpp
+/**
+ * TaskCollectPools.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,18 +16,33 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-#include "ModelFieldComponentType.h"
-
+#pragma once
+#include <stdint.h>
+#include <functional>
+#include "arl/impl/VisitorBase.h"
 
 namespace arl {
-ModelFieldComponentType::ModelFieldComponentType(
-    vsc::ITypeField         *type) : ModelFieldComponent(type), m_type(type) {
+
+class TaskCollectPools : public VisitorBase {
+public:
+    TaskCollectPools(const std::function<void (IModelFieldPool *)> &find_f);
+
+    virtual ~TaskCollectPools();
+
+    void collect(IModelFieldComponent *comp);
+
+	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
+
+	virtual void visitModelFieldPool(IModelFieldPool *f) override;
+
+private:
+    std::function<void (IModelFieldPool *)>     m_find_f;
+    int32_t                                     m_depth;
+
+};
+
 }
 
-ModelFieldComponentType::~ModelFieldComponentType() {
 
-}
-
-}

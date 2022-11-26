@@ -175,12 +175,19 @@ cdef class ModelFieldAction(vsc.ModelField):
     
 cdef class ModelFieldComponent(vsc.ModelField):
 
-    cpdef void initCompTree(self)
-
     cdef decl.IModelFieldComponent *asComponent(self)
     
     @staticmethod
     cdef ModelFieldComponent mk(decl.IModelFieldComponent *, bool owned=*)
+
+cdef class ModelFieldComponentRoot(ModelFieldComponent):
+
+    cpdef void initCompTree(self)
+
+    cdef decl.IModelFieldComponentRoot *asComponentRoot(self)
+    
+    @staticmethod
+    cdef ModelFieldComponentRoot mk(decl.IModelFieldComponentRoot *, bool owned=*)
 
 cdef class ModelFieldPool(vsc.ModelField):
 
@@ -247,6 +254,7 @@ cdef class VisitorBase(vsc.VisitorBase):
 
     cpdef visitModelFieldComponent(self, ModelFieldComponent c)
 
+    cpdef visitModelFieldComponentRoot(self, ModelFieldComponentRoot c)
 
     cpdef visitModelFieldPool(self, ModelFieldPool f)
 

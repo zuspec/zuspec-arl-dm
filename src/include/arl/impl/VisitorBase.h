@@ -29,6 +29,7 @@
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldClaim.h"
 #include "arl/IModelFieldComponent.h"
+#include "arl/IModelFieldComponentRoot.h"
 #include "arl/IModelFieldExecutor.h"
 #include "arl/IModelFieldExecutorClaim.h"
 #include "arl/IModelFieldInOut.h"
@@ -179,6 +180,10 @@ public:
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
 		vsc::VisitorBase::visitModelField(f);
+	}
+
+	virtual void visitModelFieldComponentRoot(IModelFieldComponentRoot *f) override {
+		visitModelFieldComponent(f);
 	}
 
 	virtual void visitModelFieldExecutor(IModelFieldExecutor *f) override {

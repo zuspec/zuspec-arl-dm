@@ -29,7 +29,6 @@ class ModelFieldComponentType :
     public virtual ModelField {
 public:
     ModelFieldComponentType(
-        IContext                *ctxt,
         vsc::ITypeField         *type
     );
 

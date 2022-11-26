@@ -95,12 +95,14 @@ void TaskBuildComponentMap::visitModelFieldComponent(IModelFieldComponent *f) {
 	m_component_s.push_back(std::vector<IModelFieldComponent *>());
 	VisitorBase::visitModelFieldComponent(f);
 
+#ifdef UNDEFINED
 	// Incorporate map information from sub-components
 	for (std::vector<IModelFieldComponent *>::const_iterator
 		it=m_component_s.back().begin();
 		it!=m_component_s.back().end(); it++) {
 		f->getCompMap()->addSubComponentMap((*it)->getCompMap());
 	}
+#endif
 
 	m_component_s.pop_back();
 	m_type_pool_map_s.pop_back();
@@ -121,6 +123,7 @@ void TaskBuildComponentMap::visitTypeFieldClaim(ITypeFieldClaim *f) {
 	TypePoolMapT::const_iterator type_it;
 
 
+#ifdef UNDEFINED
 	// First, check direct binds
 	if ((field_it=bind_f.m_field_m.find(f)) != bind_f.m_field_m.end()) {
 		DEBUG("Have a field-specific mapping");
@@ -131,6 +134,7 @@ void TaskBuildComponentMap::visitTypeFieldClaim(ITypeFieldClaim *f) {
 	} else {
 		DEBUG("ERROR: no mapping");
 	}
+#endif
 
 	DEBUG_LEAVE("visitTypeFieldClaim %s", f->name().c_str());
 }
@@ -141,7 +145,7 @@ void TaskBuildComponentMap::visitTypeFieldInOut(ITypeFieldInOut *f) {
 	FieldPoolMapT::const_iterator field_it;
 	TypePoolMapT::const_iterator type_it;
 
-
+#ifdef UNDEFINED
 	// First, check direct binds
 	if ((field_it=bind_f.m_field_m.find(f)) != bind_f.m_field_m.end()) {
 		DEBUG("Have a field-specific mapping");
@@ -152,6 +156,7 @@ void TaskBuildComponentMap::visitTypeFieldInOut(ITypeFieldInOut *f) {
 	} else {
 		DEBUG("ERROR: no mapping");
 	}
+#endif
 
 	DEBUG_LEAVE("visitTypeFieldInOut %s", f->name().c_str());
 }

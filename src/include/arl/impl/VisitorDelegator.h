@@ -14,6 +14,8 @@
 #include "arl/ITypeFieldPool.h"
 #include "arl/IModelFieldAction.h"
 #include "arl/IModelFieldClaim.h"
+#include "arl/IModelFieldComponent.h"
+#include "arl/IModelFieldComponentRoot.h"
 #include "arl/IModelFieldExecutor.h"
 #include "arl/IModelFieldInOut.h"
 #include "arl/IModelActivityParallel.h"
@@ -124,6 +126,11 @@ public:
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
 		delegate(&arl::IVisitor::visitModelFieldComponent,
+				&vsc::IVisitor::visitModelField, f);
+	}
+
+	virtual void visitModelFieldComponentRoot(IModelFieldComponentRoot *f) override {
+		delegate(&arl::IVisitor::visitModelFieldComponentRoot,
 				&vsc::IVisitor::visitModelField, f);
 	}
 

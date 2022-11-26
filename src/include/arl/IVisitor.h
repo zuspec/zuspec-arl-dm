@@ -30,6 +30,7 @@ class IModelActivitySequence;
 class IModelActivityTraverse;
 class IModelFieldAction;
 class IModelFieldComponent;
+class IModelFieldComponentRoot;
 class IModelFieldExecutor;
 class IModelFieldExecutorClaim;
 class IModelFieldClaim;
@@ -100,6 +101,8 @@ public:
 	virtual void visitModelFieldClaim(IModelFieldClaim *f) = 0;
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) = 0;
+
+	virtual void visitModelFieldComponentRoot(IModelFieldComponentRoot *f) = 0;
 
 	virtual void visitModelFieldExecutor(IModelFieldExecutor *f) = 0;
 

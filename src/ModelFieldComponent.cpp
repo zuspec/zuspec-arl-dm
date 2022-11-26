@@ -7,23 +7,28 @@
 
 #include "arl/IVisitor.h"
 #include "ModelFieldComponent.h"
+#include "ModelFieldComponentRoot.h"
 #include "TaskBuildComponentMap.h"
 #include "TaskPopulateResourcePools.h"
 
 namespace arl {
 
-ModelFieldComponent::ModelFieldComponent(IContext *ctxt) : m_ctxt(ctxt) {
-//	m_comp_map.init(this);
+ModelFieldComponent::ModelFieldComponent(
+	const std::string		&name,
+	IDataTypeComponent		*type) : m_name(name), m_dt(type), m_type(0) {
+	m_id = -1;
+}
+
+ModelFieldComponent::ModelFieldComponent(
+	vsc::ITypeField			*type) : 
+		m_name(type->name()), m_dt(type->getDataType()), m_type(type) {
+
 }
 
 ModelFieldComponent::~ModelFieldComponent() {
 	// TODO Auto-generated destructor stub
 }
 
-void ModelFieldComponent::initCompTree() {
-	TaskBuildComponentMap().build(this);
-	TaskPopulateResourcePools(m_ctxt).populate(this);
-}
 
 void ModelFieldComponent::accept(vsc::IVisitor *v) {
 	if (dynamic_cast<arl::IVisitor *>(v)) {
@@ -31,6 +36,16 @@ void ModelFieldComponent::accept(vsc::IVisitor *v) {
 	} else if (v->cascade()) {
 		v->visitModelField(this);
 	}
+}
+
+ModelFieldComponentRoot *ModelFieldComponent::getRoot() {
+	ModelFieldComponent *ret = this;
+
+	while (ret->getParent()) {
+		ret = ret->getParentT<ModelFieldComponent>();
+	}
+
+	return dynamic_cast<ModelFieldComponentRoot *>(ret);
 }
 
 } /* namespace arl */

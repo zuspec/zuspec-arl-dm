@@ -47,6 +47,10 @@ public:
     virtual vsc::IDataType *getDataTypePool() const override {
         return m_type_pool;
     }
+    
+    virtual int32_t getId() const override { return m_id; }
+
+    virtual void setId(int32_t id) override { m_id = id; }
 
     virtual void setDataTypePool(vsc::IDataType *t) override {
         m_type_pool = t;
@@ -60,13 +64,28 @@ public:
         return m_objects;
     }
 
+    virtual const std::pair<int32_t,int32_t> &getGlobalPoolRange() const override {
+        return m_global_pool_range;
+    }
+
+    virtual void setGlobalPoolRange(int32_t i1, int32_t i2) override {
+        m_global_pool_range = {i1, i2};
+    }
+
     virtual void accept(vsc::IVisitor *v) override;
 
 private:
     std::string                         m_name;
     vsc::IDataType                      *m_type;
     vsc::IDataType                      *m_type_pool;
+    int32_t                             m_id;
+
+    // Objects are only used for resource pools
     std::vector<vsc::IModelFieldUP>     m_objects;
+
+    // Stores the range that this pool holds within
+    // the global per-type object pool
+    std::pair<int32_t,int32_t>          m_global_pool_range;
 
 };
 

@@ -52,8 +52,6 @@ public:
 
         void init_action_pairs();
 
-        int32_t   
-
     };
 
 private:

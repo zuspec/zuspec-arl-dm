@@ -1,5 +1,5 @@
 /*
- * ModelFieldComponentType.cpp
+ * TaskVisitComponentFields.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -18,16 +18,31 @@
  * Created on:
  *     Author:
  */
-#include "ModelFieldComponentType.h"
+#include "TaskVisitComponentFields.h"
 
 
 namespace arl {
-ModelFieldComponentType::ModelFieldComponentType(
-    vsc::ITypeField         *type) : ModelFieldComponent(type), m_type(type) {
+
+
+TaskVisitComponentFields::TaskVisitComponentFields(
+    const std::function<void (IModelFieldComponent *)> &enter,
+    const std::function<void (IModelFieldComponent *)> &leave)
+    : m_enter(enter), m_leave(leave) {
+
 }
 
-ModelFieldComponentType::~ModelFieldComponentType() {
+TaskVisitComponentFields::~TaskVisitComponentFields() {
 
+}
+
+void TaskVisitComponentFields::visit(IModelFieldComponent *comp) {
+    comp->accept(m_this);
+};
+
+void TaskVisitComponentFields::visitModelFieldComponent(IModelFieldComponent *f) {
+    m_enter(f);
+    VisitorBase::visitModelFieldComponent(f);
+    m_leave(f);
 }
 
 }

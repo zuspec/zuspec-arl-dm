@@ -278,7 +278,7 @@ IModelFieldComponent *Context::mkModelFieldComponentRoot(
 
 IModelFieldComponent *Context::mkModelFieldComponentType(
 			vsc::ITypeField         *type) {
-	return new ModelFieldComponentType(this, type);
+	return new ModelFieldComponentType(type);
 }
 
 IModelFieldExecutor *Context::mkModelFieldExecutor(

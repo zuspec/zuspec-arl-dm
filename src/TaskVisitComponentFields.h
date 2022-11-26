@@ -1,5 +1,5 @@
-/*
- * ModelFieldComponentType.cpp
+/**
+ * TaskVisitComponentFields.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,18 +16,32 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-#include "ModelFieldComponentType.h"
-
+#pragma once
+#include <functional>
+#include "arl/impl/VisitorBase.h"
 
 namespace arl {
-ModelFieldComponentType::ModelFieldComponentType(
-    vsc::ITypeField         *type) : ModelFieldComponent(type), m_type(type) {
+
+
+class TaskVisitComponentFields : public VisitorBase {
+public:
+    TaskVisitComponentFields(
+        const std::function<void (IModelFieldComponent *)> &enter,
+        const std::function<void (IModelFieldComponent *)> &leave);
+
+    virtual ~TaskVisitComponentFields();
+
+    void visit(IModelFieldComponent *comp);
+
+	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
+
+private:
+    std::function<void (IModelFieldComponent *)>            m_enter;
+    std::function<void (IModelFieldComponent *)>            m_leave;
+};
+
 }
 
-ModelFieldComponentType::~ModelFieldComponentType() {
 
-}
-
-}

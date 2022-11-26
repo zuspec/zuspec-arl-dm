@@ -42,6 +42,7 @@ ActivityTraverseData *TaskBuildActivityTraverseData::build(
     m_root_comp = root_comp;
 
     IDataTypeAction *action_t = t->getTarget()->getDataTypeT<IDataTypeAction>();
+#ifdef UNDEFINED
     std::vector<IModelFieldComponent *> contexts = m_root_comp->getCompMap()->getSubContexts(
         action_t->getComponentType());
     
@@ -61,6 +62,7 @@ ActivityTraverseData *TaskBuildActivityTraverseData::build(
             m_solve_model->getComponentId(c);
         }
     }
+#endif
 
 //    ActivitySolveModel::AllCompMapT::const_iterator it = m_model->all_comp_m.find()
 }

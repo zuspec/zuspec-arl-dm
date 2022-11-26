@@ -22,6 +22,7 @@ ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
 ctypedef IModelFieldAction *IModelFieldActionP
 ctypedef IModelFieldComponent *IModelFieldComponentP
+ctypedef IModelFieldComponentRoot *IModelFieldComponentRootP
 ctypedef IModelFieldPool *IModelFieldPoolP
 ctypedef IPoolBindDirective *IPoolBindDirectiveP
 ctypedef unique_ptr[IPoolBindDirective] IPoolBindDirectiveUP
@@ -173,6 +174,10 @@ cdef extern from "arl/IModelFieldAction.h" namespace "arl":
         
 cdef extern from "arl/IModelFieldComponent.h" namespace "arl":
     cdef cppclass IModelFieldComponent(vsc.IModelField):
+        pass
+
+cdef extern from "arl/IModelFieldComponentRoot.h" namespace "arl":
+    cdef cppclass IModelFieldComponentRoot(IModelFieldComponent):
         void initCompTree()
 
 cdef extern from "arl/IModelFieldPool.h" namespace "arl":

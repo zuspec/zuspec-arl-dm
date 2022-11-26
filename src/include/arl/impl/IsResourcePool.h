@@ -1,5 +1,5 @@
-/*
- * ModelFieldComponentType.cpp
+/**
+ * IsResourcePool.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,18 +16,35 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-#include "ModelFieldComponentType.h"
-
+#pragma once
+#include "arl/impl/VisitorBase.h"
 
 namespace arl {
-ModelFieldComponentType::ModelFieldComponentType(
-    vsc::ITypeField         *type) : ModelFieldComponent(type), m_type(type) {
+
+class IsResourcePool : public VisitorBase {
+public:
+    IsResourcePool() : m_ret(false) { }
+
+    virtual ~IsResourcePool() { }
+
+    bool test(IModelFieldPool *pool) {
+        m_ret = false;
+        pool->getDataTypePool()->accept(m_this);
+        return m_ret;
+    }
+
+	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override { }
+
+	virtual void visitDataTypeResource(IDataTypeResource *t) override {
+        m_ret = true;
+    }
+
+private:
+    bool                m_ret;
+};
+
 }
 
-ModelFieldComponentType::~ModelFieldComponentType() {
 
-}
-
-}

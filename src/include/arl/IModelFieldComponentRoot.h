@@ -1,5 +1,5 @@
-/*
- * ModelFieldComponentType.cpp
+/**
+ * IModelFieldComponentRoot.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,18 +16,30 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-#include "ModelFieldComponentType.h"
-
+#pragma once
+#include "arl/IModelFieldComponent.h"
+#include "arl/IModelComponentTreeData.h"
 
 namespace arl {
-ModelFieldComponentType::ModelFieldComponentType(
-    vsc::ITypeField         *type) : ModelFieldComponent(type), m_type(type) {
-}
 
-ModelFieldComponentType::~ModelFieldComponentType() {
 
-}
 
-}
+class IModelFieldComponentRoot : 
+    public virtual IModelFieldComponent,
+    public virtual IModelComponentTreeData {
+public:
+
+    virtual ~IModelFieldComponentRoot() { }
+
+	/**
+	 * Builds the component map across the tree
+	 */
+	virtual void initCompTree() = 0;
+
+};
+
+} /* namespace arl */
+
+

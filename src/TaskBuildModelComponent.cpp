@@ -25,7 +25,7 @@ IModelFieldComponent *TaskBuildModelComponent::build(
 		const std::string &name) {
 	ModelFieldComponent *root_comp = dynamic_cast<ModelFieldComponent *>(m_core.build(c, name));
 
-	root_comp->initCompTree();
+//	root_comp->initCompTree();
 
 	return root_comp;
 }

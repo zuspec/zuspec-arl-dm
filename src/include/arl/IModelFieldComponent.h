@@ -13,16 +13,12 @@ namespace arl {
 
 class IModelFieldComponent;
 using IModelFieldComponentUP=std::unique_ptr<IModelFieldComponent>;
-class IModelFieldComponent : public virtual vsc::IModelField {
+class IModelFieldComponent : 
+	public virtual vsc::IModelField {
 public:
 	virtual ~IModelFieldComponent() { }
 
-	/**
-	 * Builds the component map across the tree
-	 */
-	virtual void initCompTree() = 0;
-
-	virtual IComponentMap *getCompMap() = 0;
+	virtual int32_t getId() const = 0;
 
 };
 

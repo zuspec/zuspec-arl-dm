@@ -178,13 +178,30 @@ Index is ((N*(N-1))/2 - ((N-f)*(N-f-1))/2 + s
 
 1000 actions is ~500k variables
 
+# Resources
 Notes:
 - Resources are managed differently because there is a fixed relationship between
   consumer component context and pool. Unlike with flow objects, we don't need to
   pair producer action pool and consumer action pool.
 - Resource information is basically static to the component tree.
 - Parent/child context info is also basically static to the component tree.
--  
+
+For each action/claim pair, each valid component id has a single mapping to a 
+resource pool. A resource pool is described by the range of objects is 
+contributes to the global per-type resource pool. 
+
+Note: Making selection on a per-pool basis might be more efficient since the
+selection space would be smaller. Doing this would complicate comparing 
+resources (eg claim1 != claim2) because both the index and the pool/component
+would need to be considered. It would also complicate resource assignment,
+since the index is implicitly pool-qualified. Overall, it may be still
+be a better approach.
+
+Note2: Wait. Our selector scheme assumes selection from a single unified pool.
+
+
+Each ref could be bound to a different pool. To build constraints, must know
+- Component/Pool mapping for a given action ref
 
 For objects, we need to do the following:
 - 

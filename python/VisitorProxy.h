@@ -41,6 +41,8 @@ public:
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
 
+	virtual void visitModelFieldComponentRoot(IModelFieldComponentRoot *f) override;
+
 	virtual void visitModelFieldPool(IModelFieldPool *f) override;
 
 private:

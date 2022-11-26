@@ -623,15 +623,27 @@ cdef class ModelFieldAction(vsc.ModelField):
     
 cdef class ModelFieldComponent(vsc.ModelField):
 
-    cpdef void initCompTree(self):
-        self.asComponent().initCompTree()
-    
     cdef decl.IModelFieldComponent *asComponent(self):
         return dynamic_cast[decl.IModelFieldComponentP](self._hndl)
     
     @staticmethod
     cdef ModelFieldComponent mk(decl.IModelFieldComponent *hndl, bool owned=True):
         ret = ModelFieldComponent()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class ModelFieldComponentRoot(ModelFieldComponent):
+
+    cpdef void initCompTree(self):
+        self.asComponentRoot().initCompTree()
+    
+    cdef decl.IModelFieldComponentRoot *asComponentRoot(self):
+        return dynamic_cast[decl.IModelFieldComponentRootP](self._hndl)
+    
+    @staticmethod
+    cdef ModelFieldComponentRoot mk(decl.IModelFieldComponentRoot *hndl, bool owned=True):
+        ret = ModelFieldComponentRoot()
         ret._hndl = hndl
         ret._owned = owned
         return ret
@@ -757,6 +769,9 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitModelFieldComponent(self, ModelFieldComponent c):
         pass
 
+    cpdef visitModelFieldComponentRoot(self, ModelFieldComponentRoot c):
+        pass
+
     cpdef visitModelFieldPool(self, ModelFieldPool f):
         pass
 
@@ -775,6 +790,8 @@ cdef public void VisitorProxy_visitModelFieldAction(obj, decl.IModelFieldAction 
 cdef public void VisitorProxy_visitModelFieldComponent(obj, decl.IModelFieldComponent *c) with gil:
     obj.visitModelFieldComponent(ModelFieldComponent.mk(c, False))
 
+cdef public void VisitorProxy_visitModelFieldComponentRoot(obj, decl.IModelFieldComponentRoot *c) with gil:
+    obj.visitModelFieldComponentRoot(ModelFieldComponentRoot.mk(c, False))
 
 cdef public void VisitorProxy_visitModelFieldPool(obj, decl.IModelFieldPool *c) with gil:
     obj.visitModelFieldPool(ModelFieldPool.mk(c, False))
@@ -815,7 +832,9 @@ cdef class WrapperBuilder(VisitorBase):
         self._set_obj(a)
 
     cpdef visitModelFieldComponent(self, ModelFieldComponent c):
-        print("visitModelFieldComponent")
+        self._set_obj(c)
+
+    cpdef visitModelFieldComponentRoot(self, ModelFieldComponentRoot c):
         self._set_obj(c)
 
     cpdef visitModelFieldPool(self, ModelFieldPool f):

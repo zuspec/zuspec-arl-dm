@@ -279,6 +279,8 @@ void TaskSolveActionSet::build_comp_map(
         // For each action instance, ask where its type can run
         IDataTypeAction *action_t = tr->getTarget()->getDataTypeT<IDataTypeAction>();
         IDataTypeComponent *comp_t = action_t->getComponentType();
+
+#ifdef UNDEFINED
         const std::vector<IModelFieldComponent *> &comp_l = 
             m_comp->getCompMap()->getSubContexts(comp_t);
         
@@ -300,6 +302,7 @@ void TaskSolveActionSet::build_comp_map(
 
             m_action_data_l.at(i).m_comp_ctxt_l.push_back(idx);
         }
+#endif
     }
 }
 
@@ -395,6 +398,7 @@ void TaskSolveActionSet::visitModelFieldRef(vsc::IModelFieldRef *f) {
 
 void TaskSolveActionSet::visitTypeFieldClaim(ITypeFieldClaim *f) {
     DEBUG_ENTER("visitTypeFieldClaim %s", f->name().c_str());
+#ifdef UNDEFINED
     vsc::IDataType *claim_t = f->getDataType();
 
     // - Process every component instance that we have
@@ -426,7 +430,7 @@ void TaskSolveActionSet::visitTypeFieldClaim(ITypeFieldClaim *f) {
             }
         }
     }
-
+#endif
     DEBUG_LEAVE("visitTypeFieldClaim");
 }
 

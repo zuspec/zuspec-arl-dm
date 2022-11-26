@@ -53,6 +53,10 @@ void VisitorProxy::visitModelFieldComponent(IModelFieldComponent *f) {
     VisitorProxy_visitModelFieldComponent(m_obj, f);
 }
 
+void VisitorProxy::visitModelFieldComponentRoot(IModelFieldComponentRoot *f) {
+    VisitorProxy_visitModelFieldComponentRoot(m_obj, f);
+}
+
 void VisitorProxy::visitModelFieldPool(IModelFieldPool *f) {
     VisitorProxy_visitModelFieldPool(m_obj, f);
 }

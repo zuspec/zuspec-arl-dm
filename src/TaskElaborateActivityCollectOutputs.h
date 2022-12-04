@@ -1,5 +1,5 @@
 /**
- * IModelFieldComponentRoot.h
+ * TaskElaborateActivityCollectOutputs.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,28 +19,32 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelFieldComponent.h"
-#include "arl/IModelComponentTreeData.h"
+#include "arl/IContext.h"
+#include "arl/impl/VisitorBase.h"
+#include "ActivityScheduleData.h"
 
 namespace arl {
 
 
-class IModelFieldComponentRoot;
-using IModelFieldComponentRootUP=std::unique_ptr<IModelFieldComponentRoot>;
-class IModelFieldComponentRoot : 
-    public virtual IModelFieldComponent,
-    public virtual IModelComponentTreeData {
+class TaskElaborateActivityCollectOutputs : public VisitorBase {
 public:
+    TaskElaborateActivityCollectOutputs(
+        IContext                *ctxt,
+        ActivityScheduleData     *sched_data
+    );
 
-    virtual ~IModelFieldComponentRoot() { }
+    virtual ~TaskElaborateActivityCollectOutputs();
 
-	/**
-	 * Builds the component map across the tree
-	 */
-	virtual void initCompTree() = 0;
+    void collect(IModelFieldAction *action);
+
+	virtual void visitModelFieldInOut(IModelFieldInOut *f) override;
+
+private:
+    IContext                    *m_ctxt;
+    ActivityScheduleData        *m_sched_data;
 
 };
 
-} /* namespace arl */
+}
 
 

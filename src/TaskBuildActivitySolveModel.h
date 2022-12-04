@@ -23,7 +23,6 @@
 #include <vector>
 #include "arl/IContext.h"
 #include "arl/impl/VisitorBase.h"
-#include "vsc/impl/TaskBuildRefSelector.h"
 
 namespace arl {
 
@@ -61,7 +60,7 @@ struct ActivitySolveModel {
     // TODO: need per-state-type data
 
 
-    std::vector<vsc::RefSelectorUP>                 ref_l;
+    std::vector<vsc::IRefSelectorUP>                ref_l;
 
     uint32_t getComponentId(IModelFieldComponent *c);
 };

@@ -49,6 +49,12 @@ public:
         return m_ref;
     }
 
+	virtual bool isLock() const override {
+        return m_type->isLock();
+    }
+
+    virtual void accept(vsc::IVisitor *v) override;
+
 private:
     ITypeFieldClaim                 *m_type;
     vsc::IModelField                *m_ref;

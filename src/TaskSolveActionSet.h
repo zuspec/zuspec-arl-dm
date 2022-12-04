@@ -29,8 +29,6 @@
 namespace vsc {
     class ModelFieldRefConstraintData;
     using ModelFieldRefConstraintDataUP=std::unique_ptr<ModelFieldRefConstraintData>;
-    class RefSelector;
-    using RefSelectorUP=std::unique_ptr<RefSelector>;
 }
 
 namespace arl {
@@ -76,8 +74,8 @@ private:
         vsc::IDataType                              *m_res_t;
         std::vector<std::pair<int32_t,int32_t>>     m_comp_sz_l;
         std::vector<vsc::IModelField *>             m_resource_l;
-        std::vector<vsc::RefSelector *>             m_lock_claims;
-        std::vector<vsc::RefSelector *>             m_share_claims;
+        std::vector<vsc::IRefSelector *>            m_lock_claims;
+        std::vector<vsc::IRefSelector *>            m_share_claims;
     };
 
     using AllCompMapT=std::unordered_map<IModelFieldComponent *,uint32_t>;
@@ -95,7 +93,7 @@ private:
     std::vector<ActionData>                                  m_action_data_l;
     ResTypeMapT                                             m_res_type_m;
     std::vector<ResourceClaimData *>                        m_res_type_l;
-    std::vector<vsc::RefSelectorUP>                         m_ref_l;
+    std::vector<vsc::IRefSelectorUP>                        m_ref_l;
 
 //    std::unordered_map<vsc::IDataTy
     std::vector<IModelEvalIteratorUP>                       m_result;

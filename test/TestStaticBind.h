@@ -1,5 +1,5 @@
 /**
- * TaskElaborateActivityExplicitBinds.h
+ * TestStaticBind.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,22 +19,15 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IContext.h"
+#include "TestBase.h"
 
 namespace arl {
 
-
-
-class TaskElaborateActivityExplicitBinds {
+class TestStaticBind : public TestBase {
 public:
-    TaskElaborateActivityExplicitBinds(IContext *ctxt);
+    TestStaticBind();
 
-    virtual ~TaskElaborateActivityExplicitBinds();
-
-    bool elab();
-
-private:
-    IContext                *m_ctxt;
+    virtual ~TestStaticBind();
 
 };
 

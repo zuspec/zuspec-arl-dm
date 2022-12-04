@@ -27,6 +27,7 @@
 #include "vsc/impl/TaskResolveFieldRefExpr.h"
 #include "ModelFieldComponentRoot.h"
 #include "TaskCollectPools.h"
+#include "TaskPopulateResourcePools.h"
 #include "TaskVisitComponentFields.h"
 
 
@@ -34,7 +35,7 @@ namespace arl {
 ModelFieldComponentRoot::ModelFieldComponentRoot(
     IContext            *ctxt,
     const std::string   &name,
-    IDataTypeComponent  *type) : ModelFieldComponent(name, type) {
+    IDataTypeComponent  *type) : ModelFieldComponent(name, type), m_ctxt(ctxt) {
     m_init_pass = 0;
 
     DEBUG_INIT("ModelFieldComponentRoot", ctxt->getDebugMgr());
@@ -49,6 +50,9 @@ ModelFieldComponentRoot::~ModelFieldComponentRoot() {
 void ModelFieldComponentRoot::initCompTree() {
 
     m_init_pass = 0;
+
+    // Need to populate field now
+    TaskPopulateResourcePools(m_ctxt).populate(this);
 
     // We first build information about component types and instances
     TaskVisitComponentFields(
@@ -81,14 +85,14 @@ void ModelFieldComponentRoot::initCompTree() {
     m_init_pass = 1;
 }
 
-const std::vector<IModelFieldComponent *> &ModelFieldComponentRoot::getCompTypeInsts(
+const std::vector<vsc::IModelField *> &ModelFieldComponentRoot::getCompTypeInsts(
         IDataTypeComponent *t) const {
     CompType2InstMapT::const_iterator it = m_comp_type_inst_m.find(t);
 
     if (it != m_comp_type_inst_m.end()) {
         return it->second.instances;
     } else {
-        return m_empty_comp_l;
+        return m_empty_field_l;
     }
 }
 
@@ -114,7 +118,46 @@ const std::vector<int32_t> &ModelFieldComponentRoot::getCompTypeSubInsts(
 
 const std::vector<IModelFieldPool *> &ModelFieldComponentRoot::getPools(
     vsc::IDataType *t) {
-    return m_obj_type_pool_m.find(t)->second;
+    ObjType2PoolMapT::const_iterator it;
+
+    if ((it=m_obj_type_pool_m.find(t)) != m_obj_type_pool_m.end()) {
+        return it->second;
+    } else {
+        return m_empty_pool_l;
+    }
+}
+
+const std::vector<vsc::IModelField *> &ModelFieldComponentRoot::getResObjects(
+    IDataTypeResource *res_t) {
+    ResTObjectM::const_iterator it;
+
+    if ((it=m_res_obj_m.find(res_t)) != m_res_obj_m.end()) {
+        return it->second;
+    } else {
+        return m_empty_field_l;
+    }
+}
+
+std::pair<int32_t, int32_t> ModelFieldComponentRoot::getResPoolObjRange(
+    IModelFieldPool *pool) {
+    ResPoolObjRangeM::const_iterator it;
+
+    if ((it=m_res_pool_obj_range_m.find(pool)) != m_res_pool_obj_range_m.end()) {
+        return it->second;
+    } else {
+        return {-1, -1};
+    }
+}
+
+const std::vector<std::pair<int32_t, IModelFieldPool *>> &ModelFieldComponentRoot::getClaimBoundCompPool(
+        ITypeFieldClaim *claim) {
+    ClaimTCompIdPoolM::const_iterator it;
+
+    if ((it=m_claim_comp_id_pool_m.find(claim)) != m_claim_comp_id_pool_m.end()) {
+        return it->second;
+    } else {
+        return m_empty_int_pool_pair_l;
+    }
 }
 
 void ModelFieldComponentRoot::accept(vsc::IVisitor *v) {
@@ -126,6 +169,7 @@ void ModelFieldComponentRoot::accept(vsc::IVisitor *v) {
 }
 
 void ModelFieldComponentRoot::enterComponentScope(ModelFieldComponent *comp) {
+    DEBUG_ENTER("enterComponentScope %s", comp->name().c_str());
     CompType2InstMapT::iterator ct_it = m_comp_type_inst_m.find(
         comp->getDataTypeT<IDataTypeComponent>());
 
@@ -175,12 +219,13 @@ void ModelFieldComponentRoot::enterComponentScope(ModelFieldComponent *comp) {
     }
 
     // Add all pools from this level
-    TaskCollectPools([&] (IModelFieldPool *pool) { addPool(pool);});
+    TaskCollectPools([&] (IModelFieldPool *pool) { addPool(pool);}).collect(comp);
 
     processBinds(comp);
 
     m_inst_data_s.push_back(&ct_it->second);
     m_inst_id_s.push_back(inst_id);
+    DEBUG_LEAVE("enterComponentScope %s", comp->name().c_str());
 }
 
 void ModelFieldComponentRoot::processBinds(ModelFieldComponent *comp) {
@@ -235,13 +280,22 @@ void ModelFieldComponentRoot::processBinds(ModelFieldComponent *comp) {
 }
 
 void ModelFieldComponentRoot::leaveComponentScope() {
+    DEBUG_ENTER("leaveComponentScope");
     m_type_pool_s.pop_back();
     m_inst_data_s.pop_back();
     m_inst_id_s.pop_back();
+    DEBUG_LEAVE("leaveComponentScope");
 }
 
 void ModelFieldComponentRoot::addPool(IModelFieldPool *pool) {
     DEBUG_ENTER("addPool %s", pool->name().c_str());
+
+    ObjType2PoolMapT::iterator it = m_obj_type_pool_m.find(pool->getDataTypePool());
+
+    if (it == m_obj_type_pool_m.end()) {
+        it = m_obj_type_pool_m.insert({pool->getDataTypePool(), {}}).first;
+    }
+    it->second.push_back(pool);
 
     if (IsResourcePool().test(pool)) {
         ResTObjectM::iterator it = m_res_obj_m.find(pool->getDataTypePool());
@@ -256,6 +310,7 @@ void ModelFieldComponentRoot::addPool(IModelFieldPool *pool) {
         pool->setGlobalPoolRange(
             it->second.size(),
             it->second.size()+pool->getObjects().size()-1);
+        m_res_pool_obj_range_m.insert({pool, {it->second.size(), it->second.size()+pool->getObjects().size()-1}});
         for (std::vector<vsc::IModelFieldUP>::const_iterator
             o_it=pool->getObjects().begin();
             o_it!=pool->getObjects().end(); o_it++) {

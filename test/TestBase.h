@@ -36,8 +36,11 @@ public:
 
     virtual void TearDown() override;
 
+    void enableDebug(bool en);
+
 protected:
     IContextUP                  m_ctxt;
+    vsc::IRandStateUP           m_randstate;
 };
 
 }

@@ -1,5 +1,5 @@
 /**
- * IModelFieldComponentRoot.h
+ * TestElaborateActivity.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,28 +19,19 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelFieldComponent.h"
-#include "arl/IModelComponentTreeData.h"
+#include "TestBase.h"
 
 namespace arl {
 
 
-class IModelFieldComponentRoot;
-using IModelFieldComponentRootUP=std::unique_ptr<IModelFieldComponentRoot>;
-class IModelFieldComponentRoot : 
-    public virtual IModelFieldComponent,
-    public virtual IModelComponentTreeData {
+class TestElaborateActivity : public TestBase {
 public:
+    TestElaborateActivity();
 
-    virtual ~IModelFieldComponentRoot() { }
-
-	/**
-	 * Builds the component map across the tree
-	 */
-	virtual void initCompTree() = 0;
+    virtual ~TestElaborateActivity();
 
 };
 
-} /* namespace arl */
+}
 
 

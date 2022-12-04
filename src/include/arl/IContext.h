@@ -23,6 +23,7 @@
 #include "arl/IModelActivityTraverse.h"
 #include "arl/IModelEvaluator.h"
 #include "arl/IModelFieldAction.h"
+#include "arl/IModelFieldClaim.h"
 #include "arl/IModelFieldComponent.h"
 #include "arl/IModelFieldExecutor.h"
 #include "arl/IModelFieldExecutorClaim.h"
@@ -138,6 +139,9 @@ public:
 
 	virtual IModelFieldAction *mkModelFieldActionType(
 			vsc::ITypeField			*type) = 0;
+
+	virtual IModelFieldClaim *mkModelFieldClaim(
+			ITypeFieldClaim			*type) = 0;
 
 	virtual IModelFieldComponent *mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,

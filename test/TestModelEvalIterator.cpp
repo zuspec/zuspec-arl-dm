@@ -67,7 +67,7 @@ TEST_F(TestModelEvalIterator, two_branch_parallel) {
     comp_t->addActionType(entry_t.get());
 
     ModelBuildContext build_ctxt(ModelBuildContext(ctxt.get()));
-    IModelFieldComponentUP comp(comp_t->mkRootFieldT<IModelFieldComponent>(
+    IModelFieldComponentRootUP comp(comp_t->mkRootFieldT<IModelFieldComponentRoot>(
         &build_ctxt,
         "pss_top",
         false));
@@ -103,7 +103,7 @@ TEST_F(TestModelEvalIterator, two_branch_parallel) {
 
     vsc::IRandStateUP rs(new vsc::RandState("0"));
 
-    IModelFieldComponentUP pss_top(comp_t->mkRootFieldT<IModelFieldComponent>(
+    IModelFieldComponentRootUP pss_top(comp_t->mkRootFieldT<IModelFieldComponentRoot>(
         &build_ctxt,
         "pss_top", 
         false));
@@ -120,7 +120,12 @@ TEST_F(TestModelEvalIterator, two_branch_parallel) {
         ctxt.get(), rs->next());
     root_thread->pushComponent(comp.get());
     ModelEvaluatorIncrElabSequence *root_seq = new ModelEvaluatorIncrElabSequence(root_thread);
-    root_seq->addActivity(new ModelActivityTraverse(entry.get(), 0), true);
+    root_seq->addActivity(new ModelActivityTraverse(
+        entry.get(), 
+        0,
+        false,
+        0,
+        false), true);
     root_thread->pushIterator(root_seq);
 
     ASSERT_TRUE(root_thread->next());
@@ -229,7 +234,7 @@ TEST_F(TestModelEvalIterator, par_single_resource) {
         true));
 
     ModelBuildContext build_ctxt(m_ctxt.get());
-    IModelFieldComponentUP pss_top(pss_top_t->mkRootFieldT<IModelFieldComponent>(
+    IModelFieldComponentRootUP pss_top(pss_top_t->mkRootFieldT<IModelFieldComponentRoot>(
         &build_ctxt,
         "pss_top", 
         false));

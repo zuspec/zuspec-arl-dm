@@ -31,7 +31,7 @@ public:
 
     virtual ~IModelComponentTreeData() { }
 
-    virtual const std::vector<IModelFieldComponent *> &getCompTypeInsts(
+    virtual const std::vector<vsc::IModelField *> &getCompTypeInsts(
         IDataTypeComponent *t) const = 0;
 
     virtual const std::vector<IDataTypeComponent *> &getCompTypes() const = 0;
@@ -51,6 +51,31 @@ public:
         int32_t             parent_id) const = 0;
 
     virtual const std::vector<IModelFieldPool *> &getPools(vsc::IDataType *t) = 0;
+
+    /**
+     * @brief Returns aggregated list of resource objects for a given type
+     * 
+     * @param res_t 
+     * @return const std::vector<vsc::IModelField *>& 
+     */
+    virtual const std::vector<vsc::IModelField *> &getResObjects(IDataTypeResource *res_t) = 0;
+
+    /**
+     * @brief Returns the range of objects associated with the specified pool
+     * 
+     * @param pool 
+     * @return const std::vector<std::pair<int32_t, int32_t>>& 
+     */
+    virtual std::pair<int32_t, int32_t> getResPoolObjRange(IModelFieldPool *pool) = 0;
+
+    /**
+     * @brief Returns the list of per-context bindings for the specified claim type
+     * 
+     * @param claim 
+     * @return std::pair<int32_t, IModelFieldPool *> 
+     */
+    virtual const std::vector<std::pair<int32_t, IModelFieldPool *>> &getClaimBoundCompPool(
+        ITypeFieldClaim *claim) = 0;
 
 };
 

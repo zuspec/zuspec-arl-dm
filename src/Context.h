@@ -104,6 +104,9 @@ public:
 	virtual IModelFieldAction *mkModelFieldActionType(
 			vsc::ITypeField			*type) override;
 
+	virtual IModelFieldClaim *mkModelFieldClaim(
+			ITypeFieldClaim			*type) override;
+
 	virtual IModelFieldComponent *mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,
 			const std::string		&name) override;

@@ -30,6 +30,8 @@ public:
 
     virtual ~IModelFieldInOut() { }
 
+	virtual bool isInput() const = 0;
+
 };
 
 } /* namespace arl */

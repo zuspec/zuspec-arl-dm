@@ -1,5 +1,5 @@
 /**
- * IModelFieldComponentRoot.h
+ * TaskVisitModelFieldInOut.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,28 +19,32 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelFieldComponent.h"
-#include "arl/IModelComponentTreeData.h"
+#include <functional>
+#include "arl/impl/VisitorBase.h"
 
 namespace arl {
 
 
-class IModelFieldComponentRoot;
-using IModelFieldComponentRootUP=std::unique_ptr<IModelFieldComponentRoot>;
-class IModelFieldComponentRoot : 
-    public virtual IModelFieldComponent,
-    public virtual IModelComponentTreeData {
+class TaskVisitModelFieldInOut : public VisitorBase {
 public:
+    TaskVisitModelFieldInOut(
+        const std::function<void (IModelFieldInOut *)> &func) :
+            m_func(func) { }
 
-    virtual ~IModelFieldComponentRoot() { }
+    virtual ~TaskVisitModelFieldInOut() { }
 
-	/**
-	 * Builds the component map across the tree
-	 */
-	virtual void initCompTree() = 0;
+    void visit(IModelFieldAction *t) {
+        t->accept(m_this);
+    }
 
+	virtual void visitModelFieldInOut(IModelFieldInOut *f) override {
+        m_func(f);
+    }
+
+private:
+    std::function<void (IModelFieldInOut *)>        m_func;
 };
 
-} /* namespace arl */
+}
 
 

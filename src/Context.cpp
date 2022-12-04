@@ -27,6 +27,7 @@
 #include "ModelEvaluator.h"
 #include "ModelFieldActionRoot.h"
 #include "ModelFieldActionType.h"
+#include "ModelFieldClaim.h"
 #include "ModelFieldComponentRoot.h"
 #include "ModelFieldComponentType.h"
 #include "ModelFieldExecutor.h"
@@ -268,6 +269,11 @@ IModelFieldAction *Context::mkModelFieldActionRoot(
 IModelFieldAction *Context::mkModelFieldActionType(
 			vsc::ITypeField			*type) {
 	return new ModelFieldActionType(type);
+}
+
+IModelFieldClaim *Context::mkModelFieldClaim(
+			ITypeFieldClaim			*type) {
+	return new ModelFieldClaim(type);
 }
 
 IModelFieldComponent *Context::mkModelFieldComponentRoot(

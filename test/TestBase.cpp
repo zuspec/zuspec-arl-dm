@@ -39,10 +39,16 @@ void TestBase::SetUp() {
     m_ctxt = IContextUP(
         ArlImpl::inst()->mkContext(
             vsc::VscImpl::inst()->mkContext()));
+    m_randstate = vsc::IRandStateUP(m_ctxt->mkRandState(""));
+    enableDebug(false);
 }
 
 void TestBase::TearDown() {
     m_ctxt.reset();
+}
+
+void TestBase::enableDebug(bool en) {
+    vsc::VscImpl::inst()->getDebugMgr()->enable(en);
 }
 
 }

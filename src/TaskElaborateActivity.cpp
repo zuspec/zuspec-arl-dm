@@ -19,18 +19,20 @@
  *     Author:
  */
 #include "arl/impl/ModelBuildContext.h"
+#include "vsc/impl/DebugMacros.h"
 #include "vsc/impl/TaskSetUsedRand.h"
 #include "TaskBuildActivitySolveModel.h"
 #include "TaskBuildActivityTraverseData.h"
 #include "TaskElaborateActivity.h"
 #include "TaskElaborateActivityExpandReplicate.h"
+#include "TaskElaborateActivityBinds.h"
 
 
 namespace arl {
 
 
 TaskElaborateActivity::TaskElaborateActivity(IContext *ctxt) : m_ctxt(ctxt) {
-
+    DEBUG_INIT("TaskElaborateActivity", ctxt->getDebugMgr());
 }
 
 TaskElaborateActivity::~TaskElaborateActivity() {
@@ -73,6 +75,37 @@ ElabActivity *TaskElaborateActivity::elaborate(
             randstate,
             m_activity->activity_s.back().get()
         )));
+
+    // The final activities revolve around binding, inference, and scheduling
+    ActivityScheduleData sched_data(
+        m_ctxt, 
+        dynamic_cast<IModelFieldComponentRoot *>(root_comp));
+    TaskElaborateActivityBinds(m_ctxt).elab(
+        &sched_data, 
+        m_activity->activity_s.back().get());
+
+    // Update the selector variables so they're ready to go
+    sched_data.initRefSelectors();
+
+    // Now, grab the selectors and relevant constraints
+    std::vector<vsc::IModelField *> selectors;
+    std::vector<vsc::IModelConstraint *> constraints;
+
+    sched_data.getSelectorsConstraints(selectors, constraints);
+
+    DEBUG("%d selectors and %d constraints",
+        selectors.size(),
+        constraints.size());
+
+    vsc::ICompoundSolverUP solver(m_ctxt->mkCompoundSolver());
+
+    solver->solve(
+        randstate,
+        selectors,
+        constraints,
+        vsc::SolveFlags::Randomize
+        | vsc::SolveFlags::RandomizeDeclRand
+        | vsc::SolveFlags::RandomizeTopFields);
 
     // Gen3: Assign flow-object claims and infer actions as needed
 
@@ -163,5 +196,7 @@ void TaskElaborateActivity::process_scope(IModelActivityScope *s) {
 void TaskElaborateActivity::process_traversal(IModelActivityTraverse *t) {
 
 }
+
+vsc::IDebug *TaskElaborateActivity::m_dbg = 0;
 
 }

@@ -8,7 +8,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "arl/IModelActivity.h"
+#include "arl/IModelActivityScope.h"
 #include "vsc/IModelField.h"
 
 namespace arl {
@@ -16,7 +16,7 @@ namespace arl {
 class IModelActivityParallel;
 using IModelActivityParallelUP=std::unique_ptr<IModelActivityParallel>;
 class IModelActivityParallel : 
-	public virtual IModelActivity, 
+	public virtual IModelActivityScope, 
 	public virtual vsc::IModelField {
 public:
 

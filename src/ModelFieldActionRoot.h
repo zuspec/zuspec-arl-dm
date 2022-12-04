@@ -27,6 +27,10 @@ public:
 		return m_type;
 	}
 
+	virtual void setDataType(vsc::IDataType *t) override { 
+		m_type = dynamic_cast<IDataTypeAction *>(t); 
+	}
+
 private:
 	std::string								m_name;
 	IDataTypeAction							*m_type;

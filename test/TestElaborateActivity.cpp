@@ -1,5 +1,5 @@
 /*
- * TestActivitySolveModel.cpp
+ * TestElaborateActivity.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -18,23 +18,25 @@
  * Created on:
  *     Author:
  */
+#include "TestElaborateActivity.h"
 #include "arl/impl/ModelBuildContext.h"
-#include "TestActivitySolveModel.h"
 #include "TaskElaborateActivity.h"
 
 
 namespace arl {
 
 
-TestActivitySolveModel::TestActivitySolveModel() {
+TestElaborateActivity::TestElaborateActivity() {
 
 }
 
-TestActivitySolveModel::~TestActivitySolveModel() {
+TestElaborateActivity::~TestElaborateActivity() {
 
 }
 
-TEST_F(TestActivitySolveModel, par_single_resource) {
+TEST_F(TestElaborateActivity, resource_wildcard_1t_1p) {
+    enableDebug(true);
+
     vsc::ITypeExprFieldRef *ref;
     IDataTypeFlowObjUP rsrc_t(m_ctxt->mkDataTypeFlowObj("rsrc_t", FlowObjKindE::Resource));
 
@@ -111,23 +113,22 @@ TEST_F(TestActivitySolveModel, par_single_resource) {
 
     pss_top->initCompTree();
 
-    ElabActivityUP activity(TaskElaborateActivity(m_ctxt.get()).elaborate(
-        m_randstate->clone(),
-        pss_top.get(),
-        entry_t.get()));
-    ASSERT_TRUE(activity.get());
-    {
-        IModelActivitySequence *seq = dynamic_cast<IModelActivitySequence *>(activity->root);
-        ASSERT_TRUE(seq);
-        ASSERT_EQ(seq->activities().size(), 1);
-        // TODO: Really shouldn't have two levels of 'sequence' here...
-        seq = dynamic_cast<IModelActivitySequence *>(seq->activities().at(0));
-        ASSERT_TRUE(seq);
-        IModelActivityParallel *par = dynamic_cast<IModelActivityParallel *>(seq->activities().at(0));
-//        ASSERT_TRUE(par);
-        ASSERT_EQ(par->branches().size(), 2);
-    }
+    ASSERT_EQ(pss_top->getPools(rsrc_t.get()).size(), 1);
+    ASSERT_EQ(pss_top->getResObjects(dynamic_cast<IDataTypeResource *>(rsrc_t.get())).size(), 2);
+    std::pair<int32_t,int32_t> pool_r = pss_top->getResPoolObjRange(pss_top->getPools(rsrc_t.get()).at(0));
+    ASSERT_EQ(pool_r.first, 0);
+    ASSERT_EQ(pool_r.second, 1);
+    ASSERT_EQ(pool_r.second, 1);
+    const std::vector<std::pair<int32_t,IModelFieldPool *>> &claim_m = pss_top->getClaimBoundCompPool(
+        action1_t->getFieldT<ITypeFieldClaim>(1));
+    ASSERT_EQ(claim_m.size(), 1);
+    ASSERT_EQ(claim_m.at(0).first, 0);
 
+    TaskElaborateActivity(m_ctxt.get()).elaborate(
+        m_randstate.get(),
+        pss_top.get(),
+        entry_t.get()
+    );
 }
 
 }

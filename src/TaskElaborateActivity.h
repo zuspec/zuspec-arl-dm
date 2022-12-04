@@ -62,6 +62,7 @@ private:
     void process_traversal(IModelActivityTraverse *t);
 
 private:
+    static vsc::IDebug              *m_dbg;
     IContext                        *m_ctxt;
     ElabActivityUP                  m_activity;
     int32_t                         m_scope_search_depth;

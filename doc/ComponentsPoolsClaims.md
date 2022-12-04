@@ -269,7 +269,9 @@ foreach Claunch_inst in Claunch_inst_l:
 
 ## Inferred Action Launch
 The parent component context of an inferred action is the component context
-of the pool to which it outputs. 
+of the pool to which it outputs. An inferred action will be provisionally
+bound to its peer ref. 
+Instead of 
 
 # Representing Pools
 For each flow-object type, there are a set of pools in the component tree.

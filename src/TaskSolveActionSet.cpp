@@ -25,7 +25,6 @@
 #include "vsc/impl/PrettyPrinter.h"
 #include "vsc/impl/TaskUnrollModelFieldRefConstraints.h"
 #include "vsc/impl/TaskBuildRefConstraintMap.h"
-#include "vsc/impl/TaskBuildRefSelector.h"
 #include "TaskCollectFlowObjFields.h"
 #include "TaskIsDataTypeFlowObj.h"
 #include "TaskSolveActionSet.h"
@@ -112,9 +111,11 @@ bool TaskSolveActionSet::solve(
             candidates[*comp_it] = m_all_comp_l[*comp_it];
         }
 
+#ifdef UNDEFINED
         m_ref_l.push_back(vsc::RefSelectorUP(vsc::TaskBuildRefSelector(m_ctxt).build(
                 it->m_traversal->getTarget()->getFieldT<vsc::IModelFieldRef>(0),
                 candidates)));
+#endif
     }
 
     // Visit each action to build out selectors for the claims and refs
@@ -129,11 +130,13 @@ bool TaskSolveActionSet::solve(
      ****************************************************************/
     std::vector<vsc::IModelField *>      ref_fields;
     std::vector<vsc::IModelConstraint *> ref_constraints;
-    for (std::vector<vsc::RefSelectorUP>::const_iterator
+#ifdef UNDEFINED
+    for (std::vector<vsc::IRefSelectorUP>::const_iterator
         it=m_ref_l.begin();
         it!=m_ref_l.end(); it++) {
-        ref_fields.push_back(it->get()->m_ref);
+        ref_fields.push_back(it->get()->getRef());
     }
+#endif
 
     // Collect the constraints we need to reason about 
     // cross-selector dependencise
@@ -151,6 +154,7 @@ bool TaskSolveActionSet::solve(
         }
     }
 
+#ifdef UNDEFINED
     std::vector<vsc::RefConstraintSet> ref_constraint_m = 
         vsc::TaskBuildRefConstraintMap(m_ctxt).build(
             ref_fields,
@@ -266,6 +270,7 @@ bool TaskSolveActionSet::solve(
     }
 
     DEBUG_LEAVE("solve - ret=%d", ret);
+#endif
     return ret;    
 }
 
@@ -309,6 +314,7 @@ void TaskSolveActionSet::build_comp_map(
 void TaskSolveActionSet::build_resource_constraints(
         std::vector<vsc::IModelConstraintUP> &constraints) {
     // Build resource constraints
+#ifdef UNDEFINED
     for (std::vector<ResourceClaimData *>::const_iterator
         it=m_res_type_l.begin();
         it!=m_res_type_l.end(); it++) {
@@ -338,6 +344,7 @@ void TaskSolveActionSet::build_resource_constraints(
             }
         } 
     }
+#endif
 }
 
 void TaskSolveActionSet::visitModelFieldRef(vsc::IModelFieldRef *f) {
@@ -374,6 +381,7 @@ void TaskSolveActionSet::visitModelFieldRef(vsc::IModelFieldRef *f) {
                 }
             }
 
+#ifdef UNDEFINED
             vsc::RefSelector *selector = vsc::TaskBuildRefSelector(m_ctxt).build(
                 f,
                 candidates);
@@ -387,6 +395,7 @@ void TaskSolveActionSet::visitModelFieldRef(vsc::IModelFieldRef *f) {
             } else {
                 res_t->second.m_share_claims.push_back(selector);
             }
+#endif
         } else {
             // TODO:
 

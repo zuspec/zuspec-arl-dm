@@ -23,6 +23,8 @@ public:
 		m_parent = p;
 	}
 
+	virtual void setDataType(vsc::IDataType *t) override { }
+
 	virtual const std::vector<vsc::IModelConstraintUP> &constraints() const override {
 		return m_constraints;
 	}

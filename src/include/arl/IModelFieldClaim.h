@@ -29,6 +29,8 @@ public:
 
     virtual ~IModelFieldClaim() { }
 
+	virtual bool isLock() const = 0;
+
 };
 
 } /* namespace arl */

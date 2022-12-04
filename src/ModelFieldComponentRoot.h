@@ -42,7 +42,7 @@ public:
 
 	virtual void initCompTree() override;
 
-    virtual const std::vector<IModelFieldComponent *> &getCompTypeInsts(
+    virtual const std::vector<vsc::IModelField *> &getCompTypeInsts(
         IDataTypeComponent *t) const override;
 
     virtual const std::vector<IDataTypeComponent *> &getCompTypes() const override {
@@ -55,6 +55,13 @@ public:
         int32_t             parent_id) const override;
 
     virtual const std::vector<IModelFieldPool *> &getPools(vsc::IDataType *t) override;
+
+    virtual const std::vector<vsc::IModelField *> &getResObjects(IDataTypeResource *res_t) override;
+
+    virtual std::pair<int32_t, int32_t> getResPoolObjRange(IModelFieldPool *pool) override;
+
+    virtual const std::vector<std::pair<int32_t, IModelFieldPool *>> &getClaimBoundCompPool(
+        ITypeFieldClaim *claim) override;
 
     virtual void accept(vsc::IVisitor *v) override;
 
@@ -78,7 +85,7 @@ private:
 
     using CompType2InstIdMapT=std::unordered_map<IDataTypeComponent *, std::vector<int32_t>>;
     struct CompType2InstData {
-        std::vector<IModelFieldComponent *>     instances;
+        std::vector<vsc::IModelField *>         instances;
         std::vector<CompType2InstIdMapT>        subinst_m;
     };
 
@@ -105,15 +112,21 @@ private:
 
 private:
     static vsc::IDebug                  *m_dbg;
+    IContext                            *m_ctxt;
 
     int32_t                             m_init_pass;
 
-    std::vector<IModelFieldComponent *> m_empty_comp_l;
+    std::vector<IModelFieldComponent *>                      m_empty_comp_l;
+    std::vector<IModelFieldPool *>                           m_empty_pool_l;
+    std::vector<int32_t>                                     m_empty_int_l;
+    std::vector<vsc::IModelField *>                          m_empty_field_l;
+    std::vector<std::pair<int32_t,int32_t>>                  m_empty_int_pair_l;
+    std::vector<std::pair<int32_t, IModelFieldPool *>>       m_empty_int_pool_pair_l;
 
     // Holds the per-type lists of component instances within 
     // this component tree (Type -> Instances).
-    CompType2InstMapT                   m_comp_type_inst_m;
-    std::vector<IDataTypeComponent *>   m_comp_type_l;
+    CompType2InstMapT                           m_comp_type_inst_m;
+    std::vector<IDataTypeComponent *>           m_comp_type_l;
 
     // Each action has a set of potential parent-component
     // instances. The type of the action component is 
@@ -133,7 +146,7 @@ private:
 
     // Map from a resource type to the objects within all 
     // pools of that resource type.
-    ResTObjectM                         m_res_obj_m;
+    ResTObjectM                                             m_res_obj_m;
 
     // Map from a resource pool to 
     ResPoolObjRangeM                    m_res_pool_obj_range_m;

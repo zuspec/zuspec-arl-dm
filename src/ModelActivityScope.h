@@ -41,6 +41,8 @@ public:
 
 	virtual vsc::IDataType *getDataType() const { return 0; }
 
+	virtual void setDataType(vsc::IDataType *t) override { }
+
 	virtual const std::vector<IModelActivity *> &activities() const override {
 		return m_activities;
 	}

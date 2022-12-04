@@ -1,5 +1,5 @@
 /*
- * TaskElaborateActivityExplicitBinds.cpp
+ * TaskElaborateActivityCollectOutputs.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -18,18 +18,27 @@
  * Created on:
  *     Author:
  */
-#include "TaskElaborateActivityExplicitBinds.h"
+#include "TaskElaborateActivityCollectOutputs.h"
 
 
 namespace arl {
 
 
-TaskElaborateActivityExplicitBinds::TaskElaborateActivityExplicitBinds(
-    IContext *ctxt) : m_ctxt(ctxt) {
+TaskElaborateActivityCollectOutputs::TaskElaborateActivityCollectOutputs(
+    IContext                *ctxt,
+    ActivityScheduleData    *sched_data) : m_ctxt(ctxt), m_sched_data(sched_data) {
 
 }
 
-TaskElaborateActivityExplicitBinds::~TaskElaborateActivityExplicitBinds() {
+TaskElaborateActivityCollectOutputs::~TaskElaborateActivityCollectOutputs() {
+
+}
+
+void TaskElaborateActivityCollectOutputs::collect(IModelFieldAction *action) {
+    action->accept(m_this);
+}
+
+void TaskElaborateActivityCollectOutputs::visitModelFieldInOut(IModelFieldInOut *f) {
 
 }
 

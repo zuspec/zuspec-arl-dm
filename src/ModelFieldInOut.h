@@ -52,6 +52,10 @@ public:
         return m_ref;
     }
 
+	virtual bool isInput() const override {
+        return m_type->isInput();
+    }
+
     virtual void accept(vsc::IVisitor *v) override;
 
 private:

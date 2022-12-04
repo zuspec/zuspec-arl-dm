@@ -25,7 +25,8 @@ TypeFieldClaim::~TypeFieldClaim() {
 
 vsc::IModelField *TypeFieldClaim::mkModelField(
 		vsc::IModelBuildContext 			*ctxt) {
-	return ctxt->ctxt()->mkModelFieldRefType(this);
+	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
+	return ctxt_a->mkModelFieldClaim(this);
 }
 
 void TypeFieldClaim::accept(vsc::IVisitor *v) {

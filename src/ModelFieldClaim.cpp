@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "arl/IVisitor.h"
 #include "ModelFieldClaim.h"
 
 
@@ -30,6 +31,14 @@ ModelFieldClaim::ModelFieldClaim(ITypeFieldClaim *type) : m_type(type) {
 
 ModelFieldClaim::~ModelFieldClaim() {
 
+}
+
+void ModelFieldClaim::accept(vsc::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitModelFieldClaim(this);
+    } else if (v->cascade()) {
+        v->visitModelFieldRef(this);
+    }
 }
 
 }

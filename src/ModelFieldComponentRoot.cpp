@@ -56,7 +56,7 @@ void ModelFieldComponentRoot::initCompTree() {
 
     // We first build information about component types and instances
     TaskVisitComponentFields(
-        [&](IModelFieldComponent *f) { enterComponentScope(dynamic_cast<ModelFieldComponent *>(f)); },
+        [&](IModelFieldComponent *f) { enterComponentScope(dynamic_cast<IModelFieldComponent *>(f)); },
         [&](IModelFieldComponent *f) { leaveComponentScope(); }).visit(this);
 
     // Now, want to do a bit of organization to ensure collections are ordered
@@ -168,7 +168,7 @@ void ModelFieldComponentRoot::accept(vsc::IVisitor *v) {
     }
 }
 
-void ModelFieldComponentRoot::enterComponentScope(ModelFieldComponent *comp) {
+void ModelFieldComponentRoot::enterComponentScope(IModelFieldComponent *comp) {
     DEBUG_ENTER("enterComponentScope %s", comp->name().c_str());
     CompType2InstMapT::iterator ct_it = m_comp_type_inst_m.find(
         comp->getDataTypeT<IDataTypeComponent>());
@@ -228,7 +228,7 @@ void ModelFieldComponentRoot::enterComponentScope(ModelFieldComponent *comp) {
     DEBUG_LEAVE("enterComponentScope %s", comp->name().c_str());
 }
 
-void ModelFieldComponentRoot::processBinds(ModelFieldComponent *comp) {
+void ModelFieldComponentRoot::processBinds(IModelFieldComponent *comp) {
 
     // Process binds at this level
     if (m_type_pool_s.size()) {
@@ -334,7 +334,7 @@ void ModelFieldComponentRoot::addPool(IModelFieldPool *pool) {
 }
 
 void ModelFieldComponentRoot::processTypeFieldRef(
-        ModelFieldComponent         *comp,
+        IModelFieldComponent        *comp,
         ITypeFieldInOut             *ref) {
     const TypePoolMapFrame &bind_f = m_type_pool_s.back();
     FieldPoolMapT::const_iterator field_it;
@@ -344,14 +344,14 @@ void ModelFieldComponentRoot::processTypeFieldRef(
         RefTCompPoolIdM::iterator it = m_ref_comp_pool_id_m.find(ref);
 
         if (it == m_ref_comp_pool_id_m.end()) {
-            m_ref_comp_pool_id_m.insert({ref, {}});
+            it = m_ref_comp_pool_id_m.insert({ref, {}}).first;
         }
         it->second.push_back({comp->getId(), field_it->second->getId()});
     } else if ((type_it=bind_f.wildcard_m.find(ref->getDataType())) != bind_f.wildcard_m.end()) {
         RefTCompPoolIdM::iterator it = m_ref_comp_pool_id_m.find(ref);
 
         if (it == m_ref_comp_pool_id_m.end()) {
-            m_ref_comp_pool_id_m.insert({ref, {}});
+            it = m_ref_comp_pool_id_m.insert({ref, {}}).first;
         }
         it->second.push_back({comp->getId(), type_it->second->getId()});
 
@@ -361,7 +361,7 @@ void ModelFieldComponentRoot::processTypeFieldRef(
 }
 
 void ModelFieldComponentRoot::processTypeFieldClaim(
-        ModelFieldComponent         *comp,
+        IModelFieldComponent        *comp,
         ITypeFieldClaim             *claim) {
     const TypePoolMapFrame &bind_f = m_type_pool_s.back();
     FieldPoolMapT::const_iterator field_it;

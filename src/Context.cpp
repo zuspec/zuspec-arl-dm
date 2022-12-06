@@ -32,6 +32,7 @@
 #include "ModelFieldComponentType.h"
 #include "ModelFieldExecutor.h"
 #include "ModelFieldExecutorClaim.h"
+#include "ModelFieldInOut.h"
 #include "ModelFieldPool.h"
 #include "PoolBindDirective.h"
 #include "TaskBuildModelAction.h"
@@ -297,6 +298,11 @@ IModelFieldExecutorClaim *Context::mkModelFieldExecutorClaim(
 	return new ModelFieldExecutorClaim(
 		type->name(),
 		type->getDataType());
+}
+
+IModelFieldInOut *Context::mkModelFieldInOut(
+			ITypeFieldInOut			*type) {
+	return new ModelFieldInOut(type);
 }
 
 IModelFieldPool *Context::mkModelFieldPoolType(

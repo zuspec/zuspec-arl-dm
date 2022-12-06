@@ -156,6 +156,9 @@ public:
 	virtual IModelFieldExecutorClaim *mkModelFieldExecutorClaim(
 			vsc::ITypeField			*type) = 0;
 
+	virtual IModelFieldInOut *mkModelFieldInOut(
+			ITypeFieldInOut			*type) = 0;
+
 	virtual IModelFieldPool *mkModelFieldPoolType(
 			vsc::ITypeField			*type) = 0;
 

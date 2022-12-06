@@ -27,7 +27,8 @@ TypeFieldInOut::~TypeFieldInOut() {
 
 vsc::IModelField *TypeFieldInOut::mkModelField(
 		vsc::IModelBuildContext 			*ctxt) {
-	return ctxt->ctxt()->mkModelFieldRefType(this);
+	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
+	return ctxt_a->mkModelFieldInOut(this);
 }
 
 void TypeFieldInOut::accept(vsc::IVisitor *v) {

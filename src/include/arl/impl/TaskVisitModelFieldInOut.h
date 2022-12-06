@@ -29,12 +29,20 @@ class TaskVisitModelFieldInOut : public VisitorBase {
 public:
     TaskVisitModelFieldInOut(
         const std::function<void (IModelFieldInOut *)> &func) :
-            m_func(func) { }
+            m_func(func), m_depth(0) { }
 
     virtual ~TaskVisitModelFieldInOut() { }
 
     void visit(IModelFieldAction *t) {
         t->accept(m_this);
+    }
+
+	virtual void visitModelFieldAction(IModelFieldAction *f) override {
+        if (!m_depth) {
+            m_depth++;
+            VisitorBase::visitModelFieldAction(f);
+            m_depth--;
+        }
     }
 
 	virtual void visitModelFieldInOut(IModelFieldInOut *f) override {
@@ -43,6 +51,7 @@ public:
 
 private:
     std::function<void (IModelFieldInOut *)>        m_func;
+    uint32_t                                        m_depth;
 };
 
 }

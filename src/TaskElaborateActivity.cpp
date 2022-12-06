@@ -21,6 +21,7 @@
 #include "arl/impl/ModelBuildContext.h"
 #include "vsc/impl/DebugMacros.h"
 #include "vsc/impl/TaskSetUsedRand.h"
+#include "vsc/impl/TaskUnrollModelFieldRefConstraints.h"
 #include "TaskBuildActivitySolveModel.h"
 #include "TaskBuildActivityTraverseData.h"
 #include "TaskElaborateActivity.h"
@@ -88,7 +89,7 @@ ElabActivity *TaskElaborateActivity::elaborate(
     sched_data.initRefSelectors();
 
     // Now, grab the selectors and relevant constraints
-    std::vector<vsc::IModelField *> selectors;
+    std::vector<vsc::IRefSelector *> selectors;
     std::vector<vsc::IModelConstraint *> constraints;
 
     sched_data.getSelectorsConstraints(selectors, constraints);
@@ -97,12 +98,40 @@ ElabActivity *TaskElaborateActivity::elaborate(
         selectors.size(),
         constraints.size());
 
+    std::vector<vsc::IModelConstraint *> constraints_i;
+    std::vector<vsc::IModelConstraintUP> unroll_result;
+
+    vsc::TaskUnrollModelFieldRefConstraints(m_ctxt).build(
+        unroll_result,
+        selectors,
+        constraints_i);
+
     vsc::ICompoundSolverUP solver(m_ctxt->mkCompoundSolver());
+
+    std::vector<vsc::IModelField *> selector_fields;
+    std::vector<vsc::IModelConstraint *> selector_constraints;
+
+    for (std::vector<vsc::IRefSelector *>::const_iterator
+        it=selectors.begin();
+        it!=selectors.end(); it++) {
+        selector_fields.push_back((*it)->getSelector());
+    }
+
+    selector_constraints.insert(
+        selector_constraints.begin(),
+        constraints.begin(),
+        constraints.end());
+
+    for (std::vector<vsc::IModelConstraintUP>::const_iterator
+        it=unroll_result.begin();
+        it!=unroll_result.end(); it++) {
+        selector_constraints.push_back(it->get());
+    }
 
     solver->solve(
         randstate,
-        selectors,
-        constraints,
+        selector_fields,
+        selector_constraints,
         vsc::SolveFlags::Randomize
         | vsc::SolveFlags::RandomizeDeclRand
         | vsc::SolveFlags::RandomizeTopFields);

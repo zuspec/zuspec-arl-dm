@@ -120,6 +120,9 @@ public:
 	virtual IModelFieldExecutorClaim *mkModelFieldExecutorClaim(
 			vsc::ITypeField			*type) override;
 
+	virtual IModelFieldInOut *mkModelFieldInOut(
+			ITypeFieldInOut			*type) override;
+
 	virtual IModelFieldPool *mkModelFieldPoolType(
 			vsc::ITypeField			*type) override;
 

@@ -71,8 +71,9 @@ private:
         std::vector<vsc::IDataType *>                               types;
     };
     using ResourceClaimMUP=std::unique_ptr<ResourceClaimM>;
-
     using ResourceContentionSet=std::vector<ResourceClaimM>;
+
+    using FlowObjType2ObjM=std::unordered_map<vsc::IDataType *, std::vector<int32_t>>;
 
 private:
     void propagateResources(
@@ -88,7 +89,8 @@ private:
 
     std::vector<ActivityScheduleData::ActionTraversalData *>        m_traverse_s;
     std::vector<ActivityScheduleData::ScheduleRegionData *>         m_schedule_s;
-    std::vector<ResourceClaimM>                                   m_resource_s;
+    std::vector<ResourceClaimM>                                     m_resource_s;
+    std::vector<FlowObjType2ObjM>                                   m_buffer_s;
 
 
 

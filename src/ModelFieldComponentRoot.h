@@ -30,8 +30,7 @@ namespace arl {
 
 class ModelFieldComponentRoot : 
     public virtual IModelFieldComponentRoot,
-    public virtual ModelFieldComponent,
-    public virtual ModelField {
+    public virtual ModelFieldComponent {
 public:
     ModelFieldComponentRoot(
         IContext            *ctxt,
@@ -65,20 +64,20 @@ public:
 
     virtual void accept(vsc::IVisitor *v) override;
 
-    void enterComponentScope(ModelFieldComponent *comp);
+    void enterComponentScope(IModelFieldComponent *comp);
 
-    void processBinds(ModelFieldComponent *comp);
+    void processBinds(IModelFieldComponent *comp);
 
     void leaveComponentScope();
 
     void addPool(IModelFieldPool *pool);
 
     void processTypeFieldRef(
-        ModelFieldComponent         *comp,
+        IModelFieldComponent        *comp,
         ITypeFieldInOut             *ref);
 
     void processTypeFieldClaim(
-        ModelFieldComponent         *comp,
+        IModelFieldComponent        *comp,
         ITypeFieldClaim             *claim);
 
 private:

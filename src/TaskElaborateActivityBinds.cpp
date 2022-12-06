@@ -44,6 +44,8 @@ bool TaskElaborateActivityBinds::elab(
     IModelActivity          *activity) {
     DEBUG_ENTER("elab");
     m_sched_data = sched_data;
+    
+    m_buffer_s.push_back(FlowObjType2ObjM());
 
     activity->accept(m_this);
 
@@ -128,6 +130,16 @@ void TaskElaborateActivityBinds::visitModelActivityTraverse(IModelActivityTraver
 
     m_traverse_s.push_back(td);
 
+    // Process inputs first
+    TaskVisitModelFieldInOut(
+        [&](IModelFieldInOut *f) { if (f->isInput()) processRefInput(f); }
+        ).visit(a->getTarget());
+
+    // Then, outputs
+    TaskVisitModelFieldInOut(
+        [&](IModelFieldInOut *f) { if (!f->isInput()) processRefOutput(f); }
+        ).visit(a->getTarget());
+
     // Push a scope for collecting resources
     m_resource_s.push_back(ResourceClaimM());
     TaskVisitModelFieldClaim(
@@ -184,27 +196,6 @@ void TaskElaborateActivityBinds::visitModelActivityTraverse(IModelActivityTraver
             m_resource_s.back());
     }
 
-//    for ()
-
-    // Find/add a traversal entry
-    // Find/add an action entry
-
-    // Process input references first
-    TaskVisitModelFieldInOut([&](IModelFieldInOut *f) { 
-        if (f->isInput()) {
-            processRefInput(f);
-        }
-    }).visit(a->getTarget());
-
-    // Now, 
-
-//    if (m_traverse_s.size()) {
-//        parent = m_traverse_s.back()->getTarget();
-//    }
-
-
-//    m_sched_data->addTraversal(parent, a, cond);
-
     if (a->getActivity()) {
         DEBUG_ENTER("visitModelActivityTraverse --> visitActivity");
         a->getActivity()->accept(m_this);
@@ -242,9 +233,24 @@ void TaskElaborateActivityBinds::processClaim(IModelFieldClaim *f) {
 
 void TaskElaborateActivityBinds::processRefInput(IModelFieldInOut *f) {
     DEBUG_ENTER("processRefInput");
+
+    vsc::IRefSelector *sel = m_sched_data->getRefSelector(f);
+    if (!sel) {
+        sel = m_sched_data->addRefSelector(f, f->getDataTypeT<IDataTypeFlowObj>()->kind());
+    }
+
     switch (f->getDataTypeT<IDataTypeFlowObj>()->kind()) {
-        case FlowObjKindE::Buffer:
-            break;
+        case FlowObjKindE::Buffer: {
+            FlowObjType2ObjM::iterator it = m_buffer_s.back().find(f->getDataType());
+            if (it != m_buffer_s.back().end()) {
+                DEBUG("%d available objects", it->second.size());
+                for (std::vector<int32_t>::const_iterator
+                    i_it=it->second.begin();
+                    i_it!=it->second.end(); i_it++) {
+                    sel->addIncludeRange(*i_it, *i_it, 0);
+                }
+            }
+        } break;
     }
 
     // Determine what kind of object this is
@@ -271,7 +277,13 @@ void TaskElaborateActivityBinds::processRefOutput(IModelFieldInOut *f) {
     }
 
     switch (f->getDataTypeT<IDataTypeFlowObj>()->kind()) {
-
+        case FlowObjKindE::Buffer: {
+            FlowObjType2ObjM::iterator it = m_buffer_s.back().find(f->getDataType());
+            if (it == m_buffer_s.back().end()) {
+                it = m_buffer_s.back().insert({f->getDataType(), std::vector<int32_t>()}).first;
+            }
+            it->second.push_back(id);
+        } break;
     }
 
     // 

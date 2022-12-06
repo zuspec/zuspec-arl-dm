@@ -20,6 +20,8 @@ public:
 
 	virtual int32_t getId() const = 0;
 
+	virtual void setId(int32_t i) = 0;
+
 };
 
 }

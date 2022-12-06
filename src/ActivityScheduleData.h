@@ -49,7 +49,7 @@ public:
     void initRefSelectors();
 
     void getSelectorsConstraints(
-        std::vector<vsc::IModelField *>         &refs,
+        std::vector<vsc::IRefSelector *>        &refs,
         std::vector<vsc::IModelConstraint *>    &constraints);
 
     ActionTraversalData *getTraversal(IModelActivityTraverse *t);

@@ -62,29 +62,35 @@ void ActivityScheduleData::initRefSelectors() {
 }
 
 void ActivityScheduleData::getSelectorsConstraints(
-        std::vector<vsc::IModelField *>         &refs,
+        std::vector<vsc::IRefSelector *>        &refs,
         std::vector<vsc::IModelConstraint *>    &constraints) {
     // TODO: only get selectors for refs not yet resolved?
     // TODO: get soft validity constraint?
     for (std::vector<vsc::IRefSelector *>::const_iterator
         it=m_buffer_sel_l.begin();
         it!=m_buffer_sel_l.end(); it++) {
-        refs.push_back((*it)->getSelector());
+        refs.push_back(*it);
+        constraints.push_back((*it)->getValidSoftC());
     }
     for (std::vector<vsc::IRefSelector *>::const_iterator
         it=m_resource_sel_l.begin();
         it!=m_resource_sel_l.end(); it++) {
-        refs.push_back((*it)->getSelector());
+        refs.push_back(*it);
+        constraints.push_back((*it)->getValidSoftC());
     }
     for (std::vector<vsc::IRefSelector *>::const_iterator
         it=m_stream_sel_l.begin();
         it!=m_stream_sel_l.end(); it++) {
-        refs.push_back((*it)->getSelector());
+        refs.push_back(*it);
+        // Insist on valid resource assignments
+        constraints.push_back((*it)->getValidC());
     }
     for (std::vector<ActionDataUP>::const_iterator
         it=m_action_l.begin();
         it!=m_action_l.end(); it++) {
-        refs.push_back((*it)->comp_ref_sel->getSelector());
+        refs.push_back((*it)->comp_ref_sel.get());
+        // Insist on valid component context
+        constraints.push_back((*it)->comp_ref_sel->getValidC());
     }
     for (std::vector<vsc::IModelConstraintUP>::const_iterator
         it=m_constraints.begin();

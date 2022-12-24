@@ -9,13 +9,15 @@ package:
   dep-sets:
   - name: default
     deps:
-    - name: libvsc
-      url: https://github.com/fvutils/libvsc.git
+    - name: libvsc-dm
+      url: https://github.com/vsc-tools/libvsc-dm.git
+      branch: dm-refactor
 
   - name: default-dev
     deps:
-    - name: libvsc
-      url: https://github.com/fvutils/libvsc.git
+    - name: libvsc-dm
+      url: https://github.com/vsc-tools/libvsc-dm.git
+      branch: dm-refactor
     - name: ninja
       src: pypi
     - name: cython

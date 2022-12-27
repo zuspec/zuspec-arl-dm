@@ -1,6 +1,6 @@
 
 #pragma once
-#include "arl/IDataTypeActivityScope.h"
+#include "zsp/arl/dm/IDataTypeActivityScope.h"
 
 namespace zsp {
 namespace arl {

@@ -21,7 +21,7 @@
 #pragma once
 #include <memory>
 #include <string>
-#include "vsc/IAccept.h"
+#include "vsc/dm/IAccept.h"
 
 namespace zsp {
 namespace arl {
@@ -41,7 +41,7 @@ public:
 
     virtual ~IMarker() { }
 
-    virtual vsc::IAccept *getTarget() const = 0;
+    virtual vsc::dm::IAccept *getTarget() const = 0;
 
     virtual MarkerSeverity getSeverity() const = 0;
 

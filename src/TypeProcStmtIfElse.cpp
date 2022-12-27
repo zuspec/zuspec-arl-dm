@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtIfElse.h"
 
 
@@ -29,7 +29,7 @@ namespace dm {
 
 
 TypeProcStmtIfElse::TypeProcStmtIfElse(
-    vsc::ITypeExpr          *cond,
+    vsc::dm::ITypeExpr          *cond,
     ITypeProcStmt           *true_s,
     ITypeProcStmt           *false_s) : 
     m_cond(cond), m_true(true_s), m_false(false_s) {
@@ -40,7 +40,7 @@ TypeProcStmtIfElse::~TypeProcStmtIfElse() {
 
 }
 
-void TypeProcStmtIfElse::accept(vsc::IVisitor *v) {
+void TypeProcStmtIfElse::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeProcStmtIfElse(this);
     }

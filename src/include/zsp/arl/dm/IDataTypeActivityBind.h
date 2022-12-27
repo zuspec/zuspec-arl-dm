@@ -20,8 +20,8 @@
  */
 #pragma once
 #include <vector>
-#include "arl/IDataTypeActivity.h"
-#include "vsc/ITypeExprFieldRef.h"
+#include "zsp/arl/dm/IDataTypeActivity.h"
+#include "vsc/dm/ITypeExprFieldRef.h"
 
 namespace zsp {
 namespace arl {
@@ -34,7 +34,7 @@ public:
 
     virtual ~IDataTypeActivityBind() { }
 
-    virtual const std::vector<vsc::ITypeExprFieldRefUP> &getTargets() const = 0;
+    virtual const std::vector<vsc::dm::ITypeExprFieldRefUP> &getTargets() const = 0;
 
 };
 

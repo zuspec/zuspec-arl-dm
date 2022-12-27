@@ -23,8 +23,7 @@
 #include "ModelActivityScope.h"
 #include "ModelActivitySequence.h"
 #include "ModelActivityTraverse.h"
-#include "arl/impl/ModelBuildContext.h"
-#include "ModelEvaluator.h"
+#include "zsp/arl/dm/impl/ModelBuildContext.h"
 #include "ModelFieldActionRoot.h"
 #include "ModelFieldActionType.h"
 #include "ModelFieldClaim.h"
@@ -62,7 +61,7 @@ namespace arl {
 namespace dm {
 
 
-Context::Context(vsc::IContext *ctxt) : vsc::ContextDelegator(ctxt) {
+Context::Context(vsc::dm::IContext *ctxt) : vsc::dm::ContextDelegator(ctxt) {
 
 }
 
@@ -114,7 +113,7 @@ IDataTypeFunction *Context::findDataTypeFunction(const std::string &name) {
 
 IDataTypeFunction *Context::mkDataTypeFunction(
 		const std::string		&name,
-		vsc::IDataType			*rtype,
+		vsc::dm::IDataType			*rtype,
 		bool					own) {
 	return new DataTypeFunction(this, name, rtype, own);
 }
@@ -130,9 +129,9 @@ bool Context::addDataTypeFunction(IDataTypeFunction *f) {
 
 IDataTypeFunctionParamDecl *Context::mkDataTypeFunctionParamDecl(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					own,
-			vsc::ITypeExpr			*init) {
+			vsc::dm::ITypeExpr			*init) {
 	return new DataTypeFunctionParamDecl(name, type, own, init);
 }
 
@@ -141,7 +140,7 @@ IDataTypeActivityParallel *Context::mkDataTypeActivityParallel() {
 }
 
 IDataTypeActivityReplicate *Context::mkDataTypeActivityReplicate(
-			vsc::ITypeExpr			*count) {
+			vsc::dm::ITypeExpr			*count) {
 	return new DataTypeActivityReplicate(this, count);
 }
 
@@ -154,8 +153,8 @@ IDataTypeActivitySequence *Context::mkDataTypeActivitySequence() {
 }
 
 IDataTypeActivityTraverse *Context::mkDataTypeActivityTraverse(
-		vsc::ITypeExprFieldRef	*target,
-		vsc::ITypeConstraint	*with_c) {
+		vsc::dm::ITypeExprFieldRef	*target,
+		vsc::dm::ITypeConstraint	*with_c) {
 	return new DataTypeActivityTraverse(target, with_c);
 }
 
@@ -229,7 +228,7 @@ IModelActivityParallel *Context::mkModelActivityParallel() {
 }
 
 IModelActivityReplicate *Context::mkModelActivityReplicate(
-			vsc::IModelExpr			*count) {
+			vsc::dm::IModelExpr			*count) {
 	return new ModelActivityReplicate(this, count);
 }
 
@@ -247,7 +246,7 @@ IModelActivitySequence *Context::mkModelActivitySequence() {
 
 IModelActivityTraverse *Context::mkModelActivityTraverse(
 		IModelFieldAction			*target,
-		vsc::IModelConstraint		*with_c,
+		vsc::dm::IModelConstraint		*with_c,
 		bool						own_with_c,
 		IModelActivity				*activity,
 		bool						owned) {
@@ -259,11 +258,6 @@ IModelActivityTraverse *Context::mkModelActivityTraverse(
 		owned);
 }
 
-IModelEvaluator *Context::mkModelEvaluator(
-		ModelEvaluatorKind			kind) {
-	return new ModelEvaluator(this, kind);
-}
-
 IModelFieldAction *Context::mkModelFieldActionRoot(
 			const std::string		&name,
 			IDataTypeAction			*type) {
@@ -271,7 +265,7 @@ IModelFieldAction *Context::mkModelFieldActionRoot(
 }
 
 IModelFieldAction *Context::mkModelFieldActionType(
-			vsc::ITypeField			*type) {
+			vsc::dm::ITypeField			*type) {
 	return new ModelFieldActionType(type);
 }
 
@@ -287,17 +281,17 @@ IModelFieldComponent *Context::mkModelFieldComponentRoot(
 }
 
 IModelFieldComponent *Context::mkModelFieldComponentType(
-			vsc::ITypeField         *type) {
+			vsc::dm::ITypeField         *type) {
 	return new ModelFieldComponentType(type);
 }
 
 IModelFieldExecutor *Context::mkModelFieldExecutor(
-			vsc::ITypeField			*type) {
+			vsc::dm::ITypeField			*type) {
 	return new ModelFieldExecutor(type->name(), type->getDataType());
 }
 
 IModelFieldExecutorClaim *Context::mkModelFieldExecutorClaim(
-			vsc::ITypeField			*type) {
+			vsc::dm::ITypeField			*type) {
 	return new ModelFieldExecutorClaim(
 		type->name(),
 		type->getDataType());
@@ -309,14 +303,14 @@ IModelFieldInOut *Context::mkModelFieldInOut(
 }
 
 IModelFieldPool *Context::mkModelFieldPoolType(
-			vsc::ITypeField			*type) {
+			vsc::dm::ITypeField			*type) {
 	return new ModelFieldPool(type->name(), type->getDataType());
 }
 
 IPoolBindDirective *Context::mkPoolBindDirective(
 			PoolBindKind			kind,
-			vsc::ITypeExprFieldRef	*pool,
-			vsc::ITypeExprFieldRef	*target) {
+			vsc::dm::ITypeExprFieldRef	*pool,
+			vsc::dm::ITypeExprFieldRef	*target) {
 	return new PoolBindDirective(kind, pool, target);
 }
 
@@ -329,45 +323,45 @@ ITypeFieldActivity *Context::mkTypeFieldActivity(
 
 ITypeFieldClaim *Context::mkTypeFieldClaim(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					is_lock) {
 	return new TypeFieldClaim(name, type, is_lock);
 }
 
 ITypeFieldExecutor *Context::mkTypeFieldExecutor(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					owned) {
 	return new TypeFieldExecutor(name, type, owned);
 }
 
 ITypeFieldExecutorClaim *Context::mkTypeFieldExecutorClaim(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					owned) {
 	return new TypeFieldExecutorClaim(name, type, owned);
 }
 
 ITypeFieldInOut *Context::mkTypeFieldInOut(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					is_input) {
 	return new TypeFieldInOut(name, type, is_input);
 }
 
 ITypeFieldPool *Context::mkTypeFieldPool(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					own,
-			vsc::TypeFieldAttr		attr,
+			vsc::dm::TypeFieldAttr		attr,
 			int32_t					decl_size) {
 	return new TypeFieldPool(this, name, type, own, attr, decl_size);
 }
 
 ITypeProcStmtAssign *Context::mkTypeProcStmtAssign(
-			vsc::ITypeExprFieldRef		*lhs,
+			vsc::dm::ITypeExprFieldRef		*lhs,
 			TypeProcStmtAssignOp		op,
-			vsc::ITypeExpr				*rhs) {
+			vsc::dm::ITypeExpr				*rhs) {
 	return new TypeProcStmtAssign(lhs, op, rhs);
 }
 
@@ -380,37 +374,37 @@ ITypeProcStmtContinue *Context::mkTypeProcStmtContinue() {
 }
 
 ITypeProcStmtForeach *Context::mkTypeProcStmtForeach(
-			vsc::ITypeExpr		*target,
+			vsc::dm::ITypeExpr		*target,
 			ITypeProcStmt		*body) { 
 
 }
 
 ITypeProcStmtIfElse *Context::mkTypeProcStmtIfElse(
-			vsc::ITypeExpr		*cond,
+			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*true_s,
 			ITypeProcStmt		*false_s) { 
 	return new TypeProcStmtIfElse(cond, true_s, false_s);
 }
 	
 ITypeProcStmtMatch *Context::mkTypeProcStmtMatch(
-			vsc::ITypeExpr		*cond) { 
+			vsc::dm::ITypeExpr		*cond) { 
 	return new TypeProcStmtMatch(cond);
 }
 
 ITypeProcStmtRepeat *Context::mkTypeProcStmtRepeat(
-			vsc::ITypeExpr		*cond,
+			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) { 
 
 }
 
 ITypeProcStmtRepeatWhile *Context::mkTypeProcStmtRepeatWhile(
-			vsc::ITypeExpr		*cond,
+			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) { 
 
 }
 
 ITypeProcStmtReturn *Context::mkTypeProcStmtReturn(
-			vsc::ITypeExpr		*expr) { 
+			vsc::dm::ITypeExpr		*expr) { 
 	return new TypeProcStmtReturn(expr);
 }
 
@@ -420,14 +414,14 @@ ITypeProcStmtScope *Context::mkTypeProcStmtScope() {
 
 ITypeProcStmtVarDecl *Context::mkTypeProcStmtVarDecl(
 			const std::string	 &name,
-			vsc::IDataType		 *type,
+			vsc::dm::IDataType		 *type,
 			bool				 own,
-			vsc::ITypeExpr		 *init) { 
+			vsc::dm::ITypeExpr		 *init) { 
 	return new TypeProcStmtVarDecl(name, type, own, init);
 }
 
 ITypeProcStmtWhile *Context::mkTypeProcStmtWhile(
-			vsc::ITypeExpr		*cond,
+			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) { 
 
 }

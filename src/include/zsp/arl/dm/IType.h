@@ -7,7 +7,7 @@
 
 #pragma once
 #include <string>
-#include "arl/IAccept.h"
+#include "zsp/arl/dm/IAccept.h"
 
 namespace zsp {
 namespace arl {

@@ -6,7 +6,7 @@
  */
 
 #include "ModelFieldAction.h"
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 
 namespace zsp {
 namespace arl {
@@ -21,9 +21,9 @@ ModelFieldAction::~ModelFieldAction() {
 	// TODO Auto-generated destructor stub
 }
 
-void ModelFieldAction::accept(vsc::IVisitor *v) {
-	if (dynamic_cast<arl::IVisitor *>(v)) {
-		dynamic_cast<arl::IVisitor *>(v)->visitModelFieldAction(this);
+void ModelFieldAction::accept(vsc::dm::IVisitor *v) {
+	if (dynamic_cast<arl::dm::IVisitor *>(v)) {
+		dynamic_cast<arl::dm::IVisitor *>(v)->visitModelFieldAction(this);
 	} else if (v->cascade()) {
 		v->visitModelField(this);
 	}

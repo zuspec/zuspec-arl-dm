@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtBreak.h"
 
 
@@ -36,7 +36,7 @@ TypeProcStmtBreak::~TypeProcStmtBreak() {
 
 }
 
-void TypeProcStmtBreak::accept(vsc::IVisitor *v) {
+void TypeProcStmtBreak::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeProcStmtBreak(this);
     }

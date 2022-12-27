@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include "vsc/IModelField.h"
-#include "vsc/IModelConstraint.h"
+#include "vsc/dm/IModelField.h"
+#include "vsc/dm/IModelConstraint.h"
 
 namespace zsp {
 namespace arl {

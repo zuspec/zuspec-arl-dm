@@ -7,8 +7,8 @@
 
 #pragma once
 #include <memory>
-#include "vsc/IModelBuildContext.h"
-#include "vsc/ITypeField.h"
+#include "vsc/dm/IModelBuildContext.h"
+#include "vsc/dm/ITypeField.h"
 
 namespace zsp {
 namespace arl {
@@ -19,12 +19,12 @@ class IModelActivity;
 
 class ITypeFieldActivity;
 using ITypeFieldActivityUP=std::unique_ptr<ITypeFieldActivity>;
-class ITypeFieldActivity : public virtual vsc::ITypeField {
+class ITypeFieldActivity : public virtual vsc::dm::ITypeField {
 public:
 
 	virtual ~ITypeFieldActivity() { }
 
-	virtual IModelActivity *mkActivity(vsc::IModelBuildContext *ctxt) = 0;
+	virtual IModelActivity *mkActivity(vsc::dm::IModelBuildContext *ctxt) = 0;
 
 };
 

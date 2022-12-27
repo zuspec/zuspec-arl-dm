@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IDataTypeActivityReplicate.h"
+#include "zsp/arl/dm/IDataTypeActivityReplicate.h"
 #include "DataTypeActivityScope.h"
 
 namespace zsp {
@@ -33,22 +33,22 @@ class DataTypeActivityReplicate :
 public:
     DataTypeActivityReplicate(
         IContext            *ctxt,
-        vsc::ITypeExpr      *count);
+        vsc::dm::ITypeExpr      *count);
 
     virtual ~DataTypeActivityReplicate();
 
-    virtual vsc::ITypeExpr *getCount() const override {
+    virtual vsc::dm::ITypeExpr *getCount() const override {
         return m_count;
     }
 
 	virtual IModelActivity *mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) override;
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    vsc::ITypeExpr                    *m_count;
+    vsc::dm::ITypeExpr                    *m_count;
 
 };
 

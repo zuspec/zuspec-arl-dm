@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelFieldExecutor.h"
 
 
@@ -30,7 +30,7 @@ namespace dm {
 
 ModelFieldExecutor::ModelFieldExecutor(
     const std::string       &name,
-    vsc::IDataType          *type) : m_name(name), m_type(type) {
+    vsc::dm::IDataType          *type) : m_name(name), m_type(type) {
 
 }
 
@@ -38,7 +38,7 @@ ModelFieldExecutor::~ModelFieldExecutor() {
 
 }
 
-void ModelFieldExecutor::accept(vsc::IVisitor *v) {
+void ModelFieldExecutor::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitModelFieldExecutor(this);
     } else if (v->cascade()) {

@@ -19,8 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmt.h"
-#include "vsc/ITypeExpr.h"
+#include "zsp/arl/dm/ITypeProcStmt.h"
+#include "vsc/dm/ITypeExpr.h"
 
 namespace zsp {
 namespace arl {
@@ -32,7 +32,7 @@ public:
 
     virtual ~ITypeProcStmtRepeat() { }
 
-    virtual vsc::ITypeExpr *getExpr() const = 0;
+    virtual vsc::dm::ITypeExpr *getExpr() const = 0;
 
     virtual ITypeProcStmt *getBody() const = 0;
 

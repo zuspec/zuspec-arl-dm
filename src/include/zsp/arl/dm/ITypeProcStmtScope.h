@@ -21,7 +21,7 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include "arl/ITypeProcStmt.h"
+#include "zsp/arl/dm/ITypeProcStmt.h"
 
 namespace zsp {
 namespace arl {

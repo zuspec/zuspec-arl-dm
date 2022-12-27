@@ -20,7 +20,7 @@
  */
 
 #pragma once
-#include "arl/IMarker.h"
+#include "zsp/arl/dm/IMarker.h"
 
 namespace zsp {
 namespace arl {
@@ -30,14 +30,14 @@ namespace dm {
 class Marker : public virtual IMarker {
 public:
     Marker(
-        vsc::IAccept        *target,
+        vsc::dm::IAccept        *target,
         MarkerSeverity      severity,
         const std::string   &message
     );
 
     virtual ~Marker();
 
-    virtual vsc::IAccept *getTarget() const override {
+    virtual vsc::dm::IAccept *getTarget() const override {
         return m_target;
     }
 
@@ -50,7 +50,7 @@ public:
     }
 
 private:
-    vsc::IAccept                *m_target;
+    vsc::dm::IAccept                *m_target;
     MarkerSeverity              m_severity;
     std::string                 m_message;
 };

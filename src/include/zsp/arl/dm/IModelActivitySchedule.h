@@ -7,7 +7,7 @@
 
 #pragma once
 #include <vector>
-#include "arl/IModelActivityScope.h"
+#include "zsp/arl/dm/IModelActivityScope.h"
 
 namespace zsp {
 namespace arl {

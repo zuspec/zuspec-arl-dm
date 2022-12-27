@@ -19,8 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IDataTypeActivityScope.h"
-#include "vsc/ITypeExpr.h"
+#include "zsp/arl/dm/IDataTypeActivityScope.h"
+#include "vsc/dm/ITypeExpr.h"
 
 namespace zsp {
 namespace arl {
@@ -34,7 +34,7 @@ public:
 
     virtual ~IDataTypeActivityReplicate() { }
 
-    virtual vsc::ITypeExpr *getCount() const = 0;
+    virtual vsc::dm::ITypeExpr *getCount() const = 0;
 
 };
 

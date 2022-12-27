@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtMatch.h"
 
 
@@ -28,7 +28,7 @@ namespace dm {
 
 
 
-TypeProcStmtMatch::TypeProcStmtMatch(vsc::ITypeExpr *cond) : m_cond(cond) {
+TypeProcStmtMatch::TypeProcStmtMatch(vsc::dm::ITypeExpr *cond) : m_cond(cond) {
 
 }
 
@@ -36,7 +36,7 @@ TypeProcStmtMatch::~TypeProcStmtMatch() {
 
 }
 
-void TypeProcStmtMatch::accept(vsc::IVisitor *v) {
+void TypeProcStmtMatch::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeProcStmtMatch(this);
     }

@@ -6,70 +6,70 @@
  */
 
 #pragma once
-#include "vsc/impl/VisitorBase.h"
+#include "vsc/dm/impl/VisitorBase.h"
 
-#include "arl/IDataTypeAction.h"
-#include "arl/IDataTypeActivityBind.h"
-#include "arl/IDataTypeActivityParallel.h"
-#include "arl/IDataTypeActivityReplicate.h"
-#include "arl/IDataTypeActivitySchedule.h"
-#include "arl/IDataTypeActivitySequence.h"
-#include "arl/IDataTypeActivityTraverse.h"
-#include "arl/IDataTypeComponent.h"
-#include "arl/IDataTypeFlowObj.h"
-#include "arl/IDataTypeFunction.h"
-#include "arl/IDataTypeResource.h"
-#include "arl/IModelActivityBind.h"
-#include "arl/IModelActivityParallel.h"
-#include "arl/IModelActivityReplicate.h"
-#include "arl/IModelActivitySchedule.h"
-#include "arl/IModelActivityScope.h"
-#include "arl/IModelActivitySequence.h"
-#include "arl/IModelActivityTraverse.h"
-#include "arl/IModelFieldAction.h"
-#include "arl/IModelFieldClaim.h"
-#include "arl/IModelFieldComponent.h"
-#include "arl/IModelFieldComponentRoot.h"
-#include "arl/IModelFieldExecutor.h"
-#include "arl/IModelFieldExecutorClaim.h"
-#include "arl/IModelFieldInOut.h"
-#include "arl/IModelFieldPool.h"
-#include "arl/IVisitor.h"
-#include "arl/ITypeFieldActivity.h"
-#include "arl/ITypeFieldClaim.h"
-#include "arl/ITypeFieldExecutor.h"
-#include "arl/ITypeFieldExecutorClaim.h"
-#include "arl/ITypeFieldInOut.h"
-#include "arl/ITypeFieldPool.h"
-#include "arl/ITypeProcStmtAssign.h"
-#include "arl/ITypeProcStmtBreak.h"
-#include "arl/ITypeProcStmtContinue.h"
-#include "arl/ITypeProcStmtForeach.h"
-#include "arl/ITypeProcStmtIfElse.h"
-#include "arl/ITypeProcStmtMatch.h"
-#include "arl/ITypeProcStmtRepeat.h"
-#include "arl/ITypeProcStmtRepeatWhile.h"
-#include "arl/ITypeProcStmtReturn.h"
-#include "arl/ITypeProcStmtScope.h"
-#include "arl/ITypeProcStmtVarDecl.h"
-#include "arl/ITypeProcStmtWhile.h"
+#include "zsp/arl/dm/IDataTypeAction.h"
+#include "zsp/arl/dm/IDataTypeActivityBind.h"
+#include "zsp/arl/dm/IDataTypeActivityParallel.h"
+#include "zsp/arl/dm/IDataTypeActivityReplicate.h"
+#include "zsp/arl/dm/IDataTypeActivitySchedule.h"
+#include "zsp/arl/dm/IDataTypeActivitySequence.h"
+#include "zsp/arl/dm/IDataTypeActivityTraverse.h"
+#include "zsp/arl/dm/IDataTypeComponent.h"
+#include "zsp/arl/dm/IDataTypeFlowObj.h"
+#include "zsp/arl/dm/IDataTypeFunction.h"
+#include "zsp/arl/dm/IDataTypeResource.h"
+#include "zsp/arl/dm/IModelActivityBind.h"
+#include "zsp/arl/dm/IModelActivityParallel.h"
+#include "zsp/arl/dm/IModelActivityReplicate.h"
+#include "zsp/arl/dm/IModelActivitySchedule.h"
+#include "zsp/arl/dm/IModelActivityScope.h"
+#include "zsp/arl/dm/IModelActivitySequence.h"
+#include "zsp/arl/dm/IModelActivityTraverse.h"
+#include "zsp/arl/dm/IModelFieldAction.h"
+#include "zsp/arl/dm/IModelFieldClaim.h"
+#include "zsp/arl/dm/IModelFieldComponent.h"
+#include "zsp/arl/dm/IModelFieldComponentRoot.h"
+#include "zsp/arl/dm/IModelFieldExecutor.h"
+#include "zsp/arl/dm/IModelFieldExecutorClaim.h"
+#include "zsp/arl/dm/IModelFieldInOut.h"
+#include "zsp/arl/dm/IModelFieldPool.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "zsp/arl/dm/ITypeFieldActivity.h"
+#include "zsp/arl/dm/ITypeFieldClaim.h"
+#include "zsp/arl/dm/ITypeFieldExecutor.h"
+#include "zsp/arl/dm/ITypeFieldExecutorClaim.h"
+#include "zsp/arl/dm/ITypeFieldInOut.h"
+#include "zsp/arl/dm/ITypeFieldPool.h"
+#include "zsp/arl/dm/ITypeProcStmtAssign.h"
+#include "zsp/arl/dm/ITypeProcStmtBreak.h"
+#include "zsp/arl/dm/ITypeProcStmtContinue.h"
+#include "zsp/arl/dm/ITypeProcStmtForeach.h"
+#include "zsp/arl/dm/ITypeProcStmtIfElse.h"
+#include "zsp/arl/dm/ITypeProcStmtMatch.h"
+#include "zsp/arl/dm/ITypeProcStmtRepeat.h"
+#include "zsp/arl/dm/ITypeProcStmtRepeatWhile.h"
+#include "zsp/arl/dm/ITypeProcStmtReturn.h"
+#include "zsp/arl/dm/ITypeProcStmtScope.h"
+#include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
+#include "zsp/arl/dm/ITypeProcStmtWhile.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class VisitorBase : public virtual arl::IVisitor, public vsc::VisitorBase {
+class VisitorBase : public virtual arl::dm::IVisitor, public vsc::dm::VisitorBase {
 public:
 
-	VisitorBase(bool cascade=true, vsc::IVisitor *this_p=0) : vsc::VisitorBase(cascade, this_p) { }
+	VisitorBase(bool cascade=true, vsc::dm::IVisitor *this_p=0) : vsc::dm::VisitorBase(cascade, this_p) { }
 
-	VisitorBase(arl::IVisitor *this_p) : vsc::VisitorBase(this_p) { }
+	VisitorBase(arl::dm::IVisitor *this_p) : vsc::dm::VisitorBase(this_p) { }
 
 	virtual ~VisitorBase() { }
 
 	virtual void visitDataTypeAction(IDataTypeAction *i) override {
-		vsc::VisitorBase::visitDataTypeStruct(i);
+		vsc::dm::VisitorBase::visitDataTypeStruct(i);
 		for (std::vector<ITypeFieldActivity *>::const_iterator
 				it=i->activities().begin();
 				it!=i->activities().end(); it++) {
@@ -78,7 +78,7 @@ public:
 	}
 
 	virtual void visitDataTypeActivityBind(IDataTypeActivityBind *t) override {
-		for (std::vector<vsc::ITypeExprFieldRefUP>::const_iterator
+		for (std::vector<vsc::dm::ITypeExprFieldRefUP>::const_iterator
 			it=t->getTargets().begin();
 			it!=t->getTargets().end(); it++) {
 			(*it)->accept(m_this);
@@ -86,30 +86,30 @@ public:
 	}
 
 	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) override {
-		vsc::VisitorBase::visitDataTypeStruct(t);
+		vsc::dm::VisitorBase::visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivityReplicate(IDataTypeActivityReplicate *t) override {
 		t->getCount()->accept(m_this);
-		vsc::VisitorBase::visitDataTypeStruct(t);
+		vsc::dm::VisitorBase::visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override {
-		vsc::VisitorBase::visitDataTypeStruct(t);
+		vsc::dm::VisitorBase::visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) override {
-		vsc::VisitorBase::visitDataTypeStruct(t);
+		vsc::dm::VisitorBase::visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { }
 
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override {
-		vsc::VisitorBase::visitDataTypeStruct(t);
+		vsc::dm::VisitorBase::visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override {
-		vsc::VisitorBase::visitDataTypeStruct(t);
+		vsc::dm::VisitorBase::visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeFunction(IDataTypeFunction *t) override {
@@ -121,7 +121,7 @@ public:
 	}
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) override {
-		for (std::vector<vsc::IModelExprUP>::const_iterator
+		for (std::vector<vsc::dm::IModelExprUP>::const_iterator
 			it=a->getTargets().begin();
 			it!=a->getTargets().end(); it++) {
 			(*it)->accept(m_this);
@@ -173,7 +173,7 @@ public:
 	}
 
 	virtual void visitModelFieldAction(IModelFieldAction *f) override {
-		vsc::VisitorBase::visitModelField(f);
+		vsc::dm::VisitorBase::visitModelField(f);
 		if (f->getActivity()) {
 			f->getActivity()->accept(m_this);
 		}
@@ -182,7 +182,7 @@ public:
 	virtual void visitModelFieldClaim(IModelFieldClaim *f) override { }
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
-		vsc::VisitorBase::visitModelField(f);
+		vsc::dm::VisitorBase::visitModelField(f);
 	}
 
 	virtual void visitModelFieldComponentRoot(IModelFieldComponentRoot *f) override {
@@ -190,41 +190,41 @@ public:
 	}
 
 	virtual void visitModelFieldExecutor(IModelFieldExecutor *f) override {
-		vsc::VisitorBase::visitModelField(f);
+		vsc::dm::VisitorBase::visitModelField(f);
 	}
 
 	virtual void visitModelFieldExecutorClaim(IModelFieldExecutorClaim *f) override {
-		vsc::VisitorBase::visitModelFieldRef(f);
+		vsc::dm::VisitorBase::visitModelFieldRef(f);
 	}
 
 	virtual void visitModelFieldInOut(IModelFieldInOut *f) override { }
 
 	virtual void visitModelFieldPool(IModelFieldPool *f) override {
-		vsc::VisitorBase::visitModelField(f);
+		vsc::dm::VisitorBase::visitModelField(f);
 	}
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {
-		vsc::VisitorBase::visitTypeField(f);
+		vsc::dm::VisitorBase::visitTypeField(f);
 	}
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
-		vsc::VisitorBase::visitTypeFieldRef(f);
+		vsc::dm::VisitorBase::visitTypeFieldRef(f);
 	}
 
 	virtual void visitTypeFieldExecutor(ITypeFieldExecutor *f) override {
-		vsc::VisitorBase::visitTypeField(f);
+		vsc::dm::VisitorBase::visitTypeField(f);
 	}
 
 	virtual void visitTypeFieldExecutorClaim(ITypeFieldExecutorClaim *f) override {
-		vsc::VisitorBase::visitTypeFieldRef(f);
+		vsc::dm::VisitorBase::visitTypeFieldRef(f);
 	}
 
 	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) override {
-		vsc::VisitorBase::visitTypeFieldRef(f);
+		vsc::dm::VisitorBase::visitTypeFieldRef(f);
 	}
 
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) override {
-		vsc::VisitorBase::visitTypeField(f);
+		vsc::dm::VisitorBase::visitTypeField(f);
 	}
 
 	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override {
@@ -291,7 +291,7 @@ public:
 		s->getExpr()->accept(m_this);
 		s->getBody()->accept(m_this);
 	}
-}
+};
 
 }
 }

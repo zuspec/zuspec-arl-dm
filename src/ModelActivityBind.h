@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelActivityBind.h"
+#include "zsp/arl/dm/IModelActivityBind.h"
 
 namespace zsp {
 namespace arl {
@@ -30,18 +30,18 @@ namespace dm {
 
 class ModelActivityBind : public virtual IModelActivityBind {
 public:
-    ModelActivityBind(const std::vector<vsc::IModelExpr *> &targets);
+    ModelActivityBind(const std::vector<vsc::dm::IModelExpr *> &targets);
 
     virtual ~ModelActivityBind();
 
-    virtual const std::vector<vsc::IModelExprUP> &getTargets() const override {
+    virtual const std::vector<vsc::dm::IModelExprUP> &getTargets() const override {
         return m_targets;
     }
     
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    std::vector<vsc::IModelExprUP>          m_targets;
+    std::vector<vsc::dm::IModelExprUP>          m_targets;
 };
 
 }

@@ -7,10 +7,10 @@
 
 #pragma once
 #include <vector>
-#include "vsc/ITypeExprFieldRef.h"
-#include "arl/IDataTypeActivity.h"
-#include "arl/ITypeFieldActivity.h"
-#include "vsc/IDataTypeStruct.h"
+#include "vsc/dm/ITypeExprFieldRef.h"
+#include "zsp/arl/dm/IDataTypeActivity.h"
+#include "zsp/arl/dm/ITypeFieldActivity.h"
+#include "vsc/dm/IDataTypeStruct.h"
 
 namespace zsp {
 namespace arl {
@@ -19,7 +19,7 @@ namespace dm {
 
 class IDataTypeActivityScope : 
 	public virtual IDataTypeActivity,
-	public virtual vsc::IDataTypeStruct {
+	public virtual vsc::dm::IDataTypeStruct {
 public:
 
 	virtual ~IDataTypeActivityScope() { }

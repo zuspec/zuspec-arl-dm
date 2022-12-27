@@ -7,17 +7,17 @@
 
 #pragma once
 #include <unordered_map>
-#include "arl/IContext.h"
-#include "vsc/impl/ContextDelegator.h"
+#include "zsp/arl/dm/IContext.h"
+#include "vsc/dm/impl/ContextDelegator.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class Context : public virtual IContext, public vsc::ContextDelegator {
+class Context : public virtual IContext, public vsc::dm::ContextDelegator {
 public:
-	Context(vsc::IContext *ctxt);
+	Context(vsc::dm::IContext *ctxt);
 
 	virtual ~Context();
 
@@ -39,21 +39,21 @@ public:
 
 	virtual IDataTypeFunction *mkDataTypeFunction(
 			const std::string		&name,
-			vsc::IDataType			*rtype,
+			vsc::dm::IDataType			*rtype,
 			bool					own_rtype) override;
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) override;
 
 	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					own,
-			vsc::ITypeExpr			*init) override;
+			vsc::dm::ITypeExpr			*init) override;
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() override;
 
 	virtual IDataTypeActivityReplicate *mkDataTypeActivityReplicate(
-			vsc::ITypeExpr			*count) override;
+			vsc::dm::ITypeExpr			*count) override;
 
 	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() override;
 
@@ -62,8 +62,8 @@ public:
 	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() override;
 
 	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
-			vsc::ITypeExprFieldRef	*target,
-			vsc::ITypeConstraint	*with_c) override;
+			vsc::dm::ITypeExprFieldRef	*target,
+			vsc::dm::ITypeConstraint	*with_c) override;
 
 	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) override;
 
@@ -84,7 +84,7 @@ public:
 	virtual IModelActivityParallel *mkModelActivityParallel() override;
 
 	virtual IModelActivityReplicate *mkModelActivityReplicate(
-			vsc::IModelExpr			*count) override;
+			vsc::dm::IModelExpr			*count) override;
 
 	virtual IModelActivitySchedule *mkModelActivitySchedule() override;
 
@@ -92,20 +92,17 @@ public:
 
 	virtual IModelActivityTraverse *mkModelActivityTraverse(
 			IModelFieldAction		*target,
-			vsc::IModelConstraint	*with_c,
+			vsc::dm::IModelConstraint	*with_c,
 			bool					own_with_c,
 			IModelActivity			*activity,
 			bool					owned) override;
-
-	virtual IModelEvaluator *mkModelEvaluator(
-			ModelEvaluatorKind		kind) override;
 
 	virtual IModelFieldAction *mkModelFieldActionRoot(
 			const std::string		&name,
 			IDataTypeAction			*type) override;
 
 	virtual IModelFieldAction *mkModelFieldActionType(
-			vsc::ITypeField			*type) override;
+			vsc::dm::ITypeField			*type) override;
 
 	virtual IModelFieldClaim *mkModelFieldClaim(
 			ITypeFieldClaim			*type) override;
@@ -115,24 +112,24 @@ public:
 			const std::string		&name) override;
 
 	virtual IModelFieldComponent *mkModelFieldComponentType(
-			vsc::ITypeField         *type) override;
+			vsc::dm::ITypeField         *type) override;
 
 	virtual IModelFieldExecutor *mkModelFieldExecutor(
-			vsc::ITypeField			*type) override;
+			vsc::dm::ITypeField			*type) override;
 
 	virtual IModelFieldExecutorClaim *mkModelFieldExecutorClaim(
-			vsc::ITypeField			*type) override;
+			vsc::dm::ITypeField			*type) override;
 
 	virtual IModelFieldInOut *mkModelFieldInOut(
 			ITypeFieldInOut			*type) override;
 
 	virtual IModelFieldPool *mkModelFieldPoolType(
-			vsc::ITypeField			*type) override;
+			vsc::dm::ITypeField			*type) override;
 
 	virtual IPoolBindDirective *mkPoolBindDirective(
 			PoolBindKind			kind,
-			vsc::ITypeExprFieldRef	*pool,
-			vsc::ITypeExprFieldRef	*target) override;
+			vsc::dm::ITypeExprFieldRef	*pool,
+			vsc::dm::ITypeExprFieldRef	*target) override;
 
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
@@ -141,73 +138,73 @@ public:
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					is_lock) override;
 
 	virtual ITypeFieldExecutor *mkTypeFieldExecutor(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					owned) override;
 
 	virtual ITypeFieldExecutorClaim *mkTypeFieldExecutorClaim(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					owned) override;
 
 	virtual ITypeFieldInOut *mkTypeFieldInOut(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					is_input) override;
 
 	virtual ITypeFieldPool *mkTypeFieldPool(
 			const std::string		&name,
-			vsc::IDataType			*type,
+			vsc::dm::IDataType			*type,
 			bool					own,
-			vsc::TypeFieldAttr		attr,
+			vsc::dm::TypeFieldAttr		attr,
 			int32_t					decl_size) override;
 
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
-			vsc::ITypeExprFieldRef		*lhs,
+			vsc::dm::ITypeExprFieldRef		*lhs,
 			TypeProcStmtAssignOp		op,
-			vsc::ITypeExpr				*rhs) override;
+			vsc::dm::ITypeExpr				*rhs) override;
 
 	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() override;
 
 	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() override;
 
 	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(
-			vsc::ITypeExpr		*target,
+			vsc::dm::ITypeExpr		*target,
 			ITypeProcStmt		*body) override;
 
 	virtual ITypeProcStmtIfElse *mkTypeProcStmtIfElse(
-			vsc::ITypeExpr		*cond,
+			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*true_s,
 			ITypeProcStmt		*false_s) override;
 	
 	virtual ITypeProcStmtMatch *mkTypeProcStmtMatch(
-			vsc::ITypeExpr		*cond) override;
+			vsc::dm::ITypeExpr		*cond) override;
 
 	virtual ITypeProcStmtRepeat *mkTypeProcStmtRepeat(
-			vsc::ITypeExpr		*cond,
+			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) override;
 
 	virtual ITypeProcStmtRepeatWhile *mkTypeProcStmtRepeatWhile(
-			vsc::ITypeExpr		*cond,
+			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) override;
 
 	virtual ITypeProcStmtReturn *mkTypeProcStmtReturn(
-			vsc::ITypeExpr		*expr) override;
+			vsc::dm::ITypeExpr		*expr) override;
 
 	virtual ITypeProcStmtScope *mkTypeProcStmtScope() override;
 
 	virtual ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(
 			const std::string	 &name,
-			vsc::IDataType		 *type,
+			vsc::dm::IDataType		 *type,
 			bool				 own,
-			vsc::ITypeExpr		 *init) override;
+			vsc::dm::ITypeExpr		 *init) override;
 
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
-			vsc::ITypeExpr		*cond,
+			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) override;
 
 private:

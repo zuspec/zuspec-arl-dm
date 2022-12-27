@@ -26,7 +26,7 @@ namespace arl {
 namespace dm {
 
 TaskCollectFlowObjFields::TaskCollectFlowObjFields(
-    std::vector<vsc::IModelField *>     &fields) : m_fields(fields) {
+    std::vector<vsc::dm::IModelField *>     &fields) : m_fields(fields) {
     m_is_flowobj = false;
 }
 
@@ -34,7 +34,7 @@ TaskCollectFlowObjFields::~TaskCollectFlowObjFields() {
 
 }
 
-void TaskCollectFlowObjFields::collect(vsc::IModelField *action) {
+void TaskCollectFlowObjFields::collect(vsc::dm::IModelField *action) {
     action->accept(m_this);
 }
 
@@ -42,7 +42,7 @@ void TaskCollectFlowObjFields::visitDataTypeFlowObj(IDataTypeFlowObj *t) {
     m_is_flowobj = true;
 }
 
-void TaskCollectFlowObjFields::visitModelFieldRef(vsc::IModelFieldRef *f) {
+void TaskCollectFlowObjFields::visitModelFieldRef(vsc::dm::IModelFieldRef *f) {
     m_is_flowobj = false;
     f->getDataType()->accept(m_this);
 

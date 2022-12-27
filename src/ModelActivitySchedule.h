@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include "arl/IDataTypeActivity.h"
-#include "arl/IModelActivitySchedule.h"
+#include "zsp/arl/dm/IDataTypeActivity.h"
+#include "zsp/arl/dm/IModelActivitySchedule.h"
 #include "ModelActivityScope.h"
 #include "ModelField.h"
 
@@ -34,7 +34,7 @@ public:
 
 	virtual const std::string &name() const { return m_name; }
 
-	virtual vsc::IDataType *getDataType() const { return m_type; }
+	virtual vsc::dm::IDataType *getDataType() const { return m_type; }
 
 	virtual const std::vector<IModelActivity *> &activities() const override {
 		return m_activities;
@@ -42,7 +42,7 @@ public:
 
 	virtual void addActivity(IModelActivity *a, bool own) override;
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
 	std::string								m_name;

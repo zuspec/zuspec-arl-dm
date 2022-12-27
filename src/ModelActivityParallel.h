@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include "arl/IModelActivityParallel.h"
+#include "zsp/arl/dm/IModelActivityParallel.h"
 #include "ModelActivityScope.h"
 #include "ModelField.h"
 
@@ -25,7 +25,7 @@ public:
 
 	virtual const std::string &name() const override { return m_name; }
 
-	virtual vsc::IDataType *getDataType() const override { return 0; }
+	virtual vsc::dm::IDataType *getDataType() const override { return 0; }
 
 	virtual const std::vector<IModelActivity *> &branches() const override {
 		return m_branches;
@@ -35,7 +35,7 @@ public:
 		m_branches.push_back(a);
 	}
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
 	std::string									m_name;

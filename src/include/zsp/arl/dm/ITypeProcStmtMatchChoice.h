@@ -20,8 +20,8 @@
  */
 #pragma once
 #include <memory>
-#include "vsc/ITypeExprRangelist.h"
-#include "arl/ITypeProcStmt.h"
+#include "vsc/dm/ITypeExprRangelist.h"
+#include "zsp/arl/dm/ITypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -35,7 +35,7 @@ public:
 
     virtual ~ITypeProcStmtMatchChoice() { }
 
-    virtual vsc::ITypeExprRangelist *getCond() const = 0;
+    virtual vsc::dm::ITypeExprRangelist *getCond() const = 0;
 
     virtual ITypeProcStmt *getBody() const = 0;
 

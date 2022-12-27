@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/impl/VisitorBase.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {
 namespace arl {
@@ -30,19 +30,19 @@ namespace dm {
 class TaskCollectFlowObjFields : public VisitorBase {
 public:
     TaskCollectFlowObjFields(
-        std::vector<vsc::IModelField *>     &fields);
+        std::vector<vsc::dm::IModelField *>     &fields);
 
     virtual ~TaskCollectFlowObjFields();
 
-    void collect(vsc::IModelField *action);
+    void collect(vsc::dm::IModelField *action);
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override;
 
-	virtual void visitModelFieldRef(vsc::IModelFieldRef *f) override;
+	virtual void visitModelFieldRef(vsc::dm::IModelFieldRef *f) override;
 
 
 private:
-    std::vector<vsc::IModelField *>         &m_fields;
+    std::vector<vsc::dm::IModelField *>         &m_fields;
     bool                                    m_is_flowobj;
 
 };

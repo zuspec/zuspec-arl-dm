@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelActivity.h"
+#include "zsp/arl/dm/IModelActivity.h"
 
 namespace zsp {
 namespace arl {

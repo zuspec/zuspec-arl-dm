@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtAssign.h"
 
 
@@ -29,9 +29,9 @@ namespace dm {
 
 
 TypeProcStmtAssign::TypeProcStmtAssign(
-        vsc::ITypeExprFieldRef      *lhs,
+        vsc::dm::ITypeExprFieldRef      *lhs,
         TypeProcStmtAssignOp        op,
-        vsc::ITypeExpr              *rhs) : m_lhs(lhs), m_op(op), m_rhs(rhs) {
+        vsc::dm::ITypeExpr              *rhs) : m_lhs(lhs), m_op(op), m_rhs(rhs) {
 
 }
 
@@ -39,7 +39,7 @@ TypeProcStmtAssign::~TypeProcStmtAssign() {
 
 }
 
-void TypeProcStmtAssign::accept(vsc::IVisitor *v) {
+void TypeProcStmtAssign::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeProcStmtAssign(this);
     }

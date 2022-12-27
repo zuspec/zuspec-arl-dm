@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include "arl/IDataTypeActivity.h"
-#include "arl/ITypeFieldActivity.h"
+#include "zsp/arl/dm/IDataTypeActivity.h"
+#include "zsp/arl/dm/ITypeFieldActivity.h"
 #include "TypeField.h"
 
 namespace zsp {
@@ -24,9 +24,9 @@ public:
 
 	virtual ~TypeFieldActivity();
 
-	virtual IModelActivity *mkActivity(vsc::IModelBuildContext *ctxt) override;
+	virtual IModelActivity *mkActivity(vsc::dm::IModelBuildContext *ctxt) override;
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
 

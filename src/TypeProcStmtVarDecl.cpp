@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtVarDecl.h"
 
 
@@ -30,9 +30,9 @@ namespace dm {
 
 TypeProcStmtVarDecl::TypeProcStmtVarDecl(
     const std::string               &name,
-    vsc::IDataType                  *type,
+    vsc::dm::IDataType                  *type,
     bool                            own,
-    vsc::ITypeExpr                  *init) : 
+    vsc::dm::ITypeExpr                  *init) : 
     m_name(name), m_type(type), m_type_u(own?type:0), m_init(init) {
 
 }
@@ -41,7 +41,7 @@ TypeProcStmtVarDecl::~TypeProcStmtVarDecl() {
 
 }
 
-void TypeProcStmtVarDecl::accept(vsc::IVisitor *v) {
+void TypeProcStmtVarDecl::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeProcStmtVarDecl(this);
     }

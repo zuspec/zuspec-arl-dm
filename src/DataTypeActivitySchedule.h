@@ -7,7 +7,7 @@
 
 #pragma once
 #include "DataTypeActivityScope.h"
-#include "arl/IDataTypeActivitySchedule.h"
+#include "zsp/arl/dm/IDataTypeActivitySchedule.h"
 
 namespace zsp {
 namespace arl {
@@ -23,10 +23,10 @@ public:
 	virtual ~DataTypeActivitySchedule();
 
 	virtual IModelActivity *mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) override;
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
 

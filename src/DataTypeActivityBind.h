@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IDataTypeActivityBind.h"
+#include "zsp/arl/dm/IDataTypeActivityBind.h"
 
 namespace zsp {
 namespace arl {
@@ -29,18 +29,18 @@ namespace dm {
 
 class DataTypeActivityBind : public virtual IDataTypeActivityBind {
 public:
-    DataTypeActivityBind(const std::vector<vsc::ITypeExprFieldRef *> &targets);
+    DataTypeActivityBind(const std::vector<vsc::dm::ITypeExprFieldRef *> &targets);
 
     virtual ~DataTypeActivityBind();
 
-    virtual const std::vector<vsc::ITypeExprFieldRefUP> &getTargets() const override {
+    virtual const std::vector<vsc::dm::ITypeExprFieldRefUP> &getTargets() const override {
         return m_targets;
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    std::vector<vsc::ITypeExprFieldRefUP>           m_targets;
+    std::vector<vsc::dm::ITypeExprFieldRefUP>           m_targets;
 
 };
 

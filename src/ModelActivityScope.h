@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelActivityScope.h"
+#include "zsp/arl/dm/IModelActivityScope.h"
 #include "ModelField.h"
 
 namespace zsp {
@@ -42,9 +42,9 @@ public:
 
 	virtual const std::string &name() const { return m_name; }
 
-	virtual vsc::IDataType *getDataType() const { return 0; }
+	virtual vsc::dm::IDataType *getDataType() const { return 0; }
 
-	virtual void setDataType(vsc::IDataType *t) override { }
+	virtual void setDataType(vsc::dm::IDataType *t) override { }
 
 	virtual const std::vector<IModelActivity *> &activities() const override {
 		return m_activities;
@@ -70,7 +70,7 @@ public:
 		m_roots.push_back(r);
 	}
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 
 private:

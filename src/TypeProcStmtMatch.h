@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmtMatch.h"
+#include "zsp/arl/dm/ITypeProcStmtMatch.h"
 
 namespace zsp {
 namespace arl {
@@ -30,12 +30,12 @@ namespace dm {
 class TypeProcStmtMatch : public virtual ITypeProcStmtMatch {
 public:
     TypeProcStmtMatch(
-        vsc::ITypeExpr          *cond
+        vsc::dm::ITypeExpr          *cond
     );
 
     virtual ~TypeProcStmtMatch();
 
-    virtual vsc::ITypeExpr *getCond() const override {
+    virtual vsc::dm::ITypeExpr *getCond() const override {
         return m_cond.get();
     }
 
@@ -55,10 +55,10 @@ public:
         return m_choices;
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    vsc::ITypeExprUP                                m_cond;
+    vsc::dm::ITypeExprUP                                m_cond;
     ITypeProcStmtUP                                 m_default;
     std::vector<ITypeProcStmtMatchChoiceUP>         m_choices;
 };

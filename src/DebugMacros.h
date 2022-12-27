@@ -4,11 +4,11 @@
 #else
 #error DebugMacros.h can only be included in a .cpp file
 #endif
-#include "vsc/IDebug.h"
+#include "dmgr/IDebug.h"
 #include "ArlImpl.h"
 
 #ifndef LIBARL_DISABLE_DEBUG
-static vsc::IDebug *__dbg = 0;
+static dmgr::IDebug *__dbg = 0;
 
 #define DEBUG_INIT(scope) \
     if (!__dbg) { \

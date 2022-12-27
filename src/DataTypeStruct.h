@@ -8,19 +8,19 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "vsc/IContext.h"
-#include "vsc/IDataTypeStruct.h"
-#include "vsc/IModelBuildContext.h"
-#include "vsc/IModelStructCreateHook.h"
-#include "vsc/ITypeField.h"
-#include "vsc/ITypeConstraint.h"
+#include "vsc/dm/IContext.h"
+#include "vsc/dm/IDataTypeStruct.h"
+#include "vsc/dm/IModelBuildContext.h"
+#include "vsc/dm/IModelStructCreateHook.h"
+#include "vsc/dm/ITypeField.h"
+#include "vsc/dm/ITypeConstraint.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class DataTypeStruct : public virtual vsc::IDataTypeStruct {
+class DataTypeStruct : public virtual vsc::dm::IDataTypeStruct {
 public:
 	DataTypeStruct(const std::string &name);
 
@@ -30,34 +30,34 @@ public:
 		return m_name;
 	}
 
-	virtual void addField(vsc::ITypeField *f);
+	virtual void addField(vsc::dm::ITypeField *f);
 
-	virtual const std::vector<vsc::ITypeFieldUP> &getFields() const;
+	virtual const std::vector<vsc::dm::ITypeFieldUP> &getFields() const;
 
-	virtual vsc::ITypeField *getField(int32_t idx);
+	virtual vsc::dm::ITypeField *getField(int32_t idx);
 
-	virtual void addConstraint(vsc::ITypeConstraint *c);
+	virtual void addConstraint(vsc::dm::ITypeConstraint *c);
 
-	virtual const std::vector<vsc::ITypeConstraintUP> &getConstraints() const;
+	virtual const std::vector<vsc::dm::ITypeConstraintUP> &getConstraints() const;
 
-	virtual vsc::IModelStructCreateHook *getCreateHook() const override;
+	virtual vsc::dm::IModelStructCreateHook *getCreateHook() const override;
 
-	virtual void setCreateHook(vsc::IModelStructCreateHook *hook) override;
+	virtual void setCreateHook(vsc::dm::IModelStructCreateHook *hook) override;
 
-	virtual vsc::IModelField *mkRootField(
-		vsc::IModelBuildContext		*ctxt,
+	virtual vsc::dm::IModelField *mkRootField(
+		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) override;
 
-	virtual vsc::IModelField *mkTypeField(
-		vsc::IModelBuildContext		*ctxt,
-		vsc::ITypeField				*type) override;
+	virtual vsc::dm::IModelField *mkTypeField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		vsc::dm::ITypeField				*type) override;
 
 public:
 	std::string								m_name;
-	std::vector<vsc::ITypeFieldUP>		 	m_fields;
-	std::vector<vsc::ITypeConstraintUP>		m_constraints;
-	vsc::IModelStructCreateHookUP			m_create_hook;
+	std::vector<vsc::dm::ITypeFieldUP>		 	m_fields;
+	std::vector<vsc::dm::ITypeConstraintUP>		m_constraints;
+	vsc::dm::IModelStructCreateHookUP			m_create_hook;
 
 
 };

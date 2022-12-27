@@ -7,8 +7,8 @@
 
 #pragma once
 #include <memory>
-#include "vsc/IModelField.h"
-#include "arl/IModelActivity.h"
+#include "vsc/dm/IModelField.h"
+#include "zsp/arl/dm/IModelActivity.h"
 
 namespace zsp {
 namespace arl {
@@ -25,7 +25,7 @@ enum class ModelActivityScopeT {
 class IModelActivityScope;
 using IModelActivityScopeUP=std::unique_ptr<IModelActivityScope>;
 class IModelActivityScope : 
-	public virtual vsc::IModelField, 
+	public virtual vsc::dm::IModelField, 
 	public virtual IModelActivity {
 public:
 

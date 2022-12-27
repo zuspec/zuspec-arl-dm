@@ -6,9 +6,9 @@
  */
 
 #pragma once
-#include "arl/IModelEvalIterator.h"
-#include "arl/IModelFieldComponent.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/IModelEvalIterator.h"
+#include "zsp/arl/dm/IModelFieldComponent.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -30,7 +30,7 @@ public:
 	virtual ~IModelEvaluator() { }
 
 	virtual IModelEvalIterator *eval(
-			const vsc::IRandState	*randstate,
+			const vsc::dm::IRandState	*randstate,
 			IModelFieldComponent	*root_comp,
 			IDataTypeAction			*root_action) = 0;
 

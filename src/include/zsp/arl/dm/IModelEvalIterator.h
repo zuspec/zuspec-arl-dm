@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include "arl/IModelFieldAction.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/IModelFieldAction.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {

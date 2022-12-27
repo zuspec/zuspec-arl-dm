@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmtBreak.h"
+#include "zsp/arl/dm/ITypeProcStmtBreak.h"
 
 namespace zsp {
 namespace arl {
@@ -32,7 +32,7 @@ public:
 
     virtual ~TypeProcStmtBreak();
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 };
 

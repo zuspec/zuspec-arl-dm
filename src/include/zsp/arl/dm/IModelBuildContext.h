@@ -6,21 +6,21 @@
  */
 
 #pragma once
-#include "arl/IContext.h"
-#include "arl/IModelActivityScope.h"
-#include "vsc/IModelBuildContext.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IModelActivityScope.h"
+#include "vsc/dm/IModelBuildContext.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class IModelBuildContext : public virtual vsc::IModelBuildContext {
+class IModelBuildContext : public virtual vsc::dm::IModelBuildContext {
 public:
 
 	virtual ~IModelBuildContext() { }
 
-	virtual arl::IContext *ctxt() const = 0;
+	virtual arl::dm::IContext *ctxt() const = 0;
 
 	virtual void pushActivityScope(IModelActivityScope *a)  = 0;
 

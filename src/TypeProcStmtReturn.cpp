@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtReturn.h"
 
 
@@ -28,7 +28,7 @@ namespace dm {
 
 
 
-TypeProcStmtReturn::TypeProcStmtReturn(vsc::ITypeExpr *expr) : m_expr(expr) {
+TypeProcStmtReturn::TypeProcStmtReturn(vsc::dm::ITypeExpr *expr) : m_expr(expr) {
 
 }
 
@@ -36,7 +36,7 @@ TypeProcStmtReturn::~TypeProcStmtReturn() {
 
 }
 
-void TypeProcStmtReturn::accept(vsc::IVisitor *v) {
+void TypeProcStmtReturn::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeProcStmtReturn(this);
     }

@@ -5,8 +5,8 @@
  *      Author: mballance
  */
 
-#include "vsc/impl/ModelBuildContext.h"
-#include "vsc/impl/TaskResolveFieldRefExpr.h"
+#include "vsc/dm/impl/ModelBuildContext.h"
+#include "vsc/dm/impl/TaskResolveFieldRefExpr.h"
 #include "DebugMacros.h"
 #include "DataTypeComponent.h"
 #include "TaskBuildComponentMap.h"
@@ -50,16 +50,16 @@ void TaskBuildComponentMap::visitModelFieldComponent(IModelFieldComponent *f) {
 	}
 
 	TypePoolMapFrame &bind_f = m_type_pool_map_s.back();
-	vsc::ModelBuildContext build_ctxt(0);
+	vsc::dm::ModelBuildContext build_ctxt(0);
 	build_ctxt.pushTopDownScope(f);
-	vsc::TaskResolveFieldRefExpr resolver(&build_ctxt);
+	vsc::dm::TaskResolveFieldRefExpr resolver(&build_ctxt);
 
 	for (std::vector<IPoolBindDirectiveUP>::const_iterator
 		it=f->getDataTypeT<IDataTypeComponent>()->getPoolBindDirectives().begin();
 		it!=f->getDataTypeT<IDataTypeComponent>()->getPoolBindDirectives().end(); it++) {
 		switch ((*it)->kind()) {
 			case PoolBindKind::All: {
-				vsc::IModelField *field = resolver.resolve((*it)->getPool());
+				vsc::dm::IModelField *field = resolver.resolve((*it)->getPool());
 				IModelFieldPool *pool = dynamic_cast<IModelFieldPool *>(field);
 				TypePoolMapT::const_iterator b_it = bind_f.m_wildcard_m.find(pool->getDataTypePool());
 
@@ -85,7 +85,7 @@ void TaskBuildComponentMap::visitModelFieldComponent(IModelFieldComponent *f) {
 		it!=f->getDataTypeT<DataTypeComponent>()->getActionTypes().end(); it++) {
 		DEBUG("ActionType %s", (*it)->name().c_str());
 		// Process action claims and references
-		for (std::vector<vsc::ITypeFieldUP>::const_iterator
+		for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 			f_it=(*it)->getFields().begin();
 			f_it!=(*it)->getFields().end(); f_it++) {
 			DEBUG("Visiting field %s", (*f_it)->name().c_str());

@@ -7,9 +7,9 @@
 
 #pragma once
 #include <unordered_map>
-#include "arl/IModelFieldComponent.h"
-#include "arl/impl/VisitorBase.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/IModelFieldComponent.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
+#include "vsc/dm/IModelField.h"
 #include "ComponentMap.h"
 
 namespace zsp {
@@ -32,8 +32,8 @@ public:
 	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) override;
 
 private:
-	using TypePoolMapT=std::unordered_map<vsc::IDataType *, IModelFieldPool *>;
-	using FieldPoolMapT=std::unordered_map<vsc::ITypeField *, IModelFieldPool *>;
+	using TypePoolMapT=std::unordered_map<vsc::dm::IDataType *, IModelFieldPool *>;
+	using FieldPoolMapT=std::unordered_map<vsc::dm::ITypeField *, IModelFieldPool *>;
 
 	struct TypePoolMapFrame {
 		TypePoolMapT						m_wildcard_m;

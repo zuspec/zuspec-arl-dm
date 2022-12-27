@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmt.h"
+#include "zsp/arl/dm/ITypeProcStmt.h"
 
 namespace zsp {
 namespace arl {

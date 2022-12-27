@@ -6,7 +6,7 @@
  */
 
 #include "TypeField.h"
-#include "vsc/IDataTypeStruct.h"
+#include "vsc/dm/IDataTypeStruct.h"
 
 namespace zsp {
 namespace arl {
@@ -15,12 +15,12 @@ namespace dm {
 
 TypeField::TypeField(
 		const std::string			&name,
-		vsc::IDataType				*type,
+		vsc::dm::IDataType				*type,
 		bool						owned,
-		vsc::TypeFieldAttr			attr) :
+		vsc::dm::TypeFieldAttr			attr) :
 				m_parent(0), m_idx(-1), m_name(name), m_type(type), m_attr(attr) {
 	if (owned) {
-		m_type_owned = vsc::IDataTypeUP(type);
+		m_type_owned = vsc::dm::IDataTypeUP(type);
 	}
 
 }
@@ -29,8 +29,8 @@ TypeField::~TypeField() {
 	// TODO Auto-generated destructor stub
 }
 
-vsc::ITypeField *TypeField::getField(int32_t idx) const {
-	vsc::IDataTypeStruct *s = dynamic_cast<vsc::IDataTypeStruct *>(getDataType());
+vsc::dm::ITypeField *TypeField::getField(int32_t idx) const {
+	vsc::dm::IDataTypeStruct *s = dynamic_cast<vsc::dm::IDataTypeStruct *>(getDataType());
 	if (s) {
 		return s->getField(idx);
 	} else {
@@ -38,8 +38,8 @@ vsc::ITypeField *TypeField::getField(int32_t idx) const {
 	}
 }
 
-vsc::IModelField *TypeField::mkModelField(
-		vsc::IModelBuildContext 			*ctxt) {
+vsc::dm::IModelField *TypeField::mkModelField(
+		vsc::dm::IModelBuildContext 			*ctxt) {
 	return getDataType()->mkTypeField(ctxt, this);
 }
 

@@ -5,7 +5,7 @@
  *      Author: mballance
  */
 
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelFieldComponent.h"
 #include "ModelFieldComponentRoot.h"
 #include "TaskBuildComponentMap.h"
@@ -23,7 +23,7 @@ ModelFieldComponent::ModelFieldComponent(
 }
 
 ModelFieldComponent::ModelFieldComponent(
-	vsc::ITypeField			*type) : 
+	vsc::dm::ITypeField			*type) : 
 		m_name(type->name()), m_dt(type->getDataType()), m_type(type) {
 
 }
@@ -33,9 +33,9 @@ ModelFieldComponent::~ModelFieldComponent() {
 }
 
 
-void ModelFieldComponent::accept(vsc::IVisitor *v) {
-	if (dynamic_cast<arl::IVisitor *>(v)) {
-		dynamic_cast<arl::IVisitor *>(v)->visitModelFieldComponent(this);
+void ModelFieldComponent::accept(vsc::dm::IVisitor *v) {
+	if (dynamic_cast<arl::dm::IVisitor *>(v)) {
+		dynamic_cast<arl::dm::IVisitor *>(v)->visitModelFieldComponent(this);
 	} else if (v->cascade()) {
 		v->visitModelField(this);
 	}

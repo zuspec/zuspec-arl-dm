@@ -20,8 +20,8 @@
  */
 #pragma once
 #include <vector>
-#include "arl/IModelActivity.h"
-#include "vsc/IModelExpr.h"
+#include "zsp/arl/dm/IModelActivity.h"
+#include "vsc/dm/IModelExpr.h"
 
 namespace zsp {
 namespace arl {
@@ -35,7 +35,7 @@ public:
 
     virtual ~IModelActivityBind() { }
 
-    virtual const std::vector<vsc::IModelExprUP> &getTargets() const = 0;
+    virtual const std::vector<vsc::dm::IModelExprUP> &getTargets() const = 0;
 
 };
 

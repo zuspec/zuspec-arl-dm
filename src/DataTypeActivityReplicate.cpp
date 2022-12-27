@@ -18,10 +18,10 @@
  * Created on:
  *     Author:
  */
-#include "arl/IContext.h"
-#include "arl/IVisitor.h"
-#include "vsc/impl/TaskBuildModelExpr.h"
-#include "vsc/impl/TaskBuildModelConstraint.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "vsc/dm/impl/TaskBuildModelExpr.h"
+#include "vsc/dm/impl/TaskBuildModelConstraint.h"
 #include "DataTypeActivityReplicate.h"
 #include "ModelActivityReplicate.h"
 
@@ -33,31 +33,31 @@ namespace dm {
 
 DataTypeActivityReplicate::DataTypeActivityReplicate(
     IContext            *ctxt,
-    vsc::ITypeExpr      *count) : DataTypeActivityScope(""), m_count(count) {
+    vsc::dm::ITypeExpr      *count) : DataTypeActivityScope(""), m_count(count) {
 
-    vsc::IDataTypeInt *ui16 = ctxt->findDataTypeInt(false, 16);
+    vsc::dm::IDataTypeInt *ui16 = ctxt->findDataTypeInt(false, 16);
     if (!ui16) {
         ui16 = ctxt->mkDataTypeInt(false, 16);
         ctxt->addDataTypeInt(ui16);
     }
 
     addField(ctxt->mkTypeFieldPhy("__count", ui16, false,
-        vsc::TypeFieldAttr::Rand, 0));
+        vsc::dm::TypeFieldAttr::Rand, 0));
     addField(ctxt->mkTypeFieldPhy("__index", ui16, false,
-        vsc::TypeFieldAttr::NoAttr, 0));
+        vsc::dm::TypeFieldAttr::NoAttr, 0));
 
-    vsc::ITypeExprFieldRef *count_r = ctxt->mkTypeExprFieldRef();
+    vsc::dm::ITypeExprFieldRef *count_r = ctxt->mkTypeExprFieldRef();
     count_r->addIdxRef(0);
     count_r->addActiveScopeRef(-1);
     addConstraint(ctxt->mkTypeConstraintExpr(
         ctxt->mkTypeExprBin(
             count_r,
-            vsc::BinOp::Eq,
+            vsc::dm::BinOp::Eq,
             count
         )
     ));
 
-    fprintf(stdout, "EQ=%d\n", vsc::BinOp::Eq);
+    fprintf(stdout, "EQ=%d\n", vsc::dm::BinOp::Eq);
 }
 
 DataTypeActivityReplicate::~DataTypeActivityReplicate() {
@@ -65,16 +65,16 @@ DataTypeActivityReplicate::~DataTypeActivityReplicate() {
 }
 
 IModelActivity *DataTypeActivityReplicate::mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     IModelActivityScope *ret = ctxt_a->mkModelActivityReplicate(
-        vsc::TaskBuildModelExpr(ctxt).build(m_count)
+        vsc::dm::TaskBuildModelExpr(ctxt).build(m_count)
     );
 
     ctxt->pushBottomUpScope(ret);
 
-	for (std::vector<vsc::ITypeFieldUP>::const_iterator
+	for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 		it=getFields().begin();
 		it!=getFields().end(); it++) {
 		ret->addField(it->get()->getDataType()->mkTypeField(
@@ -82,10 +82,10 @@ IModelActivity *DataTypeActivityReplicate::mkActivity(
 			it->get()));
 	}
 
-    for (std::vector<vsc::ITypeConstraintUP>::const_iterator
+    for (std::vector<vsc::dm::ITypeConstraintUP>::const_iterator
         it=getConstraints().begin();
         it!=getConstraints().end(); it++) {
-        ret->addConstraint(vsc::TaskBuildModelConstraint<>(ctxt).build(it->get()));
+        ret->addConstraint(vsc::dm::TaskBuildModelConstraint<>(ctxt).build(it->get()));
     }
 
 	fprintf(stdout, "mkActivity: %d\n", getActivities().size());
@@ -101,7 +101,7 @@ IModelActivity *DataTypeActivityReplicate::mkActivity(
     return ret;
 }
 
-void DataTypeActivityReplicate::accept(vsc::IVisitor *v) {
+void DataTypeActivityReplicate::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitDataTypeActivityReplicate(this);
     } else if (v->cascade()) {

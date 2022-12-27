@@ -5,87 +5,87 @@
  *      Author: mballance
  */
 #pragma once
-#include "vsc/IModelField.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class ModelField : public virtual vsc::IModelField {
+class ModelField : public virtual vsc::dm::IModelField {
 public:
 	ModelField();
 
 	virtual ~ModelField();
 
-	virtual vsc::IModelField *getParent() const override {
+	virtual vsc::dm::IModelField *getParent() const override {
 		return m_parent;
 	}
 
-	virtual void setParent(vsc::IModelField *p) override {
+	virtual void setParent(vsc::dm::IModelField *p) override {
 		m_parent = p;
 	}
 
-	virtual void setDataType(vsc::IDataType *t) override { }
+	virtual void setDataType(vsc::dm::IDataType *t) override { }
 
-	virtual const std::vector<vsc::IModelConstraintUP> &constraints() const override {
+	virtual const std::vector<vsc::dm::IModelConstraintUP> &constraints() const override {
 		return m_constraints;
 	}
 
-	virtual void addConstraint(vsc::IModelConstraint *c) override;
+	virtual void addConstraint(vsc::dm::IModelConstraint *c) override;
 
-	virtual const std::vector<vsc::IModelFieldUP> &fields() const override {
+	virtual const std::vector<vsc::dm::IModelFieldUP> &fields() const override {
 		return m_fields;
 	}
 
-	virtual void addField(vsc::IModelField *field) override;
+	virtual void addField(vsc::dm::IModelField *field) override;
 
-	virtual vsc::IModelField *getField(int32_t idx) override;
+	virtual vsc::dm::IModelField *getField(int32_t idx) override;
 
-	virtual const vsc::IModelVal *val() const override {
+	virtual const vsc::dm::IModelVal *val() const override {
 		return m_val.get();
 	}
 
-	virtual vsc::IModelVal *val() override {
+	virtual vsc::dm::IModelVal *val() override {
 		return m_val.get();
 	}
 
-	virtual vsc::ModelFieldFlag flags() const override {
+	virtual vsc::dm::ModelFieldFlag flags() const override {
 		return m_flags;
 	}
 
-	virtual void clearFlag(vsc::ModelFieldFlag flags) override {
+	virtual void clearFlag(vsc::dm::ModelFieldFlag flags) override {
 		m_flags = (m_flags & (~flags));
 	}
 
-	virtual void setFlag(vsc::ModelFieldFlag flags) override {
+	virtual void setFlag(vsc::dm::ModelFieldFlag flags) override {
 		m_flags = (m_flags | flags);
 	}
 
-	virtual void setFlags(vsc::ModelFieldFlag flags) override {
+	virtual void setFlags(vsc::dm::ModelFieldFlag flags) override {
 		m_flags = flags;
 	}
 
-	virtual bool isFlagSet(vsc::ModelFieldFlag flags) const override {
+	virtual bool isFlagSet(vsc::dm::ModelFieldFlag flags) const override {
 		return ((m_flags & flags) == flags);
 	}
 
-	virtual void setFieldData(vsc::IModelFieldData *data) override {
-		m_data = vsc::IModelFieldDataUP(data);
+	virtual void setFieldData(vsc::dm::IModelFieldData *data) override {
+		m_data = vsc::dm::IModelFieldDataUP(data);
 	}
 
-	virtual vsc::IModelFieldData *getFieldData() override {
+	virtual vsc::dm::IModelFieldData *getFieldData() override {
 		return m_data.get();
 	}
 
 protected:
-	vsc::IModelField						*m_parent;
-	vsc::IModelFieldDataUP					m_data;
-	vsc::IModelValUP						m_val;
+	vsc::dm::IModelField						*m_parent;
+	vsc::dm::IModelFieldDataUP					m_data;
+	vsc::dm::IModelValUP						m_val;
 
-	std::vector<vsc::IModelFieldUP>			m_fields;
-	std::vector<vsc::IModelConstraintUP>	m_constraints;
-	vsc::ModelFieldFlag						m_flags;
+	std::vector<vsc::dm::IModelFieldUP>			m_fields;
+	std::vector<vsc::dm::IModelConstraintUP>	m_constraints;
+	vsc::dm::ModelFieldFlag						m_flags;
 };
 
 }

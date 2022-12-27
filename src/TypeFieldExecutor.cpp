@@ -18,8 +18,8 @@
  * Created on:
  *     Author:
  */
-#include "arl/IContext.h"
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeFieldExecutor.h"
 
 
@@ -31,9 +31,9 @@ namespace dm {
 
 TypeFieldExecutor::TypeFieldExecutor(
     const std::string       &name,
-    vsc::IDataType          *type,
+    vsc::dm::IDataType          *type,
     bool                    own) : 
-        TypeField(name, type, own, vsc::TypeFieldAttr::NoAttr) {
+        TypeField(name, type, own, vsc::dm::TypeFieldAttr::NoAttr) {
 
 }
 
@@ -41,13 +41,13 @@ TypeFieldExecutor::~TypeFieldExecutor() {
 
 }
 
-vsc::IModelField *TypeFieldExecutor::mkModelField(
-		vsc::IModelBuildContext 			*ctxt) {
+vsc::dm::IModelField *TypeFieldExecutor::mkModelField(
+		vsc::dm::IModelBuildContext 			*ctxt) {
     IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     return ctxt_a->mkModelFieldExecutor(this);
 }
 
-void TypeFieldExecutor::accept(vsc::IVisitor *v) {
+void TypeFieldExecutor::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeFieldExecutor(this);
     } else if (v->cascade()) {

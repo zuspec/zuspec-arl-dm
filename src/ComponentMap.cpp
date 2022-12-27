@@ -7,8 +7,8 @@
 
 #include "DebugMacros.h"
 #include "ComponentMap.h"
-#include "arl/IDataTypeComponent.h"
-#include "arl/IModelFieldComponent.h"
+#include "zsp/arl/dm/IDataTypeComponent.h"
+#include "zsp/arl/dm/IModelFieldComponent.h"
 
 namespace zsp {
 namespace arl {
@@ -59,11 +59,11 @@ const std::vector<IModelFieldComponent *> &ComponentMap::getSubContexts(IDataTyp
 	}
 }
 
-void ComponentMap::addPoolMapping(vsc::ITypeField *claim_ref, IModelFieldPool *pool) {
+void ComponentMap::addPoolMapping(vsc::dm::ITypeField *claim_ref, IModelFieldPool *pool) {
 	m_claim_ref_pool_m.insert({claim_ref, pool});
 }
 
-IModelFieldPool *ComponentMap::getPool(vsc::ITypeField *claim_ref) const {
+IModelFieldPool *ComponentMap::getPool(vsc::dm::ITypeField *claim_ref) const {
 	ClaimRef2PoolMapT::const_iterator it = m_claim_ref_pool_m.find(claim_ref);
 
 	if (it == m_claim_ref_pool_m.end()) {

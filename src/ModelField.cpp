@@ -14,7 +14,7 @@ namespace dm {
 
 ModelField::ModelField() {
 	m_parent = 0;
-	m_flags = vsc::ModelFieldFlag::NoFlags;
+	m_flags = vsc::dm::ModelFieldFlag::NoFlags;
 
 }
 
@@ -22,15 +22,15 @@ ModelField::~ModelField() {
 	// TODO Auto-generated destructor stub
 }
 
-void ModelField::addConstraint(vsc::IModelConstraint *c) {
-	m_constraints.push_back(vsc::IModelConstraintUP(c));
+void ModelField::addConstraint(vsc::dm::IModelConstraint *c) {
+	m_constraints.push_back(vsc::dm::IModelConstraintUP(c));
 }
 
-void ModelField::addField(vsc::IModelField *field) {
-	m_fields.push_back(vsc::IModelFieldUP(field));
+void ModelField::addField(vsc::dm::IModelField *field) {
+	m_fields.push_back(vsc::dm::IModelFieldUP(field));
 }
 
-vsc::IModelField *ModelField::getField(int32_t idx) {
+vsc::dm::IModelField *ModelField::getField(int32_t idx) {
 	return m_fields.at(idx).get();
 }
 

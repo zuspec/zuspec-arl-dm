@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include "arl/IComponentMap.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/IComponentMap.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -17,7 +17,7 @@ namespace dm {
 class IModelFieldComponent;
 using IModelFieldComponentUP=std::unique_ptr<IModelFieldComponent>;
 class IModelFieldComponent : 
-	public virtual vsc::IModelField {
+	public virtual vsc::dm::IModelField {
 public:
 	virtual ~IModelFieldComponent() { }
 

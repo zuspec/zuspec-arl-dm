@@ -21,7 +21,7 @@ TaskIsDataTypeComponent::~TaskIsDataTypeComponent() {
 	// TODO Auto-generated destructor stub
 }
 
-IDataTypeComponent *TaskIsDataTypeComponent::check(vsc::IDataType *t) {
+IDataTypeComponent *TaskIsDataTypeComponent::check(vsc::dm::IDataType *t) {
 	m_comp = 0;
 	t->accept(this);
 	return m_comp;

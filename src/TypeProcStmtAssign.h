@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmtAssign.h"
+#include "zsp/arl/dm/ITypeProcStmtAssign.h"
 
 namespace zsp {
 namespace arl {
@@ -31,13 +31,13 @@ namespace dm {
 class TypeProcStmtAssign : public virtual ITypeProcStmtAssign {
 public:
     TypeProcStmtAssign(
-        vsc::ITypeExprFieldRef      *lhs,
+        vsc::dm::ITypeExprFieldRef      *lhs,
         TypeProcStmtAssignOp        op,
-        vsc::ITypeExpr              *rhs);
+        vsc::dm::ITypeExpr              *rhs);
 
     virtual ~TypeProcStmtAssign();
 
-    virtual vsc::ITypeExprFieldRef *getLhs() override {
+    virtual vsc::dm::ITypeExprFieldRef *getLhs() override {
         return m_lhs.get();
     }
 
@@ -45,16 +45,16 @@ public:
         return m_op;
     }
 
-    virtual vsc::ITypeExpr *getRhs() override {
+    virtual vsc::dm::ITypeExpr *getRhs() override {
         return m_rhs.get();
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    vsc::ITypeExprFieldRefUP                m_lhs;
+    vsc::dm::ITypeExprFieldRefUP                m_lhs;
     TypeProcStmtAssignOp                    m_op;
-    vsc::ITypeExprUP                        m_rhs;
+    vsc::dm::ITypeExprUP                        m_rhs;
 
 };
 

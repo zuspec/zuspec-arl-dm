@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "DataTypeFunction.h"
 
 
@@ -31,7 +31,7 @@ namespace dm {
 DataTypeFunction::DataTypeFunction(
     IContext                    *ctxt,
     const std::string           &name,
-    vsc::IDataType              *rtype,
+    vsc::dm::IDataType              *rtype,
     bool                        own_rtype) : 
         m_name(name), m_ret_type(rtype), m_ret_type_u(own_rtype?rtype:0),
         m_body(ctxt->mkTypeProcStmtScope()) {
@@ -45,7 +45,7 @@ void DataTypeFunction::addParameter(IDataTypeFunctionParamDecl *p) {
     m_parameters.push_back(IDataTypeFunctionParamDeclUP(p));
 }
 
-void DataTypeFunction::accept(vsc::IVisitor *v) {
+void DataTypeFunction::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitDataTypeFunction(this);
     }

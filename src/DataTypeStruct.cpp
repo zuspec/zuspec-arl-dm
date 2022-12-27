@@ -5,7 +5,7 @@
  *      Author: mballance
  */
 
-#include "vsc/impl/TaskIsTypeFieldRef.h"
+#include "vsc/dm/impl/TaskIsTypeFieldRef.h"
 #include "DataTypeStruct.h"
 
 namespace zsp {
@@ -22,40 +22,40 @@ DataTypeStruct::~DataTypeStruct() {
 	// TODO Auto-generated destructor stub
 }
 
-void DataTypeStruct::addField(vsc::ITypeField *f) {
+void DataTypeStruct::addField(vsc::dm::ITypeField *f) {
 	f->setIndex(m_fields.size());
-	m_fields.push_back(vsc::ITypeFieldUP(f));
+	m_fields.push_back(vsc::dm::ITypeFieldUP(f));
 }
 
-const std::vector<vsc::ITypeFieldUP> &DataTypeStruct::getFields() const {
+const std::vector<vsc::dm::ITypeFieldUP> &DataTypeStruct::getFields() const {
 	return m_fields;
 }
 
-vsc::ITypeField *DataTypeStruct::getField(int32_t idx) {
+vsc::dm::ITypeField *DataTypeStruct::getField(int32_t idx) {
 	return m_fields.at(idx).get();
 }
 
-void DataTypeStruct::addConstraint(vsc::ITypeConstraint *c) {
-	m_constraints.push_back(vsc::ITypeConstraintUP(c));
+void DataTypeStruct::addConstraint(vsc::dm::ITypeConstraint *c) {
+	m_constraints.push_back(vsc::dm::ITypeConstraintUP(c));
 }
 
-const std::vector<vsc::ITypeConstraintUP> &DataTypeStruct::getConstraints() const {
+const std::vector<vsc::dm::ITypeConstraintUP> &DataTypeStruct::getConstraints() const {
 	return m_constraints;
 }
 
-vsc::IModelStructCreateHook *DataTypeStruct::getCreateHook() const {
+vsc::dm::IModelStructCreateHook *DataTypeStruct::getCreateHook() const {
 	return m_create_hook.get();
 }
 
-void DataTypeStruct::setCreateHook(vsc::IModelStructCreateHook *hook) {
-	m_create_hook = vsc::IModelStructCreateHookUP(hook);
+void DataTypeStruct::setCreateHook(vsc::dm::IModelStructCreateHook *hook) {
+	m_create_hook = vsc::dm::IModelStructCreateHookUP(hook);
 }
 
-vsc::IModelField *DataTypeStruct::mkRootField(
-		vsc::IModelBuildContext		*ctxt,
+vsc::dm::IModelField *DataTypeStruct::mkRootField(
+		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) {
-	vsc::IModelField *ret;
+	vsc::dm::IModelField *ret;
 
 	if (is_ref) {
 		ret = ctxt->ctxt()->mkModelFieldRefRoot(this, name);
@@ -63,7 +63,7 @@ vsc::IModelField *DataTypeStruct::mkRootField(
 		ret = ctxt->ctxt()->mkModelFieldRoot(this, name);
 
 		// Need to build sub-fields and constraints
-		for (std::vector<vsc::ITypeFieldUP>::const_iterator
+		for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 			it=getFields().begin();
 			it!=getFields().end(); it++) {
 			ret->addField((*it)->mkModelField(ctxt));
@@ -77,17 +77,17 @@ vsc::IModelField *DataTypeStruct::mkRootField(
 	return ret;
 }
 
-vsc::IModelField *DataTypeStruct::mkTypeField(
-		vsc::IModelBuildContext		*ctxt,
-		vsc::ITypeField				*type) {
-	vsc::IModelField *ret;
+vsc::dm::IModelField *DataTypeStruct::mkTypeField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		vsc::dm::ITypeField				*type) {
+	vsc::dm::IModelField *ret;
 
-	if (vsc::TaskIsTypeFieldRef().eval(type)) {
+	if (vsc::dm::TaskIsTypeFieldRef().eval(type)) {
 		ret = ctxt->ctxt()->mkModelFieldRefType(type);
 	} else {
 		ret = ctxt->ctxt()->mkModelFieldType(type);
 
-		for (std::vector<vsc::ITypeFieldUP>::const_iterator
+		for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 			it=getFields().begin();
 			it!=getFields().end(); it++) {
 			ret->addField((*it)->mkModelField(ctxt));

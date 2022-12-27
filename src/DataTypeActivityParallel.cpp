@@ -19,8 +19,8 @@
  *     Author:
  */
 
-#include "arl/IContext.h"
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "DataTypeActivityParallel.h"
 #include "ModelActivityParallel.h"
 
@@ -38,13 +38,13 @@ DataTypeActivityParallel::~DataTypeActivityParallel() {
 }
 
 IModelActivity *DataTypeActivityParallel::mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) {
     IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     IModelActivityScope *ret = ctxt_a->mkModelActivityScope(
         ModelActivityScopeT::Parallel);
 
-	for (std::vector<vsc::ITypeFieldUP>::const_iterator
+	for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 		it=getFields().begin();
 		it!=getFields().end(); it++) {
 		ret->addField(it->get()->getDataType()->mkTypeField(
@@ -66,7 +66,7 @@ IModelActivity *DataTypeActivityParallel::mkActivity(
     return ret;
 }
 
-void DataTypeActivityParallel::accept(vsc::IVisitor *v) {
+void DataTypeActivityParallel::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitDataTypeActivityParallel(this);
     } else if (v->cascade()) {

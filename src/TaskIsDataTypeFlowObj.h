@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/impl/VisitorBase.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {
 namespace arl {
@@ -34,9 +34,9 @@ public:
 
     virtual ~TaskIsDataTypeFlowObj();
 
-    static bool test(vsc::IDataType *t);
+    static bool test(vsc::dm::IDataType *t);
 
-    static bool test(FlowObjKindE kind, vsc::IDataType *t);
+    static bool test(FlowObjKindE kind, vsc::dm::IDataType *t);
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override;
 

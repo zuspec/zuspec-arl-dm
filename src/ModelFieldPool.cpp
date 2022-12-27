@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelFieldPool.h"
 
 
@@ -28,7 +28,7 @@ namespace dm {
 
 ModelFieldPool::ModelFieldPool(
     const std::string       &name,
-    vsc::IDataType          *type) : m_name(name), m_type(type), m_type_pool(0) {
+    vsc::dm::IDataType          *type) : m_name(name), m_type(type), m_type_pool(0) {
 
 }
 
@@ -36,7 +36,7 @@ ModelFieldPool::~ModelFieldPool() {
 
 }
 
-void ModelFieldPool::accept(vsc::IVisitor *v) {
+void ModelFieldPool::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitModelFieldPool(this);
     } else if (v->cascade()) {

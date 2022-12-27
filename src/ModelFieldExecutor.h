@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelFieldExecutor.h"
+#include "zsp/arl/dm/IModelFieldExecutor.h"
 #include "ModelField.h"
 
 namespace zsp {
@@ -33,7 +33,7 @@ class ModelFieldExecutor : public virtual IModelFieldExecutor, public virtual Mo
 public:
     ModelFieldExecutor(
         const std::string   &name,
-        vsc::IDataType      *type);
+        vsc::dm::IDataType      *type);
 
     virtual ~ModelFieldExecutor();
 
@@ -41,15 +41,15 @@ public:
         return m_name;
     }
 
-    virtual vsc::IDataType *getDataType() const override {
+    virtual vsc::dm::IDataType *getDataType() const override {
         return m_type;
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     std::string             m_name;
-    vsc::IDataType          *m_type;
+    vsc::dm::IDataType          *m_type;
 
 };
 

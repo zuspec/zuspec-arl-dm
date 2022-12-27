@@ -6,7 +6,7 @@
  */
 #include <dlfcn.h>
 #include <stdio.h>
-#include "arl/IArl.h"
+#include "zsp/arl/dm/IArl.h"
 
 
 static arl::IArl *get_arl(const char *path) {

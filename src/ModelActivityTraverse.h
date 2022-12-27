@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include "arl/IModelActivityTraverse.h"
-#include "arl/IModelFieldAction.h"
+#include "zsp/arl/dm/IModelActivityTraverse.h"
+#include "zsp/arl/dm/IModelFieldAction.h"
 #include "ModelActivity.h"
 
 namespace zsp {
@@ -21,7 +21,7 @@ class ModelActivityTraverse :
 public:
 	ModelActivityTraverse(
 			IModelFieldAction		*target,
-			vsc::IModelConstraint	*with_c,
+			vsc::dm::IModelConstraint	*with_c,
 			bool					own_with_c,
 			IModelActivity			*activity,
 			bool					owned);
@@ -32,7 +32,7 @@ public:
 		return m_target;
 	}
 
-	virtual vsc::IModelConstraint *getWithC() const {
+	virtual vsc::dm::IModelConstraint *getWithC() const {
 		return m_with_c;
 	}
 
@@ -56,12 +56,12 @@ public:
 		m_processed = p;
 	}
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
 	IModelFieldAction				*m_target;
-	vsc::IModelConstraint			*m_with_c;
-	vsc::IModelConstraintUP			m_with_c_u;
+	vsc::dm::IModelConstraint			*m_with_c;
+	vsc::dm::IModelConstraintUP			m_with_c_u;
 	IModelFieldPool					*m_parent_pool;
 	IModelActivity					*m_activity;
 	IModelActivityUP				m_activity_u;

@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include "arl/IDataTypeActivitySequence.h"
-#include "vsc/IModelFieldFactory.h"
+#include "zsp/arl/dm/IDataTypeActivitySequence.h"
+#include "vsc/dm/IModelFieldFactory.h"
 #include "DataTypeActivityScope.h"
 
 namespace zsp {
@@ -29,10 +29,10 @@ public:
 	//
 
 	virtual IModelActivity *mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) override;
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
 

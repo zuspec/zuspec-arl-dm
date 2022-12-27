@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IDataTypeActivityParallel.h"
+#include "zsp/arl/dm/IDataTypeActivityParallel.h"
 #include "DataTypeActivityScope.h"
 
 namespace zsp {
@@ -37,10 +37,10 @@ public:
     virtual ~DataTypeActivityParallel();
 
 	virtual IModelActivity *mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) override;
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 };
 
 }

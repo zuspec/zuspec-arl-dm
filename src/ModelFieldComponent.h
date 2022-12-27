@@ -10,11 +10,11 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
-#include "arl/IContext.h"
-#include "arl/IDataTypeComponent.h"
-#include "arl/IModelFieldComponent.h"
-#include "vsc/IModelField.h"
-#include "vsc/IModelVal.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IDataTypeComponent.h"
+#include "zsp/arl/dm/IModelFieldComponent.h"
+#include "vsc/dm/IModelField.h"
+#include "vsc/dm/IModelVal.h"
 #include "ComponentMap.h"
 #include "ModelField.h"
 
@@ -34,7 +34,7 @@ public:
 		IDataTypeComponent			*type);
 
 	ModelFieldComponent(
-		vsc::ITypeField				*type);
+		vsc::dm::ITypeField				*type);
 
 	virtual ~ModelFieldComponent();
 
@@ -42,7 +42,7 @@ public:
         return m_name;
     }
 
-    virtual vsc::IDataType *getDataType() const override {
+    virtual vsc::dm::IDataType *getDataType() const override {
         return m_dt;
     }
 
@@ -50,7 +50,7 @@ public:
 
 	void setId(int32_t id) { m_id = id; }
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 protected:
 
@@ -58,7 +58,7 @@ protected:
 
 private:
 	using CompTCompIdM=std::unordered_map<IDataTypeComponent *, std::vector<int32_t>>;
-	using CompTCompInstM=std::unordered_map<IDataTypeComponent *,std::vector<vsc::IModelField *>>;
+	using CompTCompInstM=std::unordered_map<IDataTypeComponent *,std::vector<vsc::dm::IModelField *>>;
 	using RefTPoolIdM=std::unordered_map<ITypeFieldInOut *,int32_t>;
 
 
@@ -66,8 +66,8 @@ protected:
 	IContext								*m_ctxt;
 	int32_t									m_id;
 	std::string								m_name;
-	vsc::IDataType							*m_dt;
-	vsc::ITypeField							*m_type;
+	vsc::dm::IDataType							*m_dt;
+	vsc::dm::ITypeField							*m_type;
 
 
 	// Map from the field-type handle of an action declared in

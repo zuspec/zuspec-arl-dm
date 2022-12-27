@@ -73,7 +73,7 @@ void TaskBuildModelAction::visitTypeFieldActivity(ITypeFieldActivity *f) {
 	// Only visit fields. Activities will be processed later
 	IDataTypeActivityScope *scope = f->getDataTypeT<IDataTypeActivityScope>();
 
-	for (std::vector<vsc::ITypeFieldUP>::const_iterator
+	for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 			it=scope->getFields().begin();
 			it!=scope->getFields().end(); it++) {
 		(*it)->accept(this);
@@ -102,7 +102,7 @@ void TaskBuildModelAction::visitDataTypeActivitySequence(IDataTypeActivitySequen
 
 	// Only build out fields for now
 	m_ctxt->pushBottomUpScope(seq);
-	for (std::vector<vsc::ITypeFieldUP>::const_iterator
+	for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 			it=t->getFields().begin();
 			it!=t->getFields().end(); it++) {
 		(*it)->accept(this);

@@ -7,8 +7,8 @@
 
 #pragma once
 #include <memory>
-#include "arl/IArl.h"
-#include "vsc/IDebugMgr.h"
+#include "zsp/arl/dm/IArl.h"
+#include "dmgr/IDebugMgr.h"
 
 namespace zsp {
 namespace arl {
@@ -23,16 +23,16 @@ public:
 
 	virtual ~ArlImpl();
 
-	virtual IContext *mkContext(vsc::IContext *ctxt) override;
+	virtual IContext *mkContext(vsc::dm::IContext *ctxt) override;
 
-	virtual void init(vsc::IDebugMgr *dbg_mgr) override;
+	virtual void init(dmgr::IDebugMgr *dbg_mgr) override;
 
-	vsc::IDebugMgr *getDebugMgr() const { return m_dbg_mgr; }
+	dmgr::IDebugMgr *getDebugMgr() const { return m_dbg_mgr; }
 
 	static ArlImpl *inst();
 
 private:
-	vsc::IDebugMgr				*m_dbg_mgr;
+	dmgr::IDebugMgr				*m_dbg_mgr;
 	static ArlImplUP			m_inst;
 
 

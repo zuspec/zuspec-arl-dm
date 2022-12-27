@@ -6,9 +6,9 @@
  */
 
 #pragma once
-#include "arl/IContext.h"
-#include "arl/IDataTypeComponent.h"
-#include "vsc/IModelFieldFactory.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IDataTypeComponent.h"
+#include "vsc/dm/IModelFieldFactory.h"
 #include "DataTypeStruct.h"
 
 namespace zsp {
@@ -38,22 +38,22 @@ public:
 		return m_pool_binds;
 	}
 
-	virtual vsc::IModelField *mkRootField(
-		vsc::IModelBuildContext		*ctxt,
+	virtual vsc::dm::IModelField *mkRootField(
+		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) override;
 
-	virtual vsc::IModelField *mkTypeField(
-		vsc::IModelBuildContext		*ctxt,
-		vsc::ITypeField				*type) override;
+	virtual vsc::dm::IModelField *mkTypeField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		vsc::dm::ITypeField				*type) override;
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-	vsc::ITypeField							*m_comp_id;
+	vsc::dm::ITypeField							*m_comp_id;
 	std::vector<IDataTypeAction *>			m_action_types;
 	std::vector<IPoolBindDirectiveUP>		m_pool_binds;
-	vsc::IModelStructCreateHookUP			m_create_hook;
+	vsc::dm::IModelStructCreateHookUP			m_create_hook;
 
 };
 

@@ -32,7 +32,7 @@ class ModelFieldComponentType :
     public virtual ModelField {
 public:
     ModelFieldComponentType(
-        vsc::ITypeField         *type
+        vsc::dm::ITypeField         *type
     );
 
     virtual ~ModelFieldComponentType();
@@ -41,12 +41,12 @@ public:
         return m_type->name();
     }
 
-    virtual vsc::IDataType *getDataType() const override {
+    virtual vsc::dm::IDataType *getDataType() const override {
         return m_type->getDataType();
     }
 
 private:
-    vsc::ITypeField             *m_type;
+    vsc::dm::ITypeField             *m_type;
 
 };
 

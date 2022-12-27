@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelFieldClaim.h"
 
 
@@ -36,7 +36,7 @@ ModelFieldClaim::~ModelFieldClaim() {
 
 }
 
-void ModelFieldClaim::accept(vsc::IVisitor *v) {
+void ModelFieldClaim::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitModelFieldClaim(this);
     } else if (v->cascade()) {

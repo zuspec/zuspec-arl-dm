@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "DataTypeActivityBind.h"
 
 
@@ -29,11 +29,11 @@ namespace dm {
 
 
 DataTypeActivityBind::DataTypeActivityBind(
-    const std::vector<vsc::ITypeExprFieldRef *> &targets) {
-    for (std::vector<vsc::ITypeExprFieldRef *>::const_iterator
+    const std::vector<vsc::dm::ITypeExprFieldRef *> &targets) {
+    for (std::vector<vsc::dm::ITypeExprFieldRef *>::const_iterator
         it=targets.begin();
         it!=targets.end(); it++) {
-        m_targets.push_back(vsc::ITypeExprFieldRefUP(*it));
+        m_targets.push_back(vsc::dm::ITypeExprFieldRefUP(*it));
     }
 }
 
@@ -41,7 +41,7 @@ DataTypeActivityBind::~DataTypeActivityBind() {
 
 }
 
-void DataTypeActivityBind::accept(vsc::IVisitor *v) {
+void DataTypeActivityBind::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitDataTypeActivityBind(this);
     }

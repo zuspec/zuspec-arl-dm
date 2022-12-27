@@ -6,9 +6,9 @@
  */
 
 #pragma once
-#include "arl/IModelBuildContext.h"
-#include "vsc/impl/ModelBuildContext.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/IModelBuildContext.h"
+#include "vsc/dm/impl/ModelBuildContext.h"
+#include "vsc/dm/IModelField.h"
 #include <vector>
 
 namespace zsp {
@@ -16,9 +16,9 @@ namespace arl {
 namespace dm {
 
 
-class ModelBuildContext : public virtual IModelBuildContext, public virtual vsc::ModelBuildContext {
+class ModelBuildContext : public virtual IModelBuildContext, public virtual vsc::dm::ModelBuildContext {
 public:
-	ModelBuildContext(IContext *ctxt) : vsc::ModelBuildContext(ctxt) { }
+	ModelBuildContext(IContext *ctxt) : vsc::dm::ModelBuildContext(ctxt) { }
 
 	virtual ~ModelBuildContext() { }
 
@@ -44,7 +44,7 @@ protected:
 
 	std::vector<IModelActivityScope *>			m_activity_scope_s;
 
-}
+};
 
 }
 }

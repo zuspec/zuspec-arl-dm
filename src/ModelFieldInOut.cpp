@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelFieldInOut.h"
 
 
@@ -36,7 +36,7 @@ ModelFieldInOut::~ModelFieldInOut() {
 
 }
 
-void ModelFieldInOut::accept(vsc::IVisitor *v) {
+void ModelFieldInOut::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitModelFieldInOut(this);
     } else if (v->cascade()) {

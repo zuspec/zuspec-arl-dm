@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmtContinue.h"
+#include "zsp/arl/dm/ITypeProcStmtContinue.h"
 
 namespace zsp {
 namespace arl {
@@ -33,7 +33,7 @@ public:
 
     virtual ~TypeProcStmtContinue();
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 
 };

@@ -18,8 +18,8 @@
  * Created on:
  *     Author:
  */
-#include "arl/IContext.h"
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeFieldExecutorClaim.h"
 
 
@@ -31,8 +31,8 @@ namespace dm {
 
 TypeFieldExecutorClaim::TypeFieldExecutorClaim(
     const std::string               &name,
-    vsc::IDataType                  *type,
-    bool                            owned) : TypeField(name, type, owned, vsc::TypeFieldAttr::NoAttr) {
+    vsc::dm::IDataType                  *type,
+    bool                            owned) : TypeField(name, type, owned, vsc::dm::TypeFieldAttr::NoAttr) {
 
 }
 
@@ -40,13 +40,13 @@ TypeFieldExecutorClaim::~TypeFieldExecutorClaim() {
 
 }
 
-vsc::IModelField *TypeFieldExecutorClaim::mkModelField(
-		vsc::IModelBuildContext 			*ctxt) {
+vsc::dm::IModelField *TypeFieldExecutorClaim::mkModelField(
+		vsc::dm::IModelBuildContext 			*ctxt) {
     IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     return ctxt_a->mkModelFieldExecutorClaim(this);
 }
 
-void TypeFieldExecutorClaim::accept(vsc::IVisitor *v) {
+void TypeFieldExecutorClaim::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeFieldExecutorClaim(this);
     } else if (v->cascade()) {

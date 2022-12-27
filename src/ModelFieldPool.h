@@ -21,8 +21,8 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "arl/IModelFieldPool.h"
-#include "vsc/IDataType.h"
+#include "zsp/arl/dm/IModelFieldPool.h"
+#include "vsc/dm/IDataType.h"
 #include "ModelField.h"
 
 namespace zsp {
@@ -35,7 +35,7 @@ class ModelFieldPool : public virtual IModelFieldPool, public virtual ModelField
 public:
     ModelFieldPool(
         const std::string       &name,
-        vsc::IDataType          *type);
+        vsc::dm::IDataType          *type);
 
     virtual ~ModelFieldPool();
 
@@ -43,11 +43,11 @@ public:
         return m_name;
     }
 
-    virtual vsc::IDataType *getDataType() const override {
+    virtual vsc::dm::IDataType *getDataType() const override {
         return m_type;
     }
 
-    virtual vsc::IDataType *getDataTypePool() const override {
+    virtual vsc::dm::IDataType *getDataTypePool() const override {
         return m_type_pool;
     }
     
@@ -55,15 +55,15 @@ public:
 
     virtual void setId(int32_t id) override { m_id = id; }
 
-    virtual void setDataTypePool(vsc::IDataType *t) override {
+    virtual void setDataTypePool(vsc::dm::IDataType *t) override {
         m_type_pool = t;
     }
 
-    virtual void addObject(vsc::IModelField *obj) override {
-        m_objects.push_back(vsc::IModelFieldUP(obj));
+    virtual void addObject(vsc::dm::IModelField *obj) override {
+        m_objects.push_back(vsc::dm::IModelFieldUP(obj));
     }
 
-    virtual const std::vector<vsc::IModelFieldUP> &getObjects() const override {
+    virtual const std::vector<vsc::dm::IModelFieldUP> &getObjects() const override {
         return m_objects;
     }
 
@@ -71,23 +71,18 @@ public:
         return m_global_pool_range;
     }
 
-    virtual void setGlobalPoolRange(int32_t i1, int32_t i2) override {
-};
+    virtual void setGlobalPoolRange(int32_t i1, int32_t i2) override { }
 
-}
-}
-}
-
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     std::string                         m_name;
-    vsc::IDataType                      *m_type;
-    vsc::IDataType                      *m_type_pool;
+    vsc::dm::IDataType                      *m_type;
+    vsc::dm::IDataType                      *m_type_pool;
     int32_t                             m_id;
 
     // Objects are only used for resource pools
-    std::vector<vsc::IModelFieldUP>     m_objects;
+    std::vector<vsc::dm::IModelFieldUP>     m_objects;
 
     // Stores the range that this pool holds within
     // the global per-type object pool

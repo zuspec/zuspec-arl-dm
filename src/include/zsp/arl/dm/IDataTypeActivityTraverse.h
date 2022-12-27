@@ -6,9 +6,9 @@
  */
 
 #pragma once
-#include "arl/IDataTypeActivity.h"
-#include "vsc/ITypeConstraint.h"
-#include "vsc/ITypeExprFieldRef.h"
+#include "zsp/arl/dm/IDataTypeActivity.h"
+#include "vsc/dm/ITypeConstraint.h"
+#include "vsc/dm/ITypeExprFieldRef.h"
 
 namespace zsp {
 namespace arl {
@@ -20,11 +20,11 @@ public:
 
 	virtual ~IDataTypeActivityTraverse() { }
 
-	virtual vsc::ITypeExprFieldRef *getTarget() const = 0;
+	virtual vsc::dm::ITypeExprFieldRef *getTarget() const = 0;
 
-	virtual vsc::ITypeConstraint *getWithC() const = 0;
+	virtual vsc::dm::ITypeConstraint *getWithC() const = 0;
 
-	virtual void setWithC(vsc::ITypeConstraint *c) = 0;
+	virtual void setWithC(vsc::dm::ITypeConstraint *c) = 0;
 
 };
 

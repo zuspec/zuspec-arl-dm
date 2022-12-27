@@ -20,10 +20,12 @@
  */
 #pragma once
 #include "gtest/gtest.h"
-#include "arl/IContext.h"
+#include "zsp/arl/dm/IContext.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
 
 
 class TestBase : public ::testing::Test {
@@ -40,9 +42,11 @@ public:
 
 protected:
     IContextUP                  m_ctxt;
-    vsc::IRandStateUP           m_randstate;
+//    vsc::IRandStateUP           m_randstate;
 };
 
+}
+}
 }
 
 

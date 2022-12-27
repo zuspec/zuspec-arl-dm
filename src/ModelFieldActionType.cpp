@@ -12,7 +12,7 @@ namespace arl {
 namespace dm {
 
 
-ModelFieldActionType::ModelFieldActionType(vsc::ITypeField *type) : m_type(type) {
+ModelFieldActionType::ModelFieldActionType(vsc::dm::ITypeField *type) : m_type(type) {
 	// TODO Auto-generated constructor stub
 
 }

@@ -6,15 +6,15 @@
  */
 
 #pragma once
-#include "arl/IModelBuildContext.h"
-#include "vsc/impl/TaskBuildModelConstraint.h"
+#include "zsp/arl/dm/IModelBuildContext.h"
+#include "vsc/dm/impl/TaskBuildModelConstraint.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class TaskBuildModelConstraint : public vsc::TaskBuildModelConstraint<> {
+class TaskBuildModelConstraint : public vsc::dm::TaskBuildModelConstraint<> {
 public:
 	TaskBuildModelConstraint(IModelBuildContext *ctxt);
 

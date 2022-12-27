@@ -23,7 +23,9 @@
 #include "ArlImpl.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
 
 
 TestBase::TestBase() {
@@ -35,11 +37,11 @@ TestBase::~TestBase() {
 }
 
 void TestBase::SetUp() {
-    ArlImpl::inst()->init(vsc::VscImpl::inst()->getDebugMgr());
-    m_ctxt = IContextUP(
-        ArlImpl::inst()->mkContext(
-            vsc::VscImpl::inst()->mkContext()));
-    m_randstate = vsc::IRandStateUP(m_ctxt->mkRandState(""));
+//    ArlImpl::inst()->init(vsc::VscImpl::inst()->getDebugMgr());
+//    m_ctxt = IContextUP(
+//        ArlImpl::inst()->mkContext(
+//            vsc::VscImpl::inst()->mkContext()));
+//    m_randstate = vsc::IRandStateUP(m_ctxt->mkRandState(""));
     enableDebug(false);
 }
 
@@ -48,7 +50,9 @@ void TestBase::TearDown() {
 }
 
 void TestBase::enableDebug(bool en) {
-    vsc::VscImpl::inst()->getDebugMgr()->enable(en);
+//    vsc::VscImpl::inst()->getDebugMgr()->enable(en);
 }
 
+}
+}
 }

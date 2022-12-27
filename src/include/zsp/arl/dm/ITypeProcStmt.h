@@ -20,7 +20,7 @@
  */
 #pragma once
 #include <memory>
-#include "vsc/IAccept.h"
+#include "vsc/dm/IAccept.h"
 
 namespace zsp {
 namespace arl {
@@ -29,7 +29,7 @@ namespace dm {
 
 class ITypeProcStmt;
 using ITypeProcStmtUP=std::unique_ptr<ITypeProcStmt>;
-class ITypeProcStmt : public virtual vsc::IAccept {
+class ITypeProcStmt : public virtual vsc::dm::IAccept {
 public:
 
     virtual ~ITypeProcStmt() { }

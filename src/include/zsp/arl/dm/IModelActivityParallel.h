@@ -8,8 +8,8 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "arl/IModelActivityScope.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/IModelActivityScope.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -20,7 +20,7 @@ class IModelActivityParallel;
 using IModelActivityParallelUP=std::unique_ptr<IModelActivityParallel>;
 class IModelActivityParallel : 
 	public virtual IModelActivityScope, 
-	public virtual vsc::IModelField {
+	public virtual vsc::dm::IModelField {
 public:
 
 	virtual ~IModelActivityParallel() { }

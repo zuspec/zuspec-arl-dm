@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmtReturn.h"
+#include "zsp/arl/dm/ITypeProcStmtReturn.h"
 
 namespace zsp {
 namespace arl {
@@ -30,18 +30,18 @@ namespace dm {
 
 class TypeProcStmtReturn : public virtual ITypeProcStmtReturn {
 public:
-    TypeProcStmtReturn(vsc::ITypeExpr *expr);
+    TypeProcStmtReturn(vsc::dm::ITypeExpr *expr);
 
     virtual ~TypeProcStmtReturn();
 
-    virtual vsc::ITypeExpr *getExpr() const override {
+    virtual vsc::dm::ITypeExpr *getExpr() const override {
         return m_expr.get();
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    vsc::ITypeExprUP            m_expr;
+    vsc::dm::ITypeExprUP            m_expr;
 };
 
 }

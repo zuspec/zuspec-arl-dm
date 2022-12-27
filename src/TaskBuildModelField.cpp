@@ -12,7 +12,7 @@ namespace arl {
 namespace dm {
 
 
-TaskBuildModelField::TaskBuildModelField(vsc::IModelBuildContext *ctxt) :
+TaskBuildModelField::TaskBuildModelField(vsc::dm::IModelBuildContext *ctxt) :
 	VisitorDelegator(&m_core), m_ctxt(ctxt), m_core(ctxt, this) {
 	// TODO Auto-generated constructor stub
 
@@ -22,7 +22,7 @@ TaskBuildModelField::~TaskBuildModelField() {
 	// TODO Auto-generated destructor stub
 }
 
-vsc::IModelField *TaskBuildModelField::build(vsc::IDataTypeStruct *type, const std::string &name) {
+vsc::dm::IModelField *TaskBuildModelField::build(vsc::dm::IDataTypeStruct *type, const std::string &name) {
 	return m_core.build(type, name);
 }
 

@@ -6,9 +6,9 @@
  */
 
 #pragma once
-#include "arl/IDataTypeAction.h"
-#include "arl/IModelFieldAction.h"
-#include "arl/IModelActivityScope.h"
+#include "zsp/arl/dm/IDataTypeAction.h"
+#include "zsp/arl/dm/IModelFieldAction.h"
+#include "zsp/arl/dm/IModelActivityScope.h"
 #include "ModelField.h"
 
 namespace zsp {
@@ -36,7 +36,7 @@ public:
 		m_activity = IModelActivityScopeUP(a);
 	}
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 
 protected:

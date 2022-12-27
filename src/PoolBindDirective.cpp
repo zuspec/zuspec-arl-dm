@@ -28,8 +28,8 @@ namespace dm {
 
 PoolBindDirective::PoolBindDirective(
     PoolBindKind                kind,
-    vsc::ITypeExprFieldRef      *pool,
-    vsc::ITypeExprFieldRef      *target) : 
+    vsc::dm::ITypeExprFieldRef      *pool,
+    vsc::dm::ITypeExprFieldRef      *target) : 
         m_kind(kind), m_pool(pool), m_target(target) {
 
 }

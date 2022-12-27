@@ -19,12 +19,12 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IContext.h"
-#include "arl/IModelBuildContext.h"
-#include "arl/impl/ModelBuildContext.h"
-#include "arl/impl/VisitorDelegator.h"
-#include "vsc/impl/CopyVisitor.h"
-#include "vsc/impl/DebugMacros.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IModelBuildContext.h"
+#include "zsp/arl/dm/impl/ModelBuildContext.h"
+#include "zsp/arl/dm/impl/VisitorDelegator.h"
+#include "vsc/dm/impl/CopyVisitor.h"
+#include "vsc/dm/impl/DebugMacros.h"
 
 namespace zsp {
 namespace arl {
@@ -44,11 +44,11 @@ public:
 
     virtual ~CopyVisitor() { }
 
-    vsc::IAccept *copy(vsc::IAccept *o) {
+    vsc::dm::IAccept *copy(vsc::dm::IAccept *o) {
         return m_core.copy(o);
     }
 
-    template <class T> T *copyT(vsc::IAccept *o) {
+    template <class T> T *copyT(vsc::dm::IAccept *o) {
         return dynamic_cast<T *>(copy(o));
     }
 
@@ -65,19 +65,19 @@ public:
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) override { }
 
 	virtual void visitModelActivityReplicate(IModelActivityReplicate *a) override { 
-        vsc::IModelExpr *count_e = copyT<vsc::IModelExpr>(a->getCountExpr());
+        vsc::dm::IModelExpr *count_e = copyT<vsc::dm::IModelExpr>(a->getCountExpr());
         IModelActivityReplicate *ac = m_ctxt->mkModelActivityReplicate(count_e);
 
-        for (std::vector<vsc::IModelFieldUP>::const_iterator
+        for (std::vector<vsc::dm::IModelFieldUP>::const_iterator
             it=a->fields().begin();
             it!=a->fields().end(); it++) {
-            ac->addField(copyT<vsc::IModelField>(it->get()));
+            ac->addField(copyT<vsc::dm::IModelField>(it->get()));
         }
         
-        for (std::vector<vsc::IModelConstraintUP>::const_iterator
+        for (std::vector<vsc::dm::IModelConstraintUP>::const_iterator
             it=a->constraints().begin();
             it!=a->constraints().end(); it++) {
-            ac->addConstraint(copyT<vsc::IModelConstraint>(it->get()));
+            ac->addConstraint(copyT<vsc::dm::IModelConstraint>(it->get()));
         }
 
         for (std::vector<IModelActivity *>::const_iterator
@@ -109,9 +109,9 @@ public:
 
 	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override { 
         DEBUG_ENTER("visitModelActivityTravserse");
-        vsc::IModelConstraint *with_c = 0;
+        vsc::dm::IModelConstraint *with_c = 0;
         if (a->getWithC()) {
-            with_c = copyT<vsc::IModelConstraint>(a->getWithC());
+            with_c = copyT<vsc::dm::IModelConstraint>(a->getWithC());
         }
 
         DEBUG("target=%p target_c=%p", 
@@ -144,16 +144,16 @@ public:
         DEBUG("src=%p copy=%p", f, fc);
         add_copy(f, fc);
 
-        for (std::vector<vsc::IModelFieldUP>::const_iterator
+        for (std::vector<vsc::dm::IModelFieldUP>::const_iterator
             it=f->fields().begin();
             it!=f->fields().end(); it++) {
-            fc->addField(copyT<vsc::IModelField>(it->get()));
+            fc->addField(copyT<vsc::dm::IModelField>(it->get()));
         }
 
-        for (std::vector<vsc::IModelConstraintUP>::const_iterator
+        for (std::vector<vsc::dm::IModelConstraintUP>::const_iterator
             it=f->constraints().begin();
             it!=f->constraints().end(); it++) {
-            fc->addConstraint(copyT<vsc::IModelConstraint>(it->get()));
+            fc->addConstraint(copyT<vsc::dm::IModelConstraint>(it->get()));
         }
 
         if (f->getActivity()) {
@@ -172,30 +172,30 @@ public:
 
 public:
 
-    void ret(vsc::IAccept *ret) { m_core.ret(ret); }
+    void ret(vsc::dm::IAccept *ret) { m_core.ret(ret); }
 
-    vsc::IAccept *get_copy(vsc::IAccept *s) {
+    vsc::dm::IAccept *get_copy(vsc::dm::IAccept *s) {
         return m_core.get_copy(s);
     }
 
-	template <class T> T *get_copyT(vsc::IAccept *s) {
+	template <class T> T *get_copyT(vsc::dm::IAccept *s) {
 		return dynamic_cast<T *>(get_copy(s));
 	}
 
-    void add_copy(vsc::IAccept *s, vsc::IAccept *c) {
+    void add_copy(vsc::dm::IAccept *s, vsc::dm::IAccept *c) {
         m_core.add_copy(s, c);
     }
 
 protected:
-    static vsc::IDebug                      *m_dbg;
+    static vsc::dm::IDebug                      *m_dbg;
     IContext                                *m_ctxt;
     IModelBuildContext                      *m_build_ctxt;
     ModelBuildContext                       m_build_ctxt_l;
-    vsc::CopyVisitor                        m_core;
+    vsc::dm::CopyVisitor                        m_core;
 
 };
 
-vsc::IDebug *CopyVisitor::m_dbg = 0;
+vsc::dm::IDebug *CopyVisitor::m_dbg = 0;
 
 }
 }

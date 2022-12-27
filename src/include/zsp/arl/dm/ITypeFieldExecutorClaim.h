@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/ITypeFieldRef.h"
+#include "vsc/dm/ITypeFieldRef.h"
 
 namespace zsp {
 namespace arl {
@@ -27,7 +27,7 @@ namespace dm {
 
 
 
-class ITypeFieldExecutorClaim : public virtual vsc::ITypeFieldRef {
+class ITypeFieldExecutorClaim : public virtual vsc::dm::ITypeFieldRef {
 public:
 
     virtual ~ITypeFieldExecutorClaim() { }

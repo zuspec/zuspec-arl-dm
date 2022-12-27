@@ -6,11 +6,11 @@
  */
 
 #pragma once
-#include "arl/IContext.h"
-#include "include/arl/impl/VisitorDelegator.h"
-#include "vsc/IModelBuildContext.h"
-#include "vsc/IModelField.h"
-#include "vsc/impl/TaskBuildModelField.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/impl/VisitorDelegator.h"
+#include "vsc/dm/IModelBuildContext.h"
+#include "vsc/dm/IModelField.h"
+#include "vsc/dm/impl/TaskBuildModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -19,17 +19,17 @@ namespace dm {
 
 class TaskBuildModelField : public VisitorDelegator {
 public:
-	TaskBuildModelField(vsc::IModelBuildContext *ctxt);
+	TaskBuildModelField(vsc::dm::IModelBuildContext *ctxt);
 
 	virtual ~TaskBuildModelField();
 
-	virtual vsc::IModelField *build(
-		vsc::IDataTypeStruct *type, 
+	virtual vsc::dm::IModelField *build(
+		vsc::dm::IDataTypeStruct *type, 
 		const std::string &name);
 
 private:
-	vsc::IModelBuildContext		*m_ctxt;
-	vsc::TaskBuildModelField	m_core;
+	vsc::dm::IModelBuildContext		*m_ctxt;
+	vsc::dm::TaskBuildModelField	m_core;
 };
 
 }

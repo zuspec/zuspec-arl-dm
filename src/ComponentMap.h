@@ -10,9 +10,9 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
-#include "arl/IComponentMap.h"
-#include "arl/IModelFieldComponent.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/IComponentMap.h"
+#include "zsp/arl/dm/IModelFieldComponent.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -45,13 +45,13 @@ public:
 		return m_comp_types;
 	}
 
-    virtual void addPoolMapping(vsc::ITypeField *claim_ref, IModelFieldPool *pool) override;
+    virtual void addPoolMapping(vsc::dm::ITypeField *claim_ref, IModelFieldPool *pool) override;
 
-    virtual IModelFieldPool *getPool(vsc::ITypeField *claim_ref) const override;
+    virtual IModelFieldPool *getPool(vsc::dm::ITypeField *claim_ref) const override;
 
 private:
 	using CompType2InstMapT=std::unordered_map<IDataTypeComponent *, std::vector<IModelFieldComponent *>>;
-	using ClaimRef2PoolMapT=std::unordered_map<vsc::ITypeField *, IModelFieldPool *>;
+	using ClaimRef2PoolMapT=std::unordered_map<vsc::dm::ITypeField *, IModelFieldPool *>;
 
 private:
 	std::vector<IModelFieldComponent *>		m_empty;

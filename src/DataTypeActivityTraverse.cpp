@@ -5,11 +5,11 @@
  *      Author: mballance
  */
 
-#include "arl/IContext.h"
-#include "arl/IDataTypeActivityTraverse.h"
-#include "arl/IVisitor.h"
-#include "vsc/IModelBuildContext.h"
-#include "vsc/impl/TaskResolveFieldRefExpr.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IDataTypeActivityTraverse.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "vsc/dm/IModelBuildContext.h"
+#include "vsc/dm/impl/TaskResolveFieldRefExpr.h"
 #include "DataTypeActivityTraverse.h"
 #include "TaskBuildModelConstraint.h"
 
@@ -19,8 +19,8 @@ namespace dm {
 
 
 DataTypeActivityTraverse::DataTypeActivityTraverse(
-		vsc::ITypeExprFieldRef 		*target,
-		vsc::ITypeConstraint		*with_c) : m_target(target), m_with_c(with_c) {
+		vsc::dm::ITypeExprFieldRef 		*target,
+		vsc::dm::ITypeConstraint		*with_c) : m_target(target), m_with_c(with_c) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -30,7 +30,7 @@ DataTypeActivityTraverse::~DataTypeActivityTraverse() {
 }
 
 IModelActivity *DataTypeActivityTraverse::mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) {
 	IModelBuildContext *ctxt_a = dynamic_cast<IModelBuildContext *>(ctxt);
 	IDataTypeActivityTraverse *type_t = dynamic_cast<IDataTypeActivityTraverse *>(type->getDataType());
@@ -38,9 +38,9 @@ IModelActivity *DataTypeActivityTraverse::mkActivity(
 	// TODO: resolve the type reference
 	// TODO: build the expression model (if applicable)
 
-	vsc::IModelField *target = vsc::TaskResolveFieldRefExpr(ctxt).resolve(type_t->getTarget());
+	vsc::dm::IModelField *target = vsc::dm::TaskResolveFieldRefExpr(ctxt).resolve(type_t->getTarget());
 	IModelFieldAction *target_a = dynamic_cast<IModelFieldAction *>(target);
-	vsc::IModelConstraint *with_c = 0;
+	vsc::dm::IModelConstraint *with_c = 0;
 
 	fprintf(stdout, "target=%p target_a=%p\n", target, target_a);
 
@@ -65,9 +65,9 @@ IModelActivity *DataTypeActivityTraverse::mkActivity(
 	return ret;
 }
 
-void DataTypeActivityTraverse::accept(vsc::IVisitor *v) {
-	if (dynamic_cast<arl::IVisitor *>(v)) {
-		dynamic_cast<arl::IVisitor *>(v)->visitDataTypeActivityTraverse(this);
+void DataTypeActivityTraverse::accept(vsc::dm::IVisitor *v) {
+	if (dynamic_cast<arl::dm::IVisitor *>(v)) {
+		dynamic_cast<arl::dm::IVisitor *>(v)->visitDataTypeActivityTraverse(this);
 	}
 }
 

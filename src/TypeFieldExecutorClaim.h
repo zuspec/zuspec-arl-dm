@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeFieldExecutorClaim.h"
+#include "zsp/arl/dm/ITypeFieldExecutorClaim.h"
 #include "TypeField.h"
 
 namespace zsp {
@@ -32,15 +32,15 @@ class TypeFieldExecutorClaim : public virtual ITypeFieldExecutorClaim, public vi
 public:
     TypeFieldExecutorClaim(
 			const std::string			&name,
-			vsc::IDataType				*type,
+			vsc::dm::IDataType				*type,
 			bool						owned);
 
     virtual ~TypeFieldExecutorClaim();
 
-	virtual vsc::IModelField *mkModelField(
-		vsc::IModelBuildContext 			*ctxt) override;
+	virtual vsc::dm::IModelField *mkModelField(
+		vsc::dm::IModelBuildContext 			*ctxt) override;
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 };
 
 }

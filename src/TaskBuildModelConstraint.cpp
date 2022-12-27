@@ -13,7 +13,7 @@ namespace dm {
 
 
 TaskBuildModelConstraint::TaskBuildModelConstraint(IModelBuildContext *ctxt) :
-	vsc::TaskBuildModelConstraint<>(ctxt, this) {
+	vsc::dm::TaskBuildModelConstraint<>(ctxt, this) {
 	// TODO Auto-generated constructor stub
 
 }

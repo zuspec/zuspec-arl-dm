@@ -7,12 +7,12 @@
 
 #pragma once
 #include <vector>
-#include "arl/impl/VisitorBase.h"
-#include "arl/IModelActivity.h"
-#include "arl/IModelBuildContext.h"
-#include "arl/IDataTypeActivity.h"
-#include "vsc/IModelBuildContext.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
+#include "zsp/arl/dm/IModelActivity.h"
+#include "zsp/arl/dm/IModelBuildContext.h"
+#include "zsp/arl/dm/IDataTypeActivity.h"
+#include "vsc/dm/IModelBuildContext.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -41,9 +41,9 @@ public:
 
 private:
 	IModelBuildContext							*m_ctxt;
-	std::vector<vsc::ITypeField *>				m_field_s;
+	std::vector<vsc::dm::ITypeField *>				m_field_s;
 	std::vector<IModelActivityScope *>			m_scope_s;
-	std::vector<vsc::IModelField *>				m_ctxt_s;
+	std::vector<vsc::dm::IModelField *>				m_ctxt_s;
 
 
 };

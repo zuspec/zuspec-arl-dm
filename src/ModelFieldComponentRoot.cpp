@@ -19,12 +19,12 @@
  *     Author:
  */
 #include <algorithm>
-#include "arl/IVisitor.h"
-#include "arl/impl/IsResourcePool.h"
-#include "arl/impl/TaskVisitActionTypeClaimRef.h"
-#include "vsc/impl/DebugMacros.h"
-#include "vsc/impl/ModelBuildContext.h"
-#include "vsc/impl/TaskResolveFieldRefExpr.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "zsp/arl/dm/impl/IsResourcePool.h"
+#include "zsp/arl/dm/impl/TaskVisitActionTypeClaimRef.h"
+#include "dmgr/impl/DebugMacros.h"
+#include "vsc/dm/impl/ModelBuildContext.h"
+#include "vsc/dm/impl/TaskResolveFieldRefExpr.h"
 #include "ModelFieldComponentRoot.h"
 #include "TaskCollectPools.h"
 #include "TaskPopulateResourcePools.h"
@@ -88,7 +88,7 @@ void ModelFieldComponentRoot::initCompTree() {
     m_init_pass = 1;
 }
 
-const std::vector<vsc::IModelField *> &ModelFieldComponentRoot::getCompTypeInsts(
+const std::vector<vsc::dm::IModelField *> &ModelFieldComponentRoot::getCompTypeInsts(
         IDataTypeComponent *t) const {
     CompType2InstMapT::const_iterator it = m_comp_type_inst_m.find(t);
 
@@ -120,7 +120,7 @@ const std::vector<int32_t> &ModelFieldComponentRoot::getCompTypeSubInsts(
 }
 
 const std::vector<IModelFieldPool *> &ModelFieldComponentRoot::getPools(
-    vsc::IDataType *t) {
+    vsc::dm::IDataType *t) {
     ObjType2PoolMapT::const_iterator it;
 
     if ((it=m_obj_type_pool_m.find(t)) != m_obj_type_pool_m.end()) {
@@ -130,7 +130,7 @@ const std::vector<IModelFieldPool *> &ModelFieldComponentRoot::getPools(
     }
 }
 
-const std::vector<vsc::IModelField *> &ModelFieldComponentRoot::getResObjects(
+const std::vector<vsc::dm::IModelField *> &ModelFieldComponentRoot::getResObjects(
     IDataTypeResource *res_t) {
     ResTObjectM::const_iterator it;
 
@@ -163,7 +163,7 @@ const std::vector<std::pair<int32_t, IModelFieldPool *>> &ModelFieldComponentRoo
     }
 }
 
-void ModelFieldComponentRoot::accept(vsc::IVisitor *v) {
+void ModelFieldComponentRoot::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitModelFieldComponentRoot(this);
     } else if (v->cascade()) {
@@ -243,9 +243,9 @@ void ModelFieldComponentRoot::processBinds(IModelFieldComponent *comp) {
     }
 
     TypePoolMapFrame &bind_f = m_type_pool_s.back();
-    vsc::ModelBuildContext build_ctxt(0);
+    vsc::dm::ModelBuildContext build_ctxt(0);
     build_ctxt.pushTopDownScope(comp);
-    vsc::TaskResolveFieldRefExpr resolver(&build_ctxt);
+    vsc::dm::TaskResolveFieldRefExpr resolver(&build_ctxt);
 
     // Process bind statements and update the bind-info map
 	for (std::vector<IPoolBindDirectiveUP>::const_iterator
@@ -253,7 +253,7 @@ void ModelFieldComponentRoot::processBinds(IModelFieldComponent *comp) {
 		it!=comp->getDataTypeT<IDataTypeComponent>()->getPoolBindDirectives().end(); it++) {
 		switch ((*it)->kind()) {
 			case PoolBindKind::All: {
-				vsc::IModelField *field = resolver.resolve((*it)->getPool());
+				vsc::dm::IModelField *field = resolver.resolve((*it)->getPool());
 				IModelFieldPool *pool = dynamic_cast<IModelFieldPool *>(field);
 				TypePoolMapT::const_iterator b_it = bind_f.wildcard_m.find(pool->getDataTypePool());
 
@@ -314,7 +314,7 @@ void ModelFieldComponentRoot::addPool(IModelFieldPool *pool) {
             it->second.size(),
             it->second.size()+pool->getObjects().size()-1);
         m_res_pool_obj_range_m.insert({pool, {it->second.size(), it->second.size()+pool->getObjects().size()-1}});
-        for (std::vector<vsc::IModelFieldUP>::const_iterator
+        for (std::vector<vsc::dm::IModelFieldUP>::const_iterator
             o_it=pool->getObjects().begin();
             o_it!=pool->getObjects().end(); o_it++) {
             it->second.push_back(o_it->get());
@@ -392,6 +392,8 @@ void ModelFieldComponentRoot::processTypeFieldClaim(
     }
 }
 
-vsc::IDebug *ModelFieldComponentRoot::m_dbg = 0;
+dmgr::IDebug *ModelFieldComponentRoot::m_dbg = 0;
 
+}
+}
 }

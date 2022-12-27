@@ -19,8 +19,8 @@
  *     Author:
  */
 #include <stdio.h>
-#include "vsc/impl/ModelBuildContext.h"
-#include "vsc/impl/TaskSetUsedRand.h"
+#include "vsc/dm/impl/ModelBuildContext.h"
+#include "vsc/dm/impl/TaskSetUsedRand.h"
 #include "DebugMacros.h"
 #include "TaskPopulateResourcePools.h"
 
@@ -46,7 +46,7 @@ void TaskPopulateResourcePools::populate(IModelFieldComponent *root) {
 
 void TaskPopulateResourcePools::visitModelFieldComponent(
         IModelFieldComponent *f) {
-    for (std::vector<vsc::IModelFieldUP>::const_iterator
+    for (std::vector<vsc::dm::IModelFieldUP>::const_iterator
         it=f->fields().begin();
         it!=f->fields().end(); it++) {
         (*it)->accept(m_this);
@@ -63,7 +63,7 @@ void TaskPopulateResourcePools::visitModelFieldPool(IModelFieldPool *f) {
 
 void TaskPopulateResourcePools::visitDataTypeResource(IDataTypeResource *t) {
     DEBUG_ENTER("visitDataTypeResource %s (pool=%p)", t->name().c_str(), m_pool);
-    vsc::ModelBuildContext build_ctxt(m_ctxt);
+    vsc::dm::ModelBuildContext build_ctxt(m_ctxt);
 
     if (m_pool) {
         int32_t sz = m_pool->getField(0)->val()->val_i();
@@ -71,13 +71,13 @@ void TaskPopulateResourcePools::visitDataTypeResource(IDataTypeResource *t) {
         for (uint32_t i=0; i<sz; i++) {
             char tmp[64];
             snprintf(tmp, sizeof(tmp), "%s[%d]", m_pool->name().c_str(), t->name().c_str());
-            vsc::IModelField *obj = t->mkRootField(
+            vsc::dm::IModelField *obj = t->mkRootField(
                 &build_ctxt,
                 tmp,
                 false);
-            obj->getField(0)->setFlags(vsc::ModelFieldFlag::Resolved);
+            obj->getField(0)->setFlags(vsc::dm::ModelFieldFlag::Resolved);
             obj->getField(0)->val()->set_val_i(i);
-            vsc::TaskSetUsedRand().apply(obj, true);
+            vsc::dm::TaskSetUsedRand().apply(obj, true);
             m_pool->addObject(obj);
         }
     }

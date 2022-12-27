@@ -9,8 +9,8 @@
 #include "IsModelActivitySequence.h"
 #include "TaskBuildModelActivity.h"
 #include "TaskBuildModelConstraint.h"
-#include "vsc/impl/TaskBuildModelExpr.h"
-#include "vsc/impl/TaskResolveFieldRefExpr.h"
+#include "vsc/dm/impl/TaskBuildModelExpr.h"
+#include "vsc/dm/impl/TaskResolveFieldRefExpr.h"
 #include "ModelActivitySequence.h"
 #include "ModelActivityTraverse.h"
 
@@ -74,8 +74,8 @@ void TaskBuildModelActivity::visitDataTypeActivityTraverse(IDataTypeActivityTrav
 
 	// The traverse statement doesn't have a 'field' representation
 	// Go ahead and create one now
-	vsc::IModelConstraint *with_c = 0;
-	vsc::IModelField *target = vsc::TaskResolveFieldRefExpr(m_ctxt).resolve(t->getTarget());
+	vsc::dm::IModelConstraint *with_c = 0;
+	vsc::dm::IModelField *target = vsc::dm::TaskResolveFieldRefExpr(m_ctxt).resolve(t->getTarget());
 
 	// Note: two things can resolve from looking at the expression
 	// - We recognize it as a constant expression that we can resolve to a single field
@@ -109,7 +109,7 @@ void TaskBuildModelActivity::visitTypeFieldActivity(ITypeFieldActivity *f) {
 		IModelActivityScope *pscope = m_ctxt->getBottomUpScopeT<IModelActivityScope>();
 		fprintf(stdout, "Link into scope %p\n", pscope);
 #ifdef UNDEFINED
-		vsc::IModelField *afield = m_ctxt->getField(-1)->getField(f->getIndex());
+		vsc::dm::IModelField *afield = m_ctxt->getField(-1)->getField(f->getIndex());
 		// Link in, since the object is already owned by the 'fields' list
 		pscope->addActivity(dynamic_cast<IModelActivity *>(afield), false);
 		m_ctxt->pushField(afield);

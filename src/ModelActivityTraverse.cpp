@@ -5,7 +5,7 @@
  *      Author: mballance
  */
 
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelActivityTraverse.h"
 
 namespace zsp {
@@ -15,7 +15,7 @@ namespace dm {
 
 ModelActivityTraverse::ModelActivityTraverse(
 		IModelFieldAction		*target,
-		vsc::IModelConstraint	*with_c,
+		vsc::dm::IModelConstraint	*with_c,
 		bool					own_with_c,
 		IModelActivity			*activity,
 		bool					owned) : 
@@ -29,9 +29,9 @@ ModelActivityTraverse::~ModelActivityTraverse() {
 	// TODO Auto-generated destructor stub
 }
 
-void ModelActivityTraverse::accept(vsc::IVisitor *v) {
-	if (dynamic_cast<arl::IVisitor *>(v)) {
-		dynamic_cast<arl::IVisitor *>(v)->visitModelActivityTraverse(this);
+void ModelActivityTraverse::accept(vsc::dm::IVisitor *v) {
+	if (dynamic_cast<arl::dm::IVisitor *>(v)) {
+		dynamic_cast<arl::dm::IVisitor *>(v)->visitModelActivityTraverse(this);
 	}
 }
 

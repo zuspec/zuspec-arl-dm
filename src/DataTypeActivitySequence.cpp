@@ -5,10 +5,10 @@
  *      Author: mballance
  */
 
-#include "arl/IContext.h"
-#include "arl/IModelActivitySequence.h"
-#include "arl/IVisitor.h"
-#include "vsc/IModelBuildContext.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IModelActivitySequence.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "vsc/dm/IModelBuildContext.h"
 #include "DataTypeActivitySequence.h"
 
 namespace zsp {
@@ -26,7 +26,7 @@ DataTypeActivitySequence::~DataTypeActivitySequence() {
 }
 
 IModelActivity *DataTypeActivitySequence::mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 	IModelActivityScope *ret = ctxt_a->mkModelActivityScope(
@@ -34,7 +34,7 @@ IModelActivity *DataTypeActivitySequence::mkActivity(
 
 	ctxt->pushBottomUpScope(ret);
 
-	for (std::vector<vsc::ITypeFieldUP>::const_iterator
+	for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 		it=getFields().begin();
 		it!=getFields().end(); it++) {
 		ret->addField(it->get()->getDataType()->mkTypeField(
@@ -55,9 +55,9 @@ IModelActivity *DataTypeActivitySequence::mkActivity(
 	return ret;
 }
 
-void DataTypeActivitySequence::accept(vsc::IVisitor *v) {
-	if (dynamic_cast<arl::IVisitor *>(v)) {
-		dynamic_cast<arl::IVisitor *>(v)->visitDataTypeActivitySequence(this);
+void DataTypeActivitySequence::accept(vsc::dm::IVisitor *v) {
+	if (dynamic_cast<arl::dm::IVisitor *>(v)) {
+		dynamic_cast<arl::dm::IVisitor *>(v)->visitDataTypeActivitySequence(this);
 	}
 }
 

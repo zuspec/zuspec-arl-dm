@@ -1,7 +1,7 @@
 
 #pragma once
 #include <memory>
-#include "vsc/ITypeExprFieldRef.h"
+#include "vsc/dm/ITypeExprFieldRef.h"
 
 namespace zsp {
 namespace arl {
@@ -22,9 +22,9 @@ public:
 
     virtual PoolBindKind kind() const = 0;
 
-    virtual vsc::ITypeExprFieldRef *getPool() const = 0;
+    virtual vsc::dm::ITypeExprFieldRef *getPool() const = 0;
 
-    virtual vsc::ITypeExprFieldRef *getTarget() const = 0;
+    virtual vsc::dm::ITypeExprFieldRef *getTarget() const = 0;
 
 };
 

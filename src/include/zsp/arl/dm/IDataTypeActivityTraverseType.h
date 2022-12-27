@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include "arl/IDataTypeActivity.h"
+#include "zsp/arl/dm/IDataTypeActivity.h"
 
 namespace zsp {
 namespace arl {

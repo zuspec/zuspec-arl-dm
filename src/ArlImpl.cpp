@@ -21,11 +21,11 @@ ArlImpl::~ArlImpl() {
 	// TODO Auto-generated destructor stub
 }
 
-IContext *ArlImpl::mkContext(vsc::IContext *ctxt) {
+IContext *ArlImpl::mkContext(vsc::dm::IContext *ctxt) {
 	return new Context(ctxt);
 }
 
-void ArlImpl::init(vsc::IDebugMgr *dbg_mgr) {
+void ArlImpl::init(dmgr::IDebugMgr *dbg_mgr) {
 	m_dbg_mgr = dbg_mgr;
 };
 
@@ -42,4 +42,6 @@ extern "C" IArl *iarl() {
 
 ArlImplUP ArlImpl::m_inst;
 
+}
 } /* namespace arl */
+}

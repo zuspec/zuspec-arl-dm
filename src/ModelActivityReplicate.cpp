@@ -18,8 +18,8 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
-#include "vsc/IDataTypeInt.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "vsc/dm/IDataTypeInt.h"
 #include "ModelActivityReplicate.h"
 
 
@@ -31,18 +31,18 @@ namespace dm {
 
 ModelActivityReplicate::ModelActivityReplicate(
     IContext            *ctxt,
-    vsc::IModelExpr     *count) : 
+    vsc::dm::IModelExpr     *count) : 
         ModelActivityScope(ModelActivityScopeT::Replicate), m_count_expr(count) {
 
 /*
-    vsc::IDataTypeInt *ui16 = ctxt->findDataTypeInt(false, 16);
+    vsc::dm::IDataTypeInt *ui16 = ctxt->findDataTypeInt(false, 16);
     if (!ui16) {
         ui16 = ctxt->mkDataTypeInt(false, 16);
         ctxt->addDataTypeInt(ui16);
     }
 
     m_count_field = ctxt->mkModelFieldRoot(ui16, "__count");
-    m_count_field->setFlags(vsc::ModelFieldFlag::DeclRand);
+    m_count_field->setFlags(vsc::dm::ModelFieldFlag::DeclRand);
     addField(m_count_field);
 
     m_index_field = ctxt->mkModelFieldRoot(ui16, "__index");
@@ -54,7 +54,7 @@ ModelActivityReplicate::~ModelActivityReplicate() {
 
 }
 
-void ModelActivityReplicate::accept(vsc::IVisitor *v) {
+void ModelActivityReplicate::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitModelActivityReplicate(this);
     }

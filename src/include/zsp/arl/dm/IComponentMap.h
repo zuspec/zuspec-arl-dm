@@ -1,8 +1,8 @@
 
 #pragma once
 #include <vector>
-#include "arl/IDataTypeComponent.h"
-#include "arl/IModelFieldPool.h"
+#include "zsp/arl/dm/IDataTypeComponent.h"
+#include "zsp/arl/dm/IModelFieldPool.h"
 
 namespace zsp {
 namespace arl {
@@ -25,13 +25,13 @@ public:
 
     virtual const std::vector<IDataTypeComponent *> &getComponentTypes() const = 0;
 
-    virtual void addPoolMapping(vsc::ITypeField *claim_ref, IModelFieldPool *pool) = 0;
+    virtual void addPoolMapping(vsc::dm::ITypeField *claim_ref, IModelFieldPool *pool) = 0;
 
     /**
      * @brief Returns the pool mapped to the specified claim field in this context
      * 
      */
-    virtual IModelFieldPool *getPool(vsc::ITypeField *claim_ref) const = 0;
+    virtual IModelFieldPool *getPool(vsc::dm::ITypeField *claim_ref) const = 0;
 
 
 };

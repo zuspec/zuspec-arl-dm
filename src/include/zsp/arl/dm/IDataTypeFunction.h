@@ -22,10 +22,10 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "arl/IDataTypeFunctionParamDecl.h"
-#include "arl/ITypeProcStmtScope.h"
-#include "vsc/IAccept.h"
-#include "vsc/IDataType.h"
+#include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
+#include "zsp/arl/dm/ITypeProcStmtScope.h"
+#include "vsc/dm/IAccept.h"
+#include "vsc/dm/IDataType.h"
 
 namespace zsp {
 namespace arl {
@@ -34,14 +34,14 @@ namespace dm {
 
 class IDataTypeFunction;
 using IDataTypeFunctionUP=std::unique_ptr<IDataTypeFunction>;
-class IDataTypeFunction : public vsc::IAccept {
+class IDataTypeFunction : public vsc::dm::IAccept {
 public:
 
     virtual ~IDataTypeFunction() { }
 
     virtual const std::string &name() const = 0;
 
-    virtual vsc::IDataType *getReturnType() const = 0;
+    virtual vsc::dm::IDataType *getReturnType() const = 0;
 
     virtual const std::vector<IDataTypeFunctionParamDeclUP> &getParameters() const = 0;
 

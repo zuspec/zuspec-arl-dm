@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelActivityScope.h"
 
 
@@ -43,7 +43,7 @@ void ModelActivityScope::addActivity(IModelActivity *a, bool own) {
     }
 }
 
-void ModelActivityScope::accept(vsc::IVisitor *v) {
+void ModelActivityScope::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitModelActivityScope(this);
     }

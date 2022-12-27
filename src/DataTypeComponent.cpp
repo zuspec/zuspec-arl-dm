@@ -5,9 +5,9 @@
  *      Author: mballance
  */
 
-#include "arl/IContext.h"
-#include "vsc/impl/TaskIsTypeFieldRef.h"
-#include "vsc/impl/TaskBuildModelFieldConstraints.h"
+#include "zsp/arl/dm/IContext.h"
+#include "vsc/dm/impl/TaskIsTypeFieldRef.h"
+#include "vsc/dm/impl/TaskBuildModelFieldConstraints.h"
 #include "DataTypeComponent.h"
 
 namespace zsp {
@@ -21,7 +21,7 @@ DataTypeComponent::DataTypeComponent(
 
 	// Could back-patch this once we know the number of 
 	// instances
-	vsc::IDataTypeInt *ui32 = ctxt->findDataTypeInt(false, 32);
+	vsc::dm::IDataTypeInt *ui32 = ctxt->findDataTypeInt(false, 32);
 
 	if (!ui32) {
 		ui32 = ctxt->mkDataTypeInt(false, 32);
@@ -32,7 +32,7 @@ DataTypeComponent::DataTypeComponent(
 		"comp_id", 
 		ui32, 
 		false, 
-		vsc::TypeFieldAttr::Rand,
+		vsc::dm::TypeFieldAttr::Rand,
 		0);
 	addField(m_comp_id);
 }
@@ -49,7 +49,7 @@ void DataTypeComponent::addActionType(IDataTypeAction *action_t) {
 	m_action_types.push_back(action_t);
 }
 
-void DataTypeComponent::accept(vsc::IVisitor *v) {
+void DataTypeComponent::accept(vsc::dm::IVisitor *v) {
 	if (dynamic_cast<IVisitor *>(v)) {
 		dynamic_cast<IVisitor *>(v)->visitDataTypeComponent(this);
 	} else {
@@ -57,11 +57,11 @@ void DataTypeComponent::accept(vsc::IVisitor *v) {
 	}
 }
 
-vsc::IModelField *DataTypeComponent::mkRootField(
-		vsc::IModelBuildContext		*ctxt,
+vsc::dm::IModelField *DataTypeComponent::mkRootField(
+		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) {
-	vsc::IModelField *ret;
+	vsc::dm::IModelField *ret;
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
 	fprintf(stdout, "DataTypeComponent::mkRootField %s %d\n", name.c_str(), is_ref);
@@ -73,10 +73,10 @@ vsc::IModelField *DataTypeComponent::mkRootField(
 		// Need to build sub-fields and constraints
 	    // Push the new field just for completeness
 	    ctxt->pushTopDownScope(ret);
-	    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
+	    for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator 
 	        it=getFields().begin();
 	        it!=getFields().end(); it++) {
-	        vsc::IModelField *field = (*it)->mkModelField(ctxt);
+	        vsc::dm::IModelField *field = (*it)->mkModelField(ctxt);
 	        if (!field) {
 	            fprintf(stdout, "Error: Construction of field %s failed\n", (*it)->name().c_str());
 	        }
@@ -93,23 +93,23 @@ vsc::IModelField *DataTypeComponent::mkRootField(
 	return ret;
 }
 
-vsc::IModelField *DataTypeComponent::mkTypeField(
-		vsc::IModelBuildContext		*ctxt,
-		vsc::ITypeField				*type) {
-	vsc::IModelField *ret;
+vsc::dm::IModelField *DataTypeComponent::mkTypeField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		vsc::dm::ITypeField				*type) {
+	vsc::dm::IModelField *ret;
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
-	if (vsc::TaskIsTypeFieldRef().eval(type)) {
+	if (vsc::dm::TaskIsTypeFieldRef().eval(type)) {
 		ret = ctxt->ctxt()->mkModelFieldRefType(type);
 	} else {
 		ret = ctxt_a->mkModelFieldComponentType(type);
 
 	    // Push the new field just for completeness
 	    ctxt->pushTopDownScope(ret);
-	    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
+	    for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator 
 	        it=getFields().begin();
 	        it!=getFields().end(); it++) {
-	        vsc::IModelField *field = (*it)->mkModelField(ctxt);
+	        vsc::dm::IModelField *field = (*it)->mkModelField(ctxt);
 			ret->addField(field);
 	    }
 	    ctxt->popTopDownScope();

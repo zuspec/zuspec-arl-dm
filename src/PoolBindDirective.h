@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IPoolBindDirective.h"
+#include "zsp/arl/dm/IPoolBindDirective.h"
 
 namespace zsp {
 namespace arl {
@@ -31,25 +31,25 @@ class PoolBindDirective : public virtual IPoolBindDirective {
 public:
     PoolBindDirective(
         PoolBindKind                kind,
-        vsc::ITypeExprFieldRef      *pool,
-        vsc::ITypeExprFieldRef      *target);
+        vsc::dm::ITypeExprFieldRef      *pool,
+        vsc::dm::ITypeExprFieldRef      *target);
 
     virtual ~PoolBindDirective();
 
     virtual PoolBindKind kind() const override { return m_kind; }
 
-    virtual vsc::ITypeExprFieldRef *getPool() const override {
+    virtual vsc::dm::ITypeExprFieldRef *getPool() const override {
         return m_pool.get();
     }
 
-    virtual vsc::ITypeExprFieldRef *getTarget() const override {
+    virtual vsc::dm::ITypeExprFieldRef *getTarget() const override {
         return m_target.get();
     }
 
 private:
     PoolBindKind                            m_kind;
-    vsc::ITypeExprFieldRefUP                m_pool;
-    vsc::ITypeExprFieldRefUP                m_target;
+    vsc::dm::ITypeExprFieldRefUP                m_pool;
+    vsc::dm::ITypeExprFieldRefUP                m_target;
 
 };
 

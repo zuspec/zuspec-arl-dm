@@ -7,11 +7,11 @@
 
 #pragma once
 #include <memory>
-#include "arl/IModelActivity.h"
-#include "arl/IModelFieldAction.h"
-#include "arl/IModelFieldPool.h"
-#include "vsc/IModelConstraint.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/IModelActivity.h"
+#include "zsp/arl/dm/IModelFieldAction.h"
+#include "zsp/arl/dm/IModelFieldPool.h"
+#include "vsc/dm/IModelConstraint.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -27,7 +27,7 @@ public:
 
 	virtual IModelFieldAction *getTarget() const = 0;
 
-	virtual vsc::IModelConstraint *getWithC() const = 0;
+	virtual vsc::dm::IModelConstraint *getWithC() const = 0;
 
 	virtual IModelActivity *getActivity() const = 0;
 

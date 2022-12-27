@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/IModelFieldRef.h"
+#include "vsc/dm/IModelFieldRef.h"
 
 namespace zsp {
 namespace arl {
@@ -27,7 +27,7 @@ namespace dm {
 
 
 
-class IModelFieldClaim : public virtual vsc::IModelFieldRef {
+class IModelFieldClaim : public virtual vsc::dm::IModelFieldRef {
 public:
 
     virtual ~IModelFieldClaim() { }

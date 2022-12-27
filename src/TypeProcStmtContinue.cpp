@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtContinue.h"
 
 
@@ -36,7 +36,7 @@ TypeProcStmtContinue::~TypeProcStmtContinue() {
 
 }
 
-void TypeProcStmtContinue::accept(vsc::IVisitor *v) {
+void TypeProcStmtContinue::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeProcStmtContinue(this);
     }

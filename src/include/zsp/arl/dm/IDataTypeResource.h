@@ -1,7 +1,7 @@
 
 #pragma once
-#include "arl/IDataTypeFlowObj.h"
-#include "vsc/ITypeField.h"
+#include "zsp/arl/dm/IDataTypeFlowObj.h"
+#include "vsc/dm/ITypeField.h"
 
 namespace zsp {
 namespace arl {
@@ -13,7 +13,7 @@ public:
 
     virtual ~IDataTypeResource() { }
 
-    virtual vsc::ITypeField *getInstanceId() const = 0;
+    virtual vsc::dm::ITypeField *getInstanceId() const = 0;
 
 };
 

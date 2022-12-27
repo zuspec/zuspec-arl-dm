@@ -19,8 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelFieldExecutor.h"
-#include "arl/impl/VisitorBase.h"
+#include "zsp/arl/dm/IModelFieldExecutor.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {
 namespace arl {
@@ -36,13 +36,13 @@ public:
 
     virtual ~TaskFindExecutor() { }
 
-    IModelFieldExecutor *find(vsc::IModelField *f) {
+    IModelFieldExecutor *find(vsc::dm::IModelField *f) {
         m_executor = 0;
         f->accept(m_this);
         return m_executor;
     }
 
-    virtual void visitModelField(vsc::IModelField *f) override {
+    virtual void visitModelField(vsc::dm::IModelField *f) override {
         // Block from recursing
     }
 

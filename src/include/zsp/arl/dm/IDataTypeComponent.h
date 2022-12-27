@@ -7,9 +7,9 @@
 
 #pragma once
 #include <vector>
-#include "arl/IAccept.h"
-#include "arl/IPoolBindDirective.h"
-#include "vsc/IDataTypeStruct.h"
+#include "zsp/arl/dm/IAccept.h"
+#include "zsp/arl/dm/IPoolBindDirective.h"
+#include "vsc/dm/IDataTypeStruct.h"
 
 namespace zsp {
 namespace arl {
@@ -20,7 +20,7 @@ class IDataTypeAction;
 
 class IDataTypeComponent;
 using IDataTypeComponentUP=std::unique_ptr<IDataTypeComponent>;
-class IDataTypeComponent : public virtual vsc::IDataTypeStruct {
+class IDataTypeComponent : public virtual vsc::dm::IDataTypeStruct {
 public:
 
 	virtual ~IDataTypeComponent() { }

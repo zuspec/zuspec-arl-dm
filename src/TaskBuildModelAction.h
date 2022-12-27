@@ -6,12 +6,12 @@
  */
 
 #pragma once
-#include "arl/IModelBuildContext.h"
-#include "arl/IModelFieldAction.h"
-#include "include/arl/impl/VisitorDelegator.h"
-#include "vsc/IModelField.h"
-#include "vsc/IModelBuildContext.h"
-#include "vsc/impl/TaskBuildModelField.h"
+#include "zsp/arl/dm/IModelBuildContext.h"
+#include "zsp/arl/dm/IModelFieldAction.h"
+#include "zsp/arl/dm/impl/VisitorDelegator.h"
+#include "vsc/dm/IModelField.h"
+#include "vsc/dm/IModelBuildContext.h"
+#include "vsc/dm/impl/TaskBuildModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -38,7 +38,7 @@ public:
 
 private:
 	IModelBuildContext						*m_ctxt;
-	vsc::TaskBuildModelField				m_core;
+	vsc::dm::TaskBuildModelField				m_core;
 	std::vector<ITypeFieldActivity *>		m_activity_s;
 
 };

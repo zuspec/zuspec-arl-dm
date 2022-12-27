@@ -7,9 +7,9 @@
 
 #pragma once
 #include <memory>
-#include "arl/ITypeFieldActivity.h"
-#include "vsc/IDataTypeStruct.h"
-#include "vsc/IModelBuildContext.h"
+#include "zsp/arl/dm/ITypeFieldActivity.h"
+#include "vsc/dm/IDataTypeStruct.h"
+#include "vsc/dm/IModelBuildContext.h"
 
 namespace zsp {
 namespace arl {
@@ -20,13 +20,13 @@ class IModelActivity;
 
 class IDataTypeActivity;
 using IDataTypeActivityUP=std::unique_ptr<IDataTypeActivity>;
-class IDataTypeActivity : public virtual vsc::IDataType {
+class IDataTypeActivity : public virtual vsc::dm::IDataType {
 public:
 
 	virtual ~IDataTypeActivity() { }
 
 	virtual IModelActivity *mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) = 0;
 
 

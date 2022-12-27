@@ -7,7 +7,7 @@
 
 #pragma once
 #include "ModelFieldAction.h"
-#include "arl/IDataTypeAction.h"
+#include "zsp/arl/dm/IDataTypeAction.h"
 
 namespace zsp {
 namespace arl {
@@ -26,11 +26,11 @@ public:
 		return m_name;
 	}
 
-	virtual vsc::IDataType *getDataType() const override {
+	virtual vsc::dm::IDataType *getDataType() const override {
 		return m_type;
 	}
 
-	virtual void setDataType(vsc::IDataType *t) override { 
+	virtual void setDataType(vsc::dm::IDataType *t) override { 
 		m_type = dynamic_cast<IDataTypeAction *>(t); 
 	}
 

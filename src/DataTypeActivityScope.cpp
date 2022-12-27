@@ -21,13 +21,13 @@ DataTypeActivityScope::~DataTypeActivityScope() {
 	// TODO Auto-generated destructor stub
 }
 
-void DataTypeActivityScope::addField(vsc::ITypeField *f) {
+void DataTypeActivityScope::addField(vsc::dm::ITypeField *f) {
 	f->setIndex(m_fields.size());
-	m_fields.push_back(vsc::ITypeFieldUP(f));
+	m_fields.push_back(vsc::dm::ITypeFieldUP(f));
 }
 
-void DataTypeActivityScope::addConstraint(vsc::ITypeConstraint *c) {
-	m_constraints.push_back(vsc::ITypeConstraintUP(c));
+void DataTypeActivityScope::addConstraint(vsc::dm::ITypeConstraint *c) {
+	m_constraints.push_back(vsc::dm::ITypeConstraintUP(c));
 }
 
 void DataTypeActivityScope::addActivity(ITypeFieldActivity *a) {
@@ -39,20 +39,20 @@ void DataTypeActivityScope::addActivity(ITypeFieldActivity *a) {
 void DataTypeActivityScope::addActivityField(ITypeFieldActivity *a) {
 	a->setIndex(m_fields.size());
 	m_activities.push_back(a);
-	m_fields.push_back(vsc::ITypeFieldUP(a));
+	m_fields.push_back(vsc::dm::ITypeFieldUP(a));
 }
 
 
-vsc::IModelField *DataTypeActivityScope::mkRootField(
-		vsc::IModelBuildContext		*ctxt,
+vsc::dm::IModelField *DataTypeActivityScope::mkRootField(
+		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) {
 
 }
 
-vsc::IModelField *DataTypeActivityScope::mkTypeField(
-		vsc::IModelBuildContext		*ctxt,
-		vsc::ITypeField				*type) {
+vsc::dm::IModelField *DataTypeActivityScope::mkTypeField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		vsc::dm::ITypeField				*type) {
 			
 }
 

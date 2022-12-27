@@ -19,9 +19,9 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmt.h"
-#include "arl/ITypeProcStmtMatchChoice.h"
-#include "vsc/ITypeExpr.h"
+#include "zsp/arl/dm/ITypeProcStmt.h"
+#include "zsp/arl/dm/ITypeProcStmtMatchChoice.h"
+#include "vsc/dm/ITypeExpr.h"
 
 namespace zsp {
 namespace arl {
@@ -33,7 +33,7 @@ public:
 
     virtual ~ITypeProcStmtMatch() { }
 
-    virtual vsc::ITypeExpr *getCond() const = 0;
+    virtual vsc::dm::ITypeExpr *getCond() const = 0;
 
     virtual ITypeProcStmt *getDefault() const = 0;
 

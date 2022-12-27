@@ -19,8 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelFieldComponent.h"
-#include "arl/IModelComponentTreeData.h"
+#include "zsp/arl/dm/IModelFieldComponent.h"
+#include "zsp/arl/dm/IModelComponentTreeData.h"
 
 namespace zsp {
 namespace arl {

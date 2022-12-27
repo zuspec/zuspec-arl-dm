@@ -19,9 +19,9 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelActivityScope.h"
-#include "vsc/IModelExpr.h"
-#include "vsc/IModelField.h"
+#include "zsp/arl/dm/IModelActivityScope.h"
+#include "vsc/dm/IModelExpr.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -34,11 +34,11 @@ public:
 
     virtual ~IModelActivityReplicate() { }
 
-    virtual vsc::IModelExpr *getCountExpr() const = 0;
+    virtual vsc::dm::IModelExpr *getCountExpr() const = 0;
 
-    virtual vsc::IModelField *getCountField() const = 0;
+    virtual vsc::dm::IModelField *getCountField() const = 0;
 
-    virtual vsc::IModelField *getIndexField() const = 0;
+    virtual vsc::dm::IModelField *getIndexField() const = 0;
 
 };
 

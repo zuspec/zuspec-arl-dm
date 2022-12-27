@@ -5,9 +5,9 @@
  *      Author: mballance
  */
 
-#include "arl/IContext.h"
-#include "arl/IVisitor.h"
-#include "vsc/IModelBuildContext.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "vsc/dm/IModelBuildContext.h"
 #include "DataTypeActivitySchedule.h"
 
 namespace zsp {
@@ -25,7 +25,7 @@ DataTypeActivitySchedule::~DataTypeActivitySchedule() {
 }
 
 IModelActivity *DataTypeActivitySchedule::mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 	IModelActivitySchedule *ret = ctxt_a->mkModelActivitySchedule();
@@ -40,9 +40,9 @@ IModelActivity *DataTypeActivitySchedule::mkActivity(
 	return ret;
 }
 
-void DataTypeActivitySchedule::accept(vsc::IVisitor *v) {
-	if (dynamic_cast<arl::IVisitor *>(v)) {
-		dynamic_cast<arl::IVisitor *>(v)->visitDataTypeActivitySchedule(this);
+void DataTypeActivitySchedule::accept(vsc::dm::IVisitor *v) {
+	if (dynamic_cast<arl::dm::IVisitor *>(v)) {
+		dynamic_cast<arl::dm::IVisitor *>(v)->visitDataTypeActivitySchedule(this);
 	}
 }
 

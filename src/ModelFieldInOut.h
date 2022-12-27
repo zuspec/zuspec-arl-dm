@@ -19,9 +19,9 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IModelFieldInOut.h"
-#include "arl/ITypeFieldInOut.h"
-#include "vsc/IDataType.h"
+#include "zsp/arl/dm/IModelFieldInOut.h"
+#include "zsp/arl/dm/ITypeFieldInOut.h"
+#include "vsc/dm/IDataType.h"
 #include "ModelField.h"
 
 namespace zsp {
@@ -43,15 +43,15 @@ public:
         return m_type->name();
     }
 
-    virtual vsc::IDataType *getDataType() const override {
+    virtual vsc::dm::IDataType *getDataType() const override {
         return m_type->getDataType();
     }
 
-	virtual void setRef(vsc::IModelField *ref) override {
+	virtual void setRef(vsc::dm::IModelField *ref) override {
         m_ref = ref;
     }
 
-	virtual vsc::IModelField *getRef() const override {
+	virtual vsc::dm::IModelField *getRef() const override {
         return m_ref;
     }
 
@@ -59,11 +59,11 @@ public:
         return m_type->isInput();
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     ITypeFieldInOut                 *m_type;
-    vsc::IModelField                *m_ref;
+    vsc::dm::IModelField                *m_ref;
 
 };
 

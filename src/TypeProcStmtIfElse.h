@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmtIfElse.h"
+#include "zsp/arl/dm/ITypeProcStmtIfElse.h"
 
 namespace zsp {
 namespace arl {
@@ -31,14 +31,14 @@ namespace dm {
 class TypeProcStmtIfElse : public virtual ITypeProcStmtIfElse {
 public:
     TypeProcStmtIfElse(
-        vsc::ITypeExpr          *cond,
+        vsc::dm::ITypeExpr          *cond,
         ITypeProcStmt           *true_s,
         ITypeProcStmt           *false_s
     );
 
     virtual ~TypeProcStmtIfElse();
 
-    virtual vsc::ITypeExpr *getCond() const override {
+    virtual vsc::dm::ITypeExpr *getCond() const override {
         return m_cond.get();
     }
 
@@ -50,10 +50,10 @@ public:
         return m_false.get();
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    vsc::ITypeExprUP            m_cond;
+    vsc::dm::ITypeExprUP            m_cond;
     ITypeProcStmtUP             m_true;
     ITypeProcStmtUP             m_false;
 };

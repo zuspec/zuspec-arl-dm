@@ -21,8 +21,8 @@
 #pragma once
 #include <unordered_map>
 #include <vector>
-#include "arl/IModelFieldComponentRoot.h"
-#include "arl/IModelFieldPool.h"
+#include "zsp/arl/dm/IModelFieldComponentRoot.h"
+#include "zsp/arl/dm/IModelFieldPool.h"
 #include "ModelFieldComponent.h"
 
 namespace zsp {
@@ -44,7 +44,7 @@ public:
 
 	virtual void initCompTree() override;
 
-    virtual const std::vector<vsc::IModelField *> &getCompTypeInsts(
+    virtual const std::vector<vsc::dm::IModelField *> &getCompTypeInsts(
         IDataTypeComponent *t) const override;
 
     virtual const std::vector<IDataTypeComponent *> &getCompTypes() const override {
@@ -56,16 +56,16 @@ public:
         IDataTypeComponent *parent_t,
         int32_t             parent_id) const override;
 
-    virtual const std::vector<IModelFieldPool *> &getPools(vsc::IDataType *t) override;
+    virtual const std::vector<IModelFieldPool *> &getPools(vsc::dm::IDataType *t) override;
 
-    virtual const std::vector<vsc::IModelField *> &getResObjects(IDataTypeResource *res_t) override;
+    virtual const std::vector<vsc::dm::IModelField *> &getResObjects(IDataTypeResource *res_t) override;
 
     virtual std::pair<int32_t, int32_t> getResPoolObjRange(IModelFieldPool *pool) override;
 
     virtual const std::vector<std::pair<int32_t, IModelFieldPool *>> &getClaimBoundCompPool(
         ITypeFieldClaim *claim) override;
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
     void enterComponentScope(IModelFieldComponent *comp);
 
@@ -87,15 +87,15 @@ private:
 
     using CompType2InstIdMapT=std::unordered_map<IDataTypeComponent *, std::vector<int32_t>>;
     struct CompType2InstData {
-        std::vector<vsc::IModelField *>         instances;
+        std::vector<vsc::dm::IModelField *>         instances;
         std::vector<CompType2InstIdMapT>        subinst_m;
     };
 
 	using CompType2InstMapT=std::unordered_map<IDataTypeComponent *, CompType2InstData>;
-    using ObjType2PoolMapT=std::unordered_map<vsc::IDataType *, std::vector<IModelFieldPool *>>;
+    using ObjType2PoolMapT=std::unordered_map<vsc::dm::IDataType *, std::vector<IModelFieldPool *>>;
 
 //    using CompIdPoolM=std::pair<int32_t, IModelFieldPool *>;
-//	using ClaimTPoolMapT=std::unordered_map<vsc::ITypeField *, std::vector<CompIdPoolM>>;
+//	using ClaimTPoolMapT=std::unordered_map<vsc::dm::ITypeField *, std::vector<CompIdPoolM>>;
 
 	// Holds a mapping for each component context in which this
     // field has a pool binding.
@@ -103,17 +103,17 @@ private:
 	using RefTCompPoolIdM=std::unordered_map<ITypeFieldInOut *, std::vector<CompIdPoolId>>;
 
     using ObjRange=std::pair<int32_t,int32_t>;
-    using ResTObjectM=std::unordered_map<vsc::IDataType *, std::vector<vsc::IModelField *>>;
+    using ResTObjectM=std::unordered_map<vsc::dm::IDataType *, std::vector<vsc::dm::IModelField *>>;
     using ResPoolObjRangeM=std::unordered_map<IModelFieldPool *, ObjRange>;
 
     using CompIdPoolH=std::pair<int32_t, IModelFieldPool *>;
     using ClaimCompIdPoolM=std::vector<CompIdPoolH>;
     using ClaimTCompIdPoolM=std::unordered_map<ITypeFieldClaim *, ClaimCompIdPoolM>;
 
-    using ResourceMaxPoolSzM=std::unordered_map<vsc::IDataType *, int32_t>;
+    using ResourceMaxPoolSzM=std::unordered_map<vsc::dm::IDataType *, int32_t>;
 
 private:
-    static vsc::IDebug                  *m_dbg;
+    static dmgr::IDebug                  *m_dbg;
     IContext                            *m_ctxt;
 
     int32_t                             m_init_pass;
@@ -121,7 +121,7 @@ private:
     std::vector<IModelFieldComponent *>                      m_empty_comp_l;
     std::vector<IModelFieldPool *>                           m_empty_pool_l;
     std::vector<int32_t>                                     m_empty_int_l;
-    std::vector<vsc::IModelField *>                          m_empty_field_l;
+    std::vector<vsc::dm::IModelField *>                          m_empty_field_l;
     std::vector<std::pair<int32_t,int32_t>>                  m_empty_int_pair_l;
     std::vector<std::pair<int32_t, IModelFieldPool *>>       m_empty_int_pool_pair_l;
 
@@ -168,8 +168,8 @@ private:
     // Holds the per-type instance ID for the component
     std::vector<int32_t>                m_inst_id_s;
 
-    using TypePoolMapT=std::unordered_map<vsc::IDataType *, IModelFieldPool *>;
-    using FieldPoolMapT=std::unordered_map<vsc::ITypeField *, IModelFieldPool *>;
+    using TypePoolMapT=std::unordered_map<vsc::dm::IDataType *, IModelFieldPool *>;
+    using FieldPoolMapT=std::unordered_map<vsc::dm::ITypeField *, IModelFieldPool *>;
 
     struct TypePoolMapFrame {
         TypePoolMapT                wildcard_m;

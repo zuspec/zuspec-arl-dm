@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmtScope.h"
+#include "zsp/arl/dm/ITypeProcStmtScope.h"
 
 namespace zsp {
 namespace arl {
@@ -40,7 +40,7 @@ public:
         return m_statements;
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     std::vector<ITypeProcStmtUP>                m_statements;

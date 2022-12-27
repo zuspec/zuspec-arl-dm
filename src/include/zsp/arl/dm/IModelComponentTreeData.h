@@ -20,7 +20,7 @@
  */
 #pragma once
 #include <vector>
-#include "arl/IDataTypeComponent.h"
+#include "zsp/arl/dm/IDataTypeComponent.h"
 
 namespace zsp {
 namespace arl {
@@ -34,7 +34,7 @@ public:
 
     virtual ~IModelComponentTreeData() { }
 
-    virtual const std::vector<vsc::IModelField *> &getCompTypeInsts(
+    virtual const std::vector<vsc::dm::IModelField *> &getCompTypeInsts(
         IDataTypeComponent *t) const = 0;
 
     virtual const std::vector<IDataTypeComponent *> &getCompTypes() const = 0;
@@ -53,15 +53,15 @@ public:
         IDataTypeComponent *parent_t,
         int32_t             parent_id) const = 0;
 
-    virtual const std::vector<IModelFieldPool *> &getPools(vsc::IDataType *t) = 0;
+    virtual const std::vector<IModelFieldPool *> &getPools(vsc::dm::IDataType *t) = 0;
 
     /**
      * @brief Returns aggregated list of resource objects for a given type
      * 
      * @param res_t 
-     * @return const std::vector<vsc::IModelField *>& 
+     * @return const std::vector<vsc::dm::IModelField *>& 
      */
-    virtual const std::vector<vsc::IModelField *> &getResObjects(IDataTypeResource *res_t) = 0;
+    virtual const std::vector<vsc::dm::IModelField *> &getResObjects(IDataTypeResource *res_t) = 0;
 
     /**
      * @brief Returns the range of objects associated with the specified pool

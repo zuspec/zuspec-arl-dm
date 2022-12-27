@@ -40,13 +40,13 @@ TaskIsDataTypeFlowObj::~TaskIsDataTypeFlowObj() {
 
 }
 
-bool TaskIsDataTypeFlowObj::test(vsc::IDataType *t) {
+bool TaskIsDataTypeFlowObj::test(vsc::dm::IDataType *t) {
     TaskIsDataTypeFlowObj task;
     t->accept(&task);
     return task.m_ret;
 }
 
-bool TaskIsDataTypeFlowObj::test(FlowObjKindE kind, vsc::IDataType *t) {
+bool TaskIsDataTypeFlowObj::test(FlowObjKindE kind, vsc::dm::IDataType *t) {
     TaskIsDataTypeFlowObj task(kind);
     t->accept(&task);
     return task.m_ret;

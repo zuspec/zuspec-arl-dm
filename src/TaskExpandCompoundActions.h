@@ -19,8 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IContext.h"
-#include "arl/impl/VisitorBase.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {
 namespace arl {
@@ -39,7 +39,7 @@ public:
         IModelFieldAction           *action);
 
 private:
-    static vsc::IDebug                  *m_dbg;
+    static dmgr::IDebug                  *m_dbg;
     IContext                            *m_ctxt;
 };
 

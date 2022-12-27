@@ -19,8 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IContext.h"
-#include "arl/IModelActivityReplicate.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IModelActivityReplicate.h"
 #include "ModelActivityScope.h"
 
 namespace zsp {
@@ -35,28 +35,28 @@ class ModelActivityReplicate :
 public:
     ModelActivityReplicate(
         IContext            *ctxt,
-        vsc::IModelExpr     *count);
+        vsc::dm::IModelExpr     *count);
 
     virtual ~ModelActivityReplicate();
 
-    virtual vsc::IModelExpr *getCountExpr() const override {
+    virtual vsc::dm::IModelExpr *getCountExpr() const override {
         return m_count_expr.get();
     }
 
-    virtual vsc::IModelField *getCountField() const override {
+    virtual vsc::dm::IModelField *getCountField() const override {
         return fields().at(0).get();
     }
 
-    virtual vsc::IModelField *getIndexField() const override {
+    virtual vsc::dm::IModelField *getIndexField() const override {
         return m_index_field;
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    vsc::IModelExprUP                  m_count_expr;
-    vsc::IModelField                   *m_count_field;
-    vsc::IModelField                   *m_index_field;
+    vsc::dm::IModelExprUP                  m_count_expr;
+    vsc::dm::IModelField                   *m_count_field;
+    vsc::dm::IModelField                   *m_index_field;
 
 };
 

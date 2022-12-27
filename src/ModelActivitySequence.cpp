@@ -5,7 +5,7 @@
  *      Author: mballance
  */
 
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelActivitySequence.h"
 
 namespace zsp {
@@ -33,9 +33,9 @@ void ModelActivitySequence::addActivity(IModelActivity *a, bool own) {
 	}
 }
 
-void ModelActivitySequence::accept(vsc::IVisitor *v) {
-	if (dynamic_cast<arl::IVisitor *>(v)) {
-		dynamic_cast<arl::IVisitor *>(v)->visitModelActivitySequence(this);
+void ModelActivitySequence::accept(vsc::dm::IVisitor *v) {
+	if (dynamic_cast<arl::dm::IVisitor *>(v)) {
+		dynamic_cast<arl::dm::IVisitor *>(v)->visitModelActivitySequence(this);
 	}
 
 }

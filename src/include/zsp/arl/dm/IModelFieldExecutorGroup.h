@@ -20,8 +20,8 @@
  */
 #pragma once
 #include <vector>
-#include "vsc/IDataTypeStruct.h"
-#include "arl/IModelFieldComponent.h"
+#include "vsc/dm/IDataTypeStruct.h"
+#include "zsp/arl/dm/IModelFieldComponent.h"
 
 namespace zsp {
 namespace arl {
@@ -35,7 +35,7 @@ public:
 
     virtual ~IModelFieldExecutorGroup() { }
 
-    virtual vsc::IDataTypeStruct *getTraitType() const = 0;
+    virtual vsc::dm::IDataTypeStruct *getTraitType() const = 0;
 
     virtual const std::vector<IModelFieldExecutor *> getExecutors() const = 0;
 

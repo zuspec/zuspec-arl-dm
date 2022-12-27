@@ -19,9 +19,9 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IContext.h"
-#include "arl/IDataTypeResource.h"
-#include "vsc/ITypeField.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IDataTypeResource.h"
+#include "vsc/dm/ITypeField.h"
 #include "DataTypeFlowObj.h"
 
 namespace zsp {
@@ -40,15 +40,15 @@ public:
 
     virtual ~DataTypeResource();
 
-    virtual vsc::ITypeField *getInstanceId() const override {
+    virtual vsc::dm::ITypeField *getInstanceId() const override {
         return m_instance_id;
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    vsc::ITypeField             *m_instance_id;
-    vsc::ITypeField             *m_initial;
+    vsc::dm::ITypeField             *m_instance_id;
+    vsc::dm::ITypeField             *m_initial;
 
 };
 

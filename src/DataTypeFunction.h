@@ -19,8 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include "arl/IContext.h"
-#include "arl/IDataTypeFunction.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IDataTypeFunction.h"
 
 namespace zsp {
 namespace arl {
@@ -33,7 +33,7 @@ public:
     DataTypeFunction(
         IContext                *ctxt,
         const std::string       &name,
-        vsc::IDataType          *rtype,
+        vsc::dm::IDataType          *rtype,
         bool                    own_rtype);
 
     virtual ~DataTypeFunction();
@@ -42,7 +42,7 @@ public:
         return m_name;
     }
 
-    virtual vsc::IDataType *getReturnType() const override {
+    virtual vsc::dm::IDataType *getReturnType() const override {
         return m_ret_type;
     }
 
@@ -56,12 +56,12 @@ public:
         return m_body.get();
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     std::string                                     m_name;
-    vsc::IDataType                                  *m_ret_type;
-    vsc::IDataTypeUP                                m_ret_type_u;
+    vsc::dm::IDataType                                  *m_ret_type;
+    vsc::dm::IDataTypeUP                                m_ret_type_u;
     std::vector<IDataTypeFunctionParamDeclUP>       m_parameters;
     ITypeProcStmtScopeUP                            m_body;
 

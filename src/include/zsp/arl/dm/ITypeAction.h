@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include "arl/IType.h"
+#include "zsp/arl/dm/IType.h"
 
 namespace zsp {
 namespace arl {

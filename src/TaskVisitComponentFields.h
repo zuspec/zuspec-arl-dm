@@ -20,7 +20,7 @@
  */
 #pragma once
 #include <functional>
-#include "arl/impl/VisitorBase.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {
 namespace arl {

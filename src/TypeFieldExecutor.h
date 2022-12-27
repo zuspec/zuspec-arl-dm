@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeFieldExecutor.h"
+#include "zsp/arl/dm/ITypeFieldExecutor.h"
 #include "TypeField.h"
 
 namespace zsp {
@@ -35,15 +35,15 @@ class TypeFieldExecutor :
 public:
     TypeFieldExecutor(
         const std::string           &name,
-        vsc::IDataType              *type,
+        vsc::dm::IDataType              *type,
         bool                        own);
 
     virtual ~TypeFieldExecutor();
 
-	virtual vsc::IModelField *mkModelField(
-		vsc::IModelBuildContext 			*ctxt) override;
+	virtual vsc::dm::IModelField *mkModelField(
+		vsc::dm::IModelBuildContext 			*ctxt) override;
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 };
 

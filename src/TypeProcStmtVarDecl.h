@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmtVarDecl.h"
+#include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
 
 namespace zsp {
 namespace arl {
@@ -31,9 +31,9 @@ class TypeProcStmtVarDecl : public virtual ITypeProcStmtVarDecl {
 public:
     TypeProcStmtVarDecl(
         const std::string           &name,
-        vsc::IDataType              *type,
+        vsc::dm::IDataType              *type,
         bool                        own,
-        vsc::ITypeExpr              *init);
+        vsc::dm::ITypeExpr              *init);
 
     virtual ~TypeProcStmtVarDecl();
 
@@ -41,21 +41,21 @@ public:
         return m_name;
     }
 
-    virtual vsc::IDataType *getDataType() const override {
+    virtual vsc::dm::IDataType *getDataType() const override {
         return m_type;
     }
 
-    virtual vsc::ITypeExpr *getInit() const override {
+    virtual vsc::dm::ITypeExpr *getInit() const override {
         return m_init.get();
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     std::string                     m_name;
-    vsc::IDataType                  *m_type;
-    vsc::IDataTypeUP                m_type_u;
-    vsc::ITypeExprUP                m_init;
+    vsc::dm::IDataType                  *m_type;
+    vsc::dm::IDataTypeUP                m_type_u;
+    vsc::dm::ITypeExprUP                m_init;
 };
 
 }

@@ -20,7 +20,7 @@
  */
 #pragma once
 #include <functional>
-#include "arl/impl/VisitorBase.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {
 namespace arl {
@@ -61,7 +61,7 @@ private:
     int32_t                                   m_depth;
     std::function<void (ITypeFieldInOut *)>   m_ref_f;
     std::function<void (ITypeFieldClaim *)>   m_claim_f;
-}
+};
 
 }
 }

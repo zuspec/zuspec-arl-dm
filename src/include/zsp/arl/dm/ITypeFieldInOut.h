@@ -6,14 +6,14 @@
  */
 
 #pragma once
-#include "vsc/ITypeFieldRef.h"
+#include "vsc/dm/ITypeFieldRef.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class ITypeFieldInOut : public virtual vsc::ITypeFieldRef {
+class ITypeFieldInOut : public virtual vsc::dm::ITypeFieldRef {
 public:
 
 	virtual ~ITypeFieldInOut() { }

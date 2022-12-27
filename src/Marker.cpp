@@ -28,7 +28,7 @@ namespace dm {
 
 
 Marker::Marker(
-    vsc::IAccept            *target,
+    vsc::dm::IAccept            *target,
     MarkerSeverity          severity,
     const std::string       &message) : m_target(target), 
         m_severity(severity), m_message(message) {

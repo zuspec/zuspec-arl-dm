@@ -6,9 +6,9 @@
  */
 
 #include "DebugMacros.h"
-#include "arl/IContext.h"
-#include "vsc/IModelBuildContext.h"
-#include "vsc/impl/TaskBuildModelFieldConstraints.h"
+#include "zsp/arl/dm/IContext.h"
+#include "vsc/dm/IModelBuildContext.h"
+#include "vsc/dm/impl/TaskBuildModelFieldConstraints.h"
 #include "DataTypeAction.h"
 #include "ModelFieldAction.h"
 
@@ -23,7 +23,7 @@ DataTypeAction::DataTypeAction(
     DEBUG_INIT("DataTypeAction");
 
 	// Add the built-in 'comp' ref
-	m_comp = ctxt->mkTypeFieldRef("comp", 0, vsc::TypeFieldAttr::NoAttr);
+	m_comp = ctxt->mkTypeFieldRef("comp", 0, vsc::dm::TypeFieldAttr::NoAttr);
 	addField(m_comp);
 }
 
@@ -41,8 +41,8 @@ void DataTypeAction::addActivity(ITypeFieldActivity *activity) {
 	m_activities.push_back(activity);
 }
 
-vsc::IModelField *DataTypeAction::mkRootField(
-		vsc::IModelBuildContext		*ctxt,
+vsc::dm::IModelField *DataTypeAction::mkRootField(
+		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) {
     DEBUG_ENTER("mkRootField %s", name.c_str());
@@ -53,10 +53,10 @@ vsc::IModelField *DataTypeAction::mkRootField(
 
     // Push the new field just for completeness
     ctxt->pushTopDownScope(ret);
-    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
+    for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator 
         it=getFields().begin();
         it!=getFields().end(); it++) {
-        vsc::IModelField *field = (*it)->mkModelField(ctxt);
+        vsc::dm::IModelField *field = (*it)->mkModelField(ctxt);
 
         if (!field) {
             fprintf(stdout, "Error: Construction of field %s failed\n", (*it)->name().c_str());
@@ -82,7 +82,7 @@ vsc::IModelField *DataTypeAction::mkRootField(
     }
 
     // Finally, build out constraints on this field and sub-fields
-    vsc::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
+    vsc::dm::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
     constraint_builder.build(ret, this);
 
     if (getCreateHook()) {
@@ -94,9 +94,9 @@ vsc::IModelField *DataTypeAction::mkRootField(
     return ret;	
 }
 
-vsc::IModelField *DataTypeAction::mkTypeField(
-		vsc::IModelBuildContext		*ctxt,
-		vsc::ITypeField				*type) {
+vsc::dm::IModelField *DataTypeAction::mkTypeField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		vsc::dm::ITypeField				*type) {
     DEBUG_ENTER("mkTypeField %s", type->name().c_str());
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
@@ -105,10 +105,10 @@ vsc::IModelField *DataTypeAction::mkTypeField(
 
     // Push the new field just for completeness
     ctxt->pushTopDownScope(ret);
-    for (std::vector<vsc::ITypeFieldUP>::const_iterator 
+    for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator 
         it=getFields().begin();
         it!=getFields().end(); it++) {
-        vsc::IModelField *field = (*it)->mkModelField(ctxt);
+        vsc::dm::IModelField *field = (*it)->mkModelField(ctxt);
 		ret->addField(field);
     }
 
@@ -129,7 +129,7 @@ vsc::IModelField *DataTypeAction::mkTypeField(
     }
 
     // Finally, build out constraints on this field and sub-fields
-    vsc::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
+    vsc::dm::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
     constraint_builder.build(ret, this);
 
     if (getCreateHook()) {
@@ -142,7 +142,7 @@ vsc::IModelField *DataTypeAction::mkTypeField(
     return ret;
 }
 
-void DataTypeAction::accept(vsc::IVisitor *v) {
+void DataTypeAction::accept(vsc::dm::IVisitor *v) {
 	if (dynamic_cast<IVisitor *>(v)) {
 		dynamic_cast<IVisitor *>(v)->visitDataTypeAction(this);
 	} else if (v->cascade()) {

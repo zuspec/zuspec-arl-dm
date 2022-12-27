@@ -5,8 +5,8 @@
  *      Author: mballance
  */
 #pragma once
-#include "arl/IDataTypeActivityTraverse.h"
-#include "vsc/ITypeConstraint.h"
+#include "zsp/arl/dm/IDataTypeActivityTraverse.h"
+#include "vsc/dm/ITypeConstraint.h"
 
 
 namespace zsp {
@@ -18,42 +18,42 @@ class DataTypeActivityTraverse :
 	public virtual IDataTypeActivityTraverse {
 public:
 	DataTypeActivityTraverse(
-			vsc::ITypeExprFieldRef		*target,
-			vsc::ITypeConstraint		*with_c);
+			vsc::dm::ITypeExprFieldRef		*target,
+			vsc::dm::ITypeConstraint		*with_c);
 
 	virtual ~DataTypeActivityTraverse();
 
-	virtual vsc::ITypeExprFieldRef *getTarget() const override {
+	virtual vsc::dm::ITypeExprFieldRef *getTarget() const override {
 		return m_target.get();
 	}
 
-	virtual vsc::ITypeConstraint *getWithC() const override {
+	virtual vsc::dm::ITypeConstraint *getWithC() const override {
 		return m_with_c.get();
 	}
 
-	virtual void setWithC(vsc::ITypeConstraint *c) override {
-		m_with_c = vsc::ITypeConstraintUP(c);
+	virtual void setWithC(vsc::dm::ITypeConstraint *c) override {
+		m_with_c = vsc::dm::ITypeConstraintUP(c);
 	}
 
 	virtual IModelActivity *mkActivity(
-		vsc::IModelBuildContext		*ctxt,
+		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) override;
 
-	virtual vsc::IModelField *mkRootField(
-		vsc::IModelBuildContext		*ctxt,
+	virtual vsc::dm::IModelField *mkRootField(
+		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) override { return 0; }
 
-	virtual vsc::IModelField *mkTypeField(
-		vsc::IModelBuildContext		*ctxt,
-		vsc::ITypeField				*type) override { return 0; }
+	virtual vsc::dm::IModelField *mkTypeField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		vsc::dm::ITypeField				*type) override { return 0; }
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-	vsc::ITypeExprFieldRefUP				m_target;
-	vsc::ITypeConstraintUP					m_with_c;
-	vsc::IModelFieldFactoryUP				m_factory;
+	vsc::dm::ITypeExprFieldRefUP				m_target;
+	vsc::dm::ITypeConstraintUP					m_with_c;
+	vsc::dm::IModelFieldFactoryUP				m_factory;
 };
 
 }

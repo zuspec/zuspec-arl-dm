@@ -6,10 +6,9 @@
  */
 
 #pragma once
-#include "arl/IContext.h"
-#include "arl/IDataTypeAction.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IDataTypeAction.h"
 #include "DataTypeStruct.h"
-#include "include/arl/sav/ITypeActivityStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -32,7 +31,7 @@ public:
 
 	virtual void setComponentType(IDataTypeComponent *c) override;
 
-	virtual vsc::ITypeFieldRef *getCompField() const override { return m_comp; }
+	virtual vsc::dm::ITypeFieldRef *getCompField() const override { return m_comp; }
 
 	virtual const std::vector<ITypeFieldActivity *> &activities() const override {
 		return m_activities;
@@ -40,20 +39,20 @@ public:
 
 	virtual void addActivity(ITypeFieldActivity *activity) override;
 
-	virtual vsc::IModelField *mkRootField(
-		vsc::IModelBuildContext		*ctxt,
+	virtual vsc::dm::IModelField *mkRootField(
+		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) override;
 
-	virtual vsc::IModelField *mkTypeField(
-		vsc::IModelBuildContext		*ctxt,
-		vsc::ITypeField				*type) override;
+	virtual vsc::dm::IModelField *mkTypeField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		vsc::dm::ITypeField				*type) override;
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
 	IDataTypeComponent					*m_component_t;
-	vsc::ITypeFieldRef					*m_comp;
+	vsc::dm::ITypeFieldRef					*m_comp;
 	std::vector<ITypeFieldActivity *>	m_activities;
 
 };

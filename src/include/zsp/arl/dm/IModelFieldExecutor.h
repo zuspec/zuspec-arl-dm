@@ -19,15 +19,15 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/IDataTypeStruct.h"
-#include "vsc/IModelField.h"
+#include "vsc/dm/IDataTypeStruct.h"
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class IModelFieldExecutor : public virtual vsc::IModelField {
+class IModelFieldExecutor : public virtual vsc::dm::IModelField {
 public:
 
     virtual ~IModelFieldExecutor() { }

@@ -21,7 +21,7 @@
 #pragma once
 #include <stdint.h>
 #include <functional>
-#include "arl/impl/VisitorBase.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {
 namespace arl {

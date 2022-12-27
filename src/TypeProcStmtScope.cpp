@@ -19,7 +19,7 @@
  *     Author:
  */
 
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtScope.h"
 
 
@@ -41,7 +41,7 @@ void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt) {
     m_statements.push_back(ITypeProcStmtUP(stmt));
 }
 
-void TypeProcStmtScope::accept(vsc::IVisitor *v) {
+void TypeProcStmtScope::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitTypeProcStmtScope(this);
     }

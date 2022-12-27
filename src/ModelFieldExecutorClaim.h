@@ -20,7 +20,7 @@
  */
 #pragma once
 #include <string>
-#include "arl/IModelFieldExecutorClaim.h"
+#include "zsp/arl/dm/IModelFieldExecutorClaim.h"
 #include "ModelField.h"
 
 namespace zsp {
@@ -34,7 +34,7 @@ public:
 
     ModelFieldExecutorClaim(
         const std::string       &name,
-        vsc::IDataType          *claim_t);
+        vsc::dm::IDataType          *claim_t);
 
     virtual ~ModelFieldExecutorClaim();
 
@@ -42,24 +42,24 @@ public:
         return m_name;
     }
 
-    virtual vsc::IDataType *getDataType() const override {
+    virtual vsc::dm::IDataType *getDataType() const override {
         return m_type;
     }
 
-    virtual vsc::IModelField *getRef() const override {
+    virtual vsc::dm::IModelField *getRef() const override {
         return m_ref;
     }
 
-    virtual void setRef(vsc::IModelField *f) override {
+    virtual void setRef(vsc::dm::IModelField *f) override {
         m_ref = f;
     }
 
-    virtual void accept(vsc::IVisitor *v) override;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     std::string                 m_name;
-    vsc::IDataType              *m_type;
-    vsc::IModelField            *m_ref;
+    vsc::dm::IDataType              *m_type;
+    vsc::dm::IModelField            *m_ref;
 
 };
 

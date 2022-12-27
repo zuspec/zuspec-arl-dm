@@ -6,28 +6,28 @@
  */
 
 #pragma once
-#include "vsc/ITypeField.h"
+#include "vsc/dm/ITypeField.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class TypeField : public virtual vsc::ITypeField {
+class TypeField : public virtual vsc::dm::ITypeField {
 public:
 	TypeField(
 			const std::string			&name,
-			vsc::IDataType				*type,
+			vsc::dm::IDataType				*type,
 			bool						owned,
-			vsc::TypeFieldAttr			attr);
+			vsc::dm::TypeFieldAttr			attr);
 
 	virtual ~TypeField();
 
-	virtual vsc::ITypeField *getParent() const override {
+	virtual vsc::dm::ITypeField *getParent() const override {
 		return m_parent;
 	}
 
-	virtual void setParent(vsc::ITypeField *p) override {
+	virtual void setParent(vsc::dm::ITypeField *p) override {
 		m_parent = p;
 	}
 
@@ -37,33 +37,33 @@ public:
 
 	virtual const std::string &name() const { return m_name; }
 
-	virtual vsc::IDataType *getDataType() const override {
+	virtual vsc::dm::IDataType *getDataType() const override {
 		return m_type;
 	}
 
-	virtual void setDataType(vsc::IDataType *t, bool own=false) override {
+	virtual void setDataType(vsc::dm::IDataType *t, bool own=false) override {
 		m_type = t;
 		if (own) {
-			m_type_owned = vsc::IDataTypeUP(t);
+			m_type_owned = vsc::dm::IDataTypeUP(t);
 		}
 	}
 
-	virtual vsc::ITypeField *getField(int32_t idx) const override;
+	virtual vsc::dm::ITypeField *getField(int32_t idx) const override;
 
-	virtual vsc::TypeFieldAttr getAttr() const override {
+	virtual vsc::dm::TypeFieldAttr getAttr() const override {
 		return m_attr;
 	}
 
-	virtual vsc::IModelField *mkModelField(
-		vsc::IModelBuildContext 			*ctxt) override;
+	virtual vsc::dm::IModelField *mkModelField(
+		vsc::dm::IModelBuildContext 			*ctxt) override;
 
 protected:
-	vsc::ITypeField						*m_parent;
+	vsc::dm::ITypeField						*m_parent;
 	int32_t								m_idx;
 	std::string							m_name;
-	vsc::IDataType						*m_type;
-	vsc::IDataTypeUP					m_type_owned;
-	vsc::TypeFieldAttr					m_attr;
+	vsc::dm::IDataType						*m_type;
+	vsc::dm::IDataTypeUP					m_type_owned;
+	vsc::dm::TypeFieldAttr					m_attr;
 };
 
 }

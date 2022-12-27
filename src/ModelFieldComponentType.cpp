@@ -26,7 +26,7 @@ namespace arl {
 namespace dm {
 
 ModelFieldComponentType::ModelFieldComponentType(
-    vsc::ITypeField         *type) : ModelFieldComponent(type), m_type(type) {
+    vsc::dm::ITypeField         *type) : ModelFieldComponent(type), m_type(type) {
 }
 
 ModelFieldComponentType::~ModelFieldComponentType() {

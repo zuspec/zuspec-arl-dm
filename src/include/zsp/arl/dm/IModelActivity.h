@@ -8,8 +8,8 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include "vsc/IAccept.h"
-#include "vsc/IModelConstraint.h"
+#include "vsc/dm/IAccept.h"
+#include "vsc/dm/IModelConstraint.h"
 
 namespace zsp {
 namespace arl {
@@ -18,7 +18,7 @@ namespace dm {
 
 class IModelActivity;
 using IModelActivityUP=std::unique_ptr<IModelActivity>;
-class IModelActivity : public virtual vsc::IAccept {
+class IModelActivity : public virtual vsc::dm::IAccept {
 public:
 
 	virtual ~IModelActivity() { }
@@ -29,7 +29,7 @@ public:
 
 	/*
 	virtual void getConstraintsLookahead(
-			std::vector<vsc::IModelConstraint *> &constraints) = 0;
+			std::vector<vsc::dm::IModelConstraint *> &constraints) = 0;
 	 */
 
 };

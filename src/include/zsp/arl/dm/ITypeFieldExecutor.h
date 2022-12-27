@@ -19,14 +19,14 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/ITypeField.h"
+#include "vsc/dm/ITypeField.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class ITypeFieldExecutor : public virtual vsc::ITypeField {
+class ITypeFieldExecutor : public virtual vsc::dm::ITypeField {
 public:
 
     virtual ~ITypeFieldExecutor() { }

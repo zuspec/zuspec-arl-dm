@@ -18,7 +18,7 @@
  * Created on:
  *     Author:
  */
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelActivityBind.h"
 
 
@@ -29,9 +29,9 @@ namespace dm {
 
 
 ModelActivityBind::ModelActivityBind(
-    const std::vector<vsc::IModelExpr *> &targets) {
+    const std::vector<vsc::dm::IModelExpr *> &targets) {
 
-    for (std::vector<vsc::IModelExpr *>::const_iterator
+    for (std::vector<vsc::dm::IModelExpr *>::const_iterator
         it=targets.begin();
         it!=targets.end(); it++) {
 
@@ -42,7 +42,7 @@ ModelActivityBind::~ModelActivityBind() {
 
 }
 
-void ModelActivityBind::accept(vsc::IVisitor *v) {
+void ModelActivityBind::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
         dynamic_cast<IVisitor *>(v)->visitModelActivityBind(this);
     }

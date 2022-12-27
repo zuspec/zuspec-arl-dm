@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include "arl/IContext.h"
-#include "arl/IDataTypeFlowObj.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IDataTypeFlowObj.h"
 #include "DataTypeStruct.h"
 
 namespace zsp {
@@ -26,11 +26,11 @@ public:
 
 	virtual FlowObjKindE kind() const override { return m_kind; }
 
-	virtual void accept(vsc::IVisitor *v) override;
+	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
 	FlowObjKindE					m_kind;
-	vsc::ITypeField					*m_poolid;
+	vsc::dm::ITypeField					*m_poolid;
 };
 
 }

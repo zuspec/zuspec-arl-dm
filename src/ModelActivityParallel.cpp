@@ -5,7 +5,7 @@
  *      Author: mballance
  */
 
-#include "arl/IVisitor.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "ModelActivityParallel.h"
 
 namespace zsp {
@@ -23,9 +23,9 @@ ModelActivityParallel::~ModelActivityParallel() {
 	// TODO Auto-generated destructor stub
 }
 
-void ModelActivityParallel::accept(vsc::IVisitor *v) {
-	if (dynamic_cast<arl::IVisitor *>(v)) {
-		dynamic_cast<arl::IVisitor *>(v)->visitModelActivityParallel(this);
+void ModelActivityParallel::accept(vsc::dm::IVisitor *v) {
+	if (dynamic_cast<arl::dm::IVisitor *>(v)) {
+		dynamic_cast<arl::dm::IVisitor *>(v)->visitModelActivityParallel(this);
 	}
 }
 

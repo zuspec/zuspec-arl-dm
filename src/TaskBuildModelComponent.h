@@ -7,11 +7,11 @@
 
 #pragma once
 #include <vector>
-#include "arl/IModelBuildContext.h"
-#include "include/arl/impl/VisitorBase.h"
-#include "include/arl/impl/VisitorDelegator.h"
-#include "vsc/IModelField.h"
-#include "vsc/impl/TaskBuildModelField.h"
+#include "zsp/arl/dm/IModelBuildContext.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
+#include "zsp/arl/dm/impl/VisitorDelegator.h"
+#include "vsc/dm/IModelField.h"
+#include "vsc/dm/impl/TaskBuildModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -24,7 +24,7 @@ public:
 
 	virtual ~TaskBuildModelComponent();
 
-	IModelFieldComponent *build(arl::IDataTypeComponent *c, const std::string &name);
+	IModelFieldComponent *build(arl::dm::IDataTypeComponent *c, const std::string &name);
 
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override;
 
@@ -32,8 +32,8 @@ public:
 
 private:
 	IModelBuildContext					*m_ctxt;
-	std::vector<vsc::IModelField *>		m_field_s;
-	vsc::TaskBuildModelField			m_core;
+	std::vector<vsc::dm::IModelField *>		m_field_s;
+	vsc::dm::TaskBuildModelField			m_core;
 
 };
 

@@ -21,8 +21,8 @@
 #pragma once
 #include <memory>
 #include <string>
-#include "vsc/IDataType.h"
-#include "vsc/ITypeExpr.h"
+#include "vsc/dm/IDataType.h"
+#include "vsc/dm/ITypeExpr.h"
 
 namespace zsp {
 namespace arl {
@@ -38,9 +38,9 @@ public:
 
     virtual const std::string &name() const = 0;
 
-    virtual vsc::IDataType *getDataType() const = 0;
+    virtual vsc::dm::IDataType *getDataType() const = 0;
 
-    virtual vsc::ITypeExpr *getDefault() const = 0;
+    virtual vsc::dm::ITypeExpr *getDefault() const = 0;
 
 };
 

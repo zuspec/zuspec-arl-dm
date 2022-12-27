@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include "vsc/IVisitor.h"
+#include "vsc/dm/IVisitor.h"
 
 namespace zsp {
 namespace arl {
@@ -58,7 +58,7 @@ class ITypeProcStmtScope;
 class ITypeProcStmtVarDecl;
 class ITypeProcStmtWhile;
 
-class IVisitor : public virtual vsc::IVisitor {
+class IVisitor : public virtual vsc::dm::IVisitor {
 public:
 
 	virtual ~IVisitor() { }

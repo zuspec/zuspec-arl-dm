@@ -19,9 +19,9 @@
  *     Author: 
  */
 #pragma once
-#include "arl/ITypeProcStmt.h"
-#include "vsc/ITypeExpr.h"
-#include "vsc/ITypeExprFieldRef.h"
+#include "zsp/arl/dm/ITypeProcStmt.h"
+#include "vsc/dm/ITypeExpr.h"
+#include "vsc/dm/ITypeExprFieldRef.h"
 
 namespace zsp {
 namespace arl {
@@ -44,11 +44,11 @@ public:
 
     virtual ~ITypeProcStmtAssign() { }
 
-    virtual vsc::ITypeExprFieldRef *getLhs() = 0;
+    virtual vsc::dm::ITypeExprFieldRef *getLhs() = 0;
 
     virtual TypeProcStmtAssignOp op() const = 0;
 
-    virtual vsc::ITypeExpr *getRhs() = 0;
+    virtual vsc::dm::ITypeExpr *getRhs() = 0;
 
 };
 

@@ -29,9 +29,9 @@ namespace dm {
 
 DataTypeFunctionParamDecl::DataTypeFunctionParamDecl(
         const std::string       &name,
-        vsc::IDataType          *type,
+        vsc::dm::IDataType          *type,
         bool                    own,
-        vsc::ITypeExpr          *init) : 
+        vsc::dm::ITypeExpr          *init) : 
         m_name(name), m_type(type), m_type_u(own?type:0), m_default(init) {
 
 

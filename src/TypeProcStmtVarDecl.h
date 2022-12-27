@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/ITypeProcStmtVarDecl.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class TypeProcStmtVarDecl : public virtual ITypeProcStmtVarDecl {
@@ -55,6 +58,8 @@ private:
     vsc::ITypeExprUP                m_init;
 };
 
+}
+}
 }
 
 

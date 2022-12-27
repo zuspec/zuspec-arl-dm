@@ -22,7 +22,10 @@
 #include "DataTypeFunction.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 DataTypeFunction::DataTypeFunction(
@@ -48,4 +51,6 @@ void DataTypeFunction::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

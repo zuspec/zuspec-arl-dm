@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/IPoolBindDirective.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class PoolBindDirective : public virtual IPoolBindDirective {
@@ -50,5 +53,7 @@ private:
 
 };
 
+}
+}
 }
 

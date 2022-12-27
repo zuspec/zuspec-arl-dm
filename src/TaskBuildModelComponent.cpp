@@ -8,7 +8,10 @@
 #include "TaskBuildModelComponent.h"
 #include "ModelFieldComponentRoot.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TaskBuildModelComponent::TaskBuildModelComponent(IModelBuildContext *ctxt) :
 		VisitorDelegator(&m_core), m_ctxt(ctxt), m_core(ctxt, this) {
@@ -64,4 +67,6 @@ void TaskBuildModelComponent::visitTypeFieldPool(ITypeFieldPool *f) {
 	field->addField(size);
 }
 
-} /* namespace arl */
+}
+}
+}

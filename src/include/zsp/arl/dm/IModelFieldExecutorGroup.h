@@ -23,7 +23,10 @@
 #include "vsc/IDataTypeStruct.h"
 #include "arl/IModelFieldComponent.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelFieldExecutor;
 
@@ -40,6 +43,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

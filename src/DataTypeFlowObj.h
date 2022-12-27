@@ -10,7 +10,10 @@
 #include "arl/IDataTypeFlowObj.h"
 #include "DataTypeStruct.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class DataTypeFlowObj : public DataTypeStruct, public virtual IDataTypeFlowObj {
 public:
@@ -30,5 +33,7 @@ private:
 	vsc::ITypeField					*m_poolid;
 };
 
-} /* namespace arl */
+}
+}
+}
 

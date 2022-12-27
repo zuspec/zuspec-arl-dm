@@ -22,7 +22,10 @@
 #include <functional>
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class TaskVisitModelFieldInOut : public VisitorBase {
@@ -52,8 +55,10 @@ public:
 private:
     std::function<void (IModelFieldInOut *)>        m_func;
     uint32_t                                        m_depth;
-};
+}
 
+}
+}
 }
 
 

@@ -7,7 +7,10 @@
 
 #include "TaskBuildModelConstraint.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TaskBuildModelConstraint::TaskBuildModelConstraint(IModelBuildContext *ctxt) :
 	vsc::TaskBuildModelConstraint<>(ctxt, this) {
@@ -19,4 +22,6 @@ TaskBuildModelConstraint::~TaskBuildModelConstraint() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace arl */
+}
+}
+}

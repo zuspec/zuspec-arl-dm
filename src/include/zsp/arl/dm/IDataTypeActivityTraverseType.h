@@ -8,7 +8,10 @@
 #pragma once
 #include "arl/IDataTypeActivity.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeActivityTraverseType : public virtual IDataTypeActivity {
 public:
@@ -17,4 +20,6 @@ public:
 
 };
 
+}
+}
 }

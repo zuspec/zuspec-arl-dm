@@ -22,7 +22,10 @@
 #include "DataTypeResource.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 DataTypeResource::DataTypeResource(
         IContext            *ctxt,
@@ -70,4 +73,6 @@ void DataTypeResource::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

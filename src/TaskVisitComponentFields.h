@@ -22,7 +22,10 @@
 #include <functional>
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class TaskVisitComponentFields : public VisitorBase {
@@ -42,6 +45,8 @@ private:
     std::function<void (IModelFieldComponent *)>            m_leave;
 };
 
+}
+}
 }
 
 

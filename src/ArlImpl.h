@@ -10,7 +10,10 @@
 #include "arl/IArl.h"
 #include "vsc/IDebugMgr.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ArlImpl;
 using ArlImplUP=std::unique_ptr<ArlImpl>;
@@ -35,5 +38,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

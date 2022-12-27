@@ -21,7 +21,10 @@
 #include "TypeProcStmt.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmt::TypeProcStmt() {
@@ -32,4 +35,6 @@ TypeProcStmt::~TypeProcStmt() {
 
 }
 
+}
+}
 }

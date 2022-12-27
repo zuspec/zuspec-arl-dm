@@ -9,7 +9,10 @@
 #include "arl/IContext.h"
 #include "vsc/IDebugMgr.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IArl {
 public:
@@ -22,4 +25,6 @@ public:
 
 };
 
+}
+}
 }

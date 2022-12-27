@@ -25,7 +25,10 @@
 #include "ModelActivityParallel.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 DataTypeActivityParallel::DataTypeActivityParallel() : DataTypeActivityScope("") {
 
 }
@@ -71,4 +74,6 @@ void DataTypeActivityParallel::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

@@ -21,7 +21,10 @@
 #include "TaskCollectFlowObjFields.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 TaskCollectFlowObjFields::TaskCollectFlowObjFields(
     std::vector<vsc::IModelField *>     &fields) : m_fields(fields) {
     m_is_flowobj = false;
@@ -48,4 +51,6 @@ void TaskCollectFlowObjFields::visitModelFieldRef(vsc::IModelFieldRef *f) {
     }
 }
 
+}
+}
 }

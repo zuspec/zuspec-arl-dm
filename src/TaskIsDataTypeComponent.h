@@ -8,7 +8,10 @@
 #pragma once
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TaskIsDataTypeComponent : VisitorBase {
 public:
@@ -25,5 +28,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

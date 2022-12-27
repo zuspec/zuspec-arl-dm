@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/ITypeProcStmtScope.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -43,6 +46,8 @@ private:
     std::vector<ITypeProcStmtUP>                m_statements;
 };
 
+}
+}
 }
 
 

@@ -22,7 +22,10 @@
 #include "ModelFieldClaim.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 ModelFieldClaim::ModelFieldClaim(ITypeFieldClaim *type) : m_type(type) {
@@ -41,4 +44,6 @@ void ModelFieldClaim::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

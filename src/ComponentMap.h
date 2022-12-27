@@ -14,7 +14,10 @@
 #include "arl/IModelFieldComponent.h"
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeComponent;
 
@@ -57,5 +60,7 @@ private:
 	ClaimRef2PoolMapT						m_claim_ref_pool_m;
 };
 
-} /* namespace arl */
+}
+}
+}
 

@@ -22,7 +22,10 @@
 #include "arl/IContext.h"
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class TaskPopulateResourcePools : public virtual VisitorBase {
@@ -44,5 +47,7 @@ private:
     IModelFieldPool                     *m_pool;
 };
 
+}
+}
 }
 

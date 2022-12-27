@@ -14,7 +14,10 @@
 #include "ModelActivitySequence.h"
 #include "ModelActivityTraverse.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TaskBuildModelActivity::TaskBuildModelActivity(IModelBuildContext *ctxt) :
 		m_ctxt(ctxt) {
@@ -124,4 +127,6 @@ void TaskBuildModelActivity::visitTypeFieldActivity(ITypeFieldActivity *f) {
 	DEBUG_LEAVE("visitTypeFieldActivity %s %d", f->name().c_str(), f->getIndex());
 }
 
-} /* namespace arl */
+}
+}
+}

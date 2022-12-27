@@ -8,7 +8,10 @@
 #pragma once
 #include "arl/IType.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ITypeAction : public IType {
 public:
@@ -17,4 +20,6 @@ public:
 
 };
 
+}
+}
 }

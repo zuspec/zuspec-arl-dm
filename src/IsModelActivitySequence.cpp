@@ -7,7 +7,10 @@
 
 #include "IsModelActivitySequence.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 IsModelActivitySequence::IsModelActivitySequence() : m_is(false) {
 	// TODO Auto-generated constructor stub
@@ -26,4 +29,6 @@ bool IsModelActivitySequence::test(IModelActivity *a) {
 	return m_is;
 }
 
-} /* namespace arl */
+}
+}
+}

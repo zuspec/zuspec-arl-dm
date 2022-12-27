@@ -7,7 +7,10 @@
 #pragma once
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelField : public virtual vsc::IModelField {
 public:
@@ -85,5 +88,7 @@ protected:
 	vsc::ModelFieldFlag						m_flags;
 };
 
-} /* namespace arl */
+}
+}
+}
 

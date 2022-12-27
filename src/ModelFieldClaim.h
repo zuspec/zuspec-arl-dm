@@ -23,7 +23,10 @@
 #include "arl/ITypeFieldClaim.h"
 #include "ModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -60,6 +63,8 @@ private:
     vsc::IModelField                *m_ref;
 };
 
+}
+}
 }
 
 

@@ -23,7 +23,10 @@
 #include "arl/ITypeProcStmtMatchChoice.h"
 #include "vsc/ITypeExpr.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ITypeProcStmtMatch : public virtual ITypeProcStmt {
 public:
@@ -43,6 +46,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

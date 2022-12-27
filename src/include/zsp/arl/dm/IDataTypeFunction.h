@@ -27,7 +27,10 @@
 #include "vsc/IAccept.h"
 #include "vsc/IDataType.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeFunction;
 using IDataTypeFunctionUP=std::unique_ptr<IDataTypeFunction>;
@@ -48,6 +51,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

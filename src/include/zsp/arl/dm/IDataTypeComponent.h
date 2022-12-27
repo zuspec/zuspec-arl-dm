@@ -11,7 +11,10 @@
 #include "arl/IPoolBindDirective.h"
 #include "vsc/IDataTypeStruct.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeAction;
 
@@ -32,4 +35,6 @@ public:
 
 };
 
+}
+}
 }

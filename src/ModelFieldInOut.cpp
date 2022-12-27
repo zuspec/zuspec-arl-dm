@@ -22,7 +22,10 @@
 #include "ModelFieldInOut.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 ModelFieldInOut::ModelFieldInOut(ITypeFieldInOut *type) : m_type(type) {
@@ -41,4 +44,6 @@ void ModelFieldInOut::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

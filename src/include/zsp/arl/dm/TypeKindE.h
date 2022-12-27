@@ -7,7 +7,10 @@
 
 #pragma once
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 enum class TypeKindE {
 	Action,
@@ -15,4 +18,6 @@ enum class TypeKindE {
 	Struct
 };
 
+}
+}
 }

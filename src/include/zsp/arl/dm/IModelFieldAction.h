@@ -9,7 +9,10 @@
 #include "arl/IModelActivityScope.h"
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelFieldAction;
 using IModelFieldActionUP=std::unique_ptr<IModelFieldAction>;
@@ -26,4 +29,6 @@ public:
 
 };
 
+}
+}
 }

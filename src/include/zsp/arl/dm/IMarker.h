@@ -23,7 +23,10 @@
 #include <string>
 #include "vsc/IAccept.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 enum class MarkerSeverity {
     Note,
@@ -46,6 +49,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

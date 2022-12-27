@@ -10,7 +10,10 @@
 #include "vsc/impl/TaskBuildModelFieldConstraints.h"
 #include "DataTypeComponent.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 DataTypeComponent::DataTypeComponent(
 	IContext			*ctxt,
@@ -119,4 +122,6 @@ vsc::IModelField *DataTypeComponent::mkTypeField(
 	return ret;
 }
 
-} /* namespace arl */
+}
+}
+}

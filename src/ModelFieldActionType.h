@@ -9,7 +9,10 @@
 #include "ModelFieldAction.h"
 #include "vsc/ITypeField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelFieldActionType : public ModelFieldAction {
 public:
@@ -25,5 +28,7 @@ private:
 	vsc::ITypeField				*m_type;
 };
 
-} /* namespace arl */
+}
+}
+}
 

@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/IModelActivity.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class ModelActivity : public virtual IModelActivity {
@@ -42,6 +45,8 @@ private:
     int32_t             m_next;
 };
 
+}
+}
 }
 
 

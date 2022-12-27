@@ -23,7 +23,10 @@
 #include <functional>
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TaskCollectPools : public VisitorBase {
 public:
@@ -43,6 +46,8 @@ private:
 
 };
 
+}
+}
 }
 
 

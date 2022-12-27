@@ -23,7 +23,10 @@
 #include "vsc/ITypeExprRangelist.h"
 #include "arl/ITypeProcStmt.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ITypeProcStmtMatchChoice;
 using ITypeProcStmtMatchChoiceUP=std::unique_ptr<ITypeProcStmtMatchChoice>;
@@ -38,6 +41,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

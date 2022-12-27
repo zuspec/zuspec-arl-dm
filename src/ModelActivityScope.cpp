@@ -22,7 +22,10 @@
 #include "ModelActivityScope.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 ModelActivityScope::ModelActivityScope(ModelActivityScopeT type) : m_type(type) {
@@ -46,4 +49,6 @@ void ModelActivityScope::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

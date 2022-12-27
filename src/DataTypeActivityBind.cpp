@@ -22,7 +22,10 @@
 #include "DataTypeActivityBind.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 DataTypeActivityBind::DataTypeActivityBind(
@@ -44,4 +47,6 @@ void DataTypeActivityBind::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

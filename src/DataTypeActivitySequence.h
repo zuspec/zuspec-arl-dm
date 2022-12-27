@@ -10,7 +10,10 @@
 #include "vsc/IModelFieldFactory.h"
 #include "DataTypeActivityScope.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class DataTypeActivitySequence :
 		public virtual IDataTypeActivitySequence,
@@ -36,5 +39,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

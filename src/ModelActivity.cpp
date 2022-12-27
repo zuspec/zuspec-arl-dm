@@ -21,7 +21,10 @@
 #include "ModelActivity.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 ModelActivity::ModelActivity() : m_next(-1) {
@@ -32,4 +35,6 @@ ModelActivity::~ModelActivity() {
 
 }
 
+}
+}
 }

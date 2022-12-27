@@ -8,7 +8,10 @@
 #pragma once
 #include "vsc/IDataTypeStruct.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 enum class FlowObjKindE {
 	Buffer,
@@ -28,4 +31,6 @@ public:
 
 };
 
+}
+}
 }

@@ -21,7 +21,10 @@
 #include "TypeProcStmtForeach.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtForeach::TypeProcStmtForeach() {
@@ -32,4 +35,6 @@ TypeProcStmtForeach::~TypeProcStmtForeach() {
 
 }
 
+}
+}
 }

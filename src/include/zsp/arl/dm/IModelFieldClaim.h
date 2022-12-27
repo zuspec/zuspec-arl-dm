@@ -21,7 +21,10 @@
 #pragma once
 #include "vsc/IModelFieldRef.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class IModelFieldClaim : public virtual vsc::IModelFieldRef {
@@ -33,6 +36,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

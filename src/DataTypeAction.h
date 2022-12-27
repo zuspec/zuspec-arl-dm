@@ -11,7 +11,10 @@
 #include "DataTypeStruct.h"
 #include "include/arl/sav/ITypeActivityStmt.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class DataTypeAction : 
 	public virtual IDataTypeAction, 
@@ -55,5 +58,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

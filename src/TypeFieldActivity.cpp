@@ -8,7 +8,10 @@
 #include "TypeFieldActivity.h"
 #include "arl/IVisitor.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TypeFieldActivity::TypeFieldActivity(
 		const std::string		&name,
@@ -34,4 +37,6 @@ void TypeFieldActivity::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

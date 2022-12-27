@@ -22,7 +22,10 @@
 #include "TypeProcStmtAssign.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtAssign::TypeProcStmtAssign(
@@ -42,4 +45,6 @@ void TypeProcStmtAssign::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

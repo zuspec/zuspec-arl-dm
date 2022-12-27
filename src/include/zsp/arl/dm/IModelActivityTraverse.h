@@ -13,7 +13,10 @@
 #include "vsc/IModelConstraint.h"
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelActivityTraverse;
 using IModelActivityTraverseUP=std::unique_ptr<IModelActivityTraverse>;
@@ -43,5 +46,8 @@ public:
 	virtual void setProcessed(bool p) = 0;
 
 };
+
+}
+}
 }
 

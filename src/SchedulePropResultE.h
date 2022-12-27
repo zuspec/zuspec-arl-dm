@@ -7,7 +7,10 @@
 
 #pragma once
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 enum class SchedulePropResultE {
 	/**
@@ -26,4 +29,6 @@ enum class SchedulePropResultE {
 	UnSat
 };
 
+}
+}
 }

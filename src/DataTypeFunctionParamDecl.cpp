@@ -21,7 +21,10 @@
 #include "DataTypeFunctionParamDecl.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 DataTypeFunctionParamDecl::DataTypeFunctionParamDecl(
@@ -38,4 +41,6 @@ DataTypeFunctionParamDecl::~DataTypeFunctionParamDecl() {
 
 }
 
+}
+}
 }

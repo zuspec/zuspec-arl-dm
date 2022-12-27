@@ -11,7 +11,10 @@
 #include "vsc/IDataTypeStruct.h"
 #include "vsc/ITypeFieldRef.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeComponent;
 
@@ -32,4 +35,6 @@ public:
 
 };
 
+}
+}
 }

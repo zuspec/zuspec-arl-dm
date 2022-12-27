@@ -22,7 +22,10 @@
 #include "TypeProcStmtBreak.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtBreak::TypeProcStmtBreak() {
@@ -39,4 +42,6 @@ void TypeProcStmtBreak::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

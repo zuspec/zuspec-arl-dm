@@ -12,7 +12,10 @@
 #include "vsc/IModelField.h"
 #include "vsc/impl/TaskBuildModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TaskBuildModelField : public VisitorDelegator {
 public:
@@ -29,5 +32,7 @@ private:
 	vsc::TaskBuildModelField	m_core;
 };
 
-} /* namespace arl */
+}
+}
+}
 

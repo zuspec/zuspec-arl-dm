@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 3.10)
 
-project(libarl)
+project(zuspec-arl-dm)
 
 include (ExternalProject)
 
@@ -17,11 +17,11 @@ if (NOT PACKAGES_DIR)
 
 endif()
 
-set (LIBVSC_DIR "${PACKAGES_DIR}/libvsc")
+set (LIBVSC_DM_DIR "${PACKAGES_DIR}/libvsc-dm")
 
-ExternalProject_Add(LibVSC
-  PREFIX libvsc
-  SOURCE_DIR ${LIBVSC_DIR}
+ExternalProject_Add(LibVSC-DM
+  PREFIX libvsc-dm
+  SOURCE_DIR ${LIBVSC_DM_DIR}
   CMAKE_CACHE_ARGS
     -DPACKAGES_DIR:PATH=${PACKAGES_DIR}
     -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=${CMAKE_INTERPROCEDURAL_OPTIMIZATION}

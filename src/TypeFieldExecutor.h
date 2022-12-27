@@ -22,7 +22,10 @@
 #include "arl/ITypeFieldExecutor.h"
 #include "TypeField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -44,6 +47,8 @@ public:
 
 };
 
+}
+}
 }
 
 

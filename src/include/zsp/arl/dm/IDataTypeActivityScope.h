@@ -12,7 +12,10 @@
 #include "arl/ITypeFieldActivity.h"
 #include "vsc/IDataTypeStruct.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeActivityScope : 
 	public virtual IDataTypeActivity,
@@ -29,4 +32,6 @@ public:
 
 };
 
+}
+}
 }

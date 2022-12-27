@@ -22,7 +22,10 @@
 #include "arl/ITypeFieldExecutorClaim.h"
 #include "TypeField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class TypeFieldExecutorClaim : public virtual ITypeFieldExecutorClaim, public virtual TypeField {
@@ -40,6 +43,8 @@ public:
     virtual void accept(vsc::IVisitor *v) override;
 };
 
+}
+}
 }
 
 

@@ -8,7 +8,10 @@
 #pragma once
 #include "arl/IDataTypeActivityScope.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeActivitySchedule : public virtual IDataTypeActivityScope {
 public:
@@ -17,4 +20,6 @@ public:
 
 };
 
+}
+}
 }

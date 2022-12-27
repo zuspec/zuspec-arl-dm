@@ -22,7 +22,10 @@
 #pragma once
 #include "arl/IMarker.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class Marker : public virtual IMarker {
 public:
@@ -52,6 +55,8 @@ private:
     std::string                 m_message;
 };
 
+}
+}
 }
 
 

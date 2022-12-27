@@ -10,7 +10,10 @@
 #include "vsc/IModelBuildContext.h"
 #include "DataTypeActivitySchedule.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 DataTypeActivitySchedule::DataTypeActivitySchedule() : DataTypeActivityScope("") {
 	// TODO Auto-generated constructor stub
@@ -43,4 +46,6 @@ void DataTypeActivitySchedule::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

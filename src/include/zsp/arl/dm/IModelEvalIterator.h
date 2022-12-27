@@ -9,7 +9,10 @@
 #include "arl/IModelFieldAction.h"
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 enum class ModelEvalNodeT {
 	/**
@@ -55,4 +58,6 @@ public:
 
 };
 
+}
+}
 }

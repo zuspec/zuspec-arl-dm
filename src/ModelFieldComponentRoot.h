@@ -25,7 +25,10 @@
 #include "arl/IModelFieldPool.h"
 #include "ModelFieldComponent.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class ModelFieldComponentRoot : 
@@ -176,5 +179,7 @@ private:
     std::vector<TypePoolMapFrame>   m_type_pool_s;
 };
 
+}
+}
 }
 

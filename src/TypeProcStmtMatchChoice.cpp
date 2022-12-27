@@ -21,7 +21,10 @@
 #include "TypeProcStmtMatchChoice.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtMatchChoice::TypeProcStmtMatchChoice() {
@@ -32,4 +35,6 @@ TypeProcStmtMatchChoice::~TypeProcStmtMatchChoice() {
 
 }
 
+}
+}
 }

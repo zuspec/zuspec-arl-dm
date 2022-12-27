@@ -22,7 +22,10 @@
 #include "TypeProcStmtContinue.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtContinue::TypeProcStmtContinue() {
@@ -39,4 +42,6 @@ void TypeProcStmtContinue::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

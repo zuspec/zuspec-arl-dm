@@ -22,7 +22,10 @@
 #include <vector>
 #include "arl/IDataTypeComponent.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -79,6 +82,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

@@ -12,7 +12,10 @@
 #include "vsc/IModelField.h"
 #include "ComponentMap.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TaskBuildComponentMap : public virtual VisitorBase {
 public:
@@ -44,5 +47,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

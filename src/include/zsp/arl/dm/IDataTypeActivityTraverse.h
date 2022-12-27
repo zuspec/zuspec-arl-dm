@@ -10,7 +10,10 @@
 #include "vsc/ITypeConstraint.h"
 #include "vsc/ITypeExprFieldRef.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeActivityTraverse : public virtual IDataTypeActivity {
 public:
@@ -25,4 +28,6 @@ public:
 
 };
 
+}
+}
 }

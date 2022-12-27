@@ -7,7 +7,10 @@
 
 #include "ModelFieldActionRoot.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 ModelFieldActionRoot::ModelFieldActionRoot(
 		const std::string			&name,
@@ -20,4 +23,6 @@ ModelFieldActionRoot::~ModelFieldActionRoot() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace arl */
+}
+}
+}

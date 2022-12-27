@@ -22,7 +22,10 @@
 #include "arl/IModelActivityScope.h"
 #include "ModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class ModelActivityScope : public virtual IModelActivityScope, public ModelField {
@@ -80,6 +83,8 @@ ModelActivityScopeT                         m_type;
 
 };
 
+}
+}
 }
 
 

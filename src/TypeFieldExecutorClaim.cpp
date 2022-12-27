@@ -23,7 +23,10 @@
 #include "TypeFieldExecutorClaim.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeFieldExecutorClaim::TypeFieldExecutorClaim(
@@ -51,4 +54,6 @@ void TypeFieldExecutorClaim::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

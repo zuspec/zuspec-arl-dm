@@ -24,7 +24,10 @@
 #include "vsc/ITypeField.h"
 #include "DataTypeFlowObj.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class DataTypeResource : 
@@ -49,5 +52,7 @@ private:
 
 };
 
+}
+}
 }
 

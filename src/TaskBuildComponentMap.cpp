@@ -12,7 +12,10 @@
 #include "TaskBuildComponentMap.h"
 #include "TaskIsDataTypeComponent.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TaskBuildComponentMap::TaskBuildComponentMap() : m_comp(0) {
 	DEBUG_INIT("TaskBuildComponentMap");
@@ -161,4 +164,6 @@ void TaskBuildComponentMap::visitTypeFieldInOut(ITypeFieldInOut *f) {
 	DEBUG_LEAVE("visitTypeFieldInOut %s", f->name().c_str());
 }
 
-} /* namespace arl */
+}
+}
+}

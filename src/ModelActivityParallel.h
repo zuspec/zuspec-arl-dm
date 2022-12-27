@@ -10,7 +10,10 @@
 #include "ModelActivityScope.h"
 #include "ModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelActivityParallel : 
 	public virtual IModelActivityParallel,
@@ -40,5 +43,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

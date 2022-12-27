@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/ITypeProcStmt.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ITypeProcStmtContinue : public virtual ITypeProcStmt {
 public:
@@ -30,6 +33,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

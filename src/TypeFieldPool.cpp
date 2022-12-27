@@ -8,7 +8,10 @@
 #include "TypeFieldPool.h"
 #include "arl/IVisitor.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TypeFieldPool::TypeFieldPool(
 		IContext					*ctxt,
@@ -67,4 +70,6 @@ void TypeFieldPool::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

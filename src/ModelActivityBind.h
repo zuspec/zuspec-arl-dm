@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/IModelActivityBind.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -41,6 +44,8 @@ private:
     std::vector<vsc::IModelExprUP>          m_targets;
 };
 
+}
+}
 }
 
 

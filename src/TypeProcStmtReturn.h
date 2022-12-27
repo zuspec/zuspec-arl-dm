@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/ITypeProcStmtReturn.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -41,6 +44,8 @@ private:
     vsc::ITypeExprUP            m_expr;
 };
 
+}
+}
 }
 
 

@@ -22,7 +22,10 @@
 #include "TypeProcStmtReturn.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtReturn::TypeProcStmtReturn(vsc::ITypeExpr *expr) : m_expr(expr) {
@@ -39,4 +42,6 @@ void TypeProcStmtReturn::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

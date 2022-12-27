@@ -10,7 +10,10 @@
 #include "arl/ITypeFieldActivity.h"
 #include "TypeField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TypeFieldActivity : public virtual ITypeFieldActivity, public TypeField {
 public:
@@ -29,5 +32,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

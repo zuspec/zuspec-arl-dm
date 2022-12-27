@@ -10,7 +10,10 @@
 #include "vsc/IModelField.h"
 #include "arl/IModelActivity.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 enum class ModelActivityScopeT {
 	Parallel,
@@ -44,4 +47,6 @@ public:
 
 };
 
+}
+}
 }

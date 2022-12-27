@@ -8,7 +8,10 @@
 #include "vsc/impl/TaskIsTypeFieldRef.h"
 #include "DataTypeStruct.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 DataTypeStruct::DataTypeStruct(const std::string &name) : m_name(name) {
 	// TODO Auto-generated constructor stub
@@ -98,4 +101,6 @@ vsc::IModelField *DataTypeStruct::mkTypeField(
 	return ret;
 }
 
-} /* namespace arl */
+}
+}
+}

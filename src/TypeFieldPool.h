@@ -10,7 +10,10 @@
 #include "arl/ITypeFieldPool.h"
 #include "TypeField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TypeFieldPool : public virtual ITypeFieldPool, public TypeField {
 public:
@@ -38,5 +41,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

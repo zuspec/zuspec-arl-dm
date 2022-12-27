@@ -10,7 +10,10 @@
 #include "arl/IModelFieldComponent.h"
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeAction;
 
@@ -33,4 +36,6 @@ public:
 
 };
 
+}
+}
 }

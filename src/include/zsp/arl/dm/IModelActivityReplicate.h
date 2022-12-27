@@ -23,7 +23,10 @@
 #include "vsc/IModelExpr.h"
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class IModelActivityReplicate : public virtual IModelActivityScope {
@@ -39,6 +42,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

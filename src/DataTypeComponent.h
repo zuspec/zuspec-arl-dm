@@ -11,7 +11,10 @@
 #include "vsc/IModelFieldFactory.h"
 #include "DataTypeStruct.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class DataTypeComponent : 
 	public virtual IDataTypeComponent, 
@@ -54,5 +57,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

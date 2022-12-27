@@ -7,7 +7,10 @@
 
 #include "TaskBuildModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TaskBuildModelField::TaskBuildModelField(vsc::IModelBuildContext *ctxt) :
 	VisitorDelegator(&m_core), m_ctxt(ctxt), m_core(ctxt, this) {
@@ -23,4 +26,6 @@ vsc::IModelField *TaskBuildModelField::build(vsc::IDataTypeStruct *type, const s
 	return m_core.build(type, name);
 }
 
-} /* namespace arl */
+}
+}
+}

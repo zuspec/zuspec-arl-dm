@@ -21,7 +21,10 @@
 #include "TaskExpandCompoundActions.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TaskExpandCompoundActions::TaskExpandCompoundActions(IContext *ctxt) {
@@ -38,4 +41,6 @@ void TaskExpandCompoundActions::expand(
 
 }
 
+}
+}
 }

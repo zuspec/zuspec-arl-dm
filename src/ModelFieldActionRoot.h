@@ -9,7 +9,10 @@
 #include "ModelFieldAction.h"
 #include "arl/IDataTypeAction.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelFieldActionRoot : public ModelFieldAction {
 public:
@@ -37,5 +40,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

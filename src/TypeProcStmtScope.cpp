@@ -23,7 +23,10 @@
 #include "TypeProcStmtScope.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtScope::TypeProcStmtScope() {
@@ -44,4 +47,6 @@ void TypeProcStmtScope::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

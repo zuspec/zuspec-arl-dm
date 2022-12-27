@@ -23,7 +23,10 @@
 #include "TypeFieldExecutor.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeFieldExecutor::TypeFieldExecutor(
@@ -52,4 +55,6 @@ void TypeFieldExecutor::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

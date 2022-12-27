@@ -14,7 +14,10 @@
 #include "vsc/IModelBuildContext.h"
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 /**
  * This builder primarily links up the activity structure to
@@ -45,5 +48,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

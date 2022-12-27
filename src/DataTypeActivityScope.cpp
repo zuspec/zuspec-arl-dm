@@ -7,7 +7,10 @@
 
 #include "DataTypeActivityScope.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 DataTypeActivityScope::DataTypeActivityScope(const std::string &name) : m_name(name) {
 	// TODO Auto-generated constructor stub
@@ -53,4 +56,6 @@ vsc::IModelField *DataTypeActivityScope::mkTypeField(
 			
 }
 
-} /* namespace arl */
+}
+}
+}

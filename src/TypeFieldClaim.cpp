@@ -8,7 +8,10 @@
 #include "arl/IVisitor.h"
 #include "TypeFieldClaim.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TypeFieldClaim::TypeFieldClaim(
 			const std::string			&name,
@@ -37,4 +40,6 @@ void TypeFieldClaim::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

@@ -14,7 +14,10 @@ namespace vsc {
 	class IModelBuildContext;
 }
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class TypeFieldInOut : public virtual ITypeFieldInOut, public TypeField {
@@ -38,5 +41,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

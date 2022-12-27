@@ -8,7 +8,10 @@
 #include "ArlImpl.h"
 #include "Context.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 ArlImpl::ArlImpl() {
 	m_dbg_mgr = 0;

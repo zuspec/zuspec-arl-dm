@@ -22,7 +22,10 @@
 #include "arl/IModelFieldComponent.h"
 #include "arl/IModelComponentTreeData.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class IModelFieldComponentRoot;
@@ -41,6 +44,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

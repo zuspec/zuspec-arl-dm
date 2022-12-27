@@ -21,7 +21,10 @@
 #pragma once
 #include "ModelFieldComponent.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class ModelFieldComponentType : 
@@ -47,5 +50,7 @@ private:
 
 };
 
+}
+}
 }
 

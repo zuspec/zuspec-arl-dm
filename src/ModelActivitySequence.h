@@ -11,7 +11,10 @@
 #include "ModelActivityScope.h"
 #include "ModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelActivitySequence : 
 	public virtual IModelActivitySequence, 
@@ -52,5 +55,7 @@ private:
 	std::vector<IModelActivityUP>			m_activities_up;
 };
 
-} /* namespace arl */
+}
+}
+}
 

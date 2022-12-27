@@ -21,7 +21,10 @@
 #include "TypeProcStmtWhile.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtWhile::TypeProcStmtWhile() {
@@ -32,4 +35,6 @@ TypeProcStmtWhile::~TypeProcStmtWhile() {
 
 }
 
+}
+}
 }

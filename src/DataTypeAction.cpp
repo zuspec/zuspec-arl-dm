@@ -12,7 +12,10 @@
 #include "DataTypeAction.h"
 #include "ModelFieldAction.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 DataTypeAction::DataTypeAction(
 		IContext			*ctxt,
@@ -147,4 +150,6 @@ void DataTypeAction::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

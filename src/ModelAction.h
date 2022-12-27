@@ -9,7 +9,10 @@
 #include "vsc/IModelField.h"
 #include "vsc/IModelConstraint.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelAction {
 public:
@@ -19,5 +22,7 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

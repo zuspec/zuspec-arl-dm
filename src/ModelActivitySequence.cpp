@@ -8,7 +8,10 @@
 #include "arl/IVisitor.h"
 #include "ModelActivitySequence.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 ModelActivitySequence::ModelActivitySequence(
 		const std::string		&name,
@@ -37,4 +40,6 @@ void ModelActivitySequence::accept(vsc::IVisitor *v) {
 
 }
 
-} /* namespace arl */
+}
+}
+}

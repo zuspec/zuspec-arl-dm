@@ -10,7 +10,10 @@
 #include "ModelFieldInOut.h"
 #include "TypeFieldInOut.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TypeFieldInOut::TypeFieldInOut(
 			const std::string		&name,
@@ -37,4 +40,6 @@ void TypeFieldInOut::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

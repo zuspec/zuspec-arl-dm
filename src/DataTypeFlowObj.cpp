@@ -7,7 +7,10 @@
 #include "arl/IVisitor.h"
 #include "DataTypeFlowObj.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 DataTypeFlowObj::DataTypeFlowObj(
 		IContext			*ctxt,
@@ -48,4 +51,6 @@ void DataTypeFlowObj::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

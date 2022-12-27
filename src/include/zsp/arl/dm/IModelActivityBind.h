@@ -23,7 +23,10 @@
 #include "arl/IModelActivity.h"
 #include "vsc/IModelExpr.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -36,6 +39,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

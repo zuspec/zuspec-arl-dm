@@ -18,7 +18,10 @@
 #include "ComponentMap.h"
 #include "ModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelFieldComponentRoot;
 
@@ -76,5 +79,7 @@ protected:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

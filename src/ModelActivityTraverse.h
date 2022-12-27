@@ -10,7 +10,10 @@
 #include "arl/IModelFieldAction.h"
 #include "ModelActivity.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelActivityTraverse : 
 	public virtual IModelActivityTraverse,
@@ -67,5 +70,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

@@ -8,7 +8,10 @@
 #pragma once
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IsModelActivitySequence : public VisitorBase {
 public:
@@ -33,5 +36,7 @@ private:
 	bool						m_is;
 };
 
-} /* namespace arl */
+}
+}
+}
 

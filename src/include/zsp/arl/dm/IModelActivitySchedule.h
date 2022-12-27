@@ -9,7 +9,10 @@
 #include <vector>
 #include "arl/IModelActivityScope.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelActivitySchedule : public virtual IModelActivityScope {
 public:
@@ -21,5 +24,7 @@ public:
 
 };
 
+}
+}
 }
 

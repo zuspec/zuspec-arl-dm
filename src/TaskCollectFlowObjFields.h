@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class TaskCollectFlowObjFields : public VisitorBase {
@@ -44,5 +47,7 @@ private:
 
 };
 
+}
+}
 }
 

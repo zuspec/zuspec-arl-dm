@@ -31,7 +31,10 @@
 #include "TaskVisitComponentFields.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 ModelFieldComponentRoot::ModelFieldComponentRoot(
     IContext            *ctxt,
     const std::string   &name,

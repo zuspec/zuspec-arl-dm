@@ -11,7 +11,10 @@
 #include "ModelActivitySequence.h"
 #include "ModelActivityTraverse.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TaskBuildModelAction::TaskBuildModelAction(IModelBuildContext *ctxt) :
 		VisitorDelegator(&m_core), m_ctxt(ctxt), m_core(ctxt, this) {
@@ -113,4 +116,6 @@ void TaskBuildModelAction::visitDataTypeActivityTraverse(IDataTypeActivityTraver
 
 }
 
-} /* namespace arl */
+}
+}
+}

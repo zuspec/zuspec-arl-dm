@@ -7,7 +7,10 @@
 
 #include "TypeAction.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TypeAction::TypeAction() {
 	// TODO Auto-generated constructor stub
@@ -18,4 +21,6 @@ TypeAction::~TypeAction() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace arl */
+}
+}
+}

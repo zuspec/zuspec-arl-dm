@@ -10,7 +10,10 @@
 #include "arl/IDataTypeComponent.h"
 #include "arl/IModelFieldComponent.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 ComponentMap::ComponentMap() {
 	DEBUG_INIT("ComponentMap");
@@ -70,4 +73,6 @@ IModelFieldPool *ComponentMap::getPool(vsc::ITypeField *claim_ref) const {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

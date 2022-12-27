@@ -22,7 +22,10 @@
 #include "arl/IModelFieldExecutor.h"
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -50,8 +53,10 @@ public:
 private:
     IModelFieldExecutor                 *m_executor;
 
-};
+}
 
-} /* namespace arl */
+}
+}
+}
 
 

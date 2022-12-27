@@ -25,7 +25,10 @@
 #include "vsc/IDataType.h"
 #include "ModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class ModelFieldPool : public virtual IModelFieldPool, public virtual ModelField {
@@ -69,8 +72,11 @@ public:
     }
 
     virtual void setGlobalPoolRange(int32_t i1, int32_t i2) override {
-        m_global_pool_range = {i1, i2};
-    }
+};
+
+}
+}
+}
 
     virtual void accept(vsc::IVisitor *v) override;
 
@@ -89,5 +95,7 @@ private:
 
 };
 
+}
+}
 }
 

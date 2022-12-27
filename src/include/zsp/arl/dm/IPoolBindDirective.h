@@ -3,7 +3,10 @@
 #include <memory>
 #include "vsc/ITypeExprFieldRef.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 enum class PoolBindKind {
 	All,
@@ -25,4 +28,6 @@ public:
 
 };
 
+}
+}
 }

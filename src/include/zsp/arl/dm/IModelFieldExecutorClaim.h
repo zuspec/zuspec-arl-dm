@@ -21,7 +21,10 @@
 #pragma once
 #include "vsc/IModelFieldRef.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -32,6 +35,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

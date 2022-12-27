@@ -8,7 +8,10 @@
 #include "TypeField.h"
 #include "vsc/IDataTypeStruct.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TypeField::TypeField(
 		const std::string			&name,
@@ -40,4 +43,6 @@ vsc::IModelField *TypeField::mkModelField(
 	return getDataType()->mkTypeField(ctxt, this);
 }
 
-} /* namespace arl */
+}
+}
+}

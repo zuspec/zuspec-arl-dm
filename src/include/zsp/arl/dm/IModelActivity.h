@@ -11,7 +11,10 @@
 #include "vsc/IAccept.h"
 #include "vsc/IModelConstraint.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelActivity;
 using IModelActivityUP=std::unique_ptr<IModelActivity>;
@@ -31,5 +34,6 @@ public:
 
 };
 
-
+}
+}
 }

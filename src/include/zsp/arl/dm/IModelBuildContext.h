@@ -10,7 +10,10 @@
 #include "arl/IModelActivityScope.h"
 #include "vsc/IModelBuildContext.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelBuildContext : public virtual vsc::IModelBuildContext {
 public:
@@ -27,4 +30,6 @@ public:
 
 };
 
+}
+}
 }

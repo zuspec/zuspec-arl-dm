@@ -22,7 +22,10 @@
 #include "TypeProcStmtVarDecl.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtVarDecl::TypeProcStmtVarDecl(
@@ -44,4 +47,6 @@ void TypeProcStmtVarDecl::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

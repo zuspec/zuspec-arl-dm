@@ -11,7 +11,10 @@
 #include "arl/IModelActivityScope.h"
 #include "ModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelFieldAction : 
 	public virtual IModelFieldAction, 
@@ -41,5 +44,7 @@ protected:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

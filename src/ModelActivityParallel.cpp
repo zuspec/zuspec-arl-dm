@@ -8,7 +8,10 @@
 #include "arl/IVisitor.h"
 #include "ModelActivityParallel.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 ModelActivityParallel::ModelActivityParallel() : 
 	ModelActivityScope(ModelActivityScopeT::Parallel) {
@@ -26,4 +29,6 @@ void ModelActivityParallel::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

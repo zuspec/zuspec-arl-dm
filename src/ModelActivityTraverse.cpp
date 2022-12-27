@@ -8,7 +8,10 @@
 #include "arl/IVisitor.h"
 #include "ModelActivityTraverse.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 ModelActivityTraverse::ModelActivityTraverse(
 		IModelFieldAction		*target,
@@ -32,4 +35,6 @@ void ModelActivityTraverse::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

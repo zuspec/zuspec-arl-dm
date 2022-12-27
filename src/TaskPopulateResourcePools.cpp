@@ -25,7 +25,10 @@
 #include "TaskPopulateResourcePools.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 TaskPopulateResourcePools::TaskPopulateResourcePools(IContext *ctxt) : 
         m_ctxt(ctxt), m_pool(0) {
     DEBUG_INIT("TaskPopulateResourcePools");
@@ -82,4 +85,6 @@ void TaskPopulateResourcePools::visitDataTypeResource(IDataTypeResource *t) {
     DEBUG_LEAVE("visitDataTypeResource %s (pool=%p)", t->name().c_str(), m_pool);
 }
 
+}
+}
 }

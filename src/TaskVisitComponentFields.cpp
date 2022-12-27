@@ -21,7 +21,10 @@
 #include "TaskVisitComponentFields.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TaskVisitComponentFields::TaskVisitComponentFields(
@@ -45,4 +48,6 @@ void TaskVisitComponentFields::visitModelFieldComponent(IModelFieldComponent *f)
     m_leave(f);
 }
 
+}
+}
 }

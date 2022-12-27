@@ -23,7 +23,10 @@
 #include "arl/IModelActivityReplicate.h"
 #include "ModelActivityScope.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class ModelActivityReplicate : 
@@ -57,6 +60,8 @@ private:
 
 };
 
+}
+}
 }
 
 

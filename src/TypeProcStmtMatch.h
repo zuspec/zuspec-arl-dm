@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/ITypeProcStmtMatch.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class TypeProcStmtMatch : public virtual ITypeProcStmtMatch {
@@ -60,6 +63,8 @@ private:
     std::vector<ITypeProcStmtMatchChoiceUP>         m_choices;
 };
 
+}
+}
 }
 
 

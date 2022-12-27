@@ -2,7 +2,10 @@
 #pragma once
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TaskCollectTopLevelActivities : public virtual VisitorBase {
 public:
@@ -28,4 +31,6 @@ private:
     std::vector<IModelActivity *>       *m_activities;
 };
 
+}
+}
 }

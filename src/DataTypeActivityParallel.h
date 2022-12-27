@@ -22,7 +22,10 @@
 #include "arl/IDataTypeActivityParallel.h"
 #include "DataTypeActivityScope.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class DataTypeActivityParallel : 
@@ -40,5 +43,7 @@ public:
     virtual void accept(vsc::IVisitor *v) override;
 };
 
+}
+}
 }
 

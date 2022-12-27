@@ -22,7 +22,10 @@
 #include "ModelFieldPool.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 ModelFieldPool::ModelFieldPool(
     const std::string       &name,
     vsc::IDataType          *type) : m_name(name), m_type(type), m_type_pool(0) {
@@ -42,4 +45,6 @@ void ModelFieldPool::accept(vsc::IVisitor *v) {
 
 }
 
+}
+}
 }

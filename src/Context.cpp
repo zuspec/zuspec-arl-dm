@@ -57,7 +57,10 @@
 #include "TypeProcStmtVarDecl.h"
 #include "TypeProcStmtWhile.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 Context::Context(vsc::IContext *ctxt) : vsc::ContextDelegator(ctxt) {
 
@@ -429,4 +432,6 @@ ITypeProcStmtWhile *Context::mkTypeProcStmtWhile(
 
 }
 
-} /* namespace arl */
+}
+}
+}

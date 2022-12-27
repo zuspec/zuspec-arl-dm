@@ -15,7 +15,10 @@
 #include "vsc/ITypeField.h"
 #include "vsc/ITypeConstraint.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class DataTypeStruct : public virtual vsc::IDataTypeStruct {
 public:
@@ -59,5 +62,7 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

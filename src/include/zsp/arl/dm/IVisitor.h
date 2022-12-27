@@ -8,7 +8,10 @@
 #pragma once
 #include "vsc/IVisitor.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeAction;
 class IDataTypeActivityBind;
@@ -150,4 +153,6 @@ public:
 
 };
 
+}
+}
 }

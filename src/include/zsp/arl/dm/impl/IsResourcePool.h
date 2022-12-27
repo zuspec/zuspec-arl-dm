@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IsResourcePool : public VisitorBase {
 public:
@@ -43,8 +46,10 @@ public:
 
 private:
     bool                m_ret;
-};
+}
 
+}
+}
 }
 
 

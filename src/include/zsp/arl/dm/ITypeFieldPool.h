@@ -8,7 +8,10 @@
 #pragma once
 #include "vsc/ITypeField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ITypeFieldPool : public virtual vsc::ITypeField {
 public:
@@ -19,4 +22,6 @@ public:
 
 };
 
+}
+}
 }

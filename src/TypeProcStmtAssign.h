@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/ITypeProcStmtAssign.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -55,6 +58,8 @@ private:
 
 };
 
+}
+}
 }
 
 

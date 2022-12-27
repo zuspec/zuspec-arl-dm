@@ -11,7 +11,10 @@
 #include "ModelFieldActionRoot.h"
 #include "ModelFieldActionType.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelFieldFactoryAction : public virtual vsc::IModelFieldFactory {
 public:
@@ -72,4 +75,6 @@ public:
 
 };
 
+}
+}
 }

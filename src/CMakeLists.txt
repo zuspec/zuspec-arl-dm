@@ -1,50 +1,43 @@
 
-file(GLOB libarl_SRC
+file(GLOB zuspec_arl_dm_SRC
   "*.h"
   "*.cpp"
   )
 
-add_library(arl SHARED ${libarl_SRC})
+add_library(zuspec-arl-dm SHARED ${zuspec_arl_dm_SRC})
 
-target_include_directories(arl PUBLIC
+target_include_directories(zuspec-arl-dm PUBLIC
     ${PROJECT_SOURCE_DIR}/src
     ${PROJECT_SOURCE_DIR}/src/include
-    ${LIBVSC_DIR}/src/include
+    ${LIBVSC_DM_DIR}/src/include
     ${CMAKE_BINARY_DIR}/include
     )
 
-target_link_directories(arl PRIVATE
+target_link_directories(zuspec-arl-dm PRIVATE
     ${CMAKE_BINARY_DIR}/lib
     ${CMAKE_BINARY_DIR}/lib64
     )
 
-#target_link_libraries(arl
-#        bitwuzla
-#        boolector
-#        btor2parser
-#        cadical
-#        gmp
-#        )
-add_dependencies(arl LibVSC)
+add_dependencies(zuspec-arl-dm LibVSC-DM)
 
-add_library(arl_static STATIC ${libarl_SRC})
+add_library(zuspec-arl-dm_static STATIC ${zuspec_arl_dm_SRC})
 
-target_include_directories(arl_static PUBLIC
+target_include_directories(zuspec-arl-dm_static PUBLIC
     ${PROJECT_SOURCE_DIR}/src
     ${PROJECT_SOURCE_DIR}/src/include
-    ${LIBVSC_DIR}/src/include
+    ${LIBVSC_DM_DIR}/src/include
     ${CMAKE_BINARY_DIR}/include
     ${Boolector_INCLUDE_DIR}
     )
 
-target_link_directories(arl_static PRIVATE
+target_link_directories(zuspec-arl-dm_static PRIVATE
     ${CMAKE_BINARY_DIR}/lib
     ${CMAKE_BINARY_DIR}/lib64
     )
 
-add_dependencies(arl_static LibVSC)
+add_dependencies(zuspec-arl-dm_static LibVSC-DM)
 
-install(TARGETS arl_static
+install(TARGETS zuspec-arl-dm_static
     DESTINATION lib
-    EXPORT libarl-targets)
+    EXPORT zuspec-arl-dm-targets)
 

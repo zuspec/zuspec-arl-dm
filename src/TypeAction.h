@@ -7,7 +7,10 @@
 
 #pragma once
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TypeAction {
 public:
@@ -17,5 +20,7 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

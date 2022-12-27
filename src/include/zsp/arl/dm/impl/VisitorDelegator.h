@@ -25,7 +25,10 @@
 #include "arl/IModelActivityTraverse.h"
 #include "vsc/impl/VisitorDelegator.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class VisitorDelegator : public virtual arl::IVisitor, public vsc::VisitorDelegator {
 public:
@@ -256,6 +259,8 @@ private:
 	}
 
 	arl::IVisitor *delegate() const { return dynamic_cast<arl::IVisitor *>(m_delegate); }
-};
+}
 
+}
+}
 }

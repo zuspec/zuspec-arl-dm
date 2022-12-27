@@ -21,7 +21,10 @@
 #include "TaskCollectPools.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TaskCollectPools::TaskCollectPools(
@@ -51,4 +54,6 @@ void TaskCollectPools::visitModelFieldPool(IModelFieldPool *f) {
     m_find_f(f);
 }
 
+}
+}
 }

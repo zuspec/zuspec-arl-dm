@@ -21,7 +21,10 @@
 #include "Marker.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 Marker::Marker(
@@ -36,4 +39,6 @@ Marker::~Marker() {
 
 }
 
+}
+}
 }

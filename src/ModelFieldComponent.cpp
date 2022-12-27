@@ -11,7 +11,10 @@
 #include "TaskBuildComponentMap.h"
 #include "TaskPopulateResourcePools.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 ModelFieldComponent::ModelFieldComponent(
 	const std::string		&name,
@@ -48,4 +51,6 @@ ModelFieldComponentRoot *ModelFieldComponent::getRoot() {
 	return dynamic_cast<ModelFieldComponentRoot *>(ret);
 }
 
-} /* namespace arl */
+}
+}
+}

@@ -23,7 +23,10 @@
 #include "ModelActivityReplicate.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 ModelActivityReplicate::ModelActivityReplicate(
@@ -57,4 +60,6 @@ void ModelActivityReplicate::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

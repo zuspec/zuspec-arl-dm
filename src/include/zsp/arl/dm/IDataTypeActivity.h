@@ -11,7 +11,10 @@
 #include "vsc/IDataTypeStruct.h"
 #include "vsc/IModelBuildContext.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelActivity;
 
@@ -29,4 +32,6 @@ public:
 
 };
 
+}
+}
 }

@@ -22,7 +22,10 @@
 #include "arl/IDataTypeActivityReplicate.h"
 #include "DataTypeActivityScope.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class DataTypeActivityReplicate : 
     public virtual IDataTypeActivityReplicate, 
@@ -49,4 +52,6 @@ private:
 
 };
 
+}
+}
 }

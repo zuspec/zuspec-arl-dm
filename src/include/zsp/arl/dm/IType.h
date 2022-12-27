@@ -9,7 +9,10 @@
 #include <string>
 #include "arl/IAccept.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IType : public IAccept {
 public:
@@ -22,4 +25,6 @@ public:
 
 };
 
+}
+}
 }

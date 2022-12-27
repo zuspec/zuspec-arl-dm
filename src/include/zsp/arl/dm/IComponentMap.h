@@ -4,7 +4,10 @@
 #include "arl/IDataTypeComponent.h"
 #include "arl/IModelFieldPool.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelFieldComponent;
 
@@ -33,4 +36,6 @@ public:
 
 };
 
+}
+}
 }

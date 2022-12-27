@@ -21,7 +21,10 @@
 #include "TaskIsDataTypeFlowObj.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TaskIsDataTypeFlowObj::TaskIsDataTypeFlowObj() : 
     m_ret(false), m_check_kind(false), m_kind(FlowObjKindE::Resource) {
@@ -57,4 +60,6 @@ void TaskIsDataTypeFlowObj::visitDataTypeFlowObj(IDataTypeFlowObj *t) {
     }
 }
 
+}
+}
 }

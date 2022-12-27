@@ -23,7 +23,10 @@
 #include "arl/IDataTypeActivity.h"
 #include "vsc/ITypeExprFieldRef.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class IDataTypeActivityBind : public virtual IDataTypeActivity {
@@ -35,6 +38,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

@@ -44,20 +44,20 @@ include_directories(
 	"${source_dir}/googlemock/include"
 	)
 
-file(GLOB test_libarl_SRC
+file(GLOB test_zuspec_arl_dm_SRC
   "*.h"
   "*.cpp"
   )
 
-add_executable(test_libarl ${test_libarl_SRC})
-add_dependencies(test_libarl LibVSC)
-target_include_directories(test_libarl PUBLIC
+add_executable(test-zuspec-arl-dm ${test_zuspec_arl_dm_SRC})
+add_dependencies(test-zuspec-arl-dm LibVSC-DM)
+target_include_directories(test-zuspec-arl-dm PUBLIC
     "${source_dir}/googletest/include"
-    ${LIBVSC_DIR}/src/include
-    ${LIBVSC_DIR}/src
+    ${LIBVSC_DM_DIR}/src/include
+    ${LIBVSC_DM_DIR}/src
     )
    
-target_link_directories(test_libarl PRIVATE
+target_link_directories(test-zuspec-arl-dm PRIVATE
     ${CMAKE_BINARY_DIR}/lib
     ${CMAKE_BINARY_DIR}/lib64
     ${CMAKE_BINARY_DIR}/glog/lib64
@@ -69,13 +69,13 @@ else()
 	set(libglog glog)
 endif()
 
-target_link_libraries(test_libarl 
-	arl 
-  vsc
+target_link_libraries(test-zuspec-arl-dm 
+	zuspec-arl-dm
+    vsc-dm
 	libgtest 
 	libgmock
 	)
-add_dependencies(test_libarl GTEST)
+add_dependencies(test-zuspec-arl-dm GTEST)
 #set_property(TARGET test_libvsc PROPERTY INTERPROCEDURAL_OPTIMIZATION OFF)
 
-gtest_discover_tests(test_libarl)
+gtest_discover_tests(test-zuspec-arl-dm)

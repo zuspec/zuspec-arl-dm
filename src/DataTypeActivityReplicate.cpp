@@ -25,7 +25,10 @@
 #include "DataTypeActivityReplicate.h"
 #include "ModelActivityReplicate.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 DataTypeActivityReplicate::DataTypeActivityReplicate(
@@ -106,4 +109,6 @@ void DataTypeActivityReplicate::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

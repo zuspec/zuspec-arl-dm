@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/IDataTypeFunctionParamDecl.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -54,6 +57,8 @@ private:
     vsc::ITypeExprUP                m_default;
 };
 
+}
+}
 }
 
 

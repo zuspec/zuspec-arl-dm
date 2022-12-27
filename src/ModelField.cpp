@@ -7,7 +7,10 @@
 
 #include "ModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 ModelField::ModelField() {
 	m_parent = 0;
@@ -31,4 +34,6 @@ vsc::IModelField *ModelField::getField(int32_t idx) {
 	return m_fields.at(idx).get();
 }
 
-} /* namespace arl */
+}
+}
+}

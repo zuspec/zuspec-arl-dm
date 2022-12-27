@@ -22,7 +22,10 @@
 #include "arl/ITypeProcStmt.h"
 #include "vsc/ITypeExpr.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 
@@ -39,6 +42,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

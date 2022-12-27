@@ -8,7 +8,10 @@
 #include "arl/ITypeFieldClaim.h"
 #include "TypeField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TypeFieldClaim : public virtual ITypeFieldClaim, public TypeField {
 public:
@@ -30,5 +33,7 @@ private:
 	bool								m_is_lock;
 };
 
-} /* namespace arl */
+}
+}
+}
 

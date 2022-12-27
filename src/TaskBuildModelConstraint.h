@@ -9,7 +9,10 @@
 #include "arl/IModelBuildContext.h"
 #include "vsc/impl/TaskBuildModelConstraint.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class TaskBuildModelConstraint : public vsc::TaskBuildModelConstraint<> {
 public:
@@ -19,5 +22,7 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

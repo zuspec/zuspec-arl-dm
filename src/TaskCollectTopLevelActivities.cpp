@@ -2,7 +2,10 @@
 #include "DebugMacros.h"
 #include "TaskCollectTopLevelActivities.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TaskCollectTopLevelActivities::TaskCollectTopLevelActivities() {
     DEBUG_INIT("TaskCollectTopLevelActivities");
@@ -47,4 +50,6 @@ void TaskCollectTopLevelActivities::visitModelActivityTraverse(IModelActivityTra
     DEBUG_LEAVE("visitModelActivityTraverse");
 }
 
+}
+}
 }

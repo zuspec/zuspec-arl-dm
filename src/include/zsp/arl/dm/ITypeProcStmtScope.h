@@ -23,7 +23,10 @@
 #include <vector>
 #include "arl/ITypeProcStmt.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ITypeProcStmtScope;
 using ITypeProcStmtScopeUP=std::unique_ptr<ITypeProcStmtScope>;
@@ -38,6 +41,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

@@ -26,7 +26,10 @@
 #include "vsc/impl/CopyVisitor.h"
 #include "vsc/impl/DebugMacros.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class CopyVisitor : public virtual VisitorDelegator {
@@ -194,6 +197,8 @@ protected:
 
 vsc::IDebug *CopyVisitor::m_dbg = 0;
 
+}
+}
 }
 
 

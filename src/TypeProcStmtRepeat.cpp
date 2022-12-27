@@ -21,7 +21,10 @@
 #include "TypeProcStmtRepeat.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtRepeat::TypeProcStmtRepeat() {
@@ -32,4 +35,6 @@ TypeProcStmtRepeat::~TypeProcStmtRepeat() {
 
 }
 
+}
+}
 }

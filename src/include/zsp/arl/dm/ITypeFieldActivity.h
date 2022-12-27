@@ -10,7 +10,10 @@
 #include "vsc/IModelBuildContext.h"
 #include "vsc/ITypeField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelActivity;
 
@@ -25,5 +28,6 @@ public:
 
 };
 
-
+}
+}
 }

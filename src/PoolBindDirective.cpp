@@ -21,7 +21,10 @@
 #include "PoolBindDirective.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 PoolBindDirective::PoolBindDirective(
     PoolBindKind                kind,
@@ -35,4 +38,6 @@ PoolBindDirective::~PoolBindDirective() {
 
 }
 
+}
+}
 }

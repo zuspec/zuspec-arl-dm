@@ -22,7 +22,10 @@
 #include "arl/IContext.h"
 #include "arl/impl/VisitorBase.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class TaskExpandCompoundActions : public VisitorBase {
@@ -40,6 +43,8 @@ private:
     IContext                            *m_ctxt;
 };
 
+}
+}
 }
 
 

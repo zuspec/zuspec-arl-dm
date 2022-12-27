@@ -8,7 +8,10 @@
 #pragma once
 #include "arl/IVisitor.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IAccept {
 public:
@@ -20,3 +23,6 @@ public:
 };
 
 }
+}
+}
+

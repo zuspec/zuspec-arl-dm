@@ -8,7 +8,10 @@
 #include "ModelFieldAction.h"
 #include "arl/IVisitor.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 ModelFieldAction::ModelFieldAction() {
 
@@ -26,4 +29,6 @@ void ModelFieldAction::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

@@ -22,7 +22,10 @@
 #include "TypeProcStmtMatch.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtMatch::TypeProcStmtMatch(vsc::ITypeExpr *cond) : m_cond(cond) {
@@ -39,4 +42,6 @@ void TypeProcStmtMatch::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

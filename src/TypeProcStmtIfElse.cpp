@@ -22,7 +22,10 @@
 #include "TypeProcStmtIfElse.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 TypeProcStmtIfElse::TypeProcStmtIfElse(
@@ -43,4 +46,6 @@ void TypeProcStmtIfElse::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

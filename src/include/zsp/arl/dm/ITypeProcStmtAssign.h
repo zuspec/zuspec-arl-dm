@@ -23,7 +23,10 @@
 #include "vsc/ITypeExpr.h"
 #include "vsc/ITypeExprFieldRef.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 enum class TypeProcStmtAssignOp {
     Eq,
@@ -49,6 +52,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

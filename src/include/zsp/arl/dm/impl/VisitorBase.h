@@ -54,7 +54,10 @@
 #include "arl/ITypeProcStmtVarDecl.h"
 #include "arl/ITypeProcStmtWhile.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class VisitorBase : public virtual arl::IVisitor, public vsc::VisitorBase {
 public:
@@ -288,6 +291,8 @@ public:
 		s->getExpr()->accept(m_this);
 		s->getBody()->accept(m_this);
 	}
-};
+}
 
+}
+}
 }

@@ -9,7 +9,10 @@
 #include "arl/IComponentMap.h"
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelFieldComponent;
 using IModelFieldComponentUP=std::unique_ptr<IModelFieldComponent>;
@@ -24,4 +27,6 @@ public:
 
 };
 
+}
+}
 }

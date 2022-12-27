@@ -9,7 +9,10 @@
 #include "vsc/ITypeConstraint.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class DataTypeActivityTraverse : 
 	public virtual IDataTypeActivityTraverse {
@@ -53,5 +56,7 @@ private:
 	vsc::IModelFieldFactoryUP				m_factory;
 };
 
-} /* namespace arl */
+}
+}
+}
 

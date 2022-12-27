@@ -45,7 +45,10 @@
 #include "arl/ITypeProcStmtVarDecl.h"
 #include "arl/ITypeProcStmtWhile.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IContext;
 using IContextUP=std::unique_ptr<IContext>;
@@ -245,4 +248,6 @@ public:
 
 };
 
+}
+}
 }

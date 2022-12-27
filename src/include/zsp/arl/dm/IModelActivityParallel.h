@@ -11,7 +11,10 @@
 #include "arl/IModelActivityScope.h"
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelActivityParallel;
 using IModelActivityParallelUP=std::unique_ptr<IModelActivityParallel>;
@@ -32,5 +35,7 @@ public:
 
 };
 
+}
+}
 }
 

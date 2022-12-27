@@ -22,7 +22,10 @@
 #include <memory>
 #include "vsc/IAccept.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ITypeProcStmt;
 using ITypeProcStmtUP=std::unique_ptr<ITypeProcStmt>;
@@ -33,6 +36,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

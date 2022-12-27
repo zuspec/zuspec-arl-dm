@@ -11,7 +11,10 @@
 #include "vsc/IModelField.h"
 #include <vector>
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ModelBuildContext : public virtual IModelBuildContext, public virtual vsc::ModelBuildContext {
 public:
@@ -41,7 +44,9 @@ protected:
 
 	std::vector<IModelActivityScope *>			m_activity_scope_s;
 
-};
+}
 
-} /* namespace arl */
+}
+}
+}
 

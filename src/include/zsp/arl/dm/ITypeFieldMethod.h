@@ -20,7 +20,10 @@
  */
 #pragma once
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class ITypeFieldMethod {
 public:
@@ -29,6 +32,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

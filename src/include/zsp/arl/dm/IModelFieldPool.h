@@ -3,7 +3,10 @@
 #include <vector>
 #include "vsc/IModelField.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IModelFieldPool : public virtual vsc::IModelField {
 public:
@@ -29,5 +32,7 @@ public:
 
 };
 
+}
+}
 }
 

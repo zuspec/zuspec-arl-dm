@@ -22,7 +22,10 @@
 #include "arl/IContext.h"
 #include "arl/IDataTypeFunction.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class DataTypeFunction : public virtual IDataTypeFunction {
@@ -65,6 +68,8 @@ private:
 
 };
 
+}
+}
 }
 
 

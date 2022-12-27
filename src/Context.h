@@ -10,7 +10,10 @@
 #include "arl/IContext.h"
 #include "vsc/impl/ContextDelegator.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class Context : public virtual IContext, public vsc::ContextDelegator {
 public:
@@ -218,5 +221,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

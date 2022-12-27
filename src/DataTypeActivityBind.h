@@ -21,7 +21,10 @@
 #pragma once
 #include "arl/IDataTypeActivityBind.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 class DataTypeActivityBind : public virtual IDataTypeActivityBind {
@@ -41,6 +44,8 @@ private:
 
 };
 
+}
+}
 }
 
 

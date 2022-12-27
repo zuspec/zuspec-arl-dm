@@ -13,7 +13,10 @@
 #include "DataTypeActivityTraverse.h"
 #include "TaskBuildModelConstraint.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 DataTypeActivityTraverse::DataTypeActivityTraverse(
 		vsc::ITypeExprFieldRef 		*target,
@@ -68,4 +71,6 @@ void DataTypeActivityTraverse::accept(vsc::IVisitor *v) {
 	}
 }
 
-} /* namespace arl */
+}
+}
+}

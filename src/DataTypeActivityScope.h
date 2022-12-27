@@ -9,7 +9,10 @@
 #include "arl/IDataTypeActivityScope.h"
 #include "DataTypeStruct.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class DataTypeActivityScope : public virtual IDataTypeActivityScope {
 public:
@@ -71,5 +74,7 @@ private:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 

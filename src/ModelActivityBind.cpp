@@ -22,7 +22,10 @@
 #include "ModelActivityBind.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 
 ModelActivityBind::ModelActivityBind(
@@ -45,4 +48,6 @@ void ModelActivityBind::accept(vsc::IVisitor *v) {
     }
 }
 
+}
+}
 }

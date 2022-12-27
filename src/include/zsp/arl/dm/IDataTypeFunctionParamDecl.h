@@ -24,7 +24,10 @@
 #include "vsc/IDataType.h"
 #include "vsc/ITypeExpr.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 class IDataTypeFunctionParamDecl;
 using IDataTypeFunctionParamDeclUP=std::unique_ptr<IDataTypeFunctionParamDecl>;
@@ -41,6 +44,8 @@ public:
 
 };
 
-} /* namespace arl */
+}
+}
+}
 
 

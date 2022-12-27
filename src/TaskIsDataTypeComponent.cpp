@@ -7,7 +7,10 @@
 
 #include "TaskIsDataTypeComponent.h"
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 
 TaskIsDataTypeComponent::TaskIsDataTypeComponent() : m_comp(0) {
 	// TODO Auto-generated constructor stub
@@ -28,4 +31,6 @@ void TaskIsDataTypeComponent::visitDataTypeComponent(IDataTypeComponent *t) {
 	m_comp = t;
 }
 
-} /* namespace arl */
+}
+}
+}

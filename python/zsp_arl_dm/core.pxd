@@ -13,7 +13,7 @@ cdef class Factory(object):
 
     cdef init(self, dm_core.Factory)
     
-    cpdef Context mkContext(self, vsc.Context ctxt)
+    cpdef Context mkContext(self, vsc.Context ctxt=*)
 
 cdef class Context(vsc.Context):
 

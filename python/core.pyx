@@ -23,7 +23,10 @@ cdef class Factory(object):
     cdef init(self, dm_core.Factory f):
         self._hndl.init(f._hndl.getDebugMgr())
         
-    cpdef Context mkContext(self, vsc.Context ctxt):
+    cpdef Context mkContext(self, vsc.Context ctxt=None):
+        if ctxt is None:
+            ctxt = vsc.Factory.inst().mkContext()
+
         ctxt._owned = False
         return Context.mk(self._hndl.mkContext(ctxt._hndl), True)
     

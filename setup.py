@@ -40,8 +40,8 @@ if os.path.isdir(os.path.join(libarl_dir, "packages")):
 else:
     parent = os.path.dirname(libarl_dir)
     
-    if os.path.isdir(os.path.join(parent, "libarl")):
-        print("libarl is a peer")
+    if os.path.isdir(os.path.join(parent, "zuspec-arl-dm")):
+        print("zuspec-arl-dm is a peer")
         packages_dir = parent
     else:
         raise Exception("Unexpected source layout")
@@ -191,8 +191,8 @@ class build_ext(_build_ext):
         package_dir = build_py.get_package_dir(package)
 
         copy_file(
-            os.path.join(cwd, "build", "src", "libarl.so"),
-            os.path.join(package_dir, "libarl.so"))
+            os.path.join(cwd, "build", "src", "zuspec-arl-dm.so"),
+            os.path.join(package_dir, "zuspec-arl-dm.so"))
                 
         dest_filename = os.path.join(package_dir, filename)
         

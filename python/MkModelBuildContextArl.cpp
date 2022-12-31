@@ -1,6 +1,15 @@
 
-#include "arl/impl/ModelBuildContext.h"
+#include "zsp/arl/dm/impl/ModelBuildContext.h"
 
-extern "C" arl::IModelBuildContext *mkModelBuildContextArl(arl::IContext *ctxt) {
-    return new arl::ModelBuildContext(ctxt);
+namespace zsp {
+namespace arl {
+namespace dm {
+
+extern "C" IModelBuildContext *mkModelBuildContextArl(IContext *ctxt) {
+    return new ModelBuildContext(ctxt);
 }
+
+}
+}
+}
+

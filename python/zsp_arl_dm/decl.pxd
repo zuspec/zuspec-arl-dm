@@ -1,5 +1,6 @@
 
-cimport libvsc.decl as vsc
+cimport libvsc_dm.decl as vsc
+cimport debug_mgr.decl as dm
 
 from libcpp.string cimport string as cpp_string
 from libcpp.vector cimport vector as cpp_vector
@@ -20,6 +21,7 @@ ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
+ctypedef IFactory *IFactoryP
 ctypedef IModelFieldAction *IModelFieldActionP
 ctypedef IModelFieldComponent *IModelFieldComponentP
 ctypedef IModelFieldComponentRoot *IModelFieldComponentRootP
@@ -32,15 +34,7 @@ ctypedef ITypeFieldClaim *ITypeFieldClaimP
 ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
 
-cdef extern from "arl/IArl.h" namespace "arl":
-    cdef cppclass IArl:
-        void init(vsc.IDebugMgr *)
-        IContext *mkContext(vsc.IContext *)
-        
-        
-cdef extern IArl *py_get_arl(const char *)
-
-cdef extern from "arl/IContext.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
     cdef cppclass IContext(vsc.IContext):
         vsc.IModelField *buildModelAction(
             IDataTypeAction *t,
@@ -64,7 +58,9 @@ cdef extern from "arl/IContext.h" namespace "arl":
         IDataTypeFlowObj *findDataTypeFlowObj(const cpp_string &name, FlowObjKindE kind)
         IDataTypeFlowObj *mkDataTypeFlowObj(const cpp_string &name, FlowObjKindE kind)
         bool addDataTypeFlowObj(IDataTypeFlowObj *)
-        IModelEvaluator *mkModelEvaluator()
+
+#TODO:        IModelEvaluator *mkModelEvaluator()
+
         IPoolBindDirective *mkPoolBindDirective(
             PoolBindKind                kind,
             vsc.ITypeExprFieldRef       *pool,
@@ -79,7 +75,7 @@ cdef extern from "arl/IContext.h" namespace "arl":
             vsc.TypeFieldAttr, 
             int32_t)
         
-cdef extern from "arl/IDataTypeAction.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeAction.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeAction(vsc.IDataTypeStruct):
         IDataTypeComponent *getComponentType()
         void setComponentType(IDataTypeComponent *)
@@ -87,11 +83,11 @@ cdef extern from "arl/IDataTypeAction.h" namespace "arl":
         const cpp_vector[ITypeFieldActivityP] &activities() const
         void addActivity(ITypeFieldActivity *)
         
-cdef extern from "arl/IDataTypeActivity.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeActivity.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeActivity(vsc.IDataType):
         pass
         
-cdef extern from "arl/IDataTypeActivityScope.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeActivityScope.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeActivityScope(IDataTypeActivity, vsc.IDataTypeStruct):
         void addActivity(ITypeFieldActivity *)
         const cpp_vector[ITypeFieldActivityP] &getActivities() const
@@ -104,29 +100,29 @@ cdef extern from "arl/IDataTypeActivityScope.h" namespace "arl":
         
         pass
 
-cdef extern from "arl/IDataTypeActivityReplicate.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeActivityReplicate.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeActivityReplicate(IDataTypeActivityScope):
         vsc.ITypeExpr *getCount() const
 
-cdef extern from "arl/IDataTypeActivityParallel.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeActivityParallel.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeActivityParallel(IDataTypeActivityScope):
         pass
         
-cdef extern from "arl/IDataTypeActivitySchedule.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeActivitySchedule.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeActivitySchedule(IDataTypeActivityScope):
         pass
     
-cdef extern from "arl/IDataTypeActivitySequence.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeActivitySequence.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeActivitySequence(IDataTypeActivityScope):
         pass
     
-cdef extern from "arl/IDataTypeActivityTraverse.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeActivityTraverse.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeActivityTraverse(IDataTypeActivity):
         vsc.ITypeExprFieldRef *getTarget() const
         vsc.ITypeConstraint *getWithC() const
         void setWithC(vsc.ITypeConstraint *c)
     
-cdef extern from "arl/IDataTypeComponent.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeComponent.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeComponent(vsc.IDataTypeStruct):
         const cpp_vector[IDataTypeActionP] &getActionTypes() const
         void addActionType(IDataTypeAction *)
@@ -134,87 +130,93 @@ cdef extern from "arl/IDataTypeComponent.h" namespace "arl":
         cpp_vector[IPoolBindDirectiveUP] &getPoolBindDirectives() const
         pass
     
-cdef extern from "arl/IDataTypeFlowObj.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IDataTypeFlowObj.h" namespace "zsp::arl::dm":
     cdef enum FlowObjKindE:
-        Buffer   "arl::FlowObjKindE::Buffer"
-        Resource "arl::FlowObjKindE::Resource"
-        State    "arl::FlowObjKindE::State"
-        Stream   "arl::FlowObjKindE::Stream"
+        Buffer   "zsp::arl::dm::FlowObjKindE::Buffer"
+        Resource "zsp::arl::dm::FlowObjKindE::Resource"
+        State    "zsp::arl::dm::FlowObjKindE::State"
+        Stream   "zsp::arl::dm::FlowObjKindE::Stream"
 
     cdef cppclass IDataTypeFlowObj(vsc.IDataTypeStruct):
         FlowObjKindE kind() const
 
-cdef extern from "arl/IModelBuildContext.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IFactory.h" namespace "zsp::arl::dm":
+    cdef cppclass IFactory:
+        void init(dm.IDebugMgr *)
+        IContext *mkContext(vsc.IContext *vsc_ctxt)
+
+cdef extern from "zsp/arl/dm/IModelBuildContext.h" namespace "zsp::arl::dm":
     cdef cppclass IModelBuildContext:
         IContext *ctxt()
         pass
 
-cdef extern from "arl/IModelEvaluator.h" namespace "arl":
-    cdef cppclass IModelEvaluator:
-        IModelEvalIterator *eval(
-            vsc.IRandState *,
-            IModelFieldComponent *, 
-            IDataTypeAction *)
+# TODO:
+# cdef extern from "zsp/arl/dm/IModelEvaluator.h" namespace "zsp::arl::dm":
+#     cdef cppclass IModelEvaluator:
+#         IModelEvalIterator *eval(
+#             vsc.IRandState *,
+#             IModelFieldComponent *, 
+#             IDataTypeAction *)
 
-cdef extern from "arl/IModelEvalIterator.h" namespace "arl":
-    cdef enum ModelEvalNodeT:
-        Action   "arl::ModelEvalNodeT::Action"
-        Parallel "arl::ModelEvalNodeT::Parallel"
-        Sequence "arl::ModelEvalNodeT::Sequence"
-    cdef cppclass IModelEvalIterator:
-        bool next()
-        ModelEvalNodeT type() const
-        IModelFieldAction *action()
-        IModelEvalIterator *iterator()
+# cdef extern from "zsp/arl/dm/IModelEvalIterator.h" namespace "zsp::arl::dm":
+#     cdef enum ModelEvalNodeT:
+#         Action   "zsp::arl::dm::ModelEvalNodeT::Action"
+#         Parallel "zsp::arl::dm::ModelEvalNodeT::Parallel"
+#         Sequence "zsp::arl::dm::ModelEvalNodeT::Sequence"
+#     cdef cppclass IModelEvalIterator:
+#         bool next()
+#         ModelEvalNodeT type() const
+#         IModelFieldAction *action()
+#        IModelEvalIterator *iterator()
 
-cdef extern from "arl/IModelFieldAction.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IModelFieldAction.h" namespace "zsp::arl::dm":
     cdef cppclass IModelFieldAction(vsc.IModelField):
         bool isCompound() const
         pass
         
-cdef extern from "arl/IModelFieldComponent.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IModelFieldComponent.h" namespace "zsp::arl::dm":
     cdef cppclass IModelFieldComponent(vsc.IModelField):
         pass
 
-cdef extern from "arl/IModelFieldComponentRoot.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IModelFieldComponentRoot.h" namespace "zsp::arl::dm":
     cdef cppclass IModelFieldComponentRoot(IModelFieldComponent):
         void initCompTree()
 
-cdef extern from "arl/IModelFieldPool.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IModelFieldPool.h" namespace "zsp::arl::dm":
     cdef cppclass IModelFieldPool(vsc.IModelField):
         pass
 
-cdef extern from "arl/IPoolBindDirective.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IPoolBindDirective.h" namespace "zsp::arl::dm":
     cdef enum PoolBindKind:
-        All "arl::PoolBindKind::All"
-        Ref "arl::PoolBindKind::Ref"
+        All "zsp::arl::dm::PoolBindKind::All"
+        Ref "zsp::arl::dm::PoolBindKind::Ref"
 
     cdef cppclass IPoolBindDirective:
         PoolBindKind kind() const
         vsc.ITypeExprFieldRef *getPool() const
         vsc.ITypeExprFieldRef *getTarget() const
     
-cdef extern from "arl/ITypeFieldActivity.h" namespace "arl":
+cdef extern from "zsp/arl/dm/ITypeFieldActivity.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeFieldActivity(vsc.ITypeField):
         pass
     
-cdef extern from "arl/ITypeFieldClaim.h" namespace "arl":
+cdef extern from "zsp/arl/dm/ITypeFieldClaim.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeFieldClaim(vsc.ITypeField):
         bool isLock() const
         
-cdef extern from "arl/ITypeFieldInOut.h" namespace "arl":
+cdef extern from "zsp/arl/dm/ITypeFieldInOut.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeFieldInOut(vsc.ITypeField):
         bool isInput() const
         
-cdef extern from "arl/ITypeFieldPool.h" namespace "arl":
+cdef extern from "zsp/arl/dm/ITypeFieldPool.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeFieldPool(vsc.ITypeField):
         int32_t getDeclSize()
 
-cdef extern from "arl/IVisitor.h" namespace "arl":
+cdef extern from "zsp/arl/dm/IVisitor.h" namespace "zsp::arl::dm":
     cdef cppclass IVisitor(vsc.IVisitor):
         pass
     
-cdef extern from "VisitorProxy.h" namespace "arl":
+cdef extern from "VisitorProxy.h" namespace "zsp::arl::dm":
     cdef cppclass VisitorProxy(IVisitor):
         VisitorProxy(cpy_ref.PyObject *)
 

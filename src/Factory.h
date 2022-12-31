@@ -1,5 +1,5 @@
 /**
- * VisitorProxy.h
+ * Factory.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,40 +19,37 @@
  *     Author: 
  */
 #pragma once
-#include <Python.h>
-#include "zsp/arl/dm/impl/VisitorBase.h"
+#include <memory>
+#include "zsp/arl/dm/IFactory.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-
-class VisitorProxy : public VisitorBase {
+class Factory;
+using FactoryUP=std::unique_ptr<Factory>;
+class Factory : public virtual IFactory {
 public:
-    VisitorProxy(PyObject *);
+    Factory();
 
-    virtual ~VisitorProxy();
+    virtual ~Factory();
 
-    virtual void visitDataTypeAction(IDataTypeAction *t) override;
+    virtual void init(dmgr::IDebugMgr *dmgr) override;
 
-    virtual void visitDataTypeComponent(IDataTypeComponent *t) override;
+    virtual dmgr::IDebugMgr *getDebugMgr() override;
 
-	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override;
+    virtual IContext *mkContext(vsc::dm::IContext *ctxt) override;
 
-	virtual void visitModelFieldAction(IModelFieldAction *f) override;
-
-	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
-
-	virtual void visitModelFieldComponentRoot(IModelFieldComponentRoot *f) override;
-
-	virtual void visitModelFieldPool(IModelFieldPool *f) override;
+    static IFactory *inst();
 
 private:
-    PyObject                *m_obj;
+    static FactoryUP                m_inst;
+    dmgr::IDebugMgr                 *m_dmgr;
 
 };
 
 }
 }
 }
+
 

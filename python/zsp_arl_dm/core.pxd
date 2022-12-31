@@ -1,16 +1,19 @@
 
-from libarl cimport decl
+import ctypes
+cimport debug_mgr.core as dm_core
+from zsp_arl_dm cimport decl
 
 from libc.stdint cimport int32_t
 from libcpp cimport bool
-cimport libvsc.core as vsc
-cimport libvsc.decl as vsc_decl
+cimport libvsc_dm.core as vsc
+cimport libvsc_dm.decl as vsc_decl
 
-cdef class Arl(object):
-    cdef vsc.Vsc            _vsc
-    cdef decl.IArl          *_hndl
+cdef class Factory(object):
+    cdef decl.IFactory      *_hndl
+
+    cdef init(self, dm_core.Factory)
     
-    cpdef Context mkContext(self)
+    cpdef Context mkContext(self, vsc.Context ctxt)
 
 cdef class Context(vsc.Context):
 
@@ -30,8 +33,9 @@ cdef class Context(vsc.Context):
     cpdef DataTypeFlowObj findDataTypeFlowObj(self, name, kind)
     cpdef DataTypeFlowObj mkDataTypeFlowObj(self, name, kind)
     cpdef bool addDataTypeFlowObj(self, DataTypeFlowObj obj_t)
-    
-    cpdef ModelEvaluator mkModelEvaluator(self)
+
+# TODO:    
+#    cpdef ModelEvaluator mkModelEvaluator(self)
     cpdef PoolBindDirective mkPoolBindDirective(self, kind, vsc.TypeExprFieldRef pool, vsc.TypeExprFieldRef target)
     cpdef TypeFieldActivity mkTypeFieldActivity(self, name, DataTypeActivity, bool)
     cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType, bool)
@@ -142,27 +146,28 @@ cdef class ModelBuildContext(vsc.ModelBuildContext):
     pass
 
 
-cdef class ModelEvaluator(object):    
-    cdef decl.IModelEvaluator        *_hndl
+# TODO:
+# cdef class ModelEvaluator(object):    
+#     cdef decl.IModelEvaluator        *_hndl
     
-    cpdef ModelEvalIterator eval(self, 
-                        vsc.RandState       randstate, 
-                        ModelFieldComponent root_comp,
-                        DataTypeAction      root_action)
+#     cpdef ModelEvalIterator eval(self, 
+#                         vsc.RandState       randstate, 
+#                         ModelFieldComponent root_comp,
+#                         DataTypeAction      root_action)
     
-    @staticmethod
-    cdef ModelEvaluator mk(decl.IModelEvaluator *)
+#     @staticmethod
+#     cdef ModelEvaluator mk(decl.IModelEvaluator *)
     
-cdef class ModelEvalIterator(object):
-    cdef decl.IModelEvalIterator    *_hndl
+# cdef class ModelEvalIterator(object):
+#     cdef decl.IModelEvalIterator    *_hndl
     
-    cpdef bool next(self)
-    cpdef type(self)
-    cpdef ModelFieldAction action(self)
-    cpdef ModelEvalIterator iterator(self)
+#     cpdef bool next(self)
+#     cpdef type(self)
+#     cpdef ModelFieldAction action(self)
+#     cpdef ModelEvalIterator iterator(self)
     
-    @staticmethod
-    cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
+#     @staticmethod
+#     cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
 
 cdef class ModelFieldAction(vsc.ModelField):
 

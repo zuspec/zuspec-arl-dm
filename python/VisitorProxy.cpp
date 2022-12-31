@@ -23,7 +23,10 @@
 #include "core.h"
 
 
+namespace zsp {
 namespace arl {
+namespace dm {
+
 VisitorProxy::VisitorProxy(PyObject *obj) : VisitorBase(false), m_obj(obj) {
     Py_INCREF(m_obj);
 }
@@ -61,4 +64,6 @@ void VisitorProxy::visitModelFieldPool(IModelFieldPool *f) {
     VisitorProxy_visitModelFieldPool(m_obj, f);
 }
 
+}
+}
 }

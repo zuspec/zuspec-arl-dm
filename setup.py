@@ -1,5 +1,5 @@
 #****************************************************************************
-#* setup.py for libarl
+#* setup.py for zuspec-arl-dm
 #****************************************************************************
 import os
 import sys
@@ -32,13 +32,13 @@ else:
     cmake_build_tool = "Ninja"
 
 # First need to establish where things are
-libarl_dir = os.path.dirname(os.path.abspath(__file__))
+zuspec_arl_dm_dir = os.path.dirname(os.path.abspath(__file__))
 
-if os.path.isdir(os.path.join(libarl_dir, "packages")):
+if os.path.isdir(os.path.join(zuspec_arl_dm_dir, "packages")):
     print("Packages are inside this directory")
-    packages_dir = os.path.join(libarl_dir, "packages")
+    packages_dir = os.path.join(zuspec_arl_dm_dir, "packages")
 else:
-    parent = os.path.dirname(libarl_dir)
+    parent = os.path.dirname(zuspec_arl_dm_dir)
     
     if os.path.isdir(os.path.join(parent, "zuspec-arl-dm")):
         print("zuspec-arl-dm is a peer")
@@ -66,7 +66,7 @@ else:
 # Run configure...
 result = subprocess.run(
     ["cmake", 
-     libarl_dir,
+     zuspec_arl_dm_dir,
      "-G%s" % cmake_build_tool,
      "-DCMAKE_BUILD_TYPE=Debug",
      "-DPACKAGES_DIR=%s" % packages_dir,
@@ -191,8 +191,8 @@ class build_ext(_build_ext):
         package_dir = build_py.get_package_dir(package)
 
         copy_file(
-            os.path.join(cwd, "build", "src", "zuspec-arl-dm.so"),
-            os.path.join(package_dir, "zuspec-arl-dm.so"))
+            os.path.join(cwd, "build", "src", "libzuspec-arl-dm.so"),
+            os.path.join(package_dir, "libzuspec-arl-dm.so"))
                 
         dest_filename = os.path.join(package_dir, filename)
         
@@ -240,51 +240,50 @@ class build_ext(_build_ext):
 
 print("extra_compile_args=" + str(extra_compile_args))
 
-ext = Extension("libarl.core",
+ext = Extension("zsp_arl_dm.core",
             extra_compile_args=extra_compile_args,
             sources=[
-                os.path.join(libarl_dir, 'python', "core.pyx"), 
-                os.path.join(libarl_dir, 'python', "py_get_arl.cpp"),
-                os.path.join(libarl_dir, 'python', 'VisitorProxy.cpp'),
-                os.path.join(libarl_dir, 'python', 'MkModelBuildContextArl.cpp'),
+                os.path.join(zuspec_arl_dm_dir, 'python', "core.pyx"), 
+#                os.path.join(zuspec_arl_dm_dir, 'python', "py_get_arl.cpp"),
+                os.path.join(zuspec_arl_dm_dir, 'python', 'VisitorProxy.cpp'),
+                os.path.join(zuspec_arl_dm_dir, 'python', 'MkModelBuildContextArl.cpp'),
             ],
             language="c++",
             include_dirs=[
-#                os.path.join(libarl_dir, 'src'),
-                os.path.join(libarl_dir, 'python'),
-                os.path.join(libarl_dir, 'src', 'include'),
-                os.path.join(packages_dir, 'libvsc', 'src', 'include'),
-                os.path.join(packages_dir, 'libvsc', 'python')
+#                os.path.join(zuspec_arl_dm_dir, 'src'),
+                os.path.join(zuspec_arl_dm_dir, 'python'),
+                os.path.join(zuspec_arl_dm_dir, 'src', 'include'),
+                os.path.join(packages_dir, 'libvsc-dm', 'src', 'include'),
+                os.path.join(packages_dir, 'libvsc-dm', 'python'),
+                os.path.join(packages_dir, 'debug-mgr', 'src', 'include'),
+                os.path.join(packages_dir, 'debug-mgr', 'python'),
             ]
         )
 ext.cython_directives={'language_level' : '3'}
 
 setup(
-  name = "libarl",
+  name = "zuspec-arl-dm",
   version=version,
-  packages=['libarl'],
+  packages=['zsp_arl_dm'],
   package_dir = {'' : 'python'},
   author = "Matthew Ballance",
   author_email = "matt.ballance@gmail.com",
-  description = ("Core ARL model evaluator library"),
+  description = ("Core ARL data model library"),
   long_description = """
   Provides a library interface for creating and evaluating ARL models at an API level
   """,
   license = "Apache 2.0",
   keywords = ["SystemVerilog", "Verilog", "RTL", "Python"],
-  url = "https://github.com/fvutils/libarl",
-  entry_points={
-    'console_scripts': [
-      'tblink-rpc = tblink_rpc.__main__:main'
-    ]
-  },
+  url = "https://github.com/zuspec/zuspec-arl-dm",
   install_requires=[
-    'libvsc',
+    'libvsc-dm',
+    'debug-mgr'
   ],
   setup_requires=[
     'setuptools_scm',
-    'libvsc',
-    'cython'
+    'libvsc-dm',
+    'debug-mgr',
+    'cython',
   ],
   cmdclass={'build_ext': build_ext},
   ext_modules=[ ext ]

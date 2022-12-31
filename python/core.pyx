@@ -4,111 +4,51 @@
 import os
 import sys
 from ctypes import CDLL
+from libc.stdint cimport intptr_t
 from libcpp cimport bool
 from libcpp.cast cimport dynamic_cast, static_cast
 from libcpp.vector cimport vector as cpp_vector
 from enum import IntEnum
-from libarl cimport decl
-cimport libvsc.core as vsc
-cimport libvsc.decl as vsc_decl
+from zsp_arl_dm cimport decl
+cimport libvsc_dm.core as vsc
+cimport libvsc_dm.decl as vsc_decl
 cimport cpython.ref as cpy_ref
 
-cdef Arl _Arl_inst = None
-cdef class Arl(object):
+cdef Factory _inst = None
+cdef class Factory(object):
 
     def __init__(self):
-        
-        self._vsc = vsc.Vsc.inst()
-        path = "abc"
-        print("core file: %s" % str(os.path.abspath(__file__)))
-        paths = []
-        paths_s = set()
-        # These are libraries that we know are pointless to search
-        excludes = ['libgcc', 'libstdc++', 'libc', 'libdl', 'libz', 'libm', 'libutil', 'libpthread', 'ld-', 'libpython']
-        with open("/proc/%d/maps" % os.getpid(), "r") as fp:
-            while True:
-                line = fp.readline()
-                
-                if not line:
-                    break
-               
-                line = line.strip()
-
-                idx = line.find('/')
-                if idx != -1:                
-                    path = line[idx:]
-                    
-                    if not os.path.isfile(path):
-                        # File doesn't exist, which probably means that
-                        # the path wraps around to the next line
-                        line = fp.readline().strip()
-                        
-                        path += line
-                        
-                    if path.rfind('.so') != -1:
-                        if path not in paths_s:
-                            exclude = False
-                            for e in excludes:
-                                if path.find(e) != -1:
-                                    exclude = True
-                                    break
-
-                            paths_s.add(path)
-                            if not exclude:                                
-                                paths.append(path)
-
-        print("Paths: %s" % str(paths))
-        
-        lib_path = None
-        
-        for p in filter(lambda x : x.find('arl') != -1, paths):
-            lib = CDLL(p)
-            try:
-                getattr(lib, 'iarl')
-                lib_path = p
-                print("Found iarl")
-                break
-            except Exception as e:
-                pass
-            
-        if lib_path is None:
-            for p in filter(lambda x : x.find('arl') == -1, paths):
-                lib = CDLL(p)
-                try:
-                    getattr(lib, 'iarl')
-                    lib_path = p
-                    print("Found iarl")
-                    break
-                except Exception as e:
-                    pass
-
-        # Nothing already loaded provides tblink, so load the core library
-        if lib_path is None:
-            lib_dir = os.path.dirname(os.path.abspath(__file__))
-            lib_path = os.path.join(lib_dir, "libarl.so")
-            
-        print("lib_path: %s" % lib_path)
-        self._hndl = decl.py_get_arl(lib_path.encode())
-        
-        if self._hndl == NULL:
-            raise Exception("Failed to load libarl core library")        
-
-        # Initialize the library with the debug manager
-        self._hndl.init(self._vsc._hndl.getDebugMgr())
         pass
-    
-    cpdef Context mkContext(self):
-        return Context.mk(self._hndl.mkContext(
-            self._vsc._hndl.mkContext()
-            ), True)
+
+    cdef init(self, dm_core.Factory f):
+        self._hndl.init(f._hndl.getDebugMgr())
+        
+    cpdef Context mkContext(self, vsc.Context ctxt):
+        ctxt._owned = False
+        return Context.mk(self._hndl.mkContext(ctxt._hndl), True)
     
     @staticmethod
     def inst():
-        global _Arl_inst
-        if _Arl_inst is None:
-            _Arl_inst = Arl()
-        return _Arl_inst
-        
+        cdef Factory factory
+        global _inst
+
+        if _inst is None:
+            ext_dir = os.path.dirname(os.path.abspath(__file__))
+
+            core_lib = os.path.join(ext_dir, "libzsp-arl-dm.so")
+            if not os.path.isfile(core_lib):
+                raise Exception("Extension library core \"%s\" desn't exist" % core_lib)
+            so = ctypes.dll.LoadLibrary(core_lib)
+
+            func = so.zsp_arl_dm_getFactory()
+            func.restype = ctypes.c_void_p
+
+            hndl = <decl.IFactoryP>(<intptr_t>(func()))
+            factory = Factory()
+            factory._hndl = hndl
+            factory.init(dm_core.Factory.inst())
+            _inst = factory
+        return _inst
 
 
 cdef class Context(vsc.Context):
@@ -209,9 +149,10 @@ cdef class Context(vsc.Context):
     cpdef bool addDataTypeFlowObj(self, DataTypeFlowObj obj_t):
         obj_t._owned = False
         return self.asContext().addDataTypeFlowObj(obj_t.asFlowObj())
-    
-    cpdef ModelEvaluator mkModelEvaluator(self):
-        return ModelEvaluator.mk(self.asContext().mkModelEvaluator())
+
+# TODO:    
+#    cpdef ModelEvaluator mkModelEvaluator(self):
+#        return ModelEvaluator.mk(self.asContext().mkModelEvaluator())
 
     cpdef PoolBindDirective mkPoolBindDirective(self, kind, vsc.TypeExprFieldRef pool, vsc.TypeExprFieldRef target):
         cdef int kind_i = int(kind)
@@ -530,81 +471,81 @@ cdef class ModelBuildContext(vsc.ModelBuildContext):
         self._hndl = decl.mkModelBuildContextArl(ctxt.asContext())
 
 
-cdef class ModelEvaluator(object):
+# cdef class ModelEvaluator(object):
     
-    def __dealloc__(self):
-        if self._hndl != NULL:
-            del self._hndl
-            pass
+#     def __dealloc__(self):
+#         if self._hndl != NULL:
+#             del self._hndl
+#             pass
             
-    cpdef ModelEvalIterator eval(self, 
-                        vsc.RandState       randstate,
-                        ModelFieldComponent root_comp,
-                        DataTypeAction      root_action):
-        if root_comp is None:
-            raise Exception("None root_comp")
-        if root_action is None:
-            raise Exception("None root_action")
+#     cpdef ModelEvalIterator eval(self, 
+#                         vsc.RandState       randstate,
+#                         ModelFieldComponent root_comp,
+#                         DataTypeAction      root_action):
+#         if root_comp is None:
+#             raise Exception("None root_comp")
+#         if root_action is None:
+#             raise Exception("None root_action")
 
-        cdef decl.IModelEvalIterator *it = self._hndl.eval(
-                randstate._hndl,
-                root_comp.asComponent(),
-                root_action.asAction())
+#         cdef decl.IModelEvalIterator *it = self._hndl.eval(
+#                 randstate._hndl,
+#                 root_comp.asComponent(),
+#                 root_action.asAction())
         
-        return ModelEvalIterator.mk(it)
+#         return ModelEvalIterator.mk(it)
     
-    @staticmethod
-    cdef ModelEvaluator mk(decl.IModelEvaluator *hndl):
-        ret = ModelEvaluator()
-        ret._hndl = hndl
-        return ret
+#     @staticmethod
+#     cdef ModelEvaluator mk(decl.IModelEvaluator *hndl):
+#         ret = ModelEvaluator()
+#         ret._hndl = hndl
+#         return ret
 
-class ModelEvalNodeT(IntEnum):
-    Action = decl.ModelEvalNodeT.Action
-    Parallel = decl.ModelEvalNodeT.Parallel
-    Sequence = decl.ModelEvalNodeT.Sequence
+# class ModelEvalNodeT(IntEnum):
+#     Action = decl.ModelEvalNodeT.Action
+#     Parallel = decl.ModelEvalNodeT.Parallel
+#     Sequence = decl.ModelEvalNodeT.Sequence
 
-cdef class ModelEvalIterator(object):
+# cdef class ModelEvalIterator(object):
 
-    def __dealloc__(self):
-        # Iterator memory is self-managed, so the
-        # facade doesn't get involved
-        pass
+#     def __dealloc__(self):
+#         # Iterator memory is self-managed, so the
+#         # facade doesn't get involved
+#         pass
             
-    cpdef bool next(self):
-        if self._hndl == NULL:
-            return False
+#     cpdef bool next(self):
+#         if self._hndl == NULL:
+#             return False
 
-        ret = self._hndl.next()
+#         ret = self._hndl.next()
 
-        # Iterator self-destructs when it's no longer valid
-        if not ret:
-            self._hndl = NULL 
-        return ret
+#         # Iterator self-destructs when it's no longer valid
+#         if not ret:
+#             self._hndl = NULL 
+#         return ret
             
-    cpdef type(self):
-        cdef int type_i
-        if self._hndl == NULL:
-            return None
+#     cpdef type(self):
+#         cdef int type_i
+#         if self._hndl == NULL:
+#             return None
 
-        type_i = int(self._hndl.type())
-        return ModelEvalNodeT(type_i)
+#         type_i = int(self._hndl.type())
+#         return ModelEvalNodeT(type_i)
     
-    cpdef ModelFieldAction action(self):
-        return ModelFieldAction.mk(self._hndl.action(), False)
+#     cpdef ModelFieldAction action(self):
+#         return ModelFieldAction.mk(self._hndl.action(), False)
     
-    cpdef ModelEvalIterator iterator(self):
-        cdef decl.IModelEvalIterator *it = self._hndl.iterator()
-        if it != NULL:
-            return ModelEvalIterator.mk(self._hndl.iterator())
-        else:
-            return None
+#     cpdef ModelEvalIterator iterator(self):
+#         cdef decl.IModelEvalIterator *it = self._hndl.iterator()
+#         if it != NULL:
+#             return ModelEvalIterator.mk(self._hndl.iterator())
+#         else:
+#             return None
 
-    @staticmethod
-    cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):
-        ret = ModelEvalIterator()
-        ret._hndl = hndl
-        return ret
+#     @staticmethod
+#     cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):
+#         ret = ModelEvalIterator()
+#         ret._hndl = hndl
+#         return ret
 
 cdef class ModelFieldAction(vsc.ModelField):
 

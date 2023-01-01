@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "zsp/arl/dm/FactoryExt.h"
 #include "Context.h"
 #include "Factory.h"
 
@@ -53,10 +54,12 @@ IFactory *Factory::inst() {
     return m_inst.get();
 }
 
-extern "C" IFactory *zsp_arl_dm_getFactory() {
-    return Factory::inst();
-}
+FactoryUP Factory::m_inst;
 
 }
 }
+}
+
+zsp::arl::dm::IFactory *zsp_arl_dm_getFactory() {
+    return zsp::arl::dm::Factory::inst();
 }

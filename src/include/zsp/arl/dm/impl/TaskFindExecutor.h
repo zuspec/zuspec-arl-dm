@@ -53,7 +53,7 @@ public:
 private:
     IModelFieldExecutor                 *m_executor;
 
-}
+};
 
 }
 }

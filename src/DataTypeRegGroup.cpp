@@ -1,5 +1,5 @@
 /*
- * TypeProcStmtScope.cpp
+ * DataTypeRegGroup.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -18,9 +18,7 @@
  * Created on:
  *     Author:
  */
-
-#include "zsp/arl/dm/IVisitor.h"
-#include "TypeProcStmtScope.h"
+#include "DataTypeRegGroup.h"
 
 
 namespace zsp {
@@ -28,28 +26,12 @@ namespace arl {
 namespace dm {
 
 
-
-TypeProcStmtScope::TypeProcStmtScope() {
-
-}
-
-TypeProcStmtScope::~TypeProcStmtScope() {
+DataTypeRegGroup::DataTypeRegGroup() {
 
 }
 
-void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt) {
-    m_statements.push_back(ITypeProcStmtUP(stmt));
-}
+DataTypeRegGroup::~DataTypeRegGroup() {
 
-void TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
-    m_statements.push_back(ITypeProcStmtUP(v));
-    m_variables.push_back(v);
-}
-
-void TypeProcStmtScope::accept(vsc::dm::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtScope(this);
-    }
 }
 
 }

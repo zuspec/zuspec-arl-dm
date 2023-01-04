@@ -41,8 +41,13 @@ DataTypeFunction::~DataTypeFunction() {
 
 }
 
-void DataTypeFunction::addParameter(IDataTypeFunctionParamDecl *p) {
-    m_parameters.push_back(IDataTypeFunctionParamDeclUP(p));
+void DataTypeFunction::addParameter(ITypeProcStmtVarDecl *p) {
+    m_parameters.push_back(ITypeProcStmtVarDeclUP(p));
+    m_variables.push_back(p);
+}
+
+void DataTypeFunction::addImportSpec(IDataTypeFunctionImport *spec) {
+    m_import_specs.push_back(IDataTypeFunctionImportUP(spec));
 }
 
 void DataTypeFunction::accept(vsc::dm::IVisitor *v) {

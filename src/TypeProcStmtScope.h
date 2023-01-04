@@ -36,14 +36,21 @@ public:
 
     virtual void addStatement(ITypeProcStmt *stmt) override;
 
+    virtual void addVariable(ITypeProcStmtVarDecl *v) override;
+
     virtual const std::vector<ITypeProcStmtUP> &getStatements() const override {
         return m_statements;
+    }
+
+    virtual const std::vector<ITypeProcStmtVarDecl *> getVariables() const override {
+        return m_variables;
     }
 
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     std::vector<ITypeProcStmtUP>                m_statements;
+    std::vector<ITypeProcStmtVarDecl *>         m_variables;
 };
 
 }

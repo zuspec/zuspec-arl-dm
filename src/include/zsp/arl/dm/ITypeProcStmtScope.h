@@ -22,6 +22,7 @@
 #include <memory>
 #include <vector>
 #include "zsp/arl/dm/ITypeProcStmt.h"
+#include "zsp/arl/dm/ITypeProcStmtDeclScope.h"
 
 namespace zsp {
 namespace arl {
@@ -30,12 +31,16 @@ namespace dm {
 
 class ITypeProcStmtScope;
 using ITypeProcStmtScopeUP=std::unique_ptr<ITypeProcStmtScope>;
-class ITypeProcStmtScope : public virtual ITypeProcStmt {
+class ITypeProcStmtScope : 
+    public virtual ITypeProcStmtDeclScope,
+    public virtual ITypeProcStmt {
 public:
 
     virtual ~ITypeProcStmtScope() { }
 
     virtual void addStatement(ITypeProcStmt *stmt) = 0;
+
+    virtual void addVariable(ITypeProcStmtVarDecl *v) = 0;
 
     virtual const std::vector<ITypeProcStmtUP> &getStatements() const = 0;
 

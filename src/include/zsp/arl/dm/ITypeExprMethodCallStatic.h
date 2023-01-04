@@ -1,5 +1,5 @@
-/*
- * TypeProcStmtScope.cpp
+/**
+ * ITypeExprMethodCallStatic.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,12 +16,12 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-
-#include "zsp/arl/dm/IVisitor.h"
-#include "TypeProcStmtScope.h"
-
+#pragma once
+#include <vector>
+#include "vsc/dm/ITypeExpr.h"
+#include "zsp/arl/dm/IDataTypeFunction.h"
 
 namespace zsp {
 namespace arl {
@@ -29,29 +29,19 @@ namespace dm {
 
 
 
-TypeProcStmtScope::TypeProcStmtScope() {
+class ITypeExprMethodCallStatic : public virtual vsc::dm::ITypeExpr {
+public:
 
-}
+    virtual ~ITypeExprMethodCallStatic() { }
 
-TypeProcStmtScope::~TypeProcStmtScope() {
+    virtual IDataTypeFunction *getTarget() const = 0;
 
-}
+    virtual const std::vector<vsc::dm::ITypeExprUP> &getParameters() const = 0;
 
-void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt) {
-    m_statements.push_back(ITypeProcStmtUP(stmt));
-}
+};
 
-void TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
-    m_statements.push_back(ITypeProcStmtUP(v));
-    m_variables.push_back(v);
-}
+} /* namespace dm */
+} /* namespace arl */
+} /* namespace zsp */
 
-void TypeProcStmtScope::accept(vsc::dm::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtScope(this);
-    }
-}
 
-}
-}
-}

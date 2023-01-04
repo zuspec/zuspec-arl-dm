@@ -1,5 +1,5 @@
-/*
- * TypeProcStmtScope.cpp
+/**
+ * IDataTypeFunctionImport.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,42 +16,26 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-
-#include "zsp/arl/dm/IVisitor.h"
-#include "TypeProcStmtScope.h"
-
+#pragma once
+#include <memory>
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
+class IDataTypeFunctionImport;
+using IDataTypeFunctionImportUP=std::unique_ptr<IDataTypeFunctionImport>;
+class IDataTypeFunctionImport {
+public:
+
+    virtual ~IDataTypeFunctionImport() { }
+
+};
+
+} /* namespace dm */
+} /* namespace arl */
+} /* namespace zsp */
 
 
-TypeProcStmtScope::TypeProcStmtScope() {
-
-}
-
-TypeProcStmtScope::~TypeProcStmtScope() {
-
-}
-
-void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt) {
-    m_statements.push_back(ITypeProcStmtUP(stmt));
-}
-
-void TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
-    m_statements.push_back(ITypeProcStmtUP(v));
-    m_variables.push_back(v);
-}
-
-void TypeProcStmtScope::accept(vsc::dm::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtScope(this);
-    }
-}
-
-}
-}
-}

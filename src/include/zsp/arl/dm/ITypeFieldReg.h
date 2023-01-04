@@ -1,5 +1,5 @@
-/*
- * TypeProcStmtScope.cpp
+/**
+ * ITypeFieldReg.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,42 +16,37 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-
-#include "zsp/arl/dm/IVisitor.h"
-#include "TypeProcStmtScope.h"
-
+#pragma once
+#include "vsc/dm/ITypeField.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
+enum class RegAccess {
+    READWRITE,
+    READONLY,
+    WRITEONLY
+};
 
 
-TypeProcStmtScope::TypeProcStmtScope() {
+class ITypeFieldReg {
+public:
 
-}
+    virtual ~ITypeFieldReg() { }
 
-TypeProcStmtScope::~TypeProcStmtScope() {
+    virtual uint32_t getOffset() const = 0;
 
-}
+    virtual uint32_t getWidth() const = 0;
+    
+    virtual RegAccess getAccess() const = 0;
 
-void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt) {
-    m_statements.push_back(ITypeProcStmtUP(stmt));
-}
+};
 
-void TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
-    m_statements.push_back(ITypeProcStmtUP(v));
-    m_variables.push_back(v);
-}
+} /* namespace dm */
+} /* namespace arl */
+} /* namespace zsp */
 
-void TypeProcStmtScope::accept(vsc::dm::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtScope(this);
-    }
-}
 
-}
-}
-}

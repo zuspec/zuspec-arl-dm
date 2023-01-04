@@ -22,7 +22,10 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "vsc/dm/IDataTypeStruct.h"
+#include "zsp/arl/dm/IDataTypeFunctionImport.h"
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
+#include "zsp/arl/dm/ITypeProcStmtDeclScope.h"
 #include "zsp/arl/dm/ITypeProcStmtScope.h"
 #include "vsc/dm/IAccept.h"
 #include "vsc/dm/IDataType.h"
@@ -34,7 +37,9 @@ namespace dm {
 
 class IDataTypeFunction;
 using IDataTypeFunctionUP=std::unique_ptr<IDataTypeFunction>;
-class IDataTypeFunction : public vsc::dm::IAccept {
+class IDataTypeFunction : 
+    public virtual ITypeProcStmtDeclScope,
+    public virtual vsc::dm::IAccept {
 public:
 
     virtual ~IDataTypeFunction() { }
@@ -43,11 +48,21 @@ public:
 
     virtual vsc::dm::IDataType *getReturnType() const = 0;
 
-    virtual const std::vector<IDataTypeFunctionParamDeclUP> &getParameters() const = 0;
+    virtual const std::vector<ITypeProcStmtVarDeclUP> &getParameters() const = 0;
 
-    virtual void addParameter(IDataTypeFunctionParamDecl *p) = 0;
+    virtual void addParameter(ITypeProcStmtVarDecl *p) = 0;
+
+    virtual vsc::dm::IDataTypeStruct *getContext() const = 0;
+
+    virtual bool getIsExport() const = 0;
+
+    virtual void setIsExport(bool e) = 0;
 
     virtual ITypeProcStmtScope *getBody() const = 0;
+
+    virtual const std::vector<IDataTypeFunctionImportUP> &getImportSpecs() const = 0;
+
+    virtual void addImportSpec(IDataTypeFunctionImport *spec) = 0;
 
 };
 

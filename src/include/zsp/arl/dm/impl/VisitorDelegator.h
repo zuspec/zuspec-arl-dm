@@ -23,6 +23,8 @@
 #include "zsp/arl/dm/IModelActivitySchedule.h"
 #include "zsp/arl/dm/IModelActivitySequence.h"
 #include "zsp/arl/dm/IModelActivityTraverse.h"
+#include "zsp/arl/dm/ITypeExprMethodCallContext.h"
+#include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
 #include "vsc/dm/impl/VisitorDelegator.h"
 
 namespace zsp {
@@ -156,6 +158,14 @@ public:
 		delegate(&arl::dm::IVisitor::visitModelFieldPool,
 				&vsc::dm::IVisitor::visitModelField, f);
 	}
+
+    virtual void visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) override {
+        delegate(&arl::dm::IVisitor::visitTypeExprMethodCallContext, e);
+    }
+
+    virtual void visitTypeExprMethodCallStatic(ITypeExprMethodCallStatic *e) override {
+        delegate(&arl::dm::IVisitor::visitTypeExprMethodCallStatic, e);
+    }
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {
 		delegate(&arl::dm::IVisitor::visitTypeFieldActivity,

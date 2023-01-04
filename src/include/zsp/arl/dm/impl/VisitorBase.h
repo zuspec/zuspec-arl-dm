@@ -35,6 +35,8 @@
 #include "zsp/arl/dm/IModelFieldInOut.h"
 #include "zsp/arl/dm/IModelFieldPool.h"
 #include "zsp/arl/dm/IVisitor.h"
+#include "zsp/arl/dm/ITypeExprMethodCallContext.h"
+#include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
 #include "zsp/arl/dm/ITypeFieldActivity.h"
 #include "zsp/arl/dm/ITypeFieldClaim.h"
 #include "zsp/arl/dm/ITypeFieldExecutor.h"
@@ -202,6 +204,15 @@ public:
 	virtual void visitModelFieldPool(IModelFieldPool *f) override {
 		vsc::dm::VisitorBase::visitModelField(f);
 	}
+
+    virtual void visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) override {
+        visitTypeExprMethodCallStatic(e);
+        e->getContext()->accept(m_this);
+    }
+
+    virtual void visitTypeExprMethodCallStatic(ITypeExprMethodCallStatic *e) override {
+        e->getTarget()->accept(m_this);
+    }
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {
 		vsc::dm::VisitorBase::visitTypeField(f);

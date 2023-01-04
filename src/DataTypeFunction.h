@@ -46,24 +46,50 @@ public:
         return m_ret_type;
     }
 
-    virtual const std::vector<IDataTypeFunctionParamDeclUP> &getParameters() const override {
+    virtual const std::vector<ITypeProcStmtVarDeclUP> &getParameters() const override {
         return m_parameters;
     }
 
-    virtual void addParameter(IDataTypeFunctionParamDecl *p) override;
+    virtual void addParameter(ITypeProcStmtVarDecl *p) override;
+
+    virtual const std::vector<ITypeProcStmtVarDecl *> getVariables() const override {
+        return m_variables;
+    }
+
+    virtual vsc::dm::IDataTypeStruct *getContext() const override {
+        return m_context;
+    }
+
+    virtual bool getIsExport() const override {
+        return m_is_export;
+    }
+
+    virtual void setIsExport(bool e) override {
+        m_is_export = e;
+    }
 
     virtual ITypeProcStmtScope *getBody() const override {
         return m_body.get();
     }
 
+    virtual const std::vector<IDataTypeFunctionImportUP> &getImportSpecs() const override {
+        return m_import_specs;
+    }
+
+    virtual void addImportSpec(IDataTypeFunctionImport *spec) override;
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     std::string                                     m_name;
-    vsc::dm::IDataType                                  *m_ret_type;
-    vsc::dm::IDataTypeUP                                m_ret_type_u;
-    std::vector<IDataTypeFunctionParamDeclUP>       m_parameters;
+    vsc::dm::IDataType                              *m_ret_type;
+    vsc::dm::IDataTypeUP                            m_ret_type_u;
+    std::vector<ITypeProcStmtVarDeclUP>             m_parameters;
+    std::vector<ITypeProcStmtVarDecl *>             m_variables;
+    vsc::dm::IDataTypeStruct                        *m_context;
+    bool                                            m_is_export;
     ITypeProcStmtScopeUP                            m_body;
+    std::vector<IDataTypeFunctionImportUP>          m_import_specs;
 
 
 };

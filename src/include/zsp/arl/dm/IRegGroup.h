@@ -1,5 +1,5 @@
 /**
- * ITypeProcStmtVarDecl.h
+ * IRegGroup.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,33 +19,14 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
-#include <string>
-#include "zsp/arl/dm/ITypeProcStmt.h"
-#include "vsc/dm/IDataType.h"
-#include "vsc/dm/ITypeExpr.h"
 
-namespace zsp {
-namespace arl {
-namespace dm {
 
-class ITypeProcStmtVarDecl;
-using ITypeProcStmtVarDeclUP=std::unique_ptr<ITypeProcStmtVarDecl>;
-class ITypeProcStmtVarDecl : public virtual ITypeProcStmt {
+
+class IRegGroup {
 public:
 
-    virtual ~ITypeProcStmtVarDecl() { }
-
-    virtual const std::string &name() const = 0;
-
-    virtual vsc::dm::IDataType *getDataType() const = 0;
-
-    virtual vsc::dm::ITypeExpr *getInit() const = 0;
+    virtual ~IRegGroup() { }
 
 };
-
-}
-}
-}
 
 

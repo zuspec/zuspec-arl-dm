@@ -1,5 +1,5 @@
-/*
- * TypeProcStmtScope.cpp
+/**
+ * ITypeFieldRegVec.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,12 +16,10 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-
-#include "zsp/arl/dm/IVisitor.h"
-#include "TypeProcStmtScope.h"
-
+#pragma once
+#include "zsp/arl/dm/ITypeFieldReg.h"
 
 namespace zsp {
 namespace arl {
@@ -29,29 +27,26 @@ namespace dm {
 
 
 
-TypeProcStmtScope::TypeProcStmtScope() {
+class ITypeFieldRegVec : public virtual ITypeFieldReg {
+public:
 
-}
+    virtual ~ITypeFieldRegVec() { }
 
-TypeProcStmtScope::~TypeProcStmtScope() {
+    virtual uint32_t getSize() const = 0;
 
-}
+    /**
+     * @brief Get the stride of array elements
+     * 
+     * vec[N] = (offset + N*stride)
+     * 
+     * @return uint32_t 
+     */
+    virtual uint32_t getStride() const = 0;
 
-void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt) {
-    m_statements.push_back(ITypeProcStmtUP(stmt));
-}
+};
 
-void TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
-    m_statements.push_back(ITypeProcStmtUP(v));
-    m_variables.push_back(v);
-}
+} /* namespace dm */
+} /* namespace arl */
+} /* namespace zsp */
 
-void TypeProcStmtScope::accept(vsc::dm::IVisitor *v) {
-    if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtScope(this);
-    }
-}
 
-}
-}
-}

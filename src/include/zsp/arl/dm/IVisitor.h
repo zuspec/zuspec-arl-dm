@@ -22,6 +22,7 @@ class IDataTypeActivitySequence;
 class IDataTypeActivityTraverse;
 class IDataTypeComponent;
 class IDataTypeFlowObj;
+class IDataTypeFunctionImport;
 class IDataTypeFunction;
 class IDataTypeResource;
 class IModelActivityBind;
@@ -39,6 +40,8 @@ class IModelFieldExecutorClaim;
 class IModelFieldClaim;
 class IModelFieldInOut;
 class IModelFieldPool;
+class ITypeExprMethodCallContext;
+class ITypeExprMethodCallStatic;
 class ITypeFieldActivity;
 class ITypeFieldClaim;
 class ITypeFieldExecutor;
@@ -114,6 +117,10 @@ public:
 	virtual void visitModelFieldInOut(IModelFieldInOut *f) = 0;
 
 	virtual void visitModelFieldPool(IModelFieldPool *f) = 0;
+
+    virtual void visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) = 0;
+
+    virtual void visitTypeExprMethodCallStatic(ITypeExprMethodCallStatic *e) = 0;
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) = 0;
 

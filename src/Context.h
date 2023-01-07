@@ -97,6 +97,9 @@ public:
 			IModelActivity			*activity,
 			bool					owned) override;
 
+    virtual IModelEvalIterator *mkModelEvalIterator(
+            IModelActivityScope     *activity) override;
+
 	virtual IModelFieldAction *mkModelFieldActionRoot(
 			const std::string		&name,
 			IDataTypeAction			*type) override;

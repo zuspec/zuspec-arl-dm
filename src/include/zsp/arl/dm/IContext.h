@@ -21,6 +21,7 @@
 #include "zsp/arl/dm/IModelActivityScope.h"
 #include "zsp/arl/dm/IModelActivitySequence.h"
 #include "zsp/arl/dm/IModelActivityTraverse.h"
+#include "zsp/arl/dm/IModelEvalIterator.h"
 #include "zsp/arl/dm/IModelFieldAction.h"
 #include "zsp/arl/dm/IModelFieldClaim.h"
 #include "zsp/arl/dm/IModelFieldComponent.h"
@@ -131,6 +132,9 @@ public:
 			bool					own_with_c,
 			IModelActivity			*activity,
 			bool					owned) = 0;
+
+    virtual IModelEvalIterator *mkModelEvalIterator(
+            IModelActivityScope     *activity) = 0;
 
 	virtual IModelFieldAction *mkModelFieldActionRoot(
 			const std::string		&name,

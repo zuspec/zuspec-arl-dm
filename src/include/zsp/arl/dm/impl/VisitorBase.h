@@ -71,7 +71,7 @@ public:
 	virtual ~VisitorBase() { }
 
 	virtual void visitDataTypeAction(IDataTypeAction *i) override {
-		vsc::dm::VisitorBase::visitDataTypeStruct(i);
+		m_this->visitDataTypeStruct(i);
 		for (std::vector<ITypeFieldActivity *>::const_iterator
 				it=i->activities().begin();
 				it!=i->activities().end(); it++) {
@@ -88,30 +88,30 @@ public:
 	}
 
 	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) override {
-		vsc::dm::VisitorBase::visitDataTypeStruct(t);
+		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivityReplicate(IDataTypeActivityReplicate *t) override {
 		t->getCount()->accept(m_this);
-		vsc::dm::VisitorBase::visitDataTypeStruct(t);
+		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override {
-		vsc::dm::VisitorBase::visitDataTypeStruct(t);
+		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) override {
-		vsc::dm::VisitorBase::visitDataTypeStruct(t);
+		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { }
 
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override {
-		vsc::dm::VisitorBase::visitDataTypeStruct(t);
+		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override {
-		vsc::dm::VisitorBase::visitDataTypeStruct(t);
+		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeFunction(IDataTypeFunction *t) override {
@@ -175,7 +175,7 @@ public:
 	}
 
 	virtual void visitModelFieldAction(IModelFieldAction *f) override {
-		vsc::dm::VisitorBase::visitModelField(f);
+		m_this->visitModelField(f);
 		if (f->getActivity()) {
 			f->getActivity()->accept(m_this);
 		}
@@ -184,7 +184,7 @@ public:
 	virtual void visitModelFieldClaim(IModelFieldClaim *f) override { }
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override {
-		vsc::dm::VisitorBase::visitModelField(f);
+		m_this->visitModelField(f);
 	}
 
 	virtual void visitModelFieldComponentRoot(IModelFieldComponentRoot *f) override {
@@ -192,17 +192,17 @@ public:
 	}
 
 	virtual void visitModelFieldExecutor(IModelFieldExecutor *f) override {
-		vsc::dm::VisitorBase::visitModelField(f);
+		m_this->visitModelField(f);
 	}
 
 	virtual void visitModelFieldExecutorClaim(IModelFieldExecutorClaim *f) override {
-		vsc::dm::VisitorBase::visitModelFieldRef(f);
+		m_this->visitModelFieldRef(f);
 	}
 
 	virtual void visitModelFieldInOut(IModelFieldInOut *f) override { }
 
 	virtual void visitModelFieldPool(IModelFieldPool *f) override {
-		vsc::dm::VisitorBase::visitModelField(f);
+		m_this->visitModelField(f);
 	}
 
     virtual void visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) override {
@@ -215,27 +215,27 @@ public:
     }
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {
-		vsc::dm::VisitorBase::visitTypeField(f);
+		m_this->visitTypeField(f);
 	}
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
-		vsc::dm::VisitorBase::visitTypeFieldRef(f);
+		m_this->visitTypeFieldRef(f);
 	}
 
 	virtual void visitTypeFieldExecutor(ITypeFieldExecutor *f) override {
-		vsc::dm::VisitorBase::visitTypeField(f);
+		m_this->visitTypeField(f);
 	}
 
 	virtual void visitTypeFieldExecutorClaim(ITypeFieldExecutorClaim *f) override {
-		vsc::dm::VisitorBase::visitTypeFieldRef(f);
+		m_this->visitTypeFieldRef(f);
 	}
 
 	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) override {
-		vsc::dm::VisitorBase::visitTypeFieldRef(f);
+		m_this->visitTypeFieldRef(f);
 	}
 
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) override {
-		vsc::dm::VisitorBase::visitTypeField(f);
+		m_this->visitTypeField(f);
 	}
 
 	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override {

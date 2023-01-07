@@ -47,8 +47,6 @@ public:
 
 	virtual bool valid() = 0;
 
-	virtual bool pop() = 0;
-
 	virtual ModelEvalNodeT type() const = 0;
 
 	virtual IModelFieldAction *action() = 0;

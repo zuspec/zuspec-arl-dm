@@ -17,6 +17,7 @@
 #include "DataTypeFunction.h"
 #include "DataTypeFunctionParamDecl.h"
 #include "DataTypeResource.h"
+#include "ModelActivityIterator.h"
 #include "ModelActivityParallel.h"
 #include "ModelActivityReplicate.h"
 #include "ModelActivitySchedule.h"
@@ -256,6 +257,10 @@ IModelActivityTraverse *Context::mkModelActivityTraverse(
 		own_with_c,
 		activity,
 		owned);
+}
+
+IModelEvalIterator *Context::mkModelEvalIterator(IModelActivityScope *activity) {
+    return new ModelActivityIterator(activity);
 }
 
 IModelFieldAction *Context::mkModelFieldActionRoot(

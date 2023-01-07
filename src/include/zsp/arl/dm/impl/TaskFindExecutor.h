@@ -38,12 +38,18 @@ public:
 
     IModelFieldExecutor *find(vsc::dm::IModelField *f) {
         m_executor = 0;
+        m_depth = 0;
         f->accept(m_this);
         return m_executor;
     }
 
     virtual void visitModelField(vsc::dm::IModelField *f) override {
         // Block from recursing
+        if (!m_depth) {
+            m_depth++;
+            VisitorBase::visitModelField(f);
+            m_depth--;
+        }
     }
 
 	virtual void visitModelFieldExecutorClaim(IModelFieldExecutorClaim *f) override {
@@ -52,6 +58,7 @@ public:
 
 private:
     IModelFieldExecutor                 *m_executor;
+    uint32_t                            m_depth;
 
 };
 

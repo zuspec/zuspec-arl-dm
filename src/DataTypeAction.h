@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include <map>
 #include "zsp/arl/dm/IContext.h"
 #include "zsp/arl/dm/IDataTypeAction.h"
 #include "DataTypeStruct.h"
@@ -48,12 +49,18 @@ public:
 		vsc::dm::IModelBuildContext		*ctxt,
 		vsc::dm::ITypeField				*type) override;
 
+    virtual const std::vector<ITypeExecUP> &getExecs(ExecKindT kind) const override;
+
+    virtual void addExec(ITypeExec *exec) override;
+
 	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-	IDataTypeComponent					*m_component_t;
-	vsc::dm::ITypeFieldRef					*m_comp;
-	std::vector<ITypeFieldActivity *>	m_activities;
+    static std::vector<ITypeExecUP>                 m_empty_exec_l;
+	IDataTypeComponent					            *m_component_t;
+	vsc::dm::ITypeFieldRef				            *m_comp;
+	std::vector<ITypeFieldActivity *>	            m_activities;
+    std::map<ExecKindT, std::vector<ITypeExecUP>>   m_exec_m;
 
 };
 

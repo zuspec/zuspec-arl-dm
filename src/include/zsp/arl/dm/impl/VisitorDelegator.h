@@ -167,6 +167,14 @@ public:
         delegate(&arl::dm::IVisitor::visitTypeExprMethodCallStatic, e);
     }
 
+	virtual void visitTypeExec(ITypeExec *e) override {
+        delegate(&arl::dm::IVisitor::visitTypeExec, e);
+    }
+
+	virtual void visitTypeExecProc(ITypeExecProc *e) override {
+        delegate(&arl::dm::IVisitor::visitTypeExecProc, e);
+    }
+
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {
 		delegate(&arl::dm::IVisitor::visitTypeFieldActivity,
 				&vsc::dm::IVisitor::visitTypeField, f);

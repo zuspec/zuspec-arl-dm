@@ -27,6 +27,7 @@
 #include "zsp/arl/dm/IModelFieldComponent.h"
 #include "zsp/arl/dm/IModelFieldExecutor.h"
 #include "zsp/arl/dm/IModelFieldExecutorClaim.h"
+#include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeFieldClaim.h"
 #include "zsp/arl/dm/ITypeFieldExecutor.h"
 #include "zsp/arl/dm/ITypeFieldExecutorClaim.h"
@@ -169,6 +170,10 @@ public:
 			PoolBindKind				kind,
 			vsc::dm::ITypeExprFieldRef		*pool,
 			vsc::dm::ITypeExprFieldRef		*target) = 0;
+
+    virtual ITypeExecProc *mkTypeExecProc(
+            ExecKindT               kind,
+            ITypeProcStmtScope      *body) = 0;
 
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,

@@ -33,19 +33,24 @@ class ModelActivityIterator :
     public virtual IModelEvalIterator,
     public virtual VisitorBase {
 public:
-    ModelActivityIterator(IModelActivityScope *a);
+    ModelActivityIterator(IModelActivityScope *scope);
+
+    ModelActivityIterator(
+        ModelEvalNodeT                  it_type,
+        IModelActivityScope             *scope,
+        ModelActivityIterator           *root);
 
     virtual ~ModelActivityIterator();
 
 	virtual bool next() override;
 
-	virtual bool valid() override { return m_idx < m_scope->activities().size(); }
+	virtual bool valid() override { return m_it_idx < m_it_scope->activities().size(); }
 
-	virtual ModelEvalNodeT type() const override { return m_type; }
+	virtual ModelEvalNodeT type() const override { return m_next_type; }
 
-	virtual IModelFieldAction *action() override { return m_action; }
+	virtual IModelFieldAction *action() override { return m_next_action; }
 
-	virtual IModelEvalIterator *iterator() override { return m_iterator; }
+	virtual IModelEvalIterator *iterator() override { return m_next_it; }
 
 	virtual void visitModelActivityParallel(IModelActivityParallel *a) override;
 
@@ -55,12 +60,25 @@ public:
 
 	virtual void visitModelActivityTraverse(IModelActivityTraverse *a) override;
 
+    virtual void addListener(IModelEvalIteratorListener *l) override;
+
+    virtual void remListener(IModelEvalIteratorListener *l) override;
+
 private:
-    IModelActivityScope                 *m_scope;
-    int32_t                             m_idx;
-    ModelEvalNodeT                      m_type;
-    IModelFieldAction                   *m_action;
-    IModelEvalIterator                  *m_iterator;
+    std::vector<IModelEvalIteratorListener *>       m_listeners;
+    ModelActivityIterator                           *m_root;
+
+    // Iterator info
+    ModelEvalNodeT                                  m_it_type;
+    IModelActivityScope                             *m_it_scope;
+    int32_t                                         m_it_idx;
+
+
+    // Next-element info
+    ModelEvalNodeT                                  m_next_type;
+    IModelFieldAction                               *m_next_action;
+    IModelActivityScope                             *m_next_scope;
+    ModelActivityIterator                           *m_next_it;
 
 };
 

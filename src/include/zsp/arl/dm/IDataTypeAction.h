@@ -7,6 +7,7 @@
 
 #pragma once
 #include "zsp/arl/dm/IAccept.h"
+#include "zsp/arl/dm/ITypeExec.h"
 #include "zsp/arl/dm/ITypeFieldActivity.h"
 #include "vsc/dm/IDataTypeStruct.h"
 #include "vsc/dm/ITypeFieldRef.h"
@@ -32,6 +33,10 @@ public:
 	virtual const std::vector<ITypeFieldActivity *> &activities() const = 0;
 
 	virtual void addActivity(ITypeFieldActivity *activity) = 0;
+
+    virtual const std::vector<ITypeExecUP> &getExecs(ExecKindT kind) const = 0;
+
+    virtual void addExec(ITypeExec *exec) = 0;
 
 };
 

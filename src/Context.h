@@ -134,6 +134,10 @@ public:
 			vsc::dm::ITypeExprFieldRef	*pool,
 			vsc::dm::ITypeExprFieldRef	*target) override;
 
+    virtual ITypeExecProc *mkTypeExecProc(
+            ExecKindT               kind,
+            ITypeProcStmtScope      *body) override;
+
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,

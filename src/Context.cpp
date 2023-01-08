@@ -38,6 +38,7 @@
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
+#include "TypeExecProc.h"
 #include "TypeFieldActivity.h"
 #include "TypeFieldClaim.h"
 #include "TypeFieldExecutor.h"
@@ -317,6 +318,12 @@ IPoolBindDirective *Context::mkPoolBindDirective(
 			vsc::dm::ITypeExprFieldRef	*pool,
 			vsc::dm::ITypeExprFieldRef	*target) {
 	return new PoolBindDirective(kind, pool, target);
+}
+
+ITypeExecProc *Context::mkTypeExecProc(
+            ExecKindT               kind,
+            ITypeProcStmtScope      *body) {
+    return new TypeExecProc(kind, body);
 }
 
 ITypeFieldActivity *Context::mkTypeFieldActivity(

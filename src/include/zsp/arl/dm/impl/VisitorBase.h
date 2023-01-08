@@ -37,6 +37,7 @@
 #include "zsp/arl/dm/IVisitor.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
 #include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
+#include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeFieldActivity.h"
 #include "zsp/arl/dm/ITypeFieldClaim.h"
 #include "zsp/arl/dm/ITypeFieldExecutor.h"
@@ -212,6 +213,12 @@ public:
 
     virtual void visitTypeExprMethodCallStatic(ITypeExprMethodCallStatic *e) override {
         e->getTarget()->accept(m_this);
+    }
+
+	virtual void visitTypeExec(ITypeExec *e) override { }
+
+	virtual void visitTypeExecProc(ITypeExecProc *e) override {
+        dynamic_cast<IVisitor *>(m_this)->visitTypeExec(e);
     }
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {

@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include "zsp/arl/dm/IModelEvalIteratorListener.h"
 #include "zsp/arl/dm/IModelFieldAction.h"
 #include "vsc/dm/IModelField.h"
 
@@ -52,6 +53,10 @@ public:
 	virtual IModelFieldAction *action() = 0;
 
 	virtual IModelEvalIterator *iterator() = 0;
+
+    virtual void addListener(IModelEvalIteratorListener *l) = 0;
+
+    virtual void remListener(IModelEvalIteratorListener *l) = 0;
 
 
 };

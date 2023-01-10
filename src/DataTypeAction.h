@@ -56,7 +56,7 @@ public:
 	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    static std::vector<ITypeExecUP>                 m_empty_exec_l;
+    std::vector<ITypeExecUP>                        m_empty_exec_l;
 	IDataTypeComponent					            *m_component_t;
 	vsc::dm::ITypeFieldRef				            *m_comp;
 	std::vector<ITypeFieldActivity *>	            m_activities;

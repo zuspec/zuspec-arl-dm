@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeExec.h"
+#include "zsp/arl/dm/ITypeProcStmtScope.h"
 
 namespace zsp {
 namespace arl {

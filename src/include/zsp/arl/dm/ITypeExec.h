@@ -21,7 +21,6 @@
 #pragma once
 #include <memory>
 #include "vsc/dm/IAccept.h"
-#include "zsp/arl/dm/ITypeProcStmtScope.h"
 
 namespace zsp {
 namespace arl {

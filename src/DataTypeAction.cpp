@@ -20,7 +20,7 @@ namespace dm {
 DataTypeAction::DataTypeAction(
 		IContext			*ctxt,
 		const std::string 	&name) : DataTypeStruct(name), m_component_t(0) {
-    DEBUG_INIT("DataTypeAction");
+//    DEBUG_INIT("DataTypeAction", ctxt->getDebugMgr());
 
 	// Add the built-in 'comp' ref
 	m_comp = ctxt->mkTypeFieldRef("comp", 0, vsc::dm::TypeFieldAttr::NoAttr);
@@ -156,7 +156,9 @@ void DataTypeAction::addExec(ITypeExec *exec) {
     std::map<ExecKindT, std::vector<ITypeExecUP>>::iterator it;
 
     if ((it=m_exec_m.find(exec->getKind())) == m_exec_m.end()) {
-        it = m_exec_m.insert({exec->getKind(), {}}).first;
+        it = m_exec_m.insert({
+            exec->getKind(), 
+            std::vector<arl::dm::ITypeExecUP>()}).first;
     }
     it->second.push_back(ITypeExecUP(exec));
 }
@@ -168,8 +170,6 @@ void DataTypeAction::accept(vsc::dm::IVisitor *v) {
 		v->visitDataTypeStruct(this);
 	}
 }
-
-std::vector<ITypeExecUP> DataTypeAction::m_empty_exec_l;
 
 }
 }

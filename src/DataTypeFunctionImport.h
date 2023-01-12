@@ -29,9 +29,12 @@ namespace dm {
 
 class DataTypeFunctionImport : public virtual IDataTypeFunctionImport {
 public:
-    DataTypeFunctionImport();
+    DataTypeFunctionImport(const std::string &lang);
 
     virtual ~DataTypeFunctionImport();
+
+private:
+    std::string                             m_lang;
 
 };
 

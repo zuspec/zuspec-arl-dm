@@ -37,6 +37,9 @@ public:
     virtual const std::vector<vsc::dm::IModelField *> &getCompTypeInsts(
         IDataTypeComponent *t) const = 0;
 
+    virtual const std::vector<int32_t> &getCompInstPath(
+        IModelFieldComponent *comp) = 0;
+
     virtual const std::vector<IDataTypeComponent *> &getCompTypes() const = 0;
 
     /**

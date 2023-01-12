@@ -28,9 +28,9 @@ namespace dm {
 
 
 TaskVisitComponentFields::TaskVisitComponentFields(
-    const std::function<void (IModelFieldComponent *)> &enter,
-    const std::function<void (IModelFieldComponent *)> &leave)
-    : m_enter(enter), m_leave(leave) {
+    const std::function<void (int32_t, int32_t, IModelFieldComponent *)> &enter,
+    const std::function<void (int32_t, int32_t, IModelFieldComponent *)> &leave)
+    : m_depth(0), m_enter(enter), m_leave(leave) {
 
 }
 
@@ -39,13 +39,24 @@ TaskVisitComponentFields::~TaskVisitComponentFields() {
 }
 
 void TaskVisitComponentFields::visit(IModelFieldComponent *comp) {
+    m_depth = -1;
+    m_idx = 0;
     comp->accept(m_this);
-};
+}
+
+void TaskVisitComponentFields::visitModelField(vsc::dm::IModelField *f) {
+    for (uint32_t i=0; i<f->fields().size(); i++) {
+        m_idx = i;
+        f->fields().at(i)->accept(m_this);
+    }
+}
 
 void TaskVisitComponentFields::visitModelFieldComponent(IModelFieldComponent *f) {
-    m_enter(f);
-    VisitorBase::visitModelFieldComponent(f);
-    m_leave(f);
+    m_depth++;
+    m_enter(m_depth, m_idx, f);
+    visitModelField(f);
+    m_leave(m_depth, m_idx, f);
+    m_depth--;
 }
 
 }

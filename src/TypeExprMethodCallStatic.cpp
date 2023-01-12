@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeExprMethodCallStatic.h"
 
 
@@ -26,12 +27,24 @@ namespace arl {
 namespace dm {
 
 
-TypeExprMethodCallStatic::TypeExprMethodCallStatic() {
-
+TypeExprMethodCallStatic::TypeExprMethodCallStatic(
+    IDataTypeFunction                       *target,
+    const std::vector<vsc::dm::ITypeExpr *> &params) : m_target(target) {
+    for (std::vector<vsc::dm::ITypeExpr *>::const_iterator
+        it=params.begin();
+        it!=params.end(); it++) {
+        m_params.push_back(vsc::dm::ITypeExprUP(*it));
+    }
 }
 
 TypeExprMethodCallStatic::~TypeExprMethodCallStatic() {
 
+}
+
+void TypeExprMethodCallStatic::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitTypeExprMethodCallStatic(this);
+    }
 }
 
 }

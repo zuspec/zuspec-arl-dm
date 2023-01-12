@@ -1,5 +1,5 @@
-/*
- * DataTypeFunctionImport.cpp
+/**
+ * ITypeProcStmtExpr.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,25 +16,29 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-#include "DataTypeFunctionImport.h"
-
+#pragma once
+#include "vsc/dm/ITypeExpr.h"
+#include "zsp/arl/dm/ITypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-DataTypeFunctionImport::DataTypeFunctionImport(const std::string &lang) : 
-    m_lang(lang) {
 
-}
+class ITypeProcStmtExpr : public virtual ITypeProcStmt {
+public:
 
-DataTypeFunctionImport::~DataTypeFunctionImport() {
+    virtual ~ITypeProcStmtExpr() { }
 
-}
+    virtual vsc::dm::ITypeExpr *getExpr() const = 0;
 
-}
-}
-}
+};
+
+} /* namespace dm */
+} /* namespace arl */
+} /* namespace zsp */
+
+

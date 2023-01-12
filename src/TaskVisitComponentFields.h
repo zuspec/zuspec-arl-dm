@@ -31,18 +31,22 @@ namespace dm {
 class TaskVisitComponentFields : public VisitorBase {
 public:
     TaskVisitComponentFields(
-        const std::function<void (IModelFieldComponent *)> &enter,
-        const std::function<void (IModelFieldComponent *)> &leave);
+        const std::function<void (int32_t, int32_t, IModelFieldComponent *)> &enter,
+        const std::function<void (int32_t, int32_t, IModelFieldComponent *)> &leave);
 
     virtual ~TaskVisitComponentFields();
 
     void visit(IModelFieldComponent *comp);
 
+	virtual void visitModelField(vsc::dm::IModelField *f) override;
+
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
 
 private:
-    std::function<void (IModelFieldComponent *)>            m_enter;
-    std::function<void (IModelFieldComponent *)>            m_leave;
+    int32_t                                                 m_depth;
+    int32_t                                                 m_idx;
+    std::function<void (int32_t, int32_t, IModelFieldComponent *)>   m_enter;
+    std::function<void (int32_t, int32_t, IModelFieldComponent *)>   m_leave;
 };
 
 }

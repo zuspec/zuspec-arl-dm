@@ -15,6 +15,7 @@
 #include "zsp/arl/dm/IDataTypeComponent.h"
 #include "zsp/arl/dm/IDataTypeFlowObj.h"
 #include "zsp/arl/dm/IDataTypeFunction.h"
+#include "zsp/arl/dm/IDataTypeFunctionImport.h"
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
 #include "zsp/arl/dm/IModelActivitySchedule.h"
@@ -28,6 +29,8 @@
 #include "zsp/arl/dm/IModelFieldExecutor.h"
 #include "zsp/arl/dm/IModelFieldExecutorClaim.h"
 #include "zsp/arl/dm/ITypeExecProc.h"
+#include "zsp/arl/dm/ITypeExprMethodCallContext.h"
+#include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
 #include "zsp/arl/dm/ITypeFieldClaim.h"
 #include "zsp/arl/dm/ITypeFieldExecutor.h"
 #include "zsp/arl/dm/ITypeFieldExecutorClaim.h"
@@ -36,6 +39,7 @@
 #include "zsp/arl/dm/ITypeProcStmtAssign.h"
 #include "zsp/arl/dm/ITypeProcStmtBreak.h"
 #include "zsp/arl/dm/ITypeProcStmtContinue.h"
+#include "zsp/arl/dm/ITypeProcStmtExpr.h"
 #include "zsp/arl/dm/ITypeProcStmtForeach.h"
 #include "zsp/arl/dm/ITypeProcStmtIfElse.h"
 #include "zsp/arl/dm/ITypeProcStmtMatch.h"
@@ -76,8 +80,11 @@ public:
 
 	virtual IDataTypeFunction *mkDataTypeFunction(
 			const std::string		&name,
-			vsc::dm::IDataType			*rtype,
+			vsc::dm::IDataType		*rtype,
 			bool					own_rtype) = 0;
+    
+    virtual IDataTypeFunctionImport *mkDataTypeFunctionImport(
+            const std::string       &lang) = 0;
 
 	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
 			const std::string		&name,
@@ -175,6 +182,15 @@ public:
             ExecKindT               kind,
             ITypeProcStmtScope      *body) = 0;
 
+    virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallContext(
+            IDataTypeFunction                           *target,
+            vsc::dm::ITypeExpr                          *context,
+            const std::vector<vsc::dm::ITypeExpr *>     &params) = 0;
+
+    virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallStatic(
+            IDataTypeFunction                           *target,
+            const std::vector<vsc::dm::ITypeExpr *>     &params) = 0;
+
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,
@@ -215,6 +231,9 @@ public:
 	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() = 0;
 
 	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() = 0;
+
+	virtual ITypeProcStmtExpr *mkTypeProcStmtExpr(
+            vsc::dm::ITypeExpr *e) = 0;
 
 	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(
 			vsc::dm::ITypeExpr		*target,

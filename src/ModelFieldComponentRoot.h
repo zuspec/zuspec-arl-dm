@@ -47,6 +47,9 @@ public:
     virtual const std::vector<vsc::dm::IModelField *> &getCompTypeInsts(
         IDataTypeComponent *t) const override;
 
+    virtual const std::vector<int32_t> &getCompInstPath(
+        IModelFieldComponent *comp) override;
+
     virtual const std::vector<IDataTypeComponent *> &getCompTypes() const override {
         return m_comp_type_l;
     }
@@ -67,11 +70,11 @@ public:
 
     virtual void accept(vsc::dm::IVisitor *v) override;
 
-    void enterComponentScope(IModelFieldComponent *comp);
+    void enterComponentScope(int32_t level, int32_t idx, IModelFieldComponent *comp);
 
     void processBinds(IModelFieldComponent *comp);
 
-    void leaveComponentScope();
+    void leaveComponentScope(int32_t level);
 
     void addPool(IModelFieldPool *pool);
 
@@ -93,6 +96,8 @@ private:
 
 	using CompType2InstMapT=std::unordered_map<IDataTypeComponent *, CompType2InstData>;
     using ObjType2PoolMapT=std::unordered_map<vsc::dm::IDataType *, std::vector<IModelFieldPool *>>;
+
+    using CompInst2PathMapT=std::unordered_map<IModelFieldComponent *, std::vector<int32_t>>;
 
 //    using CompIdPoolM=std::pair<int32_t, IModelFieldPool *>;
 //	using ClaimTPoolMapT=std::unordered_map<vsc::dm::ITypeField *, std::vector<CompIdPoolM>>;
@@ -129,6 +134,9 @@ private:
     // this component tree (Type -> Instances).
     CompType2InstMapT                           m_comp_type_inst_m;
     std::vector<IDataTypeComponent *>           m_comp_type_l;
+
+    CompInst2PathMapT                           m_comp_inst_path_m;
+    std::vector<int32_t>                        m_empty_path;
 
     // Each action has a set of potential parent-component
     // instances. The type of the action component is 
@@ -168,6 +176,10 @@ private:
     // Holds the per-type instance ID for the component
     std::vector<int32_t>                m_inst_id_s;
 
+    // Holds the path to the current component instance through 
+    // the component tree
+    std::vector<int32_t>                m_inst_path;
+
     using TypePoolMapT=std::unordered_map<vsc::dm::IDataType *, IModelFieldPool *>;
     using FieldPoolMapT=std::unordered_map<vsc::dm::ITypeField *, IModelFieldPool *>;
 
@@ -177,6 +189,7 @@ private:
     };
 
     std::vector<TypePoolMapFrame>   m_type_pool_s;
+
 };
 
 }

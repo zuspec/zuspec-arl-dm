@@ -47,6 +47,7 @@
 #include "zsp/arl/dm/ITypeProcStmtAssign.h"
 #include "zsp/arl/dm/ITypeProcStmtBreak.h"
 #include "zsp/arl/dm/ITypeProcStmtContinue.h"
+#include "zsp/arl/dm/ITypeProcStmtExpr.h"
 #include "zsp/arl/dm/ITypeProcStmtForeach.h"
 #include "zsp/arl/dm/ITypeProcStmtIfElse.h"
 #include "zsp/arl/dm/ITypeProcStmtMatch.h"
@@ -256,6 +257,10 @@ public:
 
 	virtual void visitTypeProcStmtContinue(ITypeProcStmtContinue *s) override {
 
+	}
+
+	virtual void visitTypeProcStmtExpr(ITypeProcStmtExpr *s) override {
+        s->getExpr()->accept(m_this);
 	}
 
 	virtual void visitTypeProcStmtForeach(ITypeProcStmtForeach *s) override {

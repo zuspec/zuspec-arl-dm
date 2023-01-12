@@ -59,8 +59,10 @@ void ModelFieldComponentRoot::initCompTree() {
 
     // We first build information about component types and instances
     TaskVisitComponentFields(
-        [&](IModelFieldComponent *f) { enterComponentScope(dynamic_cast<IModelFieldComponent *>(f)); },
-        [&](IModelFieldComponent *f) { leaveComponentScope(); }).visit(this);
+        [&](int32_t level, int32_t idx, IModelFieldComponent *f) { enterComponentScope(
+            level, idx, dynamic_cast<IModelFieldComponent *>(f)); },
+        [&](int32_t level, int32_t idx, IModelFieldComponent *f) { 
+            leaveComponentScope(level); }).visit(this);
 
     // Now, want to do a bit of organization to ensure collections are ordered
     // in a way that makes constraint construction easy
@@ -96,6 +98,18 @@ const std::vector<vsc::dm::IModelField *> &ModelFieldComponentRoot::getCompTypeI
         return it->second.instances;
     } else {
         return m_empty_field_l;
+    }
+}
+
+const std::vector<int32_t> &ModelFieldComponentRoot::getCompInstPath(
+        IModelFieldComponent *comp) {
+    CompInst2PathMapT::const_iterator it = m_comp_inst_path_m.find(comp);
+
+    if (it != m_comp_inst_path_m.end()) {
+        return it->second;
+    } else {
+        DEBUG("Error: Unknown component %p", comp);
+        return m_empty_path;
     }
 }
 
@@ -171,12 +185,23 @@ void ModelFieldComponentRoot::accept(vsc::dm::IVisitor *v) {
     }
 }
 
-void ModelFieldComponentRoot::enterComponentScope(IModelFieldComponent *comp) {
-    DEBUG_ENTER("enterComponentScope %s", comp->name().c_str());
-    CompType2InstMapT::iterator ct_it = m_comp_type_inst_m.find(
-        comp->getDataTypeT<IDataTypeComponent>());
+void ModelFieldComponentRoot::enterComponentScope(int32_t level, int32_t idx, IModelFieldComponent *comp) {
+    DEBUG_ENTER("enterComponentScope level=%d (%d) %s", 
+        level, m_inst_path.size(), comp->name().c_str());
 
     int32_t inst_id = 0;
+
+    if (level > m_inst_path.size()) {
+        m_inst_path.push_back(idx);
+    } else if (m_inst_path.size()) {
+        m_inst_path.back() = idx;
+    }
+
+    // Add an entry to the inst/path map
+    m_comp_inst_path_m.insert({comp, m_inst_path});
+
+    CompType2InstMapT::iterator ct_it = m_comp_type_inst_m.find(
+        comp->getDataTypeT<IDataTypeComponent>());
 
     if (ct_it == m_comp_type_inst_m.end()) {
         comp->setId(0);
@@ -282,11 +307,16 @@ void ModelFieldComponentRoot::processBinds(IModelFieldComponent *comp) {
     }
 }
 
-void ModelFieldComponentRoot::leaveComponentScope() {
-    DEBUG_ENTER("leaveComponentScope");
+void ModelFieldComponentRoot::leaveComponentScope(int32_t level) {
+    DEBUG_ENTER("leaveComponentScope %d (%d)",
+        m_inst_path.size(), (m_inst_path.size())?m_inst_path.back():-1);
     m_type_pool_s.pop_back();
     m_inst_data_s.pop_back();
     m_inst_id_s.pop_back();
+    if (level < m_inst_path.size()) {
+        m_inst_path.pop_back();
+    }
+
     DEBUG_LEAVE("leaveComponentScope");
 }
 

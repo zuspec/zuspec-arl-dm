@@ -1,5 +1,5 @@
 /*
- * DataTypeFunctionImport.cpp
+ * TypeProcStmtExpr.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -18,7 +18,8 @@
  * Created on:
  *     Author:
  */
-#include "DataTypeFunctionImport.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "TypeProcStmtExpr.h"
 
 
 namespace zsp {
@@ -26,12 +27,18 @@ namespace arl {
 namespace dm {
 
 
-DataTypeFunctionImport::DataTypeFunctionImport(const std::string &lang) : 
-    m_lang(lang) {
+TypeProcStmtExpr::TypeProcStmtExpr(vsc::dm::ITypeExpr *e) : m_expr(e) {
 
 }
 
-DataTypeFunctionImport::~DataTypeFunctionImport() {
+TypeProcStmtExpr::~TypeProcStmtExpr() {
+
+}
+
+void TypeProcStmtExpr::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtExpr(this);
+    }
 
 }
 

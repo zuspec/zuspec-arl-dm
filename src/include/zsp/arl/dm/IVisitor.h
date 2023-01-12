@@ -53,6 +53,7 @@ class ITypeFieldPool;
 class ITypeProcStmtAssign;
 class ITypeProcStmtBreak;
 class ITypeProcStmtContinue;
+class ITypeProcStmtExpr;
 class ITypeProcStmtForeach;
 class ITypeProcStmtIfElse;
 class ITypeProcStmtMatch;
@@ -145,6 +146,8 @@ public:
 	virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) = 0;
 
 	virtual void visitTypeProcStmtContinue(ITypeProcStmtContinue *s) = 0;
+
+	virtual void visitTypeProcStmtExpr(ITypeProcStmtExpr *s) = 0;
 
 	virtual void visitTypeProcStmtForeach(ITypeProcStmtForeach *s) = 0;
 

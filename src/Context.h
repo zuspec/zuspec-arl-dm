@@ -44,6 +44,9 @@ public:
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) override;
 
+    virtual IDataTypeFunctionImport *mkDataTypeFunctionImport(
+            const std::string       &lang) override;
+
 	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
 			const std::string		&name,
 			vsc::dm::IDataType			*type,
@@ -138,6 +141,15 @@ public:
             ExecKindT               kind,
             ITypeProcStmtScope      *body) override;
 
+    virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallContext(
+            IDataTypeFunction                           *target,
+            vsc::dm::ITypeExpr                          *context,
+            const std::vector<vsc::dm::ITypeExpr *>     &params) override;
+
+    virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallStatic(
+            IDataTypeFunction                           *target,
+            const std::vector<vsc::dm::ITypeExpr *>     &params) override;
+
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,
@@ -178,6 +190,9 @@ public:
 	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() override;
 
 	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() override;
+
+	virtual ITypeProcStmtExpr *mkTypeProcStmtExpr(
+            vsc::dm::ITypeExpr *e) override;
 
 	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(
 			vsc::dm::ITypeExpr		*target,

@@ -15,6 +15,7 @@
 #include "DataTypeComponent.h"
 #include "DataTypeFlowObj.h"
 #include "DataTypeFunction.h"
+#include "DataTypeFunctionImport.h"
 #include "DataTypeFunctionParamDecl.h"
 #include "DataTypeResource.h"
 #include "ModelActivityIterator.h"
@@ -38,6 +39,8 @@
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
+#include "TypeExprMethodCallContext.h"
+#include "TypeExprMethodCallStatic.h"
 #include "TypeExecProc.h"
 #include "TypeFieldActivity.h"
 #include "TypeFieldClaim.h"
@@ -48,6 +51,7 @@
 #include "TypeProcStmtAssign.h"
 #include "TypeProcStmtBreak.h"
 #include "TypeProcStmtContinue.h"
+#include "TypeProcStmtExpr.h"
 #include "TypeProcStmtForeach.h"
 #include "TypeProcStmtIfElse.h"
 #include "TypeProcStmtMatch.h"
@@ -127,6 +131,11 @@ bool Context::addDataTypeFunction(IDataTypeFunction *f) {
 	} else {
 		return false;
 	}
+}
+
+IDataTypeFunctionImport *Context::mkDataTypeFunctionImport(
+            const std::string       &lang) {
+    return new DataTypeFunctionImport(lang);
 }
 
 IDataTypeFunctionParamDecl *Context::mkDataTypeFunctionParamDecl(
@@ -326,6 +335,19 @@ ITypeExecProc *Context::mkTypeExecProc(
     return new TypeExecProc(kind, body);
 }
 
+ITypeExprMethodCallStatic *Context::mkTypeExprMethodCallContext(
+            IDataTypeFunction                           *target,
+            vsc::dm::ITypeExpr                          *context,
+            const std::vector<vsc::dm::ITypeExpr *>     &params) {
+
+}
+
+ITypeExprMethodCallStatic *Context::mkTypeExprMethodCallStatic(
+            IDataTypeFunction                           *target,
+            const std::vector<vsc::dm::ITypeExpr *>     &params) {
+    return new TypeExprMethodCallStatic(target, params);
+}
+
 ITypeFieldActivity *Context::mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,
@@ -383,6 +405,11 @@ ITypeProcStmtBreak *Context::mkTypeProcStmtBreak() {
 
 ITypeProcStmtContinue *Context::mkTypeProcStmtContinue() { 
 	return new TypeProcStmtContinue();
+}
+
+ITypeProcStmtExpr *Context::mkTypeProcStmtExpr(
+            vsc::dm::ITypeExpr *e) {
+    return new TypeProcStmtExpr(e);
 }
 
 ITypeProcStmtForeach *Context::mkTypeProcStmtForeach(

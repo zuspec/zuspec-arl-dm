@@ -19,6 +19,8 @@
  *     Author: 
  */
 #pragma once
+#include "zsp/arl/dm/ITypeExprMethodCallContext.h"
+#include "TypeExprMethodCallStatic.h"
 
 namespace zsp {
 namespace arl {
@@ -26,11 +28,25 @@ namespace dm {
 
 
 
-class TypeExprMethodCallContext {
+class TypeExprMethodCallContext : 
+    public virtual ITypeExprMethodCallContext,
+    public virtual TypeExprMethodCallStatic {
 public:
-    TypeExprMethodCallContext();
+    TypeExprMethodCallContext(
+        IDataTypeFunction                           *target,
+        vsc::dm::ITypeExpr                          *context,
+        const std::vector<vsc::dm::ITypeExpr *>     &params);
 
     virtual ~TypeExprMethodCallContext();
+
+    virtual vsc::dm::ITypeExpr *getContext() const override {
+        return m_context.get();
+    }
+
+    virtual void accept(vsc::dm::IVisitor *v) override;
+
+private:
+    vsc::dm::ITypeExprUP                    m_context;
 
 };
 

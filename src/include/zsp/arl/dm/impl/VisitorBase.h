@@ -220,6 +220,7 @@ public:
 
 	virtual void visitTypeExecProc(ITypeExecProc *e) override {
         dynamic_cast<IVisitor *>(m_this)->visitTypeExec(e);
+        e->getBody()->accept(m_this);
     }
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {

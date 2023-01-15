@@ -1,5 +1,5 @@
 /**
- * IFactory.h
+ * ITypeModelDumper.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,13 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include <iostream>
-#include "dmgr/IDebugMgr.h"
-#include "vsc/dm/IContext.h"
-#include "zsp/arl/dm/IContext.h"
-#include "zsp/arl/dm/IContextDumper.h"
-#include "zsp/arl/dm/IContextLoader.h"
-#include "zsp/arl/dm/ITypeModelDumper.h"
+#include "zsp/arl/dm/IDataTypeAction.h"
+#include "zsp/arl/dm/IDataTypeComponent.h"
 
 namespace zsp {
 namespace arl {
@@ -33,21 +28,15 @@ namespace dm {
 
 
 
-class IFactory {
+class ITypeModelDumper {
 public:
 
-    virtual ~IFactory() { }
+    virtual ~ITypeModelDumper() { }
 
-    virtual void init(dmgr::IDebugMgr *dmgr) = 0;
-
-    virtual dmgr::IDebugMgr *getDebugMgr() = 0;
-
-    virtual IContext *mkContext(vsc::dm::IContext *ctxt) = 0;
-
-    virtual ITypeModelDumper *mkTypeModelDumperJSON(std::ostring *out) = 0;
-
-//    virtual IContextDumper *mkContextDumperJSON(std::ostream *out) = 0;
-
+    virtual bool dumpTypeModel(
+        IDataTypeComponent          *root_comp,
+        IDataTypeAction             *root_action
+    ) = 0;
 
 };
 

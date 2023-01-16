@@ -42,11 +42,12 @@ set_target_properties(libgmock PROPERTIES
 include_directories(
 	"${source_dir}/googletest/include"
 	"${source_dir}/googlemock/include"
+    ${JSON_DIR}/include
 	)
 
 file(GLOB test_zuspec_arl_dm_SRC
-  "*.h"
-  "*.cpp"
+  "src/*.h"
+  "src/*.cpp"
   )
 
 add_executable(test-zuspec-arl-dm ${test_zuspec_arl_dm_SRC})

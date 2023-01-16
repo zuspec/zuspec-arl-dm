@@ -40,6 +40,9 @@ public:
 
     virtual IContext *mkContext(vsc::dm::IContext *ctxt) override;
 
+    virtual ITypeModelDumper *mkTypeModelDumperJSON(
+        std::ostream *out, int32_t indent) override;
+
     static IFactory *inst();
 
 private:

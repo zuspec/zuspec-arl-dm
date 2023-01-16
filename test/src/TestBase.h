@@ -1,5 +1,5 @@
-/*
- * TestBase.cpp
+/**
+ * TestBase.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,11 +16,12 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-#include "TestBase.h"
-#include "VscImpl.h"
-#include "ArlImpl.h"
+#pragma once
+#include "gtest/gtest.h"
+#include "zsp/arl/dm/IContext.h"
+#include "zsp/arl/dm/IFactory.h"
 
 
 namespace zsp {
@@ -28,31 +29,26 @@ namespace arl {
 namespace dm {
 
 
-TestBase::TestBase() {
+class TestBase : public ::testing::Test {
+public:
+    TestBase();
 
-}
+    virtual ~TestBase();
 
-TestBase::~TestBase() {
+    virtual void SetUp() override;
 
-}
+    virtual void TearDown() override;
 
-void TestBase::SetUp() {
-//    ArlImpl::inst()->init(vsc::VscImpl::inst()->getDebugMgr());
-//    m_ctxt = IContextUP(
-//        ArlImpl::inst()->mkContext(
-//            vsc::VscImpl::inst()->mkContext()));
-//    m_randstate = vsc::IRandStateUP(m_ctxt->mkRandState(""));
-    enableDebug(false);
-}
+    void enableDebug(bool en);
 
-void TestBase::TearDown() {
-    m_ctxt.reset();
-}
-
-void TestBase::enableDebug(bool en) {
-//    vsc::VscImpl::inst()->getDebugMgr()->enable(en);
-}
+protected:
+    IFactory                    *m_arl_dm_factory;
+    IContextUP                  m_ctxt;
+//    vsc::IRandStateUP           m_randstate;
+};
 
 }
 }
 }
+
+

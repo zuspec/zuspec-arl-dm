@@ -13,9 +13,9 @@ endif()
 if (NOT PACKAGES_DIR)
   set(PACKAGES_DIR ${CMAKE_SOURCE_DIR}/packages)
   set(ENABLE_TESTING 1)
-
-
 endif()
+
+set(JSON_DIR ${PACKAGES_DIR}/json)
 
 set(DEBUG_MGR_DIR ${PACKAGES_DIR}/debug-mgr)
 ExternalProject_Add(DebugMgr

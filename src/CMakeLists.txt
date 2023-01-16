@@ -11,6 +11,7 @@ target_include_directories(zuspec-arl-dm PUBLIC
     ${PROJECT_SOURCE_DIR}/src/include
     ${DEBUG_MGR_DIR}/src/include
     ${LIBVSC_DM_DIR}/src/include
+    ${JSON_DIR}/include
     ${CMAKE_BINARY_DIR}/include
     )
 
@@ -31,6 +32,7 @@ target_include_directories(zuspec-arl-dm_static PUBLIC
     ${PROJECT_SOURCE_DIR}/src/include
     ${DEBUG_MGR_DIR}/src/include
     ${LIBVSC_DM_DIR}/src/include
+    ${JSON_DIR}/include
     ${CMAKE_BINARY_DIR}/include
     )
 

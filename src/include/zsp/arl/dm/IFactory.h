@@ -44,7 +44,8 @@ public:
 
     virtual IContext *mkContext(vsc::dm::IContext *ctxt) = 0;
 
-    virtual ITypeModelDumper *mkTypeModelDumperJSON(std::ostring *out) = 0;
+    virtual ITypeModelDumper *mkTypeModelDumperJSON(
+        std::ostream *out, int32_t indent) = 0;
 
 //    virtual IContextDumper *mkContextDumperJSON(std::ostream *out) = 0;
 

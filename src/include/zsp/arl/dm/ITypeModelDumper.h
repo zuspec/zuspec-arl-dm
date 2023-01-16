@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include <memory>
 #include "zsp/arl/dm/IDataTypeAction.h"
 #include "zsp/arl/dm/IDataTypeComponent.h"
 
@@ -27,16 +28,15 @@ namespace arl {
 namespace dm {
 
 
-
+class ITypeModelDumper;
+using ITypeModelDumperUP=std::unique_ptr<ITypeModelDumper>;
 class ITypeModelDumper {
 public:
 
     virtual ~ITypeModelDumper() { }
 
     virtual bool dumpTypeModel(
-        IDataTypeComponent          *root_comp,
-        IDataTypeAction             *root_action
-    ) = 0;
+        const std::vector<vsc::dm::IAccept *> &types) = 0;
 
 };
 

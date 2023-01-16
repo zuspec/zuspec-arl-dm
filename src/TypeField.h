@@ -48,6 +48,10 @@ public:
 		}
 	}
 
+    virtual bool isDataTypeOwned() const override { 
+        return m_type_owned.get();
+    }
+
 	virtual vsc::dm::ITypeField *getField(int32_t idx) const override;
 
 	virtual vsc::dm::TypeFieldAttr getAttr() const override {
@@ -59,8 +63,8 @@ public:
 
 protected:
 	vsc::dm::ITypeField						*m_parent;
-	int32_t								m_idx;
-	std::string							m_name;
+	int32_t								    m_idx;
+	std::string							    m_name;
 	vsc::dm::IDataType						*m_type;
 	vsc::dm::IDataTypeUP					m_type_owned;
 	vsc::dm::TypeFieldAttr					m_attr;

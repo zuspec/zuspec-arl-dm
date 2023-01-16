@@ -1,5 +1,5 @@
 /**
- * TestBase.h
+ * TestJsonDumper.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,30 +19,20 @@
  *     Author: 
  */
 #pragma once
-#include "gtest/gtest.h"
-#include "zsp/arl/dm/IContext.h"
-
+#include "TestBase.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class TestBase : public ::testing::Test {
+
+class TestJsonDumper : public TestBase {
 public:
-    TestBase();
+    TestJsonDumper();
 
-    virtual ~TestBase();
+    virtual ~TestJsonDumper();
 
-    virtual void SetUp() override;
-
-    virtual void TearDown() override;
-
-    void enableDebug(bool en);
-
-protected:
-    IContextUP                  m_ctxt;
-//    vsc::IRandStateUP           m_randstate;
 };
 
 }

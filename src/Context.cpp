@@ -125,7 +125,7 @@ IDataTypeFunction *Context::mkDataTypeFunction(
 }
 
 bool Context::addDataTypeFunction(IDataTypeFunction *f) {
-	if (m_function_type_m.find(f->name()) != m_function_type_m.end()) {
+	if (m_function_type_m.find(f->name()) == m_function_type_m.end()) {
 		m_function_type_m.insert({f->name(), IDataTypeFunctionUP(f)});
 		return true;
 	} else {

@@ -140,10 +140,11 @@ IDataTypeFunctionImport *Context::mkDataTypeFunctionImport(
 
 IDataTypeFunctionParamDecl *Context::mkDataTypeFunctionParamDecl(
 			const std::string		&name,
-			vsc::dm::IDataType			*type,
+            ParamDir                dir,
+			vsc::dm::IDataType		*type,
 			bool					own,
-			vsc::dm::ITypeExpr			*init) {
-	return new DataTypeFunctionParamDecl(name, type, own, init);
+			vsc::dm::ITypeExpr		*dflt) {
+	return new DataTypeFunctionParamDecl(name, dir, type, own, dflt);
 }
 
 IDataTypeActivityParallel *Context::mkDataTypeActivityParallel() {

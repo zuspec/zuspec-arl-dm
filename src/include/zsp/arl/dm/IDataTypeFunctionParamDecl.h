@@ -23,24 +23,26 @@
 #include <string>
 #include "vsc/dm/IDataType.h"
 #include "vsc/dm/ITypeExpr.h"
+#include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
+enum class ParamDir {
+    In,
+    Out,
+    InOut
+};
 
 class IDataTypeFunctionParamDecl;
 using IDataTypeFunctionParamDeclUP=std::unique_ptr<IDataTypeFunctionParamDecl>;
-class IDataTypeFunctionParamDecl {
+class IDataTypeFunctionParamDecl : public virtual ITypeProcStmtVarDecl {
 public:
 
     virtual ~IDataTypeFunctionParamDecl() { }
 
-    virtual const std::string &name() const = 0;
-
-    virtual vsc::dm::IDataType *getDataType() const = 0;
-
-    virtual vsc::dm::ITypeExpr *getDefault() const = 0;
+    virtual ParamDir getDirection() const = 0;
 
 };
 

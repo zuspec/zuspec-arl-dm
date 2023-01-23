@@ -48,9 +48,11 @@ public:
 
     virtual vsc::dm::IDataType *getReturnType() const = 0;
 
-    virtual const std::vector<ITypeProcStmtVarDeclUP> &getParameters() const = 0;
+    virtual const std::vector<IDataTypeFunctionParamDecl *> &getParameters() const = 0;
 
-    virtual void addParameter(ITypeProcStmtVarDecl *p) = 0;
+    virtual void addParameter(IDataTypeFunctionParamDecl *p) = 0;
+
+    virtual ITypeProcStmtScope *getParamScope() const = 0;
 
     virtual vsc::dm::IDataTypeStruct *getContext() const = 0;
 

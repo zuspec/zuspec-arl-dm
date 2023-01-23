@@ -85,6 +85,10 @@ public:
 		delegate(&arl::dm::IVisitor::visitDataTypeFunction, t);
 	}
 
+	virtual void visitDataTypeFunctionParamDecl(IDataTypeFunctionParamDecl *t) override {
+		delegate(&arl::dm::IVisitor::visitDataTypeFunctionParamDecl, t);
+	}
+
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {
 		delegate(&arl::dm::IVisitor::visitDataTypeResource,
 				&vsc::dm::IVisitor::visitDataTypeStruct, t);

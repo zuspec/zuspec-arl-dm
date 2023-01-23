@@ -24,6 +24,7 @@ class IDataTypeComponent;
 class IDataTypeFlowObj;
 class IDataTypeFunctionImport;
 class IDataTypeFunction;
+class IDataTypeFunctionParamDecl;
 class IDataTypeResource;
 class IModelActivityBind;
 class IModelActivityParallel;
@@ -88,6 +89,8 @@ public:
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
 
 	virtual void visitDataTypeFunction(IDataTypeFunction *t) = 0;
+
+	virtual void visitDataTypeFunctionParamDecl(IDataTypeFunctionParamDecl *t) = 0;
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) = 0;
 

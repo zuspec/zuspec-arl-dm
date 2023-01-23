@@ -34,7 +34,6 @@ TypeModelDumperJSON::TypeModelDumperJSON(
     int32_t             indent) : m_out(out), m_indent(indent) {
     DEBUG_INIT("TypeModelDumperJSON", dmgr);
     m_type_id = 0;
-
 }
 
 TypeModelDumperJSON::~TypeModelDumperJSON() {
@@ -158,6 +157,58 @@ void TypeModelDumperJSON::visitDataTypeEnum(vsc::dm::IDataTypeEnum *t) {
 //    for (std::vector<vsc::dm::IData)
 
     addType(t, type);
+}
+
+void TypeModelDumperJSON::visitDataTypeFunction(IDataTypeFunction *t) {
+    nlohmann::json type;
+    type["kind"] = "data-type-function";
+    type["name"] = t->name();
+    type["rtype-id"] = t->getReturnType()?getTypeIdx(t->getReturnType()):-1;
+    nlohmann::json &plist = (type["plist"] = {});
+    m_json_s.push_back(&plist);
+
+    for (std::vector<IDataTypeFunctionParamDecl *>::const_iterator
+        it=t->getParameters().begin();
+        it!=t->getParameters().end(); it++) {
+        (*it)->accept(m_this);
+    }
+
+    m_json_s.pop_back();
+
+    nlohmann::json &body = type["body"];
+
+    if (t->getBody()->getStatements().size()) {
+        body = {};
+    }
+    m_json_s.push_back(&body);
+    for (std::vector<ITypeProcStmtUP>::const_iterator
+        it=t->getBody()->getStatements().begin();
+        it!=t->getBody()->getStatements().end(); it++) {
+        (*it)->accept(m_this);
+    }
+    
+    m_json_s.pop_back();
+
+    addType(t, type);
+}
+
+static std::map<ParamDir, std::string> param_dir_m = {
+    {ParamDir::In, "in"},
+    {ParamDir::Out, "out"},
+    {ParamDir::InOut, "inout"}
+};
+
+void TypeModelDumperJSON::visitDataTypeFunctionParamDecl(IDataTypeFunctionParamDecl *t) {
+    nlohmann::json type;
+
+    type["name"] = t->name();
+    type["type-id"] = getTypeIdx(t->getDataType());
+    type["dir"] = param_dir_m.find(t->getDirection())->second;
+    if (t->getInit()) {
+        // TODO:
+    }
+
+    m_json_s.back()->push_back(type);
 }
 
 void TypeModelDumperJSON::visitDataTypeInt(vsc::dm::IDataTypeInt *t) {
@@ -375,6 +426,14 @@ void TypeModelDumperJSON::visitTypeFieldRef(vsc::dm::ITypeFieldRef *f) {
 
 void TypeModelDumperJSON::visitTypeFieldVec(vsc::dm::ITypeFieldVec *f) {
 
+}
+
+void TypeModelDumperJSON::visitTypeProcStmtAssign(ITypeProcStmtAssign *s) {
+    nlohmann::json stmt;
+
+    stmt["kind"] = "proc-stmt-assign";
+
+    m_json_s.back()->push_back(stmt);
 }
 
 int32_t TypeModelDumperJSON::getTypeIdx(vsc::dm::IAccept *t) {

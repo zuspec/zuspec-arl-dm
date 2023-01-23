@@ -18,6 +18,7 @@
 #include "zsp/arl/dm/IDataTypeComponent.h"
 #include "zsp/arl/dm/IDataTypeFlowObj.h"
 #include "zsp/arl/dm/IDataTypeFunction.h"
+#include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
 #include "zsp/arl/dm/IModelActivityBind.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
@@ -119,6 +120,13 @@ public:
 	virtual void visitDataTypeFunction(IDataTypeFunction *t) override {
 
 	}
+    
+	virtual void visitDataTypeFunctionParamDecl(IDataTypeFunctionParamDecl *t) override {
+        t->getDataType()->accept(m_this);
+        if (t->getInit()) {
+            t->getInit()->accept(m_this);
+        }
+    }
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {
 		visitDataTypeFlowObj(t);

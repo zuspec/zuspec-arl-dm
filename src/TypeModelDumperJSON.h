@@ -65,6 +65,10 @@ public:
 
 	virtual void visitDataTypeEnum(vsc::dm::IDataTypeEnum *t) override;
 
+	virtual void visitDataTypeFunction(IDataTypeFunction *t) override;
+
+	virtual void visitDataTypeFunctionParamDecl(IDataTypeFunctionParamDecl *t) override;
+
 	virtual void visitDataTypeInt(vsc::dm::IDataTypeInt *t) override;
 
 	virtual void visitDataTypeStruct(vsc::dm::IDataTypeStruct *t) override;
@@ -101,6 +105,8 @@ public:
 
 	virtual void visitTypeFieldVec(vsc::dm::ITypeFieldVec *f) override;
 
+	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override;
+
 private:
     int32_t getTypeIdx(vsc::dm::IAccept *t);
 
@@ -119,6 +125,7 @@ private:
     nlohmann::json                              *m_types;
     std::vector<nlohmann::json *>               m_json_s;
     nlohmann::json                              *m_active;
+    int32_t                                     m_exec_depth;
 };
 
 }

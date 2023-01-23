@@ -88,9 +88,10 @@ public:
 
 	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
 			const std::string		&name,
-			vsc::dm::IDataType			*type,
+            ParamDir                dir,
+			vsc::dm::IDataType		*type,
 			bool					own,
-			vsc::dm::ITypeExpr			*init) = 0;
+			vsc::dm::ITypeExpr		*init) = 0;
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) = 0;
 

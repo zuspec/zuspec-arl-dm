@@ -49,9 +49,10 @@ public:
 
 	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
 			const std::string		&name,
-			vsc::dm::IDataType			*type,
+            ParamDir                dir,
+			vsc::dm::IDataType		*type,
 			bool					own,
-			vsc::dm::ITypeExpr			*init) override;
+			vsc::dm::ITypeExpr		*dflt) override;
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() override;
 

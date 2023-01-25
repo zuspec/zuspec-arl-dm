@@ -144,6 +144,7 @@ void TypeModelDumperJSON::visitDataTypeComponent(IDataTypeComponent *t) {
         it!=t->getActionTypes().end(); it++) {
         action_types.push_back(getTypeIdx(*it));
     }
+
     DEBUG_LEAVE("visitDataTypeComponent %s", t->name().c_str());
 }
 
@@ -358,23 +359,22 @@ void TypeModelDumperJSON::visitTypeExprBin(vsc::dm::ITypeExprBin *e) {
     DEBUG_LEAVE("visitTypeExprBin");
 }
 
+static std::map<vsc::dm::ITypeExprFieldRef::RootRefKind, std::string> root_ref_kind_m = {
+    {vsc::dm::ITypeExprFieldRef::RootRefKind::TopDownScope, "top-down"},
+    {vsc::dm::ITypeExprFieldRef::RootRefKind::BottomUpScope, "bottom-up"}
+};
+
 void TypeModelDumperJSON::visitTypeExprFieldRef(vsc::dm::ITypeExprFieldRef *e) { 
     nlohmann::json expr;
     expr["kind"] = "type-expr-field-ref";
-    nlohmann::json &path = expr["path"];
+    expr["root-kind"] = root_ref_kind_m.find(e->getRootRefKind())->second;
+    expr["root-offset"] = e->getRootRefOffset();
+    nlohmann::json &path = (expr["path"] = {});
 
-    for (std::vector<vsc::dm::TypeExprFieldRefElem>::const_iterator
+    for (std::vector<int32_t>::const_iterator
         it=e->getPath().begin();
         it!=e->getPath().end(); it++) {
-        nlohmann::json elem;
-        switch (it->kind) {
-        case vsc::dm::TypeExprFieldRefElemKind::ActiveScope: elem["kind"] = "active-scope"; break;
-        case vsc::dm::TypeExprFieldRefElemKind::BottomUpScope: elem["kind"] = "bottom-up-scope"; break;
-        case vsc::dm::TypeExprFieldRefElemKind::IdxOffset: elem["kind"] = "idx-offset"; break;
-        case vsc::dm::TypeExprFieldRefElemKind::Root: elem["kind"] = "root"; break;
-        }
-        elem["idx"] = it->idx;
-        path.push_back(elem);
+        path.push_back(*it);
     }
 
     *m_json_s.back() = expr;
@@ -428,10 +428,23 @@ void TypeModelDumperJSON::visitTypeFieldVec(vsc::dm::ITypeFieldVec *f) {
 
 }
 
+static std::map<arl::dm::TypeProcStmtAssignOp, std::string> assign_op_m = {
+    {TypeProcStmtAssignOp::Eq,      "="},
+    {TypeProcStmtAssignOp::PlusEq,  "+="}, 
+    {TypeProcStmtAssignOp::MinusEq, "-="},
+    {TypeProcStmtAssignOp::ShlEq, "<<="},
+    {TypeProcStmtAssignOp::ShrEq, ">>="},
+    {TypeProcStmtAssignOp::OrEq,    "|="},
+    {TypeProcStmtAssignOp::AndEq,   "&="}
+};
+
 void TypeModelDumperJSON::visitTypeProcStmtAssign(ITypeProcStmtAssign *s) {
     nlohmann::json stmt;
 
     stmt["kind"] = "proc-stmt-assign";
+    stmt["op"] = assign_op_m.find(s->op())->second;
+    visitExpr(stmt["lhs"], s->getLhs());
+    visitExpr(stmt["rhs"], s->getRhs());
 
     m_json_s.back()->push_back(stmt);
 }

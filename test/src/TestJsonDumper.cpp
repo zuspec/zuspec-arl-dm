@@ -86,10 +86,11 @@ TEST_F(TestJsonDumper, actions_root_comp_activity) {
     action1_t->addActivity(m_ctxt->mkTypeFieldActivity(
         "", 
         m_ctxt->mkDataTypeActivityTraverse(
-            m_ctxt->mkTypeExprFieldRef({
-                {vsc::dm::TypeExprFieldRefElemKind::ActiveScope, -1},
-                {vsc::dm::TypeExprFieldRefElemKind::IdxOffset, 1}
-            }),
+            m_ctxt->mkTypeExprFieldRef(
+                vsc::dm::ITypeExprFieldRef::RootRefKind::TopDownScope,
+                0,
+                {1}
+            ),
             0),
             true
         ));

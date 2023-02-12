@@ -45,9 +45,9 @@ void TaskVisitComponentFields::visit(IModelFieldComponent *comp) {
 }
 
 void TaskVisitComponentFields::visitModelField(vsc::dm::IModelField *f) {
-    for (uint32_t i=0; i<f->fields().size(); i++) {
+    for (uint32_t i=0; i<f->getFields().size(); i++) {
         m_idx = i;
-        f->fields().at(i)->accept(m_this);
+        f->getFields().at(i)->accept(m_this);
     }
 }
 

@@ -21,24 +21,27 @@ DataTypeActivityScope::~DataTypeActivityScope() {
 	// TODO Auto-generated destructor stub
 }
 
-void DataTypeActivityScope::addField(vsc::dm::ITypeField *f) {
+void DataTypeActivityScope::addField(
+    vsc::dm::ITypeField     *f,
+    bool                    owned) {
 	f->setIndex(m_fields.size());
-	m_fields.push_back(vsc::dm::ITypeFieldUP(f));
+	m_fields.push_back(vsc::dm::ITypeFieldUP(f, owned));
 }
 
-void DataTypeActivityScope::addConstraint(vsc::dm::ITypeConstraint *c) {
-	m_constraints.push_back(vsc::dm::ITypeConstraintUP(c));
+void DataTypeActivityScope::addConstraint(
+    vsc::dm::ITypeConstraint    *c,
+    bool                        owned) {
+	m_constraints.push_back(vsc::dm::ITypeConstraintUP(c, owned));
 }
 
 void DataTypeActivityScope::addActivity(ITypeFieldActivity *a) {
 	// A non-data-field activity. Owned by the activities collection
-	m_activities.push_back(a);
-	m_activities_up.push_back(ITypeFieldActivityUP(a));
+	m_activities.push_back(ITypeFieldActivityUP(a));
 }
 
 void DataTypeActivityScope::addActivityField(ITypeFieldActivity *a) {
 	a->setIndex(m_fields.size());
-	m_activities.push_back(a);
+	m_activities.push_back(ITypeFieldActivityUP(a, false));
 	m_fields.push_back(vsc::dm::ITypeFieldUP(a));
 }
 

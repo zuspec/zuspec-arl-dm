@@ -22,12 +22,16 @@ ModelField::~ModelField() {
 	// TODO Auto-generated destructor stub
 }
 
-void ModelField::addConstraint(vsc::dm::IModelConstraint *c) {
-	m_constraints.push_back(vsc::dm::IModelConstraintUP(c));
+void ModelField::addConstraint(
+    vsc::dm::IModelConstraint       *c,
+    bool                            owned) {
+	m_constraints.push_back(vsc::dm::IModelConstraintUP(c, owned));
 }
 
-void ModelField::addField(vsc::dm::IModelField *field) {
-	m_fields.push_back(vsc::dm::IModelFieldUP(field));
+void ModelField::addField(
+    vsc::dm::IModelField    *field,
+    bool                    owned) {
+	m_fields.push_back(vsc::dm::IModelFieldUP(field, owned));
 }
 
 vsc::dm::IModelField *ModelField::getField(int32_t idx) {

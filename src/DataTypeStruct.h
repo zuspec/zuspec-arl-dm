@@ -30,19 +30,25 @@ public:
 		return m_name;
 	}
 
-	virtual void addField(vsc::dm::ITypeField *f);
+	virtual void addField(
+        vsc::dm::ITypeField     *f,
+        bool                    owned=true);
 
 	virtual const std::vector<vsc::dm::ITypeFieldUP> &getFields() const;
 
 	virtual vsc::dm::ITypeField *getField(int32_t idx);
 
-	virtual void addConstraint(vsc::dm::ITypeConstraint *c);
+	virtual void addConstraint(
+        vsc::dm::ITypeConstraint    *c,
+        bool                        owned);
 
 	virtual const std::vector<vsc::dm::ITypeConstraintUP> &getConstraints() const;
 
 	virtual vsc::dm::IModelStructCreateHook *getCreateHook() const override;
 
-	virtual void setCreateHook(vsc::dm::IModelStructCreateHook *hook) override;
+	virtual void setCreateHook(
+        vsc::dm::IModelStructCreateHook *hook,
+        bool                            owned=true) override;
 
 	virtual vsc::dm::IModelField *mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,

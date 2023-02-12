@@ -299,8 +299,8 @@ void TypeModelDumperJSON::visitTypeConstraintScope(vsc::dm::ITypeConstraintScope
     nlohmann::json &constraints = (constraint["constraints"] = {});
 
     for (std::vector<vsc::dm::ITypeConstraintUP>::const_iterator
-        it=c->constraints().begin();
-        it!=c->constraints().end(); it++) {
+        it=c->getConstraints().begin();
+        it!=c->getConstraints().end(); it++) {
         nlohmann::json c;
         m_json_s.push_back(&c);
         (*it)->accept(m_this);

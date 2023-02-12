@@ -47,8 +47,8 @@ void TaskPopulateResourcePools::populate(IModelFieldComponent *root) {
 void TaskPopulateResourcePools::visitModelFieldComponent(
         IModelFieldComponent *f) {
     for (std::vector<vsc::dm::IModelFieldUP>::const_iterator
-        it=f->fields().begin();
-        it!=f->fields().end(); it++) {
+        it=f->getFields().begin();
+        it!=f->getFields().end(); it++) {
         (*it)->accept(m_this);
     }
 }

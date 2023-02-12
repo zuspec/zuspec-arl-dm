@@ -22,7 +22,9 @@ public:
 
 	virtual const std::string &name() const override { return m_name; }
 
-	virtual void addField(vsc::dm::ITypeField *f) override;
+	virtual void addField(
+        vsc::dm::ITypeField     *f,
+        bool                    owned=true) override;
 
 	virtual const std::vector<vsc::dm::ITypeFieldUP> &getFields() const override {
 		return m_fields;
@@ -32,7 +34,9 @@ public:
 		return m_fields.at(idx).get();
 	}
 
-	virtual void addConstraint(vsc::dm::ITypeConstraint *c) override;
+	virtual void addConstraint(
+        vsc::dm::ITypeConstraint    *c,
+        bool                        owned=true) override;
 
 	virtual const std::vector<vsc::dm::ITypeConstraintUP> &getConstraints() const override {
 		return m_constraints;
@@ -42,11 +46,13 @@ public:
 		return m_create_hook.get();
 	}
 
-	virtual void setCreateHook(vsc::dm::IModelStructCreateHook *hook) override {
-		m_create_hook = vsc::dm::IModelStructCreateHookUP(hook);
+	virtual void setCreateHook(
+        vsc::dm::IModelStructCreateHook     *hook,
+        bool                                owned) override {
+		m_create_hook = vsc::dm::IModelStructCreateHookUP(hook, owned);
 	}
 
-	virtual const std::vector<ITypeFieldActivity *> &getActivities() const override {
+	virtual const std::vector<ITypeFieldActivityUP> &getActivities() const override {
 		return m_activities;
 	}
 
@@ -65,12 +71,11 @@ public:
 
 private:
 	std::string									m_name;
-	std::vector<vsc::dm::ITypeFieldUP>				m_fields;
-	std::vector<vsc::dm::ITypeConstraintUP>			m_constraints;
-	vsc::dm::IModelStructCreateHookUP				m_create_hook;
+	std::vector<vsc::dm::ITypeFieldUP>			m_fields;
+	std::vector<vsc::dm::ITypeConstraintUP>		m_constraints;
+	vsc::dm::IModelStructCreateHookUP			m_create_hook;
 
-	std::vector<ITypeFieldActivity *>			m_activities;
-	std::vector<ITypeFieldActivityUP>			m_activities_up;
+	std::vector<ITypeFieldActivityUP>			m_activities;
 
 };
 

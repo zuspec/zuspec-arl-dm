@@ -28,17 +28,21 @@ public:
 
 	virtual void setDataType(vsc::dm::IDataType *t) override { }
 
-	virtual const std::vector<vsc::dm::IModelConstraintUP> &constraints() const override {
+	virtual const std::vector<vsc::dm::IModelConstraintUP> &getConstraints() const override {
 		return m_constraints;
 	}
 
-	virtual void addConstraint(vsc::dm::IModelConstraint *c) override;
+	virtual void addConstraint(
+        vsc::dm::IModelConstraint   *c,
+        bool                        owned) override;
 
-	virtual const std::vector<vsc::dm::IModelFieldUP> &fields() const override {
+	virtual const std::vector<vsc::dm::IModelFieldUP> &getFields() const override {
 		return m_fields;
 	}
 
-	virtual void addField(vsc::dm::IModelField *field) override;
+	virtual void addField(
+        vsc::dm::IModelField    *field,
+        bool                    owned) override;
 
 	virtual vsc::dm::IModelField *getField(int32_t idx) override;
 

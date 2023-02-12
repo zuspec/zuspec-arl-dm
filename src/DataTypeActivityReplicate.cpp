@@ -90,7 +90,7 @@ IModelActivity *DataTypeActivityReplicate::mkActivity(
     }
 
 	fprintf(stdout, "mkActivity: %d\n", getActivities().size());
-	for (std::vector<ITypeFieldActivity *>::const_iterator
+	for (std::vector<ITypeFieldActivityUP>::const_iterator
 		it=getActivities().begin();
 		it!=getActivities().end(); it++) {
 		IModelActivity *field_a = (*it)->mkActivity(ctxt);

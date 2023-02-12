@@ -6,7 +6,6 @@
  */
 
 #pragma once
-#include <memory>
 #include "vsc/dm/IModelBuildContext.h"
 #include "vsc/dm/ITypeField.h"
 
@@ -18,7 +17,7 @@ namespace dm {
 class IModelActivity;
 
 class ITypeFieldActivity;
-using ITypeFieldActivityUP=std::unique_ptr<ITypeFieldActivity>;
+using ITypeFieldActivityUP=vsc::dm::UP<ITypeFieldActivity>;
 class ITypeFieldActivity : public virtual vsc::dm::ITypeField {
 public:
 

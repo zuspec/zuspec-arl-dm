@@ -30,7 +30,7 @@ IModelActivity *DataTypeActivitySchedule::mkActivity(
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 	IModelActivitySchedule *ret = ctxt_a->mkModelActivitySchedule();
 
-	for (std::vector<ITypeFieldActivity *>::const_iterator
+	for (std::vector<ITypeFieldActivityUP>::const_iterator
 		it=getActivities().begin();
 		it!=getActivities().end(); it++) {
 		IModelActivity *activity = (*it)->mkActivity(ctxt);

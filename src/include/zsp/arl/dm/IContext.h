@@ -17,6 +17,7 @@
 #include "zsp/arl/dm/IDataTypeFunction.h"
 #include "zsp/arl/dm/IDataTypeFunctionImport.h"
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
+#include "zsp/arl/dm/IDataTypePackedStruct.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
 #include "zsp/arl/dm/IModelActivitySchedule.h"
 #include "zsp/arl/dm/IModelActivityScope.h"
@@ -124,6 +125,16 @@ public:
 
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
 
+    virtual IDataTypePackedStruct *findDataTypePackedStruct(
+            const std::string   &name) = 0;
+
+    virtual IDataTypePackedStruct *mkDataTypePackedStruct(
+            const std::string   &name,
+            Endian              endian=Endian::Little) = 0;
+
+    virtual bool addDataTypePackedStruct(
+            IDataTypePackedStruct   *type) = 0;
+
 	virtual IModelActivityParallel *mkModelActivityParallel() = 0;
 
 	virtual IModelActivityReplicate *mkModelActivityReplicate(
@@ -178,6 +189,7 @@ public:
 			PoolBindKind				kind,
 			vsc::dm::ITypeExprFieldRef		*pool,
 			vsc::dm::ITypeExprFieldRef		*target) = 0;
+
 
     virtual ITypeExecProc *mkTypeExecProc(
             ExecKindT               kind,

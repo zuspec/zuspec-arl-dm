@@ -1,5 +1,5 @@
 /**
- * ITypeFieldReg.h
+ * IDataTypePureComponent.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,18 +19,18 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/ITypeField.h"
+#include "vsc/dm/IDataTypeStruct.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-
-
-class ITypeFieldReg {
+class IDataTypePureComponent;
+using IDataTypePureComponentUP=vsc::dm::UP<IDataTypePureComponent>;
+class IDataTypePureComponent : public vsc::dm::IDataTypeStruct {
 public:
 
-    virtual ~ITypeFieldReg() { }
+    virtual ~IDataTypePureComponent() { }
 
 };
 

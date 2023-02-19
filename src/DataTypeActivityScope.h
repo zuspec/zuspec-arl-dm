@@ -56,7 +56,9 @@ public:
 		return m_activities;
 	}
 
-	virtual void addActivity(ITypeFieldActivity *a) override;
+	virtual void addActivity(
+        ITypeFieldActivity      *a,
+        bool                    owned) override;
 
 	virtual void addActivityField(ITypeFieldActivity *a) override;
 

@@ -1,5 +1,5 @@
-/**
- * ITypeFieldReg.h
+/*
+ * TestRegisterModel.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,26 +16,29 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "vsc/dm/ITypeField.h"
+#include "TestRegisterModel.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
+TestRegisterModel::TestRegisterModel() {
 
-class ITypeFieldReg {
-public:
+}
 
-    virtual ~ITypeFieldReg() { }
+TestRegisterModel::~TestRegisterModel() {
 
-};
+}
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+TEST_F(TestRegisterModel, smoke) {
+//    IDataTypePacke
 
+}
 
+}
+}
+}

@@ -1,5 +1,5 @@
 /**
- * ITypeFieldReg.h
+ * IDataTypeReg.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,18 +19,32 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/ITypeField.h"
+#include <stdint.h>
+#include "zsp/arl/dm/IDataTypePackedStruct.h"
+#include "zsp/arl/dm/IDataTypePureComponent.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
+enum class RegAccess {
+    READWRITE,
+    READONLY,
+    WRITEONLY
+};
 
-
-class ITypeFieldReg {
+class IDataTypeReg : public virtual IDataTypePureComponent {
 public:
 
-    virtual ~ITypeFieldReg() { }
+    virtual ~IDataTypeReg() { }
+
+    virtual IDataTypePackedStruct *getDataType() const = 0;
+
+    virtual uint32_t getOffset() const = 0;
+
+    virtual uint32_t getWidth() const = 0;
+    
+    virtual RegAccess getAccess() const = 0;
 
 };
 

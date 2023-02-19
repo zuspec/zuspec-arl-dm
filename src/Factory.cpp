@@ -21,6 +21,7 @@
 #include "zsp/arl/dm/FactoryExt.h"
 #include "Context.h"
 #include "Factory.h"
+#include "RewriteContext.h"
 #include "TypeModelDumperJSON.h"
 
 namespace zsp {
@@ -46,6 +47,12 @@ dmgr::IDebugMgr *Factory::getDebugMgr() {
 
 IContext *Factory::mkContext(vsc::dm::IContext *ctxt) {
     return new Context(ctxt);
+}
+
+IRewriteContext *Factory::mkRewriteContext(
+            IContext                                *ctxt,
+            const std::vector<vsc::dm::IAccept *>   &roots) {
+    return new RewriteContext(ctxt, roots);
 }
 
 ITypeModelDumper *Factory::mkTypeModelDumperJSON(

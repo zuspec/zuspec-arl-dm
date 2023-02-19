@@ -1,13 +1,26 @@
-/*
- * VisitorBase.h
+/**
+ * RewriteVisitorBase.h
  *
- *  Created on: Apr 16, 2022
- *      Author: mballance
+ * Copyright 2022 Matthew Ballance and Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may 
+ * not use this file except in compliance with the License.  
+ * You may obtain a copy of the License at:
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ *
+ * Created on:
+ *     Author: 
  */
-
 #pragma once
-#include "vsc/dm/impl/VisitorBase.h"
-
+#include "vsc/dm/impl/RewriteVisitorBase.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "zsp/arl/dm/IDataTypeAction.h"
 #include "zsp/arl/dm/IDataTypeActivityBind.h"
 #include "zsp/arl/dm/IDataTypeActivityParallel.h"
@@ -19,7 +32,6 @@
 #include "zsp/arl/dm/IDataTypeFlowObj.h"
 #include "zsp/arl/dm/IDataTypeFunction.h"
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
-#include "zsp/arl/dm/IDataTypePackedStruct.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
 #include "zsp/arl/dm/IModelActivityBind.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
@@ -60,19 +72,19 @@
 #include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
 #include "zsp/arl/dm/ITypeProcStmtWhile.h"
 
+
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class VisitorBase : public virtual arl::dm::IVisitor, public vsc::dm::VisitorBase {
+class RewriteVisitorBase :
+    public virtual IVisitor,
+    public virtual vsc::dm::RewriteVisitorBase {
 public:
+    RewriteVisitorBase() { }
 
-	VisitorBase(bool cascade=true, vsc::dm::IVisitor *this_p=0) : vsc::dm::VisitorBase(cascade, this_p) { }
-
-	VisitorBase(arl::dm::IVisitor *this_p) : vsc::dm::VisitorBase(this_p) { }
-
-	virtual ~VisitorBase() { }
+    virtual ~RewriteVisitorBase() { }
 
 	virtual void visitDataTypeAction(IDataTypeAction *i) override {
 		m_this->visitDataTypeStruct(i);
@@ -127,10 +139,6 @@ public:
         if (t->getInit()) {
             t->getInit()->accept(m_this);
         }
-    }
-
-	virtual void visitDataTypePackedStruct(IDataTypePackedStruct *t) override {
-        m_this->visitDataTypeStruct(t);
     }
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {
@@ -328,8 +336,11 @@ public:
 		s->getExpr()->accept(m_this);
 		s->getBody()->accept(m_this);
 	}
+
 };
 
 }
 }
 }
+
+

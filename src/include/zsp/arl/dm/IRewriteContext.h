@@ -1,5 +1,5 @@
 /**
- * IFactory.h
+ * IRewriteContext.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,41 +19,22 @@
  *     Author: 
  */
 #pragma once
-#include <iostream>
-#include "dmgr/IDebugMgr.h"
-#include "vsc/dm/IContext.h"
+#include "vsc/dm/IRewriteContext.h"
 #include "zsp/arl/dm/IContext.h"
-#include "zsp/arl/dm/IContextDumper.h"
-#include "zsp/arl/dm/IContextLoader.h"
-#include "zsp/arl/dm/IRewriteContext.h"
-#include "zsp/arl/dm/ITypeModelDumper.h"
+#include "zsp/arl/dm/impl/ContextDelegator.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-
-class IFactory {
+class IRewriteContext :
+    public virtual IContext,
+    public virtual vsc::dm::IRewriteContext,
+    public virtual ContextDelegator {
 public:
 
-    virtual ~IFactory() { }
-
-    virtual void init(dmgr::IDebugMgr *dmgr) = 0;
-
-    virtual dmgr::IDebugMgr *getDebugMgr() = 0;
-
-    virtual IContext *mkContext(vsc::dm::IContext *ctxt) = 0;
-
-    virtual IRewriteContext *mkRewriteContext(
-            IContext                                *ctxt,
-            const std::vector<vsc::dm::IAccept *>   &roots) = 0;
-
-    virtual ITypeModelDumper *mkTypeModelDumperJSON(
-        std::ostream *out, int32_t indent) = 0;
-
-//    virtual IContextDumper *mkContextDumperJSON(std::ostream *out) = 0;
-
+    virtual ~IRewriteContext() { }
 
 };
 

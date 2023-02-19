@@ -26,7 +26,9 @@ public:
 
 	virtual const std::vector<ITypeFieldActivityUP> &getActivities() const = 0;
 
-	virtual void addActivity(ITypeFieldActivity *a) = 0;
+	virtual void addActivity(
+        ITypeFieldActivity      *a,
+        bool                    owned=true) = 0;
 
 	virtual void addActivityField(ITypeFieldActivity *a) = 0;
 

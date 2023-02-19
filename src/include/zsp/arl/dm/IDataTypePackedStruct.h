@@ -1,5 +1,5 @@
 /**
- * ITypeFieldReg.h
+ * IDataTypePackedStruct.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,18 +19,25 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/ITypeField.h"
+#include "vsc/dm/IDataTypeStruct.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
+enum class Endian {
+    Big,
+    Little
+};
 
-
-class ITypeFieldReg {
+class IDataTypePackedStruct;
+using IDataTypePackedStructUP=vsc::dm::UP<IDataTypePackedStruct>;
+class IDataTypePackedStruct : public virtual vsc::dm::IDataTypeStruct {
 public:
 
-    virtual ~ITypeFieldReg() { }
+    virtual ~IDataTypePackedStruct() { }
+
+    virtual Endian getEndian() const = 0;
 
 };
 

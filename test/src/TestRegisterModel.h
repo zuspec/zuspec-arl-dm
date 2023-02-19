@@ -1,5 +1,5 @@
 /**
- * ITypeFieldReg.h
+ * TestRegisterModel.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/ITypeField.h"
+#include "TestBase.h"
 
 namespace zsp {
 namespace arl {
@@ -27,15 +27,16 @@ namespace dm {
 
 
 
-class ITypeFieldReg {
+class TestRegisterModel : public TestBase {
 public:
+    TestRegisterModel();
 
-    virtual ~ITypeFieldReg() { }
+    virtual ~TestRegisterModel();
 
 };
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+}
+}
+}
 
 

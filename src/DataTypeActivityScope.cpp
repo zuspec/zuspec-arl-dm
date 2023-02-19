@@ -34,9 +34,11 @@ void DataTypeActivityScope::addConstraint(
 	m_constraints.push_back(vsc::dm::ITypeConstraintUP(c, owned));
 }
 
-void DataTypeActivityScope::addActivity(ITypeFieldActivity *a) {
+void DataTypeActivityScope::addActivity(
+    ITypeFieldActivity      *a,
+    bool                    owned) {
 	// A non-data-field activity. Owned by the activities collection
-	m_activities.push_back(ITypeFieldActivityUP(a));
+	m_activities.push_back(ITypeFieldActivityUP(a, owned));
 }
 
 void DataTypeActivityScope::addActivityField(ITypeFieldActivity *a) {

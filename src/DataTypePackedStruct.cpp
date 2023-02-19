@@ -1,5 +1,5 @@
-/**
- * ITypeFieldReg.h
+/*
+ * DataTypePackedStruct.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,26 +16,36 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "vsc/dm/ITypeField.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "DataTypePackedStruct.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
+DataTypePackedStruct::DataTypePackedStruct(
+    const std::string       &name,
+    Endian                  endian) : 
+        DataTypeStruct(name), m_endian(endian) {
 
-class ITypeFieldReg {
-public:
+}
 
-    virtual ~ITypeFieldReg() { }
+DataTypePackedStruct::~DataTypePackedStruct() {
 
-};
+}
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+void DataTypePackedStruct::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitDataTypePackedStruct(this);
+    } else if (v->cascade()) {
+        v->visitDataTypeStruct(this);
+    }
+}
 
-
+}
+}
+}

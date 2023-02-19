@@ -30,7 +30,7 @@ namespace arl {
 namespace dm {
 
 class ITypeProcStmtVarDecl;
-using ITypeProcStmtVarDeclUP=std::unique_ptr<ITypeProcStmtVarDecl>;
+using ITypeProcStmtVarDeclUP=vsc::dm::UP<ITypeProcStmtVarDecl>;
 class ITypeProcStmtVarDecl : public virtual ITypeProcStmt {
 public:
 

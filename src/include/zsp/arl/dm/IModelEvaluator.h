@@ -23,7 +23,7 @@ enum class ModelEvaluatorKind {
 };
 
 class IModelEvaluator;
-using IModelEvaluatorUP=std::unique_ptr<IModelEvaluator>;
+using IModelEvaluatorUP=vsc::dm::UP<IModelEvaluator>;
 class IModelEvaluator {
 public:
 

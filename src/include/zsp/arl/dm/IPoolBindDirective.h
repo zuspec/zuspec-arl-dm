@@ -14,7 +14,7 @@ enum class PoolBindKind {
 };
 
 class IPoolBindDirective;
-using IPoolBindDirectiveUP=std::unique_ptr<IPoolBindDirective>;
+using IPoolBindDirectiveUP=vsc::dm::UP<IPoolBindDirective>;
 class IPoolBindDirective {
 public:
 

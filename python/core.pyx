@@ -327,7 +327,7 @@ cdef class DataTypeActivityScope(DataTypeActivity):
         ret = []
         for i in range(self.asScope().getActivities().size()):
             ret.append(TypeFieldActivity.mk(
-                self.asScope().getActivities().at(i),
+                self.asScope().getActivities().at(i).get(),
                 False))
             pass
         return ret

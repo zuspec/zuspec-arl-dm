@@ -28,7 +28,7 @@ namespace dm {
 
 
 class IContextDumper;
-using IContextDumperUP=std::unique_ptr<IContextDumper>;
+using IContextDumperUP=vsc::dm::UP<IContextDumper>;
 class IContextDumper {
 public:
 

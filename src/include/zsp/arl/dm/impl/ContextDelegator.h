@@ -125,6 +125,22 @@ public:
 
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) { }
 
+    virtual IDataTypePackedStruct *findDataTypePackedStruct(
+            const std::string   &name) {
+
+    }
+
+    virtual IDataTypePackedStruct *mkDataTypePackedStruct(
+            const std::string   &name,
+            Endian              endian=Endian::Little) override {
+
+    }
+
+    virtual bool addDataTypePackedStruct(
+            IDataTypePackedStruct   *type) override {
+
+    }
+
 	virtual IModelActivityParallel *mkModelActivityParallel() { }
 
 	virtual IModelActivityReplicate *mkModelActivityReplicate(

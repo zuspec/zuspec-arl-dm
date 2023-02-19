@@ -12,7 +12,7 @@ cimport cpython.ref as cpy_ref
 ctypedef IContext *IContextP
 ctypedef IDataTypeAction *IDataTypeActionP
 ctypedef IDataTypeActivity *IDataTypeActivityP
-ctypedef unique_ptr[IDataTypeActivity] IDataTypeActivityUP
+ctypedef vsc.UP[IDataTypeActivity] IDataTypeActivityUP
 ctypedef IDataTypeActivityScope *IDataTypeActivityScopeP
 ctypedef IDataTypeActivityParallel *IDataTypeActivityParallelP
 ctypedef IDataTypeActivityReplicate *IDataTypeActivityReplicateP
@@ -27,9 +27,9 @@ ctypedef IModelFieldComponent *IModelFieldComponentP
 ctypedef IModelFieldComponentRoot *IModelFieldComponentRootP
 ctypedef IModelFieldPool *IModelFieldPoolP
 ctypedef IPoolBindDirective *IPoolBindDirectiveP
-ctypedef unique_ptr[IPoolBindDirective] IPoolBindDirectiveUP
+ctypedef vsc.UP[IPoolBindDirective] IPoolBindDirectiveUP
 ctypedef ITypeFieldActivity *ITypeFieldActivityP
-ctypedef unique_ptr[ITypeFieldActivity] ITypeFieldActivityUP
+ctypedef vsc.UP[ITypeFieldActivity] ITypeFieldActivityUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
 ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
@@ -90,7 +90,7 @@ cdef extern from "zsp/arl/dm/IDataTypeActivity.h" namespace "zsp::arl::dm":
 cdef extern from "zsp/arl/dm/IDataTypeActivityScope.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeActivityScope(IDataTypeActivity, vsc.IDataTypeStruct):
         void addActivity(ITypeFieldActivity *)
-        const cpp_vector[ITypeFieldActivityP] &getActivities() const
+        const cpp_vector[ITypeFieldActivityUP] &getActivities() const
         # const cpp_string &name() const
         # void addField(vsc.ITypeField *)
         # vsc.ITypeField *getField(int32_t idx)

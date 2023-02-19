@@ -29,7 +29,7 @@ namespace dm {
 
 
 class ITypeModelDumper;
-using ITypeModelDumperUP=std::unique_ptr<ITypeModelDumper>;
+using ITypeModelDumperUP=vsc::dm::UP<ITypeModelDumper>;
 class ITypeModelDumper {
 public:
 

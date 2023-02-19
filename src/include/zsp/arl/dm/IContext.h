@@ -57,7 +57,7 @@ namespace dm {
 
 
 class IContext;
-using IContextUP=std::unique_ptr<IContext>;
+using IContextUP=vsc::dm::UP<IContext>;
 class IContext : public virtual vsc::dm::IContext {
 public:
 

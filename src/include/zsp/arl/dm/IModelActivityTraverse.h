@@ -19,7 +19,7 @@ namespace dm {
 
 
 class IModelActivityTraverse;
-using IModelActivityTraverseUP=std::unique_ptr<IModelActivityTraverse>;
+using IModelActivityTraverseUP=vsc::dm::UP<IModelActivityTraverse>;
 class IModelActivityTraverse : public virtual IModelActivity {
 public:
 

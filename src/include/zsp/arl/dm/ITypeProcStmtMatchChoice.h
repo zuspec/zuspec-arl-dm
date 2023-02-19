@@ -29,7 +29,7 @@ namespace dm {
 
 
 class ITypeProcStmtMatchChoice;
-using ITypeProcStmtMatchChoiceUP=std::unique_ptr<ITypeProcStmtMatchChoice>;
+using ITypeProcStmtMatchChoiceUP=vsc::dm::UP<ITypeProcStmtMatchChoice>;
 class ITypeProcStmtMatchChoice {
 public:
 

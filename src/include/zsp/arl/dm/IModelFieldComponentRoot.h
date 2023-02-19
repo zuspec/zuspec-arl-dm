@@ -29,7 +29,7 @@ namespace dm {
 
 
 class IModelFieldComponentRoot;
-using IModelFieldComponentRootUP=std::unique_ptr<IModelFieldComponentRoot>;
+using IModelFieldComponentRootUP=vsc::dm::UP<IModelFieldComponentRoot>;
 class IModelFieldComponentRoot : 
     public virtual IModelFieldComponent,
     public virtual IModelComponentTreeData {

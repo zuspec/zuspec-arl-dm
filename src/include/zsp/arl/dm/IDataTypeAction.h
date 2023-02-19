@@ -20,7 +20,7 @@ namespace dm {
 class IDataTypeComponent;
 
 class IDataTypeAction;
-using IDataTypeActionUP=std::unique_ptr<IDataTypeAction>;
+using IDataTypeActionUP=vsc::dm::UP<IDataTypeAction>;
 class IDataTypeAction : public virtual vsc::dm::IDataTypeStruct {
 public:
 

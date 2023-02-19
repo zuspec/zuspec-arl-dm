@@ -21,7 +21,7 @@ enum class FlowObjKindE {
 };
 
 class IDataTypeFlowObj;
-using IDataTypeFlowObjUP=std::unique_ptr<IDataTypeFlowObj>;
+using IDataTypeFlowObjUP=vsc::dm::UP<IDataTypeFlowObj>;
 class IDataTypeFlowObj : public virtual vsc::dm::IDataTypeStruct {
 public:
 

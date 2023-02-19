@@ -15,7 +15,7 @@ namespace dm {
 
 
 class IModelFieldComponent;
-using IModelFieldComponentUP=std::unique_ptr<IModelFieldComponent>;
+using IModelFieldComponentUP=vsc::dm::UP<IModelFieldComponent>;
 class IModelFieldComponent : 
 	public virtual vsc::dm::IModelField {
 public:

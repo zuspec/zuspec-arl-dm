@@ -17,7 +17,7 @@ namespace dm {
 
 
 class IModelActivity;
-using IModelActivityUP=std::unique_ptr<IModelActivity>;
+using IModelActivityUP=vsc::dm::UP<IModelActivity>;
 class IModelActivity : public virtual vsc::dm::IAccept {
 public:
 

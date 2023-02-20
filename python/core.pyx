@@ -1,6 +1,7 @@
 #****************************************************************************
 #* core.pyx
 #****************************************************************************
+import ctypes
 import os
 import sys
 from ctypes import CDLL
@@ -171,7 +172,7 @@ cdef class Context(vsc.Context):
             <decl.PoolBindKind>(kind_i),
             pool.asFieldRef(),
             tp), True)
-        
+
     
     cpdef TypeFieldActivity mkTypeFieldActivity(self, name, DataTypeActivity type, bool owned):
     
@@ -475,12 +476,11 @@ cdef class ModelBuildContext(vsc.ModelBuildContext):
 
 
 # cdef class ModelEvaluator(object):
-    
+  
 #     def __dealloc__(self):
 #         if self._hndl != NULL:
 #             del self._hndl
-#             pass
-            
+          
 #     cpdef ModelEvalIterator eval(self, 
 #                         vsc.RandState       randstate,
 #                         ModelFieldComponent root_comp,
@@ -494,7 +494,7 @@ cdef class ModelBuildContext(vsc.ModelBuildContext):
 #                 randstate._hndl,
 #                 root_comp.asComponent(),
 #                 root_action.asAction())
-        
+       
 #         return ModelEvalIterator.mk(it)
     
 #     @staticmethod
@@ -503,52 +503,52 @@ cdef class ModelBuildContext(vsc.ModelBuildContext):
 #         ret._hndl = hndl
 #         return ret
 
-# class ModelEvalNodeT(IntEnum):
-#     Action = decl.ModelEvalNodeT.Action
-#     Parallel = decl.ModelEvalNodeT.Parallel
-#     Sequence = decl.ModelEvalNodeT.Sequence
+class ModelEvalNodeT(IntEnum):
+    Action = decl.ModelEvalNodeT.Action
+    Parallel = decl.ModelEvalNodeT.Parallel
+    Sequence = decl.ModelEvalNodeT.Sequence
 
-# cdef class ModelEvalIterator(object):
+cdef class ModelEvalIterator(object):
 
-#     def __dealloc__(self):
-#         # Iterator memory is self-managed, so the
-#         # facade doesn't get involved
-#         pass
+    def __dealloc__(self):
+        # Iterator memory is self-managed, so the
+        # facade doesn't get involved
+        pass
             
-#     cpdef bool next(self):
-#         if self._hndl == NULL:
-#             return False
+    cpdef bool next(self):
+        if self._hndl == NULL:
+            return False
 
-#         ret = self._hndl.next()
+        ret = self._hndl.next()
 
-#         # Iterator self-destructs when it's no longer valid
-#         if not ret:
-#             self._hndl = NULL 
-#         return ret
+        # Iterator self-destructs when it's no longer valid
+        if not ret:
+            self._hndl = NULL 
+        return ret
             
-#     cpdef type(self):
-#         cdef int type_i
-#         if self._hndl == NULL:
-#             return None
+    cpdef type(self):
+        cdef int type_i
+        if self._hndl == NULL:
+            return None
 
-#         type_i = int(self._hndl.type())
-#         return ModelEvalNodeT(type_i)
-    
-#     cpdef ModelFieldAction action(self):
-#         return ModelFieldAction.mk(self._hndl.action(), False)
-    
-#     cpdef ModelEvalIterator iterator(self):
-#         cdef decl.IModelEvalIterator *it = self._hndl.iterator()
-#         if it != NULL:
-#             return ModelEvalIterator.mk(self._hndl.iterator())
-#         else:
-#             return None
+        type_i = int(self._hndl.type())
+        return ModelEvalNodeT(type_i)
+  
+    cpdef ModelFieldAction action(self):
+        return ModelFieldAction.mk(self._hndl.action(), False)
+  
+    cpdef ModelEvalIterator iterator(self):
+        cdef decl.IModelEvalIterator *it = self._hndl.iterator()
+        if it != NULL:
+            return ModelEvalIterator.mk(self._hndl.iterator())
+        else:
+            return None
 
-#     @staticmethod
-#     cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):
-#         ret = ModelEvalIterator()
-#         ret._hndl = hndl
-#         return ret
+    @staticmethod
+    cdef ModelEvalIterator mk(decl.IModelEvalIterator *hndl):
+        ret = ModelEvalIterator()
+        ret._hndl = hndl
+        return ret
 
 cdef class ModelFieldAction(vsc.ModelField):
 
@@ -635,8 +635,12 @@ cdef class PoolBindDirective(object):
         ret._hndl = hndl
         ret._owned = owned
         return ret
-    
-    
+
+class ExecKindT(IntEnum):
+    Body = decl.ExecKindT.ExecBody
+    PreSolve = decl.ExecKindT.ExecPostSolve
+    PostSolve = decl.ExecKindT.ExecPostSolve
+
 cdef class TypeFieldActivity(vsc.TypeField):
 
     cdef decl.ITypeFieldActivity *asActivity(self):

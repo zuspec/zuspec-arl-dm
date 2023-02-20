@@ -150,24 +150,23 @@ cdef extern from "zsp/arl/dm/IModelBuildContext.h" namespace "zsp::arl::dm":
         IContext *ctxt()
         pass
 
-# TODO:
-# cdef extern from "zsp/arl/dm/IModelEvaluator.h" namespace "zsp::arl::dm":
-#     cdef cppclass IModelEvaluator:
-#         IModelEvalIterator *eval(
-#             vsc.IRandState *,
-#             IModelFieldComponent *, 
-#             IDataTypeAction *)
+#cdef extern from "zsp/arl/dm/IModelEvaluator.h" namespace "zsp::arl::dm":
+#    cdef cppclass IModelEvaluator:
+#        IModelEvalIterator *eval(
+#            vsc.IRandState *,
+#            IModelFieldComponent *, 
+#            IDataTypeAction *)
 
-# cdef extern from "zsp/arl/dm/IModelEvalIterator.h" namespace "zsp::arl::dm":
-#     cdef enum ModelEvalNodeT:
-#         Action   "zsp::arl::dm::ModelEvalNodeT::Action"
-#         Parallel "zsp::arl::dm::ModelEvalNodeT::Parallel"
-#         Sequence "zsp::arl::dm::ModelEvalNodeT::Sequence"
-#     cdef cppclass IModelEvalIterator:
-#         bool next()
-#         ModelEvalNodeT type() const
-#         IModelFieldAction *action()
-#        IModelEvalIterator *iterator()
+cdef extern from "zsp/arl/dm/IModelEvalIterator.h" namespace "zsp::arl::dm":
+    cdef enum ModelEvalNodeT:
+        Action   "zsp::arl::dm::ModelEvalNodeT::Action"
+        Parallel "zsp::arl::dm::ModelEvalNodeT::Parallel"
+        Sequence "zsp::arl::dm::ModelEvalNodeT::Sequence"
+    cdef cppclass IModelEvalIterator:
+        bool next()
+        ModelEvalNodeT type() const
+        IModelFieldAction *action()
+        IModelEvalIterator *iterator()
 
 cdef extern from "zsp/arl/dm/IModelFieldAction.h" namespace "zsp::arl::dm":
     cdef cppclass IModelFieldAction(vsc.IModelField):
@@ -195,6 +194,12 @@ cdef extern from "zsp/arl/dm/IPoolBindDirective.h" namespace "zsp::arl::dm":
         PoolBindKind kind() const
         vsc.ITypeExprFieldRef *getPool() const
         vsc.ITypeExprFieldRef *getTarget() const
+
+cdef extern from "zsp/arl/dm/ITypeExec.h" namespace "zsp::arl::dm":
+    cdef enum ExecKindT:
+        ExecBody "zsp::arl::dm::ExecKindT::Body"
+        ExecPreSolve "zsp::arl::dm::ExecKindT::PreSolve"
+        ExecPostSolve "zsp::arl::dm::ExecKindT::PostSolve"
     
 cdef extern from "zsp/arl/dm/ITypeFieldActivity.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeFieldActivity(vsc.ITypeField):

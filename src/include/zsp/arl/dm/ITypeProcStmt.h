@@ -28,7 +28,7 @@ namespace dm {
 
 
 class ITypeProcStmt;
-using ITypeProcStmtUP=std::unique_ptr<ITypeProcStmt>;
+using ITypeProcStmtUP=vsc::dm::UP<ITypeProcStmt>;
 class ITypeProcStmt : public virtual vsc::dm::IAccept {
 public:
 

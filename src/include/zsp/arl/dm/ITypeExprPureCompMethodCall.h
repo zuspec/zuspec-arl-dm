@@ -1,5 +1,5 @@
 /**
- * ITypeExec.h
+ * ITypeExprPureCompMethodCall.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,28 +19,27 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    PreSolve,
-    PostSolve,
-};
 
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
+
+class ITypeExprPureCompMethodCall {
 public:
 
-    virtual ~ITypeExec() { }
+    virtual ~ITypeExprPureCompMethodCall() { }
 
-    virtual ExecKindT getKind() const = 0;
+    // TODO: type path to pure-comp field
+    // Note: the pure-comp root type can be inferred from this
 
+    // TODO: path through pure-comp hierarchy
+    // Note: this will be empty if the method call is on the root field
+
+    // TODO: method index
+
+    // TODO: method parameters
 
 };
 

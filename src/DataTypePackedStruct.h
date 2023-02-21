@@ -1,5 +1,5 @@
 /**
- * ITypeExec.h
+ * DataTypePackedStruct.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,33 +19,39 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
+#include "zsp/arl/dm/IDataTypePackedStruct.h"
+#include "DataTypeStruct.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    PreSolve,
-    PostSolve,
-};
 
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
+
+class DataTypePackedStruct : 
+    public virtual IDataTypePackedStruct,
+    public virtual DataTypeStruct {
 public:
+    DataTypePackedStruct(
+        const std::string           &name,
+        Endian                      endian
+    );
 
-    virtual ~ITypeExec() { }
+    virtual ~DataTypePackedStruct();
 
-    virtual ExecKindT getKind() const = 0;
+    virtual Endian getEndian() const override {
+        return m_endian;
+    }
 
+    virtual void accept(vsc::dm::IVisitor *v) override;
+
+private:
+    Endian                          m_endian;
 
 };
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+}
+}
+}
 
 

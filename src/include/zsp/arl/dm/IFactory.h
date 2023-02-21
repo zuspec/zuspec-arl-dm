@@ -25,6 +25,7 @@
 #include "zsp/arl/dm/IContext.h"
 #include "zsp/arl/dm/IContextDumper.h"
 #include "zsp/arl/dm/IContextLoader.h"
+#include "zsp/arl/dm/IRewriteContext.h"
 #include "zsp/arl/dm/ITypeModelDumper.h"
 
 namespace zsp {
@@ -43,6 +44,10 @@ public:
     virtual dmgr::IDebugMgr *getDebugMgr() = 0;
 
     virtual IContext *mkContext(vsc::dm::IContext *ctxt) = 0;
+
+    virtual IRewriteContext *mkRewriteContext(
+            IContext                                *ctxt,
+            const std::vector<vsc::dm::IAccept *>   &roots) = 0;
 
     virtual ITypeModelDumper *mkTypeModelDumperJSON(
         std::ostream *out, int32_t indent) = 0;

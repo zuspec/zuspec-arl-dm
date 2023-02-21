@@ -23,7 +23,7 @@ enum class ModelActivityScopeT {
 };
 
 class IModelActivityScope;
-using IModelActivityScopeUP=std::unique_ptr<IModelActivityScope>;
+using IModelActivityScopeUP=vsc::dm::UP<IModelActivityScope>;
 class IModelActivityScope : 
 	public virtual vsc::dm::IModelField, 
 	public virtual IModelActivity {

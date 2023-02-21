@@ -30,7 +30,7 @@ namespace dm {
 
 
 class ITypeProcStmtScope;
-using ITypeProcStmtScopeUP=std::unique_ptr<ITypeProcStmtScope>;
+using ITypeProcStmtScopeUP=vsc::dm::UP<ITypeProcStmtScope>;
 class ITypeProcStmtScope : 
     public virtual ITypeProcStmtDeclScope,
     public virtual ITypeProcStmt {

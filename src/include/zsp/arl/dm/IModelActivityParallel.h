@@ -17,7 +17,7 @@ namespace dm {
 
 
 class IModelActivityParallel;
-using IModelActivityParallelUP=std::unique_ptr<IModelActivityParallel>;
+using IModelActivityParallelUP=vsc::dm::UP<IModelActivityParallel>;
 class IModelActivityParallel : 
 	public virtual IModelActivityScope, 
 	public virtual vsc::dm::IModelField {

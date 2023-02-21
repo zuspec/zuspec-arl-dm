@@ -19,8 +19,8 @@ namespace dm {
 class IDataTypeAction;
 
 class IDataTypeComponent;
-using IDataTypeComponentUP=std::unique_ptr<IDataTypeComponent>;
-class IDataTypeComponent : public virtual IDataTypeStruct {
+using IDataTypeComponentUP=vsc::dm::UP<IDataTypeComponent>;
+class IDataTypeComponent : public virtual vsc::dm::IDataTypeStruct {
 public:
 
 	virtual ~IDataTypeComponent() { }

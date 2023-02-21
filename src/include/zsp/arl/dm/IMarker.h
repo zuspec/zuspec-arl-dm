@@ -35,7 +35,7 @@ enum class MarkerSeverity {
 };
 
 class IMarker;
-using IMarkerUP=std::unique_ptr<IMarker>;
+using IMarkerUP=vsc::dm::UP<IMarker>;
 class IMarker {
 public:
 

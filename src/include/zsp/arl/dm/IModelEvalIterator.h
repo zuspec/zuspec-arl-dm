@@ -34,7 +34,7 @@ enum class ModelEvalNodeT {
 };
 
 class IModelEvalIterator;
-using IModelEvalIteratorUP=std::unique_ptr<IModelEvalIterator>;
+using IModelEvalIteratorUP=vsc::dm::UP<IModelEvalIterator>;
 class IModelEvalIterator {
 public:
 

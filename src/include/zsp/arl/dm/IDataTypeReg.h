@@ -1,5 +1,5 @@
 /**
- * ITypeExec.h
+ * IDataTypeReg.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,28 +19,32 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
+#include <stdint.h>
+#include "zsp/arl/dm/IDataTypePackedStruct.h"
+#include "zsp/arl/dm/IDataTypePureComponent.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    PreSolve,
-    PostSolve,
+enum class RegAccess {
+    READWRITE,
+    READONLY,
+    WRITEONLY
 };
 
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
+class IDataTypeReg : public virtual IDataTypePureComponent {
 public:
 
-    virtual ~ITypeExec() { }
+    virtual ~IDataTypeReg() { }
 
-    virtual ExecKindT getKind() const = 0;
+    virtual IDataTypePackedStruct *getDataType() const = 0;
 
+    virtual uint32_t getOffset() const = 0;
+
+    virtual uint32_t getWidth() const = 0;
+    
+    virtual RegAccess getAccess() const = 0;
 
 };
 

@@ -1,5 +1,5 @@
 /**
- * ITypeExec.h
+ * TestRegisterModel.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,33 +19,24 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
+#include "TestBase.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    PreSolve,
-    PostSolve,
-};
 
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
+
+class TestRegisterModel : public TestBase {
 public:
+    TestRegisterModel();
 
-    virtual ~ITypeExec() { }
-
-    virtual ExecKindT getKind() const = 0;
-
+    virtual ~TestRegisterModel();
 
 };
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+}
+}
+}
 
 

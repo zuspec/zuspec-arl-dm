@@ -1,5 +1,5 @@
 /**
- * ITypeExec.h
+ * IDataTypePureComponent.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,28 +19,18 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
+#include "vsc/dm/IDataTypeStruct.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    PreSolve,
-    PostSolve,
-};
-
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
+class IDataTypePureComponent;
+using IDataTypePureComponentUP=vsc::dm::UP<IDataTypePureComponent>;
+class IDataTypePureComponent : public vsc::dm::IDataTypeStruct {
 public:
 
-    virtual ~ITypeExec() { }
-
-    virtual ExecKindT getKind() const = 0;
-
+    virtual ~IDataTypePureComponent() { }
 
 };
 

@@ -1,5 +1,5 @@
-/**
- * ITypeExec.h
+/*
+ * DataTypePackedStruct.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,36 +16,36 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "DataTypePackedStruct.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    PreSolve,
-    PostSolve,
-};
 
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
-public:
+DataTypePackedStruct::DataTypePackedStruct(
+    const std::string       &name,
+    Endian                  endian) : 
+        DataTypeStruct(name), m_endian(endian) {
 
-    virtual ~ITypeExec() { }
+}
 
-    virtual ExecKindT getKind() const = 0;
+DataTypePackedStruct::~DataTypePackedStruct() {
 
+}
 
-};
+void DataTypePackedStruct::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitDataTypePackedStruct(this);
+    } else if (v->cascade()) {
+        v->visitDataTypeStruct(this);
+    }
+}
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
-
-
+}
+}
+}

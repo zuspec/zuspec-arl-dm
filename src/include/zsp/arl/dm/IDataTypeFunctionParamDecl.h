@@ -36,7 +36,7 @@ enum class ParamDir {
 };
 
 class IDataTypeFunctionParamDecl;
-using IDataTypeFunctionParamDeclUP=std::unique_ptr<IDataTypeFunctionParamDecl>;
+using IDataTypeFunctionParamDeclUP=vsc::dm::UP<IDataTypeFunctionParamDecl>;
 class IDataTypeFunctionParamDecl : public virtual ITypeProcStmtVarDecl {
 public:
 

@@ -1,5 +1,5 @@
-/**
- * ITypeExec.h
+/*
+ * TestRegisterModel.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,36 +16,29 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
+#include "TestRegisterModel.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    PreSolve,
-    PostSolve,
-};
 
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
-public:
+TestRegisterModel::TestRegisterModel() {
 
-    virtual ~ITypeExec() { }
+}
 
-    virtual ExecKindT getKind() const = 0;
+TestRegisterModel::~TestRegisterModel() {
 
+}
 
-};
+TEST_F(TestRegisterModel, smoke) {
+//    IDataTypePacke
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+}
 
-
+}
+}
+}

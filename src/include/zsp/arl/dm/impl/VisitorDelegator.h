@@ -7,6 +7,7 @@
 
 #pragma once
 #include "zsp/arl/dm/IDataTypeFunction.h"
+#include "zsp/arl/dm/IDataTypePackedStruct.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
 #include "zsp/arl/dm/IDataTypeStruct.h"
 #include "zsp/arl/dm/IDataTypeActivityReplicate.h"
@@ -88,6 +89,11 @@ public:
 
 	virtual void visitDataTypeFunctionParamDecl(IDataTypeFunctionParamDecl *t) override {
 		delegate(&arl::dm::IVisitor::visitDataTypeFunctionParamDecl, t);
+	}
+
+	virtual void visitDataTypePackedStruct(IDataTypePackedStruct *t) override {
+		delegate(&arl::dm::IVisitor::visitDataTypePackedStruct,
+				&vsc::dm::IVisitor::visitDataTypeStruct, t);
 	}
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {

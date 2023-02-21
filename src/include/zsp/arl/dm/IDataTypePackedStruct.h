@@ -1,5 +1,5 @@
 /**
- * ITypeExec.h
+ * IDataTypePackedStruct.h
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -19,28 +19,25 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
+#include "vsc/dm/IDataTypeStruct.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    PreSolve,
-    PostSolve,
+enum class Endian {
+    Big,
+    Little
 };
 
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
+class IDataTypePackedStruct;
+using IDataTypePackedStructUP=vsc::dm::UP<IDataTypePackedStruct>;
+class IDataTypePackedStruct : public virtual vsc::dm::IDataTypeStruct {
 public:
 
-    virtual ~ITypeExec() { }
+    virtual ~IDataTypePackedStruct() { }
 
-    virtual ExecKindT getKind() const = 0;
-
+    virtual Endian getEndian() const = 0;
 
 };
 

@@ -4,9 +4,9 @@ file(GLOB zuspec_arl_dm_SRC
   "*.cpp"
   )
 
-add_library(zuspec-arl-dm SHARED ${zuspec_arl_dm_SRC})
+add_library(zsp-arl-dm SHARED ${zuspec_arl_dm_SRC})
 
-target_include_directories(zuspec-arl-dm PUBLIC
+target_include_directories(zsp-arl-dm PUBLIC
     ${PROJECT_SOURCE_DIR}/src
     ${PROJECT_SOURCE_DIR}/src/include
     ${DEBUG_MGR_DIR}/src/include
@@ -15,19 +15,17 @@ target_include_directories(zuspec-arl-dm PUBLIC
     ${CMAKE_BINARY_DIR}/include
     )
 
-target_link_directories(zuspec-arl-dm PRIVATE
+target_link_directories(zsp-arl-dm PRIVATE
     ${CMAKE_BINARY_DIR}/lib
     ${CMAKE_BINARY_DIR}/lib64
     )
-target_link_libraries(zuspec-arl-dm
+target_link_libraries(zsp-arl-dm
     vsc-dm
     debug-mgr)
 
-add_dependencies(zuspec-arl-dm LibVSC-DM DebugMgr)
-
-install(TARGETS zuspec-arl-dm
+install(TARGETS zsp-arl-dm
     DESTINATION lib
-    EXPORT zuspec-arl-dm-targets)
+    EXPORT zsp-arl-dm-targets)
 
 # add_library(zuspec-arl-dm_static STATIC ${zuspec_arl_dm_SRC})
 
@@ -50,4 +48,5 @@ install(TARGETS zuspec-arl-dm
 # install(TARGETS zuspec-arl-dm_static
 #     DESTINATION lib
 #     EXPORT zuspec-arl-dm-targets)
+
 

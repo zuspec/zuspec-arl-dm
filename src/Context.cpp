@@ -17,6 +17,7 @@
 #include "DataTypeFunction.h"
 #include "DataTypeFunctionImport.h"
 #include "DataTypeFunctionParamDecl.h"
+#include "DataTypePackedStruct.h"
 #include "DataTypeResource.h"
 #include "ModelActivityIterator.h"
 #include "ModelActivityParallel.h"
@@ -235,6 +236,22 @@ bool Context::addDataTypeFlowObj(IDataTypeFlowObj *t) {
 	return it->second.insert({t->name(), IDataTypeFlowObjUP(t)}).second;
 }
 
+IDataTypePackedStruct *Context::findDataTypePackedStruct(
+            const std::string   &name) {
+
+}
+
+IDataTypePackedStruct *Context::mkDataTypePackedStruct(
+            const std::string   &name,
+            Endian              endian) {
+    return new DataTypePackedStruct(name, endian);
+}
+
+bool Context::addDataTypePackedStruct(
+            IDataTypePackedStruct   *type) {
+
+}
+
 IModelActivityParallel *Context::mkModelActivityParallel() {
 	return new ModelActivityParallel();
 }
@@ -329,6 +346,7 @@ IPoolBindDirective *Context::mkPoolBindDirective(
 			vsc::dm::ITypeExprFieldRef	*target) {
 	return new PoolBindDirective(kind, pool, target);
 }
+
 
 ITypeExecProc *Context::mkTypeExecProc(
             ExecKindT               kind,

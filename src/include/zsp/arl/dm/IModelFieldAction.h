@@ -15,7 +15,7 @@ namespace dm {
 
 
 class IModelFieldAction;
-using IModelFieldActionUP=std::unique_ptr<IModelFieldAction>;
+using IModelFieldActionUP=vsc::dm::UP<IModelFieldAction>;
 class IModelFieldAction : public virtual vsc::dm::IModelField {
 public:
 

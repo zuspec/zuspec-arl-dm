@@ -191,8 +191,8 @@ class build_ext(_build_ext):
         package_dir = build_py.get_package_dir(package)
 
         copy_file(
-            os.path.join(cwd, "build", "src", "libzuspec-arl-dm.so"),
-            os.path.join(package_dir, "libzuspec-arl-dm.so"))
+            os.path.join(cwd, "build", "src", "libzsp-arl-dm.so"),
+            os.path.join(package_dir, "libzsp-arl-dm.so"))
                 
         dest_filename = os.path.join(package_dir, filename)
         

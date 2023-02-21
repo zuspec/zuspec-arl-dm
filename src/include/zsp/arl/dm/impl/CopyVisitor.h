@@ -24,7 +24,8 @@
 #include "zsp/arl/dm/impl/ModelBuildContext.h"
 #include "zsp/arl/dm/impl/VisitorDelegator.h"
 #include "vsc/dm/impl/CopyVisitor.h"
-#include "vsc/dm/impl/DebugMacros.h"
+#include "dmgr/IDebugMgr.h"
+#include "dmgr/impl/DebugMacros.h"
 
 namespace zsp {
 namespace arl {

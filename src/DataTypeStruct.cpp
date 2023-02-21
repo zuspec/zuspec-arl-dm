@@ -51,6 +51,30 @@ void DataTypeStruct::setCreateHook(vsc::dm::IModelStructCreateHook *hook) {
 	m_create_hook = vsc::dm::IModelStructCreateHookUP(hook);
 }
 
+bool DataTypeStruct::hasExecKind(ExecKindT kind) const {
+    return (m_exec_m.find(kind) != m_exec_m.end());
+}
+
+ITypeExecGroup *DataTypeStruct::getExecGroup(ExecKindT kind) const {
+    std::map<ExecKindT, ITypeExecGroupUP>::const_iterator it;
+
+    if ((it=m_exec_m.find(kind)) != m_exec_m.end()) {
+        return it->second.get();
+    } else {
+        return 0;
+    }
+}
+
+void DataTypeStruct::addExecGroup(ITypeExecGroup *group) {
+    std::map<ExecKindT, ITypeExecGroupUP>::const_iterator it;
+
+    if ((it=m_exec_m.find(group->getKind())) != m_exec_m.end()) {
+        m_exec_m.erase(it);
+    }
+
+    m_exec_m.insert({group->getKind(), ITypeExecGroupUP(group)});
+}
+
 vsc::dm::IModelField *DataTypeStruct::mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,

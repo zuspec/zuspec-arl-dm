@@ -20,6 +20,7 @@
 #include "zsp/arl/dm/IDataTypeFunction.h"
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
+#include "zsp/arl/dm/IDataTypeStruct.h"
 #include "zsp/arl/dm/IModelActivityBind.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
 #include "zsp/arl/dm/IModelActivityReplicate.h"
@@ -129,7 +130,11 @@ public:
     }
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {
-		visitDataTypeFlowObj(t);
+		dynamic_cast<IVisitor *>(m_this)->visitDataTypeFlowObj(t);
+	}
+
+	virtual void visitDataTypeStruct(IDataTypeStruct *t) override {
+		m_this->visitDataTypeStruct(static_cast<vsc::dm::IDataTypeStruct *>(t));
 	}
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) override {

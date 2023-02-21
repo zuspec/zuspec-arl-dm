@@ -26,6 +26,7 @@ class IDataTypeFunctionImport;
 class IDataTypeFunction;
 class IDataTypeFunctionParamDecl;
 class IDataTypeResource;
+class IDataTypeStruct;
 class IModelActivityBind;
 class IModelActivityParallel;
 class IModelActivityReplicate;
@@ -93,6 +94,8 @@ public:
 	virtual void visitDataTypeFunctionParamDecl(IDataTypeFunctionParamDecl *t) = 0;
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) = 0;
+
+	virtual void visitDataTypeStruct(IDataTypeStruct *t) = 0;
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) = 0;
 

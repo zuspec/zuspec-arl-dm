@@ -19,6 +19,7 @@
  *     Author:
  */
 #include "dmgr/impl/DebugMacros.h"
+#include "vsc/dm/ITypeExprVal.h"
 #include "TypeModelDumperJSON.h"
 #include "nlohmann/json.hpp"
 
@@ -221,7 +222,7 @@ void TypeModelDumperJSON::visitDataTypeInt(vsc::dm::IDataTypeInt *t) {
     addType(t, type);
 }
 
-void TypeModelDumperJSON::visitDataTypeStruct(vsc::dm::IDataTypeStruct *t) {
+void TypeModelDumperJSON::visitDataTypeStruct(IDataTypeStruct *t) {
     bool is_root = !m_active;
     DEBUG_ENTER("visitDataTypeStruct %s (is_root=%d)", t->name().c_str(), is_root);
     nlohmann::json type;
@@ -384,7 +385,17 @@ void TypeModelDumperJSON::visitTypeExprRange(vsc::dm::ITypeExprRange *e) { }
 
 void TypeModelDumperJSON::visitTypeExprRangelist(vsc::dm::ITypeExprRangelist *e) { }
 
-void TypeModelDumperJSON::visitTypeExprVal(vsc::dm::ITypeExprVal *e) { }
+void TypeModelDumperJSON::visitTypeExprVal(vsc::dm::ITypeExprVal *e) { 
+    char tmp[64];
+
+    sprintf(tmp, "%lld", e->val()->val_u());
+
+    nlohmann::json expr;
+    expr["kind"] = "type-expr-val";
+    expr["value"] = tmp;
+
+    *m_json_s.back() = expr;
+}
 
 void TypeModelDumperJSON::visitTypeFieldActivity(ITypeFieldActivity *f) {
     DEBUG_ENTER("visitTypeFieldActivity");

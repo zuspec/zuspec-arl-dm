@@ -9,7 +9,7 @@
 #include <vector>
 #include "zsp/arl/dm/IAccept.h"
 #include "zsp/arl/dm/IPoolBindDirective.h"
-#include "vsc/dm/IDataTypeStruct.h"
+#include "zsp/arl/dm/IDataTypeStruct.h"
 
 namespace zsp {
 namespace arl {

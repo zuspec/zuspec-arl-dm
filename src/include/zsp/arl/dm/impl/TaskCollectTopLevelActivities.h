@@ -14,6 +14,7 @@ public:
     TaskCollectTopLevelActivities() {
 //        DEBUG_INIT("TaskCollectTopLevelActivities");
         m_activities = 0;
+        m_dbg = 0;
     }
     
     virtual ~TaskCollectTopLevelActivities();
@@ -53,11 +54,9 @@ public:
     }
 
 private:
-    static dmgr::IDebug                 *m_dbg;
+    dmgr::IDebug                        *m_dbg;
     std::vector<IModelActivity *>       *m_activities;
 };
-
-dmgr::IDebug *TaskCollectTopLevelActivities::m_dbg = 0;
 
 }
 }

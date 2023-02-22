@@ -28,17 +28,37 @@ namespace dm {
 
 class TaskIsDataTypeFlowObj : public VisitorBase {
 public:
-    TaskIsDataTypeFlowObj();
+    TaskIsDataTypeFlowObj() : 
+        m_ret(false), m_check_kind(false), m_kind(FlowObjKindE::Resource) {
 
-    TaskIsDataTypeFlowObj(FlowObjKindE kind);
+    }
 
-    virtual ~TaskIsDataTypeFlowObj();
+    TaskIsDataTypeFlowObj(FlowObjKindE kind) :
+        m_ret(false), m_check_kind(true), m_kind(kind) {
 
-    static bool test(vsc::dm::IDataType *t);
+    }
 
-    static bool test(FlowObjKindE kind, vsc::dm::IDataType *t);
+    virtual ~TaskIsDataTypeFlowObj() { }
 
-	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override;
+    static bool test(vsc::dm::IDataType *t) {
+        TaskIsDataTypeFlowObj task;
+        t->accept(&task);
+        return task.m_ret;
+    }
+
+    static bool test(FlowObjKindE kind, vsc::dm::IDataType *t) {
+        TaskIsDataTypeFlowObj task(kind);
+        t->accept(&task);
+        return task.m_ret;
+    }
+
+	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override {
+        if (m_check_kind) {
+            m_ret = (t->kind() == m_kind);
+        } else {
+            m_ret = true;
+        }
+    } 
 
 private:
     bool                m_ret;

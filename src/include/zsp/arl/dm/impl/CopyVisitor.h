@@ -70,14 +70,14 @@ public:
         IModelActivityReplicate *ac = m_ctxt->mkModelActivityReplicate(count_e);
 
         for (std::vector<vsc::dm::IModelFieldUP>::const_iterator
-            it=a->fields().begin();
-            it!=a->fields().end(); it++) {
+            it=a->getFields().begin();
+            it!=a->getFields().end(); it++) {
             ac->addField(copyT<vsc::dm::IModelField>(it->get()));
         }
         
         for (std::vector<vsc::dm::IModelConstraintUP>::const_iterator
-            it=a->constraints().begin();
-            it!=a->constraints().end(); it++) {
+            it=a->getConstraints().begin();
+            it!=a->getConstraints().end(); it++) {
             ac->addConstraint(copyT<vsc::dm::IModelConstraint>(it->get()));
         }
 
@@ -146,14 +146,14 @@ public:
         add_copy(f, fc);
 
         for (std::vector<vsc::dm::IModelFieldUP>::const_iterator
-            it=f->fields().begin();
-            it!=f->fields().end(); it++) {
+            it=f->getFields().begin();
+            it!=f->getFields().end(); it++) {
             fc->addField(copyT<vsc::dm::IModelField>(it->get()));
         }
 
         for (std::vector<vsc::dm::IModelConstraintUP>::const_iterator
-            it=f->constraints().begin();
-            it!=f->constraints().end(); it++) {
+            it=f->getConstraints().begin();
+            it!=f->getConstraints().end(); it++) {
             fc->addConstraint(copyT<vsc::dm::IModelConstraint>(it->get()));
         }
 
@@ -188,15 +188,15 @@ public:
     }
 
 protected:
-    static vsc::dm::IDebug                      *m_dbg;
+    static dmgr::IDebug                     *m_dbg;
     IContext                                *m_ctxt;
     IModelBuildContext                      *m_build_ctxt;
     ModelBuildContext                       m_build_ctxt_l;
-    vsc::dm::CopyVisitor                        m_core;
+    vsc::dm::CopyVisitor                    m_core;
 
 };
 
-vsc::dm::IDebug *CopyVisitor::m_dbg = 0;
+dmgr::IDebug *CopyVisitor::m_dbg = 0;
 
 }
 }

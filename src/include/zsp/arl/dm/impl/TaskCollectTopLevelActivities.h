@@ -17,7 +17,7 @@ public:
         m_dbg = 0;
     }
     
-    virtual ~TaskCollectTopLevelActivities();
+    virtual ~TaskCollectTopLevelActivities() { }
 
     void collect(
         std::vector<IModelActivity *>   &activities,

@@ -1,5 +1,5 @@
-/**
- * TaskIsDataTypeFlowObj.h
+/*
+ * TypeExecTargetTmpl.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,38 +16,38 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "zsp/arl/dm/impl/VisitorBase.h"
+#include "TypeExecTargetTmpl.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class TaskIsDataTypeFlowObj : public VisitorBase {
-public:
-    TaskIsDataTypeFlowObj();
+TypeExecTargetTmpl::TypeExecTargetTmpl(
+    ExecKindT           kind,
+    const std::string   &tmpl) : TypeExec(kind), m_template(tmpl) {
 
-    TaskIsDataTypeFlowObj(FlowObjKindE kind);
+}
 
-    virtual ~TaskIsDataTypeFlowObj();
+TypeExecTargetTmpl::~TypeExecTargetTmpl() {
 
-    static bool test(vsc::dm::IDataType *t);
+}
 
-    static bool test(FlowObjKindE kind, vsc::dm::IDataType *t);
+void TypeExecTargetTmpl::addReplacement(
+        int32_t             start,
+        int32_t             end,
+        vsc::dm::ITypeExpr  *expr) {
+    m_replacements.push_back({start, end, expr});
+    m_expr_u.push_back(vsc::dm::ITypeExprUP(expr));
+}
 
-	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override;
+void TypeExecTargetTmpl::accept(vsc::dm::IVisitor *v) {
 
-private:
-    bool                m_ret;
-    bool                m_check_kind;
-    FlowObjKindE        m_kind;
-
-};
+}
 
 }
 }
 }
-

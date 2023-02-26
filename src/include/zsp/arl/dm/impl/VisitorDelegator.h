@@ -9,6 +9,7 @@
 #include "zsp/arl/dm/IDataTypeFunction.h"
 #include "zsp/arl/dm/IDataTypePackedStruct.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
+#include "zsp/arl/dm/IDataTypeStruct.h"
 #include "zsp/arl/dm/IDataTypeActivityReplicate.h"
 #include "zsp/arl/dm/IVisitor.h"
 #include "zsp/arl/dm/ITypeFieldExecutor.h"
@@ -97,6 +98,11 @@ public:
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {
 		delegate(&arl::dm::IVisitor::visitDataTypeResource,
+				&vsc::dm::IVisitor::visitDataTypeStruct, t);
+	}
+
+	virtual void visitDataTypeStruct(IDataTypeStruct *t) override {
+		delegate(&arl::dm::IVisitor::visitDataTypeStruct,
 				&vsc::dm::IVisitor::visitDataTypeStruct, t);
 	}
 

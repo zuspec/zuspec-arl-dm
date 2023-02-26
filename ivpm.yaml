@@ -1,6 +1,6 @@
 
 package:
-  name: libarl
+  name: zuspec-arl-dm
 
   setup-deps:
   - ninja

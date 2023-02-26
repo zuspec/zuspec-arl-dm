@@ -1,5 +1,6 @@
 
 #pragma once
+#include "zsp/arl/dm/impl/TaskCollectTopLevelActivities.h"
 #include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {

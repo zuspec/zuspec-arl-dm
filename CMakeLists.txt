@@ -28,7 +28,7 @@ message("IVPM_CMAKE_PATH: ${IVPM_CMAKE_PATH} ${CMAKE_MODULE_PATH}")
 include(ivpm)
 
 Ivpm_AddPythonExtProject(debug-mgr debug_mgr)
-Ivpm_AddPythonExtProject(libvsc-dm vsc_dm)
+Ivpm_AddPythonExtProject(vsc-dm vsc_dm)
 
 set(JSON_DIR ${PACKAGES_DIR}/json)
 
@@ -46,7 +46,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
 add_subdirectory(src)
 
 if (ENABLE_TESTING)
-  # Testing is only enabled when libvsc is the top-level project
+  # Testing is only enabled when this is the top-level project
   enable_testing()
 
   add_subdirectory(test)

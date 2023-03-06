@@ -46,7 +46,7 @@ else:
     else:
         raise Exception("Unexpected source layout")
 
-# Now, build the core tblink-rpc-hdl library
+# Now, build the zuspec-arl-dm library
 cwd = os.getcwd()
 if not os.path.isdir(os.path.join(cwd, "build")):
     os.makedirs(os.path.join(cwd, "build"))
@@ -119,6 +119,11 @@ else:
     raise Exception("Unknown build system %s" % cmake_build_tool)
 if result.returncode != 0:
     raise Exception("build failed")
+
+# Locate required dependencies
+for d in {"debug-mgr", "vsc-dm"}:
+    if os.path.isdir(os.path.join(packages_dir, d, "python")):
+        sys.path.insert(0, os.path.join(packages_dir, d, "python"))
 
 extra_compile_args = sysconfig.get_config_var('CFLAGS').split()
 extra_compile_args = []
@@ -299,12 +304,12 @@ setup(
   keywords = ["SystemVerilog", "Verilog", "RTL", "Python"],
   url = "https://github.com/zuspec/zuspec-arl-dm",
   install_requires=[
-    'libvsc-dm',
+    'vsc-dm',
     'debug-mgr'
   ],
   setup_requires=[
     'setuptools_scm',
-    'libvsc-dm',
+    'vsc-dm',
     'debug-mgr',
     'cython',
   ],

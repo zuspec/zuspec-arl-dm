@@ -11,8 +11,8 @@ from libcpp.cast cimport dynamic_cast, static_cast
 from libcpp.vector cimport vector as cpp_vector
 from enum import IntEnum
 from zsp_arl_dm cimport decl
-cimport libvsc_dm.core as vsc
-cimport libvsc_dm.decl as vsc_decl
+cimport vsc_dm.core as vsc
+cimport vsc_dm.decl as vsc_decl
 cimport cpython.ref as cpy_ref
 
 cdef Factory _inst = None

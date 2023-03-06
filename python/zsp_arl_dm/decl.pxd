@@ -1,5 +1,5 @@
 
-cimport libvsc_dm.decl as vsc
+cimport vsc_dm.decl as vsc
 cimport debug_mgr.decl as dm
 
 from libcpp.string cimport string as cpp_string

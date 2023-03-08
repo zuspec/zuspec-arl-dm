@@ -145,7 +145,15 @@ cdef extern from "zsp/arl/dm/IDataTypeFlowObj.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeFlowObj(vsc.IDataTypeStruct):
         FlowObjKindE kind() const
 
-cdef extern from "zsp/arl/IDataTypeFunction.h" namespace "zsp::arl::dm":
+cdef extern from "zsp/arl/dm/ITypeProcStmt.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmt(vsc.IAccept):
+        pass
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtDeclScope.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtDeclScope:
+        pass
+
+cdef extern from "zsp/arl/dm/IDataTypeFunction.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeFunction(ITypeProcStmtDeclScope):
         pass
 

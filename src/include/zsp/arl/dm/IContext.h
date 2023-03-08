@@ -17,6 +17,7 @@
 #include "zsp/arl/dm/IDataTypeFunction.h"
 #include "zsp/arl/dm/IDataTypeFunctionImport.h"
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
+#include "zsp/arl/dm/IDataTypePackedStruct.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
 #include "zsp/arl/dm/IModelActivitySchedule.h"
 #include "zsp/arl/dm/IModelActivityScope.h"
@@ -56,7 +57,7 @@ namespace dm {
 
 
 class IContext;
-using IContextUP=std::unique_ptr<IContext>;
+using IContextUP=vsc::dm::UP<IContext>;
 class IContext : public virtual vsc::dm::IContext {
 public:
 
@@ -88,9 +89,10 @@ public:
 
 	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
 			const std::string		&name,
-			vsc::dm::IDataType			*type,
+            ParamDir                dir,
+			vsc::dm::IDataType		*type,
 			bool					own,
-			vsc::dm::ITypeExpr			*init) = 0;
+			vsc::dm::ITypeExpr		*init) = 0;
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) = 0;
 
@@ -122,6 +124,16 @@ public:
 			FlowObjKindE		kind) = 0;
 
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
+
+    virtual IDataTypePackedStruct *findDataTypePackedStruct(
+            const std::string   &name) = 0;
+
+    virtual IDataTypePackedStruct *mkDataTypePackedStruct(
+            const std::string   &name,
+            Endian              endian=Endian::Little) = 0;
+
+    virtual bool addDataTypePackedStruct(
+            IDataTypePackedStruct   *type) = 0;
 
 	virtual IModelActivityParallel *mkModelActivityParallel() = 0;
 
@@ -177,6 +189,7 @@ public:
 			PoolBindKind				kind,
 			vsc::dm::ITypeExprFieldRef		*pool,
 			vsc::dm::ITypeExprFieldRef		*target) = 0;
+
 
     virtual ITypeExecProc *mkTypeExecProc(
             ExecKindT               kind,

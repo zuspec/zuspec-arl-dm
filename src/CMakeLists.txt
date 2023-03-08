@@ -4,44 +4,32 @@ file(GLOB zuspec_arl_dm_SRC
   "*.cpp"
   )
 
-add_library(zuspec-arl-dm SHARED ${zuspec_arl_dm_SRC})
+add_library(zsp-arl-dm SHARED ${zuspec_arl_dm_SRC})
 
-target_include_directories(zuspec-arl-dm PUBLIC
+target_include_directories(zsp-arl-dm PUBLIC
     ${PROJECT_SOURCE_DIR}/src
     ${PROJECT_SOURCE_DIR}/src/include
     ${DEBUG_MGR_DIR}/src/include
     ${LIBVSC_DM_DIR}/src/include
+    ${JSON_DIR}/include
     ${CMAKE_BINARY_DIR}/include
+    "${vsc_dm_INCDIR}"
+    "${debug_mgr_INCDIR}"
     )
 
-target_link_directories(zuspec-arl-dm PRIVATE
+target_link_directories(zsp-arl-dm PRIVATE
     ${CMAKE_BINARY_DIR}/lib
     ${CMAKE_BINARY_DIR}/lib64
+    "${vsc_dm_LIBDIR}"
+    "${debug_mgr_LIBDIR}"
     )
-target_link_libraries(zuspec-arl-dm
+target_link_libraries(zsp-arl-dm
     vsc-dm
     debug-mgr)
 
-add_dependencies(zuspec-arl-dm LibVSC-DM DebugMgr)
-
-add_library(zuspec-arl-dm_static STATIC ${zuspec_arl_dm_SRC})
-
-target_include_directories(zuspec-arl-dm_static PUBLIC
-    ${PROJECT_SOURCE_DIR}/src
-    ${PROJECT_SOURCE_DIR}/src/include
-    ${DEBUG_MGR_DIR}/src/include
-    ${LIBVSC_DM_DIR}/src/include
-    ${CMAKE_BINARY_DIR}/include
-    )
-
-target_link_directories(zuspec-arl-dm_static PRIVATE
-    ${CMAKE_BINARY_DIR}/lib
-    ${CMAKE_BINARY_DIR}/lib64
-    )
-
-add_dependencies(zuspec-arl-dm_static LibVSC-DM DebugMgr)
-
-install(TARGETS zuspec-arl-dm_static
+install(TARGETS zsp-arl-dm
     DESTINATION lib
-    EXPORT zuspec-arl-dm-targets)
+    EXPORT zsp-arl-dm-targets)
+
+
 

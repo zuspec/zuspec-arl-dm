@@ -22,9 +22,11 @@ DataTypeStruct::~DataTypeStruct() {
 	// TODO Auto-generated destructor stub
 }
 
-void DataTypeStruct::addField(vsc::dm::ITypeField *f) {
+void DataTypeStruct::addField(
+    vsc::dm::ITypeField     *f,
+    bool                    owned) {
 	f->setIndex(m_fields.size());
-	m_fields.push_back(vsc::dm::ITypeFieldUP(f));
+	m_fields.push_back(vsc::dm::ITypeFieldUP(f, owned));
 }
 
 const std::vector<vsc::dm::ITypeFieldUP> &DataTypeStruct::getFields() const {
@@ -35,8 +37,10 @@ vsc::dm::ITypeField *DataTypeStruct::getField(int32_t idx) {
 	return m_fields.at(idx).get();
 }
 
-void DataTypeStruct::addConstraint(vsc::dm::ITypeConstraint *c) {
-	m_constraints.push_back(vsc::dm::ITypeConstraintUP(c));
+void DataTypeStruct::addConstraint(
+    vsc::dm::ITypeConstraint    *c,
+    bool                        owned) {
+	m_constraints.push_back(vsc::dm::ITypeConstraintUP(c, owned));
 }
 
 const std::vector<vsc::dm::ITypeConstraintUP> &DataTypeStruct::getConstraints() const {
@@ -47,8 +51,34 @@ vsc::dm::IModelStructCreateHook *DataTypeStruct::getCreateHook() const {
 	return m_create_hook.get();
 }
 
-void DataTypeStruct::setCreateHook(vsc::dm::IModelStructCreateHook *hook) {
-	m_create_hook = vsc::dm::IModelStructCreateHookUP(hook);
+void DataTypeStruct::setCreateHook(
+    vsc::dm::IModelStructCreateHook     *hook,
+    bool                                owned) {
+	m_create_hook = vsc::dm::IModelStructCreateHookUP(hook, owned);
+}
+
+bool DataTypeStruct::hasExecKind(ExecKindT kind) const {
+    return (m_exec_m.find(kind) != m_exec_m.end());
+}
+
+ITypeExecGroup *DataTypeStruct::getExecGroup(ExecKindT kind) const {
+    std::map<ExecKindT, ITypeExecGroupUP>::const_iterator it;
+
+    if ((it=m_exec_m.find(kind)) != m_exec_m.end()) {
+        return it->second.get();
+    } else {
+        return 0;
+    }
+}
+
+void DataTypeStruct::addExecGroup(ITypeExecGroup *group) {
+    std::map<ExecKindT, ITypeExecGroupUP>::const_iterator it;
+
+    if ((it=m_exec_m.find(group->getKind())) != m_exec_m.end()) {
+        m_exec_m.erase(it);
+    }
+
+    m_exec_m.insert({group->getKind(), ITypeExecGroupUP(group)});
 }
 
 vsc::dm::IModelField *DataTypeStruct::mkRootField(

@@ -46,9 +46,10 @@ DataTypeActivityReplicate::DataTypeActivityReplicate(
     addField(ctxt->mkTypeFieldPhy("__index", ui16, false,
         vsc::dm::TypeFieldAttr::NoAttr, 0));
 
-    vsc::dm::ITypeExprFieldRef *count_r = ctxt->mkTypeExprFieldRef();
-    count_r->addIdxRef(0);
-    count_r->addActiveScopeRef(-1);
+    vsc::dm::ITypeExprFieldRef *count_r = ctxt->mkTypeExprFieldRef(
+        vsc::dm::ITypeExprFieldRef::RootRefKind::BottomUpScope,
+        -1);
+    count_r->addPathElem(0);
     addConstraint(ctxt->mkTypeConstraintExpr(
         ctxt->mkTypeExprBin(
             count_r,
@@ -89,7 +90,7 @@ IModelActivity *DataTypeActivityReplicate::mkActivity(
     }
 
 	fprintf(stdout, "mkActivity: %d\n", getActivities().size());
-	for (std::vector<ITypeFieldActivity *>::const_iterator
+	for (std::vector<ITypeFieldActivityUP>::const_iterator
 		it=getActivities().begin();
 		it!=getActivities().end(); it++) {
 		IModelActivity *field_a = (*it)->mkActivity(ctxt);

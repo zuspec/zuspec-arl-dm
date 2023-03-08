@@ -33,7 +33,7 @@ public:
     DataTypeFunction(
         IContext                *ctxt,
         const std::string       &name,
-        vsc::dm::IDataType          *rtype,
+        vsc::dm::IDataType      *rtype,
         bool                    own_rtype);
 
     virtual ~DataTypeFunction();
@@ -46,11 +46,15 @@ public:
         return m_ret_type;
     }
 
-    virtual const std::vector<ITypeProcStmtVarDeclUP> &getParameters() const override {
+    virtual const std::vector<IDataTypeFunctionParamDecl *> &getParameters() const override {
         return m_parameters;
     }
 
-    virtual void addParameter(ITypeProcStmtVarDecl *p) override;
+    virtual void addParameter(IDataTypeFunctionParamDecl *p) override;
+
+    virtual ITypeProcStmtScope *getParamScope() const override {
+        return m_param_scope.get();
+    }
 
     virtual const std::vector<ITypeProcStmtVarDecl *> getVariables() const override {
         return m_variables;
@@ -84,10 +88,11 @@ private:
     std::string                                     m_name;
     vsc::dm::IDataType                              *m_ret_type;
     vsc::dm::IDataTypeUP                            m_ret_type_u;
-    std::vector<ITypeProcStmtVarDeclUP>             m_parameters;
+    std::vector<IDataTypeFunctionParamDecl *>       m_parameters;
     std::vector<ITypeProcStmtVarDecl *>             m_variables;
     vsc::dm::IDataTypeStruct                        *m_context;
     bool                                            m_is_export;
+    ITypeProcStmtScopeUP                            m_param_scope;
     ITypeProcStmtScopeUP                            m_body;
     std::vector<IDataTypeFunctionImportUP>          m_import_specs;
 

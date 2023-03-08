@@ -46,6 +46,7 @@ const std::vector<IDataTypeAction *> &DataTypeComponent::getActionTypes() const 
 }
 
 void DataTypeComponent::addActionType(IDataTypeAction *action_t) {
+    action_t->setComponentType(this);
 	m_action_types.push_back(action_t);
 }
 

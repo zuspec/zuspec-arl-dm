@@ -34,6 +34,7 @@ DataTypeFunction::DataTypeFunction(
     vsc::dm::IDataType              *rtype,
     bool                        own_rtype) : 
         m_name(name), m_ret_type(rtype), m_ret_type_u(own_rtype?rtype:0),
+        m_param_scope(ctxt->mkTypeProcStmtScope()),
         m_body(ctxt->mkTypeProcStmtScope()) {
 }
 
@@ -41,9 +42,9 @@ DataTypeFunction::~DataTypeFunction() {
 
 }
 
-void DataTypeFunction::addParameter(ITypeProcStmtVarDecl *p) {
-    m_parameters.push_back(ITypeProcStmtVarDeclUP(p));
-    m_variables.push_back(p);
+void DataTypeFunction::addParameter(IDataTypeFunctionParamDecl *p) {
+    m_parameters.push_back(p);
+    m_param_scope->addVariable(p);
 }
 
 void DataTypeFunction::addImportSpec(IDataTypeFunctionImport *spec) {

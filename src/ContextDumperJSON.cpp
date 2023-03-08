@@ -1,5 +1,5 @@
-/**
- * TaskIsDataTypeFlowObj.h
+/*
+ * ContextDumperJSON.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,38 +16,24 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "zsp/arl/dm/impl/VisitorBase.h"
+#include "ContextDumperJSON.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class TaskIsDataTypeFlowObj : public VisitorBase {
-public:
-    TaskIsDataTypeFlowObj();
+ContextDumperJSON::ContextDumperJSON() {
 
-    TaskIsDataTypeFlowObj(FlowObjKindE kind);
+}
 
-    virtual ~TaskIsDataTypeFlowObj();
+ContextDumperJSON::~ContextDumperJSON() {
 
-    static bool test(vsc::dm::IDataType *t);
-
-    static bool test(FlowObjKindE kind, vsc::dm::IDataType *t);
-
-	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override;
-
-private:
-    bool                m_ret;
-    bool                m_check_kind;
-    FlowObjKindE        m_kind;
-
-};
+}
 
 }
 }
 }
-

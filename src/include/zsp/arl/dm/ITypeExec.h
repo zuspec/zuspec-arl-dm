@@ -33,7 +33,7 @@ enum class ExecKindT {
 };
 
 class ITypeExec;
-using ITypeExecUP=std::unique_ptr<ITypeExec>;
+using ITypeExecUP=vsc::dm::UP<ITypeExec>;
 class ITypeExec : public virtual vsc::dm::IAccept {
 public:
 

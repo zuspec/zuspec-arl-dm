@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
+#include "TypeProcStmtVarDecl.h"
 
 namespace zsp {
 namespace arl {
@@ -28,33 +29,26 @@ namespace dm {
 
 
 
-class DataTypeFunctionParamDecl : public virtual IDataTypeFunctionParamDecl {
+class DataTypeFunctionParamDecl : 
+    public virtual IDataTypeFunctionParamDecl,
+    public virtual TypeProcStmtVarDecl {
 public:
     DataTypeFunctionParamDecl(
-        const std::string       &name,
+        const std::string           &name,
+        ParamDir                    dir,
         vsc::dm::IDataType          *type,
-        bool                    own,
-        vsc::dm::ITypeExpr          *init);
+        bool                        own,
+        vsc::dm::ITypeExpr          *dflt);
 
     virtual ~DataTypeFunctionParamDecl();
 
-    virtual const std::string &name() const override {
-        return m_name;
-    }
+    virtual ParamDir getDirection() const { return m_dir; }
 
-    virtual vsc::dm::IDataType *getDataType() const override {
-        return m_type;
-    }
-
-    virtual vsc::dm::ITypeExpr *getDefault() const override {
-        return m_default.get();
-    }
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    std::string                     m_name;
-    vsc::dm::IDataType                  *m_type;
-    vsc::dm::IDataTypeUP                m_type_u;
-    vsc::dm::ITypeExprUP                m_default;
+    ParamDir                        m_dir;
+
 };
 
 }

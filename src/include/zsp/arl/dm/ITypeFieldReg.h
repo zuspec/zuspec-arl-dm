@@ -25,23 +25,12 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class RegAccess {
-    READWRITE,
-    READONLY,
-    WRITEONLY
-};
 
 
 class ITypeFieldReg {
 public:
 
     virtual ~ITypeFieldReg() { }
-
-    virtual uint32_t getOffset() const = 0;
-
-    virtual uint32_t getWidth() const = 0;
-    
-    virtual RegAccess getAccess() const = 0;
 
 };
 

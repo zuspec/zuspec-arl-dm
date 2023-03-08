@@ -1,6 +1,6 @@
 
 package:
-  name: libarl
+  name: zuspec-arl-dm
 
   setup-deps:
   - ninja
@@ -9,15 +9,17 @@ package:
   dep-sets:
   - name: default
     deps:
-    - name: libvsc-dm
-      url: https://github.com/vsc-tools/libvsc-dm.git
-      branch: dm-refactor
+    - name: vsc-dm
+      url: https://github.com/vsc-tools/vsc-dm.git
+    - name: json
+      url: https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz
 
   - name: default-dev
     deps:
-    - name: libvsc-dm
-      url: https://github.com/vsc-tools/libvsc-dm.git
-      branch: dm-refactor
+    - name: vsc-dm
+      url: https://github.com/vsc-tools/vsc-dm.git
+    - name: json
+      url: https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz
     - name: ninja
       src: pypi
     - name: cython

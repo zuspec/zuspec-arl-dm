@@ -49,9 +49,10 @@ public:
 
 	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
 			const std::string		&name,
-			vsc::dm::IDataType			*type,
+            ParamDir                dir,
+			vsc::dm::IDataType		*type,
 			bool					own,
-			vsc::dm::ITypeExpr			*init) override;
+			vsc::dm::ITypeExpr		*dflt) override;
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() override;
 
@@ -83,6 +84,16 @@ public:
 			FlowObjKindE		kind) override;
 
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) override;
+
+    virtual IDataTypePackedStruct *findDataTypePackedStruct(
+            const std::string   &name) override;
+
+    virtual IDataTypePackedStruct *mkDataTypePackedStruct(
+            const std::string   &name,
+            Endian              endian=Endian::Little) override;
+
+    virtual bool addDataTypePackedStruct(
+            IDataTypePackedStruct   *type) override;
 
 	virtual IModelActivityParallel *mkModelActivityParallel() override;
 

@@ -1,5 +1,5 @@
-/**
- * TestBase.h
+/*
+ * TypeExecTargetTmpl.cpp
  *
  * Copyright 2022 Matthew Ballance and Contributors
  *
@@ -16,11 +16,9 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "gtest/gtest.h"
-#include "zsp/arl/dm/IContext.h"
+#include "TypeExecTargetTmpl.h"
 
 
 namespace zsp {
@@ -28,25 +26,28 @@ namespace arl {
 namespace dm {
 
 
-class TestBase : public ::testing::Test {
-public:
-    TestBase();
+TypeExecTargetTmpl::TypeExecTargetTmpl(
+    ExecKindT           kind,
+    const std::string   &tmpl) : TypeExec(kind), m_template(tmpl) {
 
-    virtual ~TestBase();
+}
 
-    virtual void SetUp() override;
+TypeExecTargetTmpl::~TypeExecTargetTmpl() {
 
-    virtual void TearDown() override;
+}
 
-    void enableDebug(bool en);
+void TypeExecTargetTmpl::addReplacement(
+        int32_t             start,
+        int32_t             end,
+        vsc::dm::ITypeExpr  *expr) {
+    m_replacements.push_back({start, end, expr});
+    m_expr_u.push_back(vsc::dm::ITypeExprUP(expr));
+}
 
-protected:
-    IContextUP                  m_ctxt;
-//    vsc::IRandStateUP           m_randstate;
-};
+void TypeExecTargetTmpl::accept(vsc::dm::IVisitor *v) {
+
+}
 
 }
 }
 }
-
-

@@ -19,14 +19,14 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
+#include "vsc/dm/impl/UP.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 class IDataTypeFunctionImport;
-using IDataTypeFunctionImportUP=std::unique_ptr<IDataTypeFunctionImport>;
+using IDataTypeFunctionImportUP=vsc::dm::UP<IDataTypeFunctionImport>;
 class IDataTypeFunctionImport {
 public:
 

@@ -9,7 +9,7 @@
 #include "zsp/arl/dm/IAccept.h"
 #include "zsp/arl/dm/ITypeExec.h"
 #include "zsp/arl/dm/ITypeFieldActivity.h"
-#include "vsc/dm/IDataTypeStruct.h"
+#include "zsp/arl/dm/IDataTypeStruct.h"
 #include "vsc/dm/ITypeFieldRef.h"
 
 namespace zsp {
@@ -20,7 +20,7 @@ namespace dm {
 class IDataTypeComponent;
 
 class IDataTypeAction;
-using IDataTypeActionUP=std::unique_ptr<IDataTypeAction>;
+using IDataTypeActionUP=vsc::dm::UP<IDataTypeAction>;
 class IDataTypeAction : public virtual vsc::dm::IDataTypeStruct {
 public:
 

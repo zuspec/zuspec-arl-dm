@@ -42,11 +42,16 @@ set_target_properties(libgmock PROPERTIES
 include_directories(
 	"${source_dir}/googletest/include"
 	"${source_dir}/googlemock/include"
+    ${JSON_DIR}/include
+    "${zsp_arl_dm_INCDIR}"
+    "${vsc_dm_INCDIR}"
+    "${vsc_solvers_INCDIR}"
+    "${debug_mgr_INCDIR}"
 	)
 
 file(GLOB test_zuspec_arl_dm_SRC
-  "*.h"
-  "*.cpp"
+  "src/*.h"
+  "src/*.cpp"
   )
 
 add_executable(test-zuspec-arl-dm ${test_zuspec_arl_dm_SRC})
@@ -55,6 +60,10 @@ target_include_directories(test-zuspec-arl-dm PUBLIC
     "${source_dir}/googletest/include"
     ${LIBVSC_DM_DIR}/src/include
     ${LIBVSC_DM_DIR}/src
+    "${zsp_arl_dm_INCDIR}"
+    "${vsc_dm_INCDIR}"
+    "${vsc_solvers_INCDIR}"
+    "${debug_mgr_INCDIR}"
     )
    
 target_link_directories(test-zuspec-arl-dm PRIVATE

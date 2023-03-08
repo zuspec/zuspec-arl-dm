@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "zsp/arl/dm/IVisitor.h"
 #include "DataTypeFunctionParamDecl.h"
 
 
@@ -29,15 +30,22 @@ namespace dm {
 
 DataTypeFunctionParamDecl::DataTypeFunctionParamDecl(
         const std::string       &name,
-        vsc::dm::IDataType          *type,
+        ParamDir                dir,
+        vsc::dm::IDataType      *type,
         bool                    own,
-        vsc::dm::ITypeExpr          *init) : 
-        m_name(name), m_type(type), m_type_u(own?type:0), m_default(init) {
-
+        vsc::dm::ITypeExpr      *dflt) : 
+        TypeProcStmtVarDecl(name, type, own, dflt), m_dir(dir) {
 
 }
 
 DataTypeFunctionParamDecl::~DataTypeFunctionParamDecl() {
+
+}
+
+void DataTypeFunctionParamDecl::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitDataTypeFunctionParamDecl(this);
+    }
 
 }
 

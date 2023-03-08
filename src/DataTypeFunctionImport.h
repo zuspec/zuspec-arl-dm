@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include <string>
 #include "zsp/arl/dm/IDataTypeFunctionImport.h"
 
 

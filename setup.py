@@ -46,7 +46,7 @@ else:
     else:
         raise Exception("Unexpected source layout")
 
-# Now, build the core tblink-rpc-hdl library
+# Now, build the zuspec-arl-dm library
 cwd = os.getcwd()
 if not os.path.isdir(os.path.join(cwd, "build")):
     os.makedirs(os.path.join(cwd, "build"))
@@ -70,6 +70,7 @@ result = subprocess.run(
      "-G%s" % cmake_build_tool,
      "-DCMAKE_BUILD_TYPE=Debug",
      "-DPACKAGES_DIR=%s" % packages_dir,
+     "-DCMAKE_INSTALL_PREFIX=%s" % os.path.join(cwd, "build")
      ],
     cwd=os.path.join(cwd, "build"),
     env=env)
@@ -96,6 +97,33 @@ else:
     raise Exception("Unknown build system %s" % cmake_build_tool)
 if result.returncode != 0:
     raise Exception("build failed")
+
+if cmake_build_tool == "Ninja":
+    result = subprocess.run(
+        ["ninja",
+         "-j",
+         "%d" % os.cpu_count(),
+         "install"
+        ],
+        cwd=os.path.join(cwd, "build"),
+        env=env)
+elif cmake_build_tool == "Unix Makefiles":
+    result = subprocess.run(
+        ["make",
+         "-j%d" % os.cpu_count(),
+         "install"
+        ],
+        cwd=os.path.join(cwd, "build"),
+        env=env)
+else:
+    raise Exception("Unknown build system %s" % cmake_build_tool)
+if result.returncode != 0:
+    raise Exception("build failed")
+
+# Locate required dependencies
+for d in {"debug-mgr", "vsc-dm"}:
+    if os.path.isdir(os.path.join(packages_dir, d, "python")):
+        sys.path.insert(0, os.path.join(packages_dir, d, "python"))
 
 extra_compile_args = sysconfig.get_config_var('CFLAGS').split()
 extra_compile_args = []
@@ -191,8 +219,8 @@ class build_ext(_build_ext):
         package_dir = build_py.get_package_dir(package)
 
         copy_file(
-            os.path.join(cwd, "build", "src", "libzuspec-arl-dm.so"),
-            os.path.join(package_dir, "libzuspec-arl-dm.so"))
+            os.path.join(cwd, "build", "src", "libzsp-arl-dm.so"),
+            os.path.join(package_dir, "libzsp-arl-dm.so"))
                 
         dest_filename = os.path.join(package_dir, filename)
         
@@ -253,8 +281,8 @@ ext = Extension("zsp_arl_dm.core",
 #                os.path.join(zuspec_arl_dm_dir, 'src'),
                 os.path.join(zuspec_arl_dm_dir, 'python'),
                 os.path.join(zuspec_arl_dm_dir, 'src', 'include'),
-                os.path.join(packages_dir, 'libvsc-dm', 'src', 'include'),
-                os.path.join(packages_dir, 'libvsc-dm', 'python'),
+                os.path.join(packages_dir, 'vsc-dm', 'src', 'include'),
+                os.path.join(packages_dir, 'vsc-dm', 'python'),
                 os.path.join(packages_dir, 'debug-mgr', 'src', 'include'),
                 os.path.join(packages_dir, 'debug-mgr', 'python'),
             ]
@@ -276,12 +304,12 @@ setup(
   keywords = ["SystemVerilog", "Verilog", "RTL", "Python"],
   url = "https://github.com/zuspec/zuspec-arl-dm",
   install_requires=[
-    'libvsc-dm',
+    'vsc-dm',
     'debug-mgr'
   ],
   setup_requires=[
     'setuptools_scm',
-    'libvsc-dm',
+    'vsc-dm',
     'debug-mgr',
     'cython',
   ],

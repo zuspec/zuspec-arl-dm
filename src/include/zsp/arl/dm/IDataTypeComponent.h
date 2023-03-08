@@ -9,7 +9,7 @@
 #include <vector>
 #include "zsp/arl/dm/IAccept.h"
 #include "zsp/arl/dm/IPoolBindDirective.h"
-#include "vsc/dm/IDataTypeStruct.h"
+#include "zsp/arl/dm/IDataTypeStruct.h"
 
 namespace zsp {
 namespace arl {
@@ -19,7 +19,7 @@ namespace dm {
 class IDataTypeAction;
 
 class IDataTypeComponent;
-using IDataTypeComponentUP=std::unique_ptr<IDataTypeComponent>;
+using IDataTypeComponentUP=vsc::dm::UP<IDataTypeComponent>;
 class IDataTypeComponent : public virtual vsc::dm::IDataTypeStruct {
 public:
 

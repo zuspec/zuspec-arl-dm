@@ -17,6 +17,7 @@
 #include "DataTypeFunction.h"
 #include "DataTypeFunctionImport.h"
 #include "DataTypeFunctionParamDecl.h"
+#include "DataTypePackedStruct.h"
 #include "DataTypeResource.h"
 #include "ModelActivityIterator.h"
 #include "ModelActivityParallel.h"
@@ -125,7 +126,7 @@ IDataTypeFunction *Context::mkDataTypeFunction(
 }
 
 bool Context::addDataTypeFunction(IDataTypeFunction *f) {
-	if (m_function_type_m.find(f->name()) != m_function_type_m.end()) {
+	if (m_function_type_m.find(f->name()) == m_function_type_m.end()) {
 		m_function_type_m.insert({f->name(), IDataTypeFunctionUP(f)});
 		return true;
 	} else {
@@ -140,10 +141,11 @@ IDataTypeFunctionImport *Context::mkDataTypeFunctionImport(
 
 IDataTypeFunctionParamDecl *Context::mkDataTypeFunctionParamDecl(
 			const std::string		&name,
-			vsc::dm::IDataType			*type,
+            ParamDir                dir,
+			vsc::dm::IDataType		*type,
 			bool					own,
-			vsc::dm::ITypeExpr			*init) {
-	return new DataTypeFunctionParamDecl(name, type, own, init);
+			vsc::dm::ITypeExpr		*dflt) {
+	return new DataTypeFunctionParamDecl(name, dir, type, own, dflt);
 }
 
 IDataTypeActivityParallel *Context::mkDataTypeActivityParallel() {
@@ -232,6 +234,22 @@ bool Context::addDataTypeFlowObj(IDataTypeFlowObj *t) {
 	}
 
 	return it->second.insert({t->name(), IDataTypeFlowObjUP(t)}).second;
+}
+
+IDataTypePackedStruct *Context::findDataTypePackedStruct(
+            const std::string   &name) {
+
+}
+
+IDataTypePackedStruct *Context::mkDataTypePackedStruct(
+            const std::string   &name,
+            Endian              endian) {
+    return new DataTypePackedStruct(name, endian);
+}
+
+bool Context::addDataTypePackedStruct(
+            IDataTypePackedStruct   *type) {
+
 }
 
 IModelActivityParallel *Context::mkModelActivityParallel() {
@@ -328,6 +346,7 @@ IPoolBindDirective *Context::mkPoolBindDirective(
 			vsc::dm::ITypeExprFieldRef	*target) {
 	return new PoolBindDirective(kind, pool, target);
 }
+
 
 ITypeExecProc *Context::mkTypeExecProc(
             ExecKindT               kind,

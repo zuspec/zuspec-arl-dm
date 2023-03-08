@@ -55,7 +55,7 @@ IModelActivity *DataTypeActivityParallel::mkActivity(
     fprintf(stdout, "Parallel: %d activities\n", getActivities().size());
 
     ctxt->pushBottomUpScope(ret);
-    for (std::vector<ITypeFieldActivity *>::const_iterator
+    for (std::vector<ITypeFieldActivityUP>::const_iterator
         it=getActivities().begin();
         it!=getActivities().end(); it++) {
         IModelActivity *activity = (*it)->mkActivity(ctxt);

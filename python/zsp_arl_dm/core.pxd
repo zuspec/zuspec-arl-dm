@@ -5,8 +5,8 @@ from zsp_arl_dm cimport decl
 
 from libc.stdint cimport int32_t
 from libcpp cimport bool
-cimport libvsc_dm.core as vsc
-cimport libvsc_dm.decl as vsc_decl
+cimport vsc_dm.core as vsc
+cimport vsc_dm.decl as vsc_decl
 
 cdef class Factory(object):
     cdef decl.IFactory      *_hndl
@@ -146,28 +146,27 @@ cdef class ModelBuildContext(vsc.ModelBuildContext):
     pass
 
 
-# TODO:
-# cdef class ModelEvaluator(object):    
-#     cdef decl.IModelEvaluator        *_hndl
+#cdef class ModelEvaluator(object):    
+#    cdef decl.IModelEvaluator        *_hndl
+#  
+#    cpdef ModelEvalIterator eval(self, 
+#                        vsc.RandState       randstate, 
+#                        ModelFieldComponent root_comp,
+#                        DataTypeAction      root_action)
+#    
+#    @staticmethod
+#    cdef ModelEvaluator mk(decl.IModelEvaluator *)
     
-#     cpdef ModelEvalIterator eval(self, 
-#                         vsc.RandState       randstate, 
-#                         ModelFieldComponent root_comp,
-#                         DataTypeAction      root_action)
+cdef class ModelEvalIterator(object):
+    cdef decl.IModelEvalIterator    *_hndl
+  
+    cpdef bool next(self)
+    cpdef type(self)
+    cpdef ModelFieldAction action(self)
+    cpdef ModelEvalIterator iterator(self)
     
-#     @staticmethod
-#     cdef ModelEvaluator mk(decl.IModelEvaluator *)
-    
-# cdef class ModelEvalIterator(object):
-#     cdef decl.IModelEvalIterator    *_hndl
-    
-#     cpdef bool next(self)
-#     cpdef type(self)
-#     cpdef ModelFieldAction action(self)
-#     cpdef ModelEvalIterator iterator(self)
-    
-#     @staticmethod
-#     cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
+    @staticmethod
+    cdef ModelEvalIterator mk(decl.IModelEvalIterator *)
 
 cdef class ModelFieldAction(vsc.ModelField):
 

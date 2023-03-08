@@ -40,6 +40,13 @@ public:
 
     virtual IContext *mkContext(vsc::dm::IContext *ctxt) override;
 
+    virtual IRewriteContext *mkRewriteContext(
+            IContext                                *ctxt,
+            const std::vector<vsc::dm::IAccept *>   &roots) override;
+
+    virtual ITypeModelDumper *mkTypeModelDumperJSON(
+        std::ostream *out, int32_t indent) override;
+
     static IFactory *inst();
 
 private:

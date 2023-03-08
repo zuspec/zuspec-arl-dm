@@ -1,5 +1,5 @@
 
-cimport libvsc_dm.decl as vsc
+cimport vsc_dm.decl as vsc
 cimport debug_mgr.decl as dm
 
 from libcpp.string cimport string as cpp_string
@@ -12,7 +12,7 @@ cimport cpython.ref as cpy_ref
 ctypedef IContext *IContextP
 ctypedef IDataTypeAction *IDataTypeActionP
 ctypedef IDataTypeActivity *IDataTypeActivityP
-ctypedef unique_ptr[IDataTypeActivity] IDataTypeActivityUP
+ctypedef vsc.UP[IDataTypeActivity] IDataTypeActivityUP
 ctypedef IDataTypeActivityScope *IDataTypeActivityScopeP
 ctypedef IDataTypeActivityParallel *IDataTypeActivityParallelP
 ctypedef IDataTypeActivityReplicate *IDataTypeActivityReplicateP
@@ -30,9 +30,9 @@ ctypedef IModelFieldComponentRoot *IModelFieldComponentRootP
 ctypedef IModelFieldExecutor *IModelFieldExecutorP
 ctypedef IModelFieldPool *IModelFieldPoolP
 ctypedef IPoolBindDirective *IPoolBindDirectiveP
-ctypedef unique_ptr[IPoolBindDirective] IPoolBindDirectiveUP
+ctypedef vsc.UP[IPoolBindDirective] IPoolBindDirectiveUP
 ctypedef ITypeFieldActivity *ITypeFieldActivityP
-ctypedef unique_ptr[ITypeFieldActivity] ITypeFieldActivityUP
+ctypedef vsc.UP[ITypeFieldActivity] ITypeFieldActivityUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
 ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
@@ -95,7 +95,7 @@ cdef extern from "zsp/arl/dm/IDataTypeActivity.h" namespace "zsp::arl::dm":
 cdef extern from "zsp/arl/dm/IDataTypeActivityScope.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeActivityScope(IDataTypeActivity, vsc.IDataTypeStruct):
         void addActivity(ITypeFieldActivity *)
-        const cpp_vector[ITypeFieldActivityP] &getActivities() const
+        const cpp_vector[ITypeFieldActivityUP] &getActivities() const
         # const cpp_string &name() const
         # void addField(vsc.ITypeField *)
         # vsc.ITypeField *getField(int32_t idx)
@@ -159,24 +159,23 @@ cdef extern from "zsp/arl/dm/IModelBuildContext.h" namespace "zsp::arl::dm":
         IContext *ctxt()
         pass
 
-# TODO:
-# cdef extern from "zsp/arl/dm/IModelEvaluator.h" namespace "zsp::arl::dm":
-#     cdef cppclass IModelEvaluator:
-#         IModelEvalIterator *eval(
-#             vsc.IRandState *,
-#             IModelFieldComponent *, 
-#             IDataTypeAction *)
+#cdef extern from "zsp/arl/dm/IModelEvaluator.h" namespace "zsp::arl::dm":
+#    cdef cppclass IModelEvaluator:
+#        IModelEvalIterator *eval(
+#            vsc.IRandState *,
+#            IModelFieldComponent *, 
+#            IDataTypeAction *)
 
-# cdef extern from "zsp/arl/dm/IModelEvalIterator.h" namespace "zsp::arl::dm":
-#     cdef enum ModelEvalNodeT:
-#         Action   "zsp::arl::dm::ModelEvalNodeT::Action"
-#         Parallel "zsp::arl::dm::ModelEvalNodeT::Parallel"
-#         Sequence "zsp::arl::dm::ModelEvalNodeT::Sequence"
-#     cdef cppclass IModelEvalIterator:
-#         bool next()
-#         ModelEvalNodeT type() const
-#         IModelFieldAction *action()
-#        IModelEvalIterator *iterator()
+cdef extern from "zsp/arl/dm/IModelEvalIterator.h" namespace "zsp::arl::dm":
+    cdef enum ModelEvalNodeT:
+        Action   "zsp::arl::dm::ModelEvalNodeT::Action"
+        Parallel "zsp::arl::dm::ModelEvalNodeT::Parallel"
+        Sequence "zsp::arl::dm::ModelEvalNodeT::Sequence"
+    cdef cppclass IModelEvalIterator:
+        bool next()
+        ModelEvalNodeT type() const
+        IModelFieldAction *action()
+        IModelEvalIterator *iterator()
 
 cdef extern from "zsp/arl/dm/IModelEvalIterator.h" namespace "zsp::arl::dm":
     cdef cppclass IModelEvalIterator:
@@ -212,6 +211,12 @@ cdef extern from "zsp/arl/dm/IPoolBindDirective.h" namespace "zsp::arl::dm":
         PoolBindKind kind() const
         vsc.ITypeExprFieldRef *getPool() const
         vsc.ITypeExprFieldRef *getTarget() const
+
+cdef extern from "zsp/arl/dm/ITypeExec.h" namespace "zsp::arl::dm":
+    cdef enum ExecKindT:
+        ExecBody "zsp::arl::dm::ExecKindT::Body"
+        ExecPreSolve "zsp::arl::dm::ExecKindT::PreSolve"
+        ExecPostSolve "zsp::arl::dm::ExecKindT::PostSolve"
     
 cdef extern from "zsp/arl/dm/ITypeFieldActivity.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeFieldActivity(vsc.ITypeField):

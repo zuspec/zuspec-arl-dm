@@ -19,7 +19,7 @@ namespace dm {
 class IModelActivity;
 
 class IDataTypeActivity;
-using IDataTypeActivityUP=std::unique_ptr<IDataTypeActivity>;
+using IDataTypeActivityUP=vsc::dm::UP<IDataTypeActivity>;
 class IDataTypeActivity : public virtual vsc::dm::IDataType {
 public:
 

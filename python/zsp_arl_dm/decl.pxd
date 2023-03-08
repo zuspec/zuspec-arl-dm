@@ -21,10 +21,13 @@ ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
+ctypedef IDataTypeFunction *IDataTypeFunctionP
 ctypedef IFactory *IFactoryP
+ctypedef IModelEvalIterator *IModelEvalIteratorP
 ctypedef IModelFieldAction *IModelFieldActionP
 ctypedef IModelFieldComponent *IModelFieldComponentP
 ctypedef IModelFieldComponentRoot *IModelFieldComponentRootP
+ctypedef IModelFieldExecutor *IModelFieldExecutorP
 ctypedef IModelFieldPool *IModelFieldPoolP
 ctypedef IPoolBindDirective *IPoolBindDirectiveP
 ctypedef vsc.UP[IPoolBindDirective] IPoolBindDirectiveUP
@@ -33,6 +36,8 @@ ctypedef vsc.UP[ITypeFieldActivity] ITypeFieldActivityUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
 ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
+ctypedef ITypeProcStmt *ITypeProcStmtP 
+ctypedef ITypeProcStmtDeclScope *ITypeProcStmtDeclScopeP 
 
 cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
     cdef cppclass IContext(vsc.IContext):
@@ -140,6 +145,10 @@ cdef extern from "zsp/arl/dm/IDataTypeFlowObj.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeFlowObj(vsc.IDataTypeStruct):
         FlowObjKindE kind() const
 
+cdef extern from "zsp/arl/IDataTypeFunction.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypeFunction(ITypeProcStmtDeclScope):
+        pass
+
 cdef extern from "zsp/arl/dm/IFactory.h" namespace "zsp::arl::dm":
     cdef cppclass IFactory:
         void init(dm.IDebugMgr *)
@@ -168,6 +177,10 @@ cdef extern from "zsp/arl/dm/IModelEvalIterator.h" namespace "zsp::arl::dm":
         IModelFieldAction *action()
         IModelEvalIterator *iterator()
 
+cdef extern from "zsp/arl/dm/IModelEvalIterator.h" namespace "zsp::arl::dm":
+    cdef cppclass IModelEvalIterator:
+        pass
+
 cdef extern from "zsp/arl/dm/IModelFieldAction.h" namespace "zsp::arl::dm":
     cdef cppclass IModelFieldAction(vsc.IModelField):
         bool isCompound() const
@@ -180,6 +193,10 @@ cdef extern from "zsp/arl/dm/IModelFieldComponent.h" namespace "zsp::arl::dm":
 cdef extern from "zsp/arl/dm/IModelFieldComponentRoot.h" namespace "zsp::arl::dm":
     cdef cppclass IModelFieldComponentRoot(IModelFieldComponent):
         void initCompTree()
+
+cdef extern from "zsp/arl/dm/IModelFieldExecutor.h" namespace "zsp::arl::dm":
+    cdef cppclass IModelFieldExecutor(vsc.IModelField):
+        pass
 
 cdef extern from "zsp/arl/dm/IModelFieldPool.h" namespace "zsp::arl::dm":
     cdef cppclass IModelFieldPool(vsc.IModelField):

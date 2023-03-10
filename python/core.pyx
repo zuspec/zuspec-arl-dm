@@ -592,6 +592,10 @@ cdef class ModelFieldComponentRoot(ModelFieldComponent):
         ret._owned = owned
         return ret
 
+cdef class ModelFieldExecutor(vsc.ModelField):
+    cdef decl.IModelFieldExecutor *asExecutor(self):
+        return dynamic_cast[decl.IModelFieldExecutorP](self._hndl)
+
 cdef class ModelFieldPool(vsc.ModelField):
     cdef decl.IModelFieldPool *asPool(self):
         return dynamic_cast[decl.IModelFieldPoolP](self._hndl)

@@ -193,6 +193,10 @@ cdef class ModelFieldComponentRoot(ModelFieldComponent):
     @staticmethod
     cdef ModelFieldComponentRoot mk(decl.IModelFieldComponentRoot *, bool owned=*)
 
+cdef class ModelFieldExecutor(vsc.ModelField):
+
+    cdef decl.IModelFieldExecutor *asExecutor(self)
+
 cdef class ModelFieldPool(vsc.ModelField):
 
     cdef decl.IModelFieldPool *asPool(self)

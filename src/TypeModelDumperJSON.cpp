@@ -32,7 +32,7 @@ namespace dm {
 TypeModelDumperJSON::TypeModelDumperJSON(
     dmgr::IDebugMgr     *dmgr,
     std::ostream        *out,
-    int32_t             indent) : m_out(out), m_indent(indent) {
+    int32_t             indent) : VisitorBase(this), m_out(out), m_indent(indent) {
     DEBUG_INIT("TypeModelDumperJSON", dmgr);
     m_type_id = 0;
 }
@@ -222,7 +222,7 @@ void TypeModelDumperJSON::visitDataTypeInt(vsc::dm::IDataTypeInt *t) {
     addType(t, type);
 }
 
-void TypeModelDumperJSON::visitDataTypeStruct(IDataTypeStruct *t) {
+void TypeModelDumperJSON::visitDataTypeStruct(vsc::dm::IDataTypeStruct *t) {
     bool is_root = !m_active;
     DEBUG_ENTER("visitDataTypeStruct %s (is_root=%d)", t->name().c_str(), is_root);
     nlohmann::json type;

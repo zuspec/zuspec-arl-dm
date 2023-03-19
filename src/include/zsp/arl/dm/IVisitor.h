@@ -98,7 +98,9 @@ public:
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) = 0;
 
+    /*
 	virtual void visitDataTypeStruct(IDataTypeStruct *t) = 0;
+     */
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) = 0;
 

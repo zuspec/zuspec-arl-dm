@@ -101,10 +101,12 @@ public:
 				&vsc::dm::IVisitor::visitDataTypeStruct, t);
 	}
 
+    /*
 	virtual void visitDataTypeStruct(IDataTypeStruct *t) override {
 		delegate(&arl::dm::IVisitor::visitDataTypeStruct,
 				&vsc::dm::IVisitor::visitDataTypeStruct, t);
 	}
+     */
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) override {
 		delegate(&arl::dm::IVisitor::visitModelActivityBind, a);

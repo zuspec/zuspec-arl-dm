@@ -138,9 +138,11 @@ public:
 		dynamic_cast<IVisitor *>(m_this)->visitDataTypeFlowObj(t);
 	}
 
+    /*
 	virtual void visitDataTypeStruct(IDataTypeStruct *t) override {
 		m_this->visitDataTypeStruct(static_cast<vsc::dm::IDataTypeStruct *>(t));
 	}
+     */
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) override {
 		for (std::vector<vsc::dm::IModelExprUP>::const_iterator

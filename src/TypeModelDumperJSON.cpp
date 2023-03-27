@@ -77,7 +77,21 @@ void TypeModelDumperJSON::visitDataTypeAction(IDataTypeAction *i) {
     type["activities"] = {};
 
     m_active = &type;
-    VisitorBase::visitDataTypeAction(i);
+    m_this->visitDataTypeStruct(i);
+    m_active = 0;
+
+    // Now,
+    DEBUG("Action: %s ; activities=%d", 
+        i->name().c_str(),
+        i->activities().size());
+    m_active = &type;
+    m_json_s.push_back(&type["activities"]);
+	for (std::vector<ITypeFieldActivity *>::const_iterator
+			it=i->activities().begin();
+			it!=i->activities().end(); it++) {
+		(*it)->accept(m_this);
+	}
+    m_json_s.pop_back();
     m_active = 0;
 
     addType(i, type);
@@ -86,7 +100,24 @@ void TypeModelDumperJSON::visitDataTypeAction(IDataTypeAction *i) {
 }
 
 void TypeModelDumperJSON::visitDataTypeActivityBind(IDataTypeActivityBind *t) { 
+    DEBUG_ENTER("visitDataTypeActivityBind");
+    nlohmann::json type;
 
+    type["kind"] = "data-type-activity-bind";
+    nlohmann::json &blist = type["bind-list"];
+    blist = {};
+
+    for (std::vector<vsc::dm::ITypeExprFieldRefUP>::const_iterator
+        it=t->getTargets().begin();
+        it!=t->getTargets().end(); it++) {
+        nlohmann::json expr;
+        visitExpr(expr, it->get());
+        blist.push_back(expr);
+    }
+
+    m_json_s.back()->push_back(type);
+
+    DEBUG_LEAVE("visitDataTypeActivityBind");
 }
 
 void TypeModelDumperJSON::visitDataTypeActivityParallel(IDataTypeActivityParallel *t) { 
@@ -103,6 +134,22 @@ void TypeModelDumperJSON::visitDataTypeActivitySchedule(IDataTypeActivitySchedul
 
 void TypeModelDumperJSON::visitDataTypeActivitySequence(IDataTypeActivitySequence *t) { 
     DEBUG_ENTER("visitDataTypeActivitySequence");
+    nlohmann::json &type = (*m_json_s.back())["type"];
+
+    type["kind"] = "data-type-activity-sequence";
+    nlohmann::json &body = type["body"];
+
+    body = {};
+    if (t->getActivities().size()) {
+    }
+
+    m_json_s.push_back(&body);
+    for (std::vector<ITypeFieldActivityUP>::const_iterator
+        it=t->getActivities().begin();
+        it!=t->getActivities().end(); it++) {
+        (*it)->accept(m_this);
+    }
+    m_json_s.pop_back();
 
     DEBUG_LEAVE("visitDataTypeActivitySequence");
 }
@@ -117,7 +164,7 @@ void TypeModelDumperJSON::visitDataTypeActivityTraverse(IDataTypeActivityTravers
     if (m_json_s.size() == 0) {
         addType(t, type);
     } else {
-        *m_json_s.back() = type;
+        m_json_s.back()->push_back(type);
     }
 
     DEBUG_LEAVE("visitDataTypeActivityTraverse");
@@ -411,9 +458,12 @@ void TypeModelDumperJSON::visitTypeFieldActivity(ITypeFieldActivity *f) {
         field["type-id"] = getTypeIdx(f->getDataType());
     }
 
+    m_json_s.back()->push_back(field);
+    /*
     if (m_active) {
         (*m_active)["activities"].push_back(field);
     }
+     */
     DEBUG_ENTER("visitTypeFieldActivity");
 }
 

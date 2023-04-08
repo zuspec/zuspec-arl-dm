@@ -61,6 +61,8 @@ public:
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override;
 
+	virtual void visitDataTypeBool(vsc::dm::IDataTypeBool *t) override;
+
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override;
 
 	virtual void visitDataTypeEnum(vsc::dm::IDataTypeEnum *t) override;

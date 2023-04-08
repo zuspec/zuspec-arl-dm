@@ -170,6 +170,15 @@ void TypeModelDumperJSON::visitDataTypeActivityTraverse(IDataTypeActivityTravers
     DEBUG_LEAVE("visitDataTypeActivityTraverse");
 }
 
+void TypeModelDumperJSON::visitDataTypeBool(vsc::dm::IDataTypeBool *t) {
+    DEBUG_ENTER("visitDataTypeBool");
+    nlohmann::json type;
+    type["kind"] = "data-type-bool";
+
+    addType(t, type);
+    DEBUG_LEAVE("visitDataTypeBool");
+}
+
 void TypeModelDumperJSON::visitDataTypeComponent(IDataTypeComponent *t) {
     DEBUG_ENTER("visitDataTypeComponent %s", t->name().c_str());
     nlohmann::json type;

@@ -42,8 +42,6 @@ IModelActivity *DataTypeActivityTraverse::mkActivity(
 	IModelFieldAction *target_a = dynamic_cast<IModelFieldAction *>(target);
 	vsc::dm::IModelConstraint *with_c = 0;
 
-	fprintf(stdout, "target=%p target_a=%p\n", target, target_a);
-
 	if (!target_a) {
 		throw "Error";
 	}
@@ -51,8 +49,6 @@ IModelActivity *DataTypeActivityTraverse::mkActivity(
 	if (type_t->getWithC()) {
 		with_c = TaskBuildModelConstraint(ctxt_a).build(type_t->getWithC());
 	}
-
-	fprintf(stdout, "DataTypeActivity::mkActivity with_c=%p (%p)\n", type_t->getWithC(), with_c);
 
 	IModelActivityTraverse *ret = ctxt_a->ctxt()->mkModelActivityTraverse(
 		target_a,

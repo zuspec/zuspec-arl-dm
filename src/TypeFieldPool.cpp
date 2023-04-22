@@ -20,7 +20,8 @@ TypeFieldPool::TypeFieldPool(
 		bool						own,
 		vsc::dm::TypeFieldAttr			attr,
 		int32_t						decl_size) : TypeField(name, 0, false, attr),
-			m_pool_t(type), m_pool_t_u((own)?type:0) {
+			m_pool_t(type), m_pool_t_u((own)?type:0),
+            m_decl_size(decl_size) {
 	vsc::dm::IDataTypeInt *i32_t = ctxt->findDataTypeInt(true, 32);
 	if (!i32_t) {
 		i32_t = ctxt->mkDataTypeInt(true, 32);
@@ -48,7 +49,6 @@ vsc::dm::IModelField *TypeFieldPool::mkModelField(
 		vsc::dm::IModelBuildContext 			*ctxt) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 	IModelFieldPool *pool = ctxt_a->mkModelFieldPoolType(this);
-	fprintf(stdout, "TypeFieldPool::mkModelField\n");
 
 	pool->setDataTypePool(m_pool_t);
 

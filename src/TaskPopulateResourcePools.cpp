@@ -70,7 +70,9 @@ void TaskPopulateResourcePools::visitDataTypeResource(IDataTypeResource *t) {
         DEBUG("Pool size: %d", sz);
         for (uint32_t i=0; i<sz; i++) {
             char tmp[64];
-            snprintf(tmp, sizeof(tmp), "%s[%d]", m_pool->name().c_str(), t->name().c_str());
+            snprintf(tmp, sizeof(tmp), "%s[%d]", 
+			    m_pool->name().c_str(), 
+			    i);
             vsc::dm::IModelField *obj = t->mkRootField(
                 &build_ctxt,
                 tmp,

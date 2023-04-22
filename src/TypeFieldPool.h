@@ -27,7 +27,11 @@ public:
 
 	virtual ~TypeFieldPool();
 
-	virtual int32_t getDeclSize() override { return -1; }
+	virtual int32_t getDeclSize() override { return m_decl_size; }
+
+    virtual vsc::dm::IDataType *getElemDataType() override {
+        return m_pool_t;
+    }
 
 	virtual vsc::dm::IModelField *mkModelField(
 		vsc::dm::IModelBuildContext 			*ctxt) override;
@@ -37,7 +41,7 @@ public:
 private:
 	vsc::dm::IDataType						*m_pool_t;
 	vsc::dm::IDataTypeUP					m_pool_t_u;
-	vsc::dm::ITypeField						*m_decl_size;
+    int32_t                                 m_decl_size;
 
 };
 

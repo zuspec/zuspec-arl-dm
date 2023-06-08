@@ -20,6 +20,8 @@ public:
 
 	virtual int32_t getDeclSize() = 0;
 
+    virtual vsc::dm::IDataType *getElemDataType() = 0;
+
 };
 
 }

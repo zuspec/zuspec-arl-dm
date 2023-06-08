@@ -65,7 +65,6 @@ vsc::dm::IModelField *DataTypeComponent::mkRootField(
 	vsc::dm::IModelField *ret;
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
-	fprintf(stdout, "DataTypeComponent::mkRootField %s %d\n", name.c_str(), is_ref);
 	if (is_ref) {
 		ret = ctxt_a->mkModelFieldRefRoot(this, name);
 	} else {

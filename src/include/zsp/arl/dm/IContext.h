@@ -123,6 +123,12 @@ public:
 			const std::string 	&name,
 			FlowObjKindE		kind) = 0;
 
+    template <class T> T *mkDataTypeFlowObjT(
+			const std::string 	&name,
+			FlowObjKindE		kind) {
+        return dynamic_cast<T *>(mkDataTypeFlowObj(name, kind));
+    }
+
 	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
 
     virtual IDataTypePackedStruct *findDataTypePackedStruct(

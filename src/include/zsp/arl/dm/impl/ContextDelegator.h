@@ -101,192 +101,286 @@ public:
         return ctxt()->mkDataTypeActivityReplicate(count);
     }
 
-	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() { }
+	virtual IDataTypeActivitySchedule *mkDataTypeActivitySchedule() { 
+        return ctxt()->mkDataTypeActivitySchedule();
+    }
 
-	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() { }
+	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() { 
+        return ctxt()->mkDataTypeActivitySequence();
+    }
 
 	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
 			vsc::dm::ITypeExprFieldRef 		*target,
-			vsc::dm::ITypeConstraint		*with_c) { }
+			vsc::dm::ITypeConstraint		*with_c) { 
+        return ctxt()->mkDataTypeActivityTraverse(target, with_c);
+    }
 
-	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) { }
+	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) { 
+        return ctxt()->findDataTypeComponent(name);
+    }
 
-	virtual IDataTypeComponent *mkDataTypeComponent(const std::string &name) { }
+	virtual IDataTypeComponent *mkDataTypeComponent(const std::string &name) { 
+        return ctxt()->mkDataTypeComponent(name);
+    }
 
-	virtual bool addDataTypeComponent(IDataTypeComponent *t) { }
+	virtual bool addDataTypeComponent(IDataTypeComponent *t) { 
+        return ctxt()->addDataTypeComponent(t);
+    }
 
 	virtual IDataTypeFlowObj *findDataTypeFlowObj(
 			const std::string 	&name, 
-			FlowObjKindE 		kind) { }
+			FlowObjKindE 		kind) { 
+        return ctxt()->findDataTypeFlowObj(name, kind);
+    }
 
 	virtual IDataTypeFlowObj *mkDataTypeFlowObj(
 			const std::string 	&name,
-			FlowObjKindE		kind) { }
+			FlowObjKindE		kind) { 
+        return ctxt()->mkDataTypeFlowObj(name, kind);
+    }
 
-	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) { }
+	virtual bool addDataTypeFlowObj(IDataTypeFlowObj *t) { 
+        return ctxt()->addDataTypeFlowObj(t);
+    }
 
     virtual IDataTypePackedStruct *findDataTypePackedStruct(
             const std::string   &name) {
-
+        return ctxt()->findDataTypePackedStruct(name);
     }
 
     virtual IDataTypePackedStruct *mkDataTypePackedStruct(
             const std::string   &name,
             Endian              endian=Endian::Little) override {
-
+        return ctxt()->mkDataTypePackedStruct(name, endian);
     }
 
     virtual bool addDataTypePackedStruct(
             IDataTypePackedStruct   *type) override {
-
+        return ctxt()->addDataTypePackedStruct(type);
     }
 
-	virtual IModelActivityParallel *mkModelActivityParallel() { }
+	virtual IModelActivityParallel *mkModelActivityParallel() { 
+        return ctxt()->mkModelActivityParallel();
+    }
 
 	virtual IModelActivityReplicate *mkModelActivityReplicate(
-			vsc::dm::IModelExpr			*count) { }
+			vsc::dm::IModelExpr			*count) { 
+        return ctxt()->mkModelActivityReplicate(count);
+    }
 
-	virtual IModelActivitySchedule *mkModelActivitySchedule() { }
+	virtual IModelActivitySchedule *mkModelActivitySchedule() { 
+        return ctxt()->mkModelActivitySchedule();
+    }
 
-	virtual IModelActivityScope *mkModelActivityScope(ModelActivityScopeT t) { }
+	virtual IModelActivityScope *mkModelActivityScope(ModelActivityScopeT t) { 
+        return ctxt()->mkModelActivityScope(t);
+    }
 
-	virtual IModelActivitySequence *mkModelActivitySequence() { }
+	virtual IModelActivitySequence *mkModelActivitySequence() { 
+        return ctxt()->mkModelActivitySequence();
+    }
 
 	virtual IModelActivityTraverse *mkModelActivityTraverse(
 			IModelFieldAction		*target,
 			vsc::dm::IModelConstraint	*with_c,
 			bool					own_with_c,
 			IModelActivity			*activity,
-			bool					owned) { }
+			bool					owned) { 
+        return ctxt()->mkModelActivityTraverse(target, with_c, own_with_c, activity, owned);
+    }
 
     virtual IModelEvalIterator *mkModelEvalIterator(
-            IModelActivityScope     *activity) { }
+            IModelActivityScope     *activity) { 
+        return ctxt()->mkModelEvalIterator(activity);
+    }
 
 	virtual IModelFieldAction *mkModelFieldActionRoot(
 			const std::string		&name,
-			IDataTypeAction			*type) { }
+			IDataTypeAction			*type) { 
+        return ctxt()->mkModelFieldActionRoot(name, type);
+    }
 
 	virtual IModelFieldAction *mkModelFieldActionType(
-			vsc::dm::ITypeField			*type) { }
+			vsc::dm::ITypeField			*type) { 
+        return ctxt()->mkModelFieldActionType(type);
+    }
 
 	virtual IModelFieldClaim *mkModelFieldClaim(
-			ITypeFieldClaim			*type) { }
+			ITypeFieldClaim			*type) { 
+        return ctxt()->mkModelFieldClaim(type);
+    }
 
 	virtual IModelFieldComponent *mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,
-			const std::string		&name) { }
+			const std::string		&name) { 
+        return ctxt()->mkModelFieldComponentRoot(type, name);
+    }
 
 	virtual IModelFieldComponent *mkModelFieldComponentType(
-			vsc::dm::ITypeField			*type) { }
+			vsc::dm::ITypeField			*type) { 
+        return ctxt()->mkModelFieldComponentType(type);
+    }
 
 	virtual IModelFieldExecutor *mkModelFieldExecutor(
-			vsc::dm::ITypeField			*type) { }
+			vsc::dm::ITypeField			*type) { 
+        return ctxt()->mkModelFieldExecutor(type);
+    }
 
 	virtual IModelFieldExecutorClaim *mkModelFieldExecutorClaim(
-			vsc::dm::ITypeField			*type) { }
+			vsc::dm::ITypeField			*type) { 
+        return ctxt()->mkModelFieldExecutorClaim(type);
+    }
 
 	virtual IModelFieldInOut *mkModelFieldInOut(
-			ITypeFieldInOut			*type) { }
+			ITypeFieldInOut			*type) { 
+        return ctxt()->mkModelFieldInOut(type);
+    }
 
 	virtual IModelFieldPool *mkModelFieldPoolType(
-			vsc::dm::ITypeField			*type) { }
+			vsc::dm::ITypeField			*type) { 
+        return ctxt()->mkModelFieldPoolType(type);
+    }
 
 	virtual IPoolBindDirective *mkPoolBindDirective(
 			PoolBindKind				kind,
 			vsc::dm::ITypeExprFieldRef		*pool,
-			vsc::dm::ITypeExprFieldRef		*target) { }
+			vsc::dm::ITypeExprFieldRef		*target) { 
+        return ctxt()->mkPoolBindDirective(kind, pool, target);
+    }
 
     virtual ITypeExecProc *mkTypeExecProc(
             ExecKindT               kind,
-            ITypeProcStmtScope      *body) { }
+            ITypeProcStmtScope      *body) { 
+        return ctxt()->mkTypeExecProc(kind, body);
+    }
 
     virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallContext(
             IDataTypeFunction                           *target,
             vsc::dm::ITypeExpr                          *context,
-            const std::vector<vsc::dm::ITypeExpr *>     &params) { }
+            const std::vector<vsc::dm::ITypeExpr *>     &params) { 
+        return ctxt()->mkTypeExprMethodCallContext(target, context, params);
+    }
 
     virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallStatic(
             IDataTypeFunction                           *target,
-            const std::vector<vsc::dm::ITypeExpr *>     &params) { }
+            const std::vector<vsc::dm::ITypeExpr *>     &params) { 
+        return ctxt()->mkTypeExprMethodCallStatic(target, params);
+    }
 
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
 			IDataTypeActivity		*type,
-			bool					owned) { }
+			bool					owned) { 
+        return ctxt()->mkTypeFieldActivity(name, type, owned);
+    }
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,
 			vsc::dm::IDataType			*type,
-			bool					is_lock) { }
+			bool					is_lock) { 
+        return ctxt()->mkTypeFieldClaim(name, type, is_lock);
+    }
 
 	virtual ITypeFieldExecutor *mkTypeFieldExecutor(
 			const std::string		&name,
 			vsc::dm::IDataType			*type,
-			bool					owned) { }
+			bool					owned) { 
+        return ctxt()->mkTypeFieldExecutor(name, type, owned);
+    }
 
 	virtual ITypeFieldExecutorClaim *mkTypeFieldExecutorClaim(
 			const std::string		&name,
 			vsc::dm::IDataType			*type,
-			bool					owned) { }
+			bool					owned) { 
+        return ctxt()->mkTypeFieldExecutorClaim(name, type, owned);
+    }
 
 	virtual ITypeFieldInOut *mkTypeFieldInOut(
 			const std::string		&name,
 			vsc::dm::IDataType			*type,
-			bool					is_input) { }
+			bool					is_input) { 
+        return ctxt()->mkTypeFieldInOut(name, type, is_input);
+    }
 
 	virtual ITypeFieldPool *mkTypeFieldPool(
 			const std::string		&name,
 			vsc::dm::IDataType			*type,
 			bool					own,
 			vsc::dm::TypeFieldAttr		attr,
-			int32_t					decl_size) { }
+			int32_t					decl_size) { 
+        return ctxt()->mkTypeFieldPool(name, type, own, attr, decl_size);
+    }
 
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
 			vsc::dm::ITypeExprFieldRef		*lhs,
 			TypeProcStmtAssignOp		op,
-			vsc::dm::ITypeExpr				*rhs) { }
+			vsc::dm::ITypeExpr				*rhs) { 
+        return ctxt()->mkTypeProcStmtAssign(lhs, op, rhs);
+    }
 
-	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() { }
+	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() { 
+        return ctxt()->mkTypeProcStmtBreak();
+    }
 
-	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() { }
+	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() { 
+        return ctxt()->mkTypeProcStmtContinue();
+    }
 
-	virtual ITypeProcStmtExpr *mkTypeProcStmtExpr(
-            vsc::dm::ITypeExpr *e) { }
+	virtual ITypeProcStmtExpr *mkTypeProcStmtExpr(vsc::dm::ITypeExpr *e) { 
+        return ctxt()->mkTypeProcStmtExpr(e);
+    }
 
 	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(
 			vsc::dm::ITypeExpr		*target,
-			ITypeProcStmt		*body) { }
+			ITypeProcStmt		*body) { 
+        return ctxt()->mkTypeProcStmtForeach(target, body);
+    }
 
 	virtual ITypeProcStmtIfElse *mkTypeProcStmtIfElse(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*true_s,
-			ITypeProcStmt		*false_s) { }
+			ITypeProcStmt		*false_s) { 
+        return ctxt()->mkTypeProcStmtIfElse(cond, true_s, false_s);
+    }
 	
 	virtual ITypeProcStmtMatch *mkTypeProcStmtMatch(
-			vsc::dm::ITypeExpr		*cond) { }
+			vsc::dm::ITypeExpr		*cond) { 
+        return ctxt()->mkTypeProcStmtMatch(cond);
+    }
 
 	virtual ITypeProcStmtRepeat *mkTypeProcStmtRepeat(
 			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*body) { }
+			ITypeProcStmt		*body) { 
+        return ctxt()->mkTypeProcStmtRepeat(cond, body);
+    }
 
 	virtual ITypeProcStmtRepeatWhile *mkTypeProcStmtRepeatWhile(
 			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*body) { }
+			ITypeProcStmt		*body) { 
+        return ctxt()->mkTypeProcStmtRepeatWhile(cond, body);
+    }
 
-	virtual ITypeProcStmtReturn *mkTypeProcStmtReturn(
-			vsc::dm::ITypeExpr		*expr) { }
+	virtual ITypeProcStmtReturn *mkTypeProcStmtReturn(vsc::dm::ITypeExpr *expr) { 
+        return ctxt()->mkTypeProcStmtReturn(expr);
+    }
 
-	virtual ITypeProcStmtScope *mkTypeProcStmtScope() { }
+	virtual ITypeProcStmtScope *mkTypeProcStmtScope() { 
+        return ctxt()->mkTypeProcStmtScope();
+    }
 
 	virtual ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(
 			const std::string	 &name,
 			vsc::dm::IDataType		 *type,
 			bool				 own,
-			vsc::dm::ITypeExpr		 *init) { }
+			vsc::dm::ITypeExpr		 *init) { 
+        return ctxt()->mkTypeProcStmtVarDecl(name, type, own, init);
+    }
 
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*body) { }
+			ITypeProcStmt		*body) { 
+        return ctxt()->mkTypeProcStmtWhile(cond, body);
+    }
 
 protected:
     IContext *ctxt() const { return dynamic_cast<IContext *>(m_ctxt.get()); }

@@ -83,6 +83,10 @@ public:
 			const std::string		&name,
 			vsc::dm::IDataType		*rtype,
 			bool					own_rtype) = 0;
+
+	virtual bool addDataTypeFunction(IDataTypeFunction *f) = 0;
+
+    virtual const std::vector<IDataTypeFunction *> &getDataTypeFunctions() const = 0;
     
     virtual IDataTypeFunctionImport *mkDataTypeFunctionImport(
             const std::string       &lang) = 0;
@@ -94,7 +98,6 @@ public:
 			bool					own,
 			vsc::dm::ITypeExpr		*init) = 0;
 
-	virtual bool addDataTypeFunction(IDataTypeFunction *f) = 0;
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() = 0;
 

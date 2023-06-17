@@ -128,10 +128,15 @@ IDataTypeFunction *Context::mkDataTypeFunction(
 bool Context::addDataTypeFunction(IDataTypeFunction *f) {
 	if (m_function_type_m.find(f->name()) == m_function_type_m.end()) {
 		m_function_type_m.insert({f->name(), IDataTypeFunctionUP(f)});
+        m_function_type_l.push_back(f);
 		return true;
 	} else {
 		return false;
 	}
+}
+
+const std::vector<IDataTypeFunction *> &Context::getDataTypeFunctions() const {
+    return m_function_type_l;
 }
 
 IDataTypeFunctionImport *Context::mkDataTypeFunctionImport(

@@ -44,6 +44,8 @@ public:
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) override;
 
+    virtual const std::vector<IDataTypeFunction *> &getDataTypeFunctions() const override;
+
     virtual IDataTypeFunctionImport *mkDataTypeFunctionImport(
             const std::string       &lang) override;
 
@@ -247,6 +249,7 @@ private:
 	std::unordered_map<std::string, IDataTypeActionUP>			m_action_type_m;
 	std::unordered_map<std::string, IDataTypeComponentUP>		m_component_type_m;
 	std::unordered_map<std::string, IDataTypeFunctionUP>		m_function_type_m;
+    std::vector<IDataTypeFunction *>                            m_function_type_l;
 	std::unordered_map<FlowObjKindE, FlowObjMapT>				m_flowobj_kind_m;
 
 };

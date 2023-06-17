@@ -92,6 +92,10 @@ public:
         return ctxt()->addDataTypeFunction(f);
     }
 
+    virtual const std::vector<IDataTypeFunction *> &getDataTypeFunctions() const override {
+        return ctxt()->getDataTypeFunctions();
+    }
+
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() { 
         return ctxt()->mkDataTypeActivityParallel();
     }

@@ -150,11 +150,12 @@ cdef extern from "zsp/arl/dm/ITypeProcStmt.h" namespace "zsp::arl::dm":
         pass
 
 cdef extern from "zsp/arl/dm/ITypeProcStmtDeclScope.h" namespace "zsp::arl::dm":
-    cdef cppclass ITypeProcStmtDeclScope:
+    cdef cppclass ITypeProcStmtDeclScope(vsc.IAccept):
         pass
 
 cdef extern from "zsp/arl/dm/IDataTypeFunction.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeFunction(ITypeProcStmtDeclScope):
+        const cpp_string &name()
         pass
 
 cdef extern from "zsp/arl/dm/IFactory.h" namespace "zsp::arl::dm":

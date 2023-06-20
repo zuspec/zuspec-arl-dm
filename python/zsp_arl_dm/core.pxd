@@ -142,6 +142,15 @@ cdef class DataTypeFlowObj(vsc.DataTypeStruct):
     @staticmethod
     cdef DataTypeFlowObj mk(decl.IDataTypeFlowObj *hndl, bool owned=*)
 
+cdef class DataTypeFunction(vsc.ObjBase):
+
+    cpdef name(self)
+
+    cdef decl.IDataTypeFunction *asFunction(self)
+
+    @staticmethod
+    cdef DataTypeFunction mk(decl.IDataTypeFunction *hndl, bool owned=*)
+
 cdef class ModelBuildContext(vsc.ModelBuildContext):
     pass
 

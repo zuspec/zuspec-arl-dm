@@ -469,6 +469,21 @@ cdef class DataTypeFlowObj(vsc.DataTypeStruct):
         ret._owned = owned
         return ret
 
+cdef class DataTypeFunction(vsc.ObjBase):
+
+    cpdef name(self):
+        return self.asFunction().name().decode()
+    
+    cdef decl.IDataTypeFunction *asFunction(self):
+        return dynamic_cast[decl.IDataTypeFunctionP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeFunction mk(decl.IDataTypeFunction *hndl, bool owned=True):
+        ret = DataTypeFunction()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
 cdef class ModelBuildContext(vsc.ModelBuildContext):
 
     def __init__(self, Context ctxt):

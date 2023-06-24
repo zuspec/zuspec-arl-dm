@@ -29,6 +29,7 @@
 #include "zsp/arl/dm/IModelFieldComponent.h"
 #include "zsp/arl/dm/IModelFieldExecutor.h"
 #include "zsp/arl/dm/IModelFieldExecutorClaim.h"
+#include "zsp/arl/dm/ITypeExecGroup.h"
 #include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
 #include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
@@ -199,6 +200,9 @@ public:
 			vsc::dm::ITypeExprFieldRef		*pool,
 			vsc::dm::ITypeExprFieldRef		*target) = 0;
 
+    virtual ITypeExecGroup *mkTypeExecGroup(
+            ExecKindT               kind,
+            ITypeExecGroup          *super) = 0;
 
     virtual ITypeExecProc *mkTypeExecProc(
             ExecKindT               kind,

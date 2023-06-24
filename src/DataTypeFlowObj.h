@@ -6,16 +6,17 @@
  */
 
 #pragma once
-#include "zsp/arl/dm/IContext.h"
 #include "zsp/arl/dm/IDataTypeFlowObj.h"
-#include "DataTypeStruct.h"
+#include "DataTypeArlStruct.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class DataTypeFlowObj : public DataTypeStruct, public virtual IDataTypeFlowObj {
+class DataTypeFlowObj : 
+    public virtual IDataTypeFlowObj,
+    public virtual DataTypeArlStruct {
 public:
 	DataTypeFlowObj(
 			IContext			*ctxt,
@@ -30,7 +31,7 @@ public:
 
 private:
 	FlowObjKindE					m_kind;
-	vsc::dm::ITypeField					*m_poolid;
+	vsc::dm::ITypeField				*m_poolid;
 };
 
 }

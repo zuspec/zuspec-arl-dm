@@ -6,10 +6,10 @@
  */
 
 #pragma once
+#include "zsp/arl/dm/IDataTypeArlStruct.h"
 #include "zsp/arl/dm/IDataTypeFunction.h"
 #include "zsp/arl/dm/IDataTypePackedStruct.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
-#include "zsp/arl/dm/IDataTypeStruct.h"
 #include "zsp/arl/dm/IDataTypeActivityReplicate.h"
 #include "zsp/arl/dm/IVisitor.h"
 #include "zsp/arl/dm/ITypeFieldExecutor.h"
@@ -72,6 +72,12 @@ public:
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override {
 		delegate(&arl::dm::IVisitor::visitDataTypeActivityTraverse, t);
 	}
+
+    virtual void visitDataTypeArlStruct(IDataTypeArlStruct *t) override {
+        delegate(
+            &arl::dm::IVisitor::visitDataTypeArlStruct,
+            &vsc::dm::IVisitor::visitDataTypeStruct, t);
+    }
 
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override {
 		delegate(&arl::dm::IVisitor::visitDataTypeComponent,

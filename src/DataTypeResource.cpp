@@ -18,7 +18,9 @@
  * Created on:
  *     Author:
  */
+#include "vsc/dm/ITypeField.h"
 #include "vsc/dm/IVisitor.h"
+#include "zsp/arl/dm/IContext.h"
 #include "DataTypeResource.h"
 
 
@@ -29,7 +31,7 @@ namespace dm {
 
 DataTypeResource::DataTypeResource(
         IContext            *ctxt,
-        const std::string   &name) : DataTypeFlowObj(ctxt, name, FlowObjKindE::Resource) {
+        const std::string   &name) : DataTypeArlStruct(name) {
     vsc::dm::IDataTypeInt *ui32_t = ctxt->findDataTypeInt(false, 32);
 
     if (!ui32_t) {

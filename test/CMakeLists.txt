@@ -43,9 +43,7 @@ include_directories(
 	"${source_dir}/googletest/include"
 	"${source_dir}/googlemock/include"
     ${JSON_DIR}/include
-    "${zsp_arl_dm_INCDIR}"
     "${vsc_dm_INCDIR}"
-    "${vsc_solvers_INCDIR}"
     "${debug_mgr_INCDIR}"
 	)
 
@@ -55,14 +53,12 @@ file(GLOB test_zuspec_arl_dm_SRC
   )
 
 add_executable(test-zuspec-arl-dm ${test_zuspec_arl_dm_SRC})
-add_dependencies(test-zuspec-arl-dm LibVSC-DM)
 target_include_directories(test-zuspec-arl-dm PUBLIC
     "${source_dir}/googletest/include"
+    "${CMAKE_SOURCE_DIR}/src/include"
     ${LIBVSC_DM_DIR}/src/include
     ${LIBVSC_DM_DIR}/src
-    "${zsp_arl_dm_INCDIR}"
     "${vsc_dm_INCDIR}"
-    "${vsc_solvers_INCDIR}"
     "${debug_mgr_INCDIR}"
     )
    
@@ -70,6 +66,8 @@ target_link_directories(test-zuspec-arl-dm PRIVATE
     ${CMAKE_BINARY_DIR}/lib
     ${CMAKE_BINARY_DIR}/lib64
     ${CMAKE_BINARY_DIR}/glog/lib64
+    "${vsc_dm_LIBDIR}"
+    "${debug_mgr_LIBDIR}"
     )
   
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -79,7 +77,7 @@ else()
 endif()
 
 target_link_libraries(test-zuspec-arl-dm 
-	zuspec-arl-dm
+	zsp-arl-dm
     vsc-dm
 	libgtest 
 	libgmock

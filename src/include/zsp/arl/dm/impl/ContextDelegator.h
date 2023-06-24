@@ -252,6 +252,12 @@ public:
         return ctxt()->mkPoolBindDirective(kind, pool, target);
     }
 
+    virtual ITypeExecGroup *mkTypeExecGroup(
+            ExecKindT           kind,
+            ITypeExecGroup      *super) override {
+        return ctxt()->mkTypeExecGroup(kind, super);
+    }
+
     virtual ITypeExecProc *mkTypeExecProc(
             ExecKindT               kind,
             ITypeProcStmtScope      *body) { 

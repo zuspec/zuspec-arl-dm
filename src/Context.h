@@ -150,6 +150,10 @@ public:
 			vsc::dm::ITypeExprFieldRef	*pool,
 			vsc::dm::ITypeExprFieldRef	*target) override;
 
+    virtual ITypeExecGroup *mkTypeExecGroup(
+            ExecKindT           kind,
+            ITypeExecGroup      *super) override;
+
     virtual ITypeExecProc *mkTypeExecProc(
             ExecKindT               kind,
             ITypeProcStmtScope      *body) override;

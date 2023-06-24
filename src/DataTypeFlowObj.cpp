@@ -4,6 +4,7 @@
  *  Created on: Apr 16, 2022
  *      Author: mballance
  */
+#include "zsp/arl/dm/IContext.h"
 #include "zsp/arl/dm/IVisitor.h"
 #include "DataTypeFlowObj.h"
 
@@ -15,7 +16,7 @@ namespace dm {
 DataTypeFlowObj::DataTypeFlowObj(
 		IContext			*ctxt,
 		const std::string	&name,
-		FlowObjKindE 		kind) : DataTypeStruct(name), m_kind(kind) {
+		FlowObjKindE 		kind) : DataTypeArlStruct(name), m_kind(kind) {
     vsc::dm::IDataTypeInt *ui32_t = ctxt->findDataTypeInt(false, 32);
 
     if (!ui32_t) {

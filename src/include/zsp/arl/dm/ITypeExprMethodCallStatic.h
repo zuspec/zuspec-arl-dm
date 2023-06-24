@@ -27,8 +27,8 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
-
-
+class ITypeExprMethodCallStatic;
+using ITypeExprMethodCallStaticUP=vsc::dm::UP<ITypeExprMethodCallStatic>;
 class ITypeExprMethodCallStatic : public virtual vsc::dm::ITypeExpr {
 public:
 

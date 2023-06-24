@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include "vsc/dm/IDataTypeStruct.h"
+#include "zsp/arl/dm/IDataTypeArlStruct.h"
 
 namespace zsp {
 namespace arl {
@@ -22,7 +22,7 @@ enum class FlowObjKindE {
 
 class IDataTypeFlowObj;
 using IDataTypeFlowObjUP=vsc::dm::UP<IDataTypeFlowObj>;
-class IDataTypeFlowObj : public virtual vsc::dm::IDataTypeStruct {
+class IDataTypeFlowObj : public virtual arl::dm::IDataTypeArlStruct {
 public:
 
 	virtual ~IDataTypeFlowObj() { }

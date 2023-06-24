@@ -42,6 +42,7 @@
 #include "TaskBuildModelField.h"
 #include "TypeExprMethodCallContext.h"
 #include "TypeExprMethodCallStatic.h"
+#include "TypeExecGroup.h"
 #include "TypeExecProc.h"
 #include "TypeFieldActivity.h"
 #include "TypeFieldClaim.h"
@@ -352,6 +353,11 @@ IPoolBindDirective *Context::mkPoolBindDirective(
 	return new PoolBindDirective(kind, pool, target);
 }
 
+ITypeExecGroup *Context::mkTypeExecGroup(
+        ExecKindT           kind,
+        ITypeExecGroup      *super) {
+    return new TypeExecGroup(kind, super);
+}
 
 ITypeExecProc *Context::mkTypeExecProc(
             ExecKindT               kind,

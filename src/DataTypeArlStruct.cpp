@@ -1,87 +1,89 @@
 /*
- * DataTypeStruct.cpp
+ * DataTypeArlStruct.cpp
  *
  *  Created on: Apr 16, 2022
  *      Author: mballance
  */
 
+#include "vsc/dm/IContext.h"
+#include "vsc/dm/IModelBuildContext.h"
+#include "vsc/dm/IModelStructCreateHook.h"
+#include "vsc/dm/ITypeField.h"
+#include "vsc/dm/ITypeConstraint.h"
 #include "vsc/dm/impl/TaskIsTypeFieldRef.h"
-#include "DataTypeStruct.h"
+#include "DataTypeArlStruct.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-DataTypeStruct::DataTypeStruct(const std::string &name) : m_name(name) {
+DataTypeArlStruct::DataTypeArlStruct(const std::string &name) : m_name(name) {
 	// TODO Auto-generated constructor stub
 
 }
 
-DataTypeStruct::~DataTypeStruct() {
+DataTypeArlStruct::~DataTypeArlStruct() {
 	// TODO Auto-generated destructor stub
 }
 
-void DataTypeStruct::addField(
+void DataTypeArlStruct::addField(
     vsc::dm::ITypeField     *f,
     bool                    owned) {
 	f->setIndex(m_fields.size());
 	m_fields.push_back(vsc::dm::ITypeFieldUP(f, owned));
 }
 
-const std::vector<vsc::dm::ITypeFieldUP> &DataTypeStruct::getFields() const {
+const std::vector<vsc::dm::ITypeFieldUP> &DataTypeArlStruct::getFields() const {
 	return m_fields;
 }
 
-vsc::dm::ITypeField *DataTypeStruct::getField(int32_t idx) {
+vsc::dm::ITypeField *DataTypeArlStruct::getField(int32_t idx) {
 	return m_fields.at(idx).get();
 }
 
-void DataTypeStruct::addConstraint(
+void DataTypeArlStruct::addConstraint(
     vsc::dm::ITypeConstraint    *c,
     bool                        owned) {
 	m_constraints.push_back(vsc::dm::ITypeConstraintUP(c, owned));
 }
 
-const std::vector<vsc::dm::ITypeConstraintUP> &DataTypeStruct::getConstraints() const {
+const std::vector<vsc::dm::ITypeConstraintUP> &DataTypeArlStruct::getConstraints() const {
 	return m_constraints;
 }
 
-vsc::dm::IModelStructCreateHook *DataTypeStruct::getCreateHook() const {
+vsc::dm::IModelStructCreateHook *DataTypeArlStruct::getCreateHook() const {
 	return m_create_hook.get();
 }
 
-void DataTypeStruct::setCreateHook(
+void DataTypeArlStruct::setCreateHook(
     vsc::dm::IModelStructCreateHook     *hook,
     bool                                owned) {
 	m_create_hook = vsc::dm::IModelStructCreateHookUP(hook, owned);
 }
 
-bool DataTypeStruct::hasExecKind(ExecKindT kind) const {
-    return (m_exec_m.find(kind) != m_exec_m.end());
-}
-
-ITypeExecGroup *DataTypeStruct::getExecGroup(ExecKindT kind) const {
-    std::map<ExecKindT, ITypeExecGroupUP>::const_iterator it;
+const std::vector<ITypeExecUP> &DataTypeArlStruct::getExecs(ExecKindT kind) const {
+    std::map<ExecKindT, std::vector<ITypeExecUP>>::const_iterator it;
 
     if ((it=m_exec_m.find(kind)) != m_exec_m.end()) {
-        return it->second.get();
+        return it->second;
     } else {
-        return 0;
+        return m_empty_exec_l;
     }
 }
 
-void DataTypeStruct::addExecGroup(ITypeExecGroup *group) {
-    std::map<ExecKindT, ITypeExecGroupUP>::const_iterator it;
+void DataTypeArlStruct::addExec(ITypeExec *exec) {
+    std::map<ExecKindT, std::vector<ITypeExecUP>>::iterator it;
 
-    if ((it=m_exec_m.find(group->getKind())) != m_exec_m.end()) {
-        m_exec_m.erase(it);
+    if ((it=m_exec_m.find(exec->getKind())) == m_exec_m.end()) {
+        it = m_exec_m.insert({
+            exec->getKind(), 
+            std::vector<arl::dm::ITypeExecUP>()}).first;
     }
-
-    m_exec_m.insert({group->getKind(), ITypeExecGroupUP(group)});
+    it->second.push_back(ITypeExecUP(exec));
 }
 
-vsc::dm::IModelField *DataTypeStruct::mkRootField(
+vsc::dm::IModelField *DataTypeArlStruct::mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) {
@@ -107,7 +109,7 @@ vsc::dm::IModelField *DataTypeStruct::mkRootField(
 	return ret;
 }
 
-vsc::dm::IModelField *DataTypeStruct::mkTypeField(
+vsc::dm::IModelField *DataTypeArlStruct::mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		vsc::dm::ITypeField				*type) {
 	vsc::dm::IModelField *ret;
@@ -130,6 +132,8 @@ vsc::dm::IModelField *DataTypeStruct::mkTypeField(
 
 	return ret;
 }
+
+std::vector<ITypeExecUP> DataTypeArlStruct::m_empty_exec_l;
 
 }
 }

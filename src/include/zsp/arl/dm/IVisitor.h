@@ -27,7 +27,7 @@ class IDataTypeFunction;
 class IDataTypeFunctionParamDecl;
 class IDataTypePackedStruct;
 class IDataTypeResource;
-class IDataTypeStruct;
+class IDataTypeArlStruct;
 class IModelActivityBind;
 class IModelActivityParallel;
 class IModelActivityReplicate;
@@ -86,6 +86,8 @@ public:
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) = 0;
 
+	virtual void visitDataTypeArlStruct(IDataTypeArlStruct *t) = 0;
+
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) = 0;
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) = 0;
@@ -97,10 +99,6 @@ public:
 	virtual void visitDataTypePackedStruct(IDataTypePackedStruct *t) = 0;
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) = 0;
-
-    /*
-	virtual void visitDataTypeStruct(IDataTypeStruct *t) = 0;
-     */
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) = 0;
 

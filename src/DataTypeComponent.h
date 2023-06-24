@@ -9,7 +9,7 @@
 #include "zsp/arl/dm/IContext.h"
 #include "zsp/arl/dm/IDataTypeComponent.h"
 #include "vsc/dm/IModelFieldFactory.h"
-#include "DataTypeStruct.h"
+#include "DataTypeArlStruct.h"
 
 namespace zsp {
 namespace arl {
@@ -18,7 +18,7 @@ namespace dm {
 
 class DataTypeComponent : 
 	public virtual IDataTypeComponent, 
-	public virtual DataTypeStruct {
+	public virtual DataTypeArlStruct {
 public:
 	DataTypeComponent(
 		IContext			*ctxt,

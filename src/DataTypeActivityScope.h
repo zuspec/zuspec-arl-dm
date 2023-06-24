@@ -7,7 +7,6 @@
 
 #pragma once
 #include "zsp/arl/dm/IDataTypeActivityScope.h"
-#include "DataTypeStruct.h"
 
 namespace zsp {
 namespace arl {

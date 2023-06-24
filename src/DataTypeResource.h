@@ -19,10 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include "zsp/arl/dm/IContext.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
-#include "vsc/dm/ITypeField.h"
-#include "DataTypeFlowObj.h"
+#include "DataTypeArlStruct.h"
 
 namespace zsp {
 namespace arl {
@@ -32,13 +30,15 @@ namespace dm {
 
 class DataTypeResource : 
     public virtual IDataTypeResource, 
-    public virtual DataTypeFlowObj {
+    public virtual DataTypeArlStruct {
 public:
     DataTypeResource(
         IContext            *ctxt,
         const std::string   &name);
 
     virtual ~DataTypeResource();
+
+	virtual FlowObjKindE kind() const override { return FlowObjKindE::Resource; }
 
     virtual vsc::dm::ITypeField *getInstanceId() const override {
         return m_instance_id;

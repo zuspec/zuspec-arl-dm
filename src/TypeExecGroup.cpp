@@ -1,7 +1,7 @@
-/**
- * IDataTypePureComponent.h
+/*
+ * TypeExecGroup.cpp
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -16,26 +16,26 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "zsp/arl/dm/IDataTypeArlStruct.h"
+#include "TypeExecGroup.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-class IDataTypePureComponent;
-using IDataTypePureComponentUP=vsc::dm::UP<IDataTypePureComponent>;
-class IDataTypePureComponent : public arl::dm::IDataTypeArlStruct {
-public:
 
-    virtual ~IDataTypePureComponent() { }
+TypeExecGroup::TypeExecGroup(
+    ExecKindT           kind,
+    ITypeExecGroup      *super) : m_kind(kind), m_super(super) {
 
-};
+}
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+TypeExecGroup::~TypeExecGroup() {
 
+}
 
+}
+}
+}

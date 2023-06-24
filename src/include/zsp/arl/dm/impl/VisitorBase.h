@@ -21,7 +21,7 @@
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
 #include "zsp/arl/dm/IDataTypePackedStruct.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
-#include "zsp/arl/dm/IDataTypeStruct.h"
+#include "zsp/arl/dm/IDataTypeArlStruct.h"
 #include "zsp/arl/dm/IModelActivityBind.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
 #include "zsp/arl/dm/IModelActivityReplicate.h"
@@ -111,6 +111,10 @@ public:
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { }
 
+	virtual void visitDataTypeArlStruct(IDataTypeArlStruct *t) override {
+		m_this->visitDataTypeStruct(t);
+	}
+
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override {
 		m_this->visitDataTypeStruct(t);
 	}
@@ -137,12 +141,6 @@ public:
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {
 		dynamic_cast<IVisitor *>(m_this)->visitDataTypeFlowObj(t);
 	}
-
-    /*
-	virtual void visitDataTypeStruct(IDataTypeStruct *t) override {
-		m_this->visitDataTypeStruct(static_cast<vsc::dm::IDataTypeStruct *>(t));
-	}
-     */
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) override {
 		for (std::vector<vsc::dm::IModelExprUP>::const_iterator

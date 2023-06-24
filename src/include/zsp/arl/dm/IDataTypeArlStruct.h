@@ -26,18 +26,16 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
-class IDataTypeStruct;
-using IDataTypeStructUP=std::unique_ptr<IDataTypeStruct>;
-class IDataTypeStruct : public virtual vsc::dm::IDataTypeStruct {
+class IDataTypeArlStruct;
+using IDataTypeArlStructUP=std::unique_ptr<IDataTypeArlStruct>;
+class IDataTypeArlStruct : public virtual vsc::dm::IDataTypeStruct {
 public:
 
-    virtual ~IDataTypeStruct() { }
+    virtual ~IDataTypeArlStruct() { }
 
-    virtual bool hasExecKind(ExecKindT kind) const = 0;
+    virtual const std::vector<ITypeExecUP> &getExecs(ExecKindT kind) const = 0;
 
-    virtual ITypeExecGroup *getExecGroup(ExecKindT kind) const = 0;
-
-    virtual void addExecGroup(ITypeExecGroup *group) = 0;
+    virtual void addExec(ITypeExec *exec) = 0;
 
 
 };

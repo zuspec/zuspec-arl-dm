@@ -17,7 +17,7 @@ namespace dm {
 
 DataTypeComponent::DataTypeComponent(
 	IContext			*ctxt,
-	const std::string 	&name) : DataTypeStruct(name) {
+	const std::string 	&name) : DataTypeArlStruct(name) {
 
 	// Could back-patch this once we know the number of 
 	// instances

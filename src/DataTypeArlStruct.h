@@ -1,5 +1,5 @@
 /*
- * DataTypeStruct.h
+ * DataTypeArlStruct.h
  *
  *  Created on: Apr 16, 2022
  *      Author: mballance
@@ -9,23 +9,27 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "vsc/dm/IContext.h"
-#include "vsc/dm/IModelBuildContext.h"
-#include "vsc/dm/IModelStructCreateHook.h"
-#include "vsc/dm/ITypeField.h"
-#include "vsc/dm/ITypeConstraint.h"
-#include "zsp/arl/dm/IDataTypeStruct.h"
+#include "zsp/arl/dm/IDataTypeArlStruct.h"
+
+namespace vsc {
+namespace dm {
+    class IModelBuildContext;
+    class IModelStructCreateHook;
+    class ITypeField;
+    class ITypeConstraint;
+}
+}
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class DataTypeStruct : public virtual IDataTypeStruct {
+class DataTypeArlStruct : public virtual IDataTypeArlStruct {
 public:
-	DataTypeStruct(const std::string &name);
+	DataTypeArlStruct(const std::string &name);
 
-	virtual ~DataTypeStruct();
+	virtual ~DataTypeArlStruct();
 
 	virtual const std::string &name() const {
 		return m_name;
@@ -51,11 +55,9 @@ public:
         vsc::dm::IModelStructCreateHook *hook,
         bool                            owned=true) override;
 
-    virtual bool hasExecKind(ExecKindT kind) const override;
+    virtual const std::vector<ITypeExecUP> &getExecs(ExecKindT kind) const override;
 
-    virtual ITypeExecGroup *getExecGroup(ExecKindT kind) const override;
-
-    virtual void addExecGroup(ITypeExecGroup *group) override;
+    virtual void addExec(ITypeExec *exec) override;
 
 	virtual vsc::dm::IModelField *mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
@@ -67,11 +69,12 @@ public:
 		vsc::dm::ITypeField				*type) override;
 
 public:
-	std::string								    m_name;
-	std::vector<vsc::dm::ITypeFieldUP>		 	m_fields;
-	std::vector<vsc::dm::ITypeConstraintUP>		m_constraints;
-	vsc::dm::IModelStructCreateHookUP			m_create_hook;
-    std::map<ExecKindT, ITypeExecGroupUP>       m_exec_m;
+	std::string								        m_name;
+	std::vector<vsc::dm::ITypeFieldUP>		 	    m_fields;
+	std::vector<vsc::dm::ITypeConstraintUP>		    m_constraints;
+	vsc::dm::IModelStructCreateHookUP			    m_create_hook;
+    static std::vector<ITypeExecUP>                 m_empty_exec_l;
+    std::map<ExecKindT, std::vector<ITypeExecUP>>   m_exec_m;
 
 
 };

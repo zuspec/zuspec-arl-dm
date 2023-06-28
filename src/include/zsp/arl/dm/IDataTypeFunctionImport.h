@@ -32,6 +32,10 @@ public:
 
     virtual ~IDataTypeFunctionImport() { }
 
+    virtual bool isTarget() = 0;
+
+    virtual bool isSolve() = 0;
+
 };
 
 } /* namespace dm */

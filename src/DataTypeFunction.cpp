@@ -31,9 +31,12 @@ namespace dm {
 DataTypeFunction::DataTypeFunction(
     IContext                    *ctxt,
     const std::string           &name,
-    vsc::dm::IDataType              *rtype,
-    bool                        own_rtype) : 
+    vsc::dm::IDataType          *rtype,
+    bool                        own_rtype,
+    bool                        is_target,
+    bool                        is_solve) : 
         m_name(name), m_ret_type(rtype), m_ret_type_u(own_rtype?rtype:0),
+        m_is_target(is_target), m_is_solve(is_solve),
         m_param_scope(ctxt->mkTypeProcStmtScope()),
         m_body(ctxt->mkTypeProcStmtScope()) {
 }

@@ -26,8 +26,11 @@ namespace arl {
 namespace dm {
 
 
-DataTypeFunctionImport::DataTypeFunctionImport(const std::string &lang) : 
-    m_lang(lang) {
+DataTypeFunctionImport::DataTypeFunctionImport(
+    const std::string   &lang,
+    bool                is_target,
+    bool                is_solve) : 
+        m_lang(lang), m_is_target(is_target), m_is_solve(is_solve) {
 
 }
 

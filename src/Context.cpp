@@ -121,9 +121,11 @@ IDataTypeFunction *Context::findDataTypeFunction(const std::string &name) {
 
 IDataTypeFunction *Context::mkDataTypeFunction(
 		const std::string		&name,
-		vsc::dm::IDataType			*rtype,
-		bool					own) {
-	return new DataTypeFunction(this, name, rtype, own);
+		vsc::dm::IDataType		*rtype,
+		bool					own,
+        bool                    is_target,
+        bool                    is_solve) {
+	return new DataTypeFunction(this, name, rtype, own, is_target, is_solve);
 }
 
 bool Context::addDataTypeFunction(IDataTypeFunction *f) {
@@ -141,8 +143,10 @@ const std::vector<IDataTypeFunction *> &Context::getDataTypeFunctions() const {
 }
 
 IDataTypeFunctionImport *Context::mkDataTypeFunctionImport(
-            const std::string       &lang) {
-    return new DataTypeFunctionImport(lang);
+            const std::string       &lang,
+            bool                    is_target,
+            bool                    is_solve) {
+    return new DataTypeFunctionImport(lang, is_target, is_solve);
 }
 
 IDataTypeFunctionParamDecl *Context::mkDataTypeFunctionParamDecl(

@@ -30,12 +30,25 @@ namespace dm {
 
 class DataTypeFunctionImport : public virtual IDataTypeFunctionImport {
 public:
-    DataTypeFunctionImport(const std::string &lang);
+    DataTypeFunctionImport(
+        const std::string   &lang,
+        bool                is_target,
+        bool                is_solve);
 
     virtual ~DataTypeFunctionImport();
 
+    virtual bool isTarget() override {
+        return m_is_target;
+    }
+
+    virtual bool isSolve() override {
+        return m_is_solve;
+    }
+
 private:
     std::string                             m_lang;
+    bool                                    m_is_target;
+    bool                                    m_is_solve;
 
 };
 

@@ -39,6 +39,14 @@ public:
 		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) override;
 
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
+        m_associated_data = vsc::dm::IAssociatedDataUP(data);
+    }
+
+    virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
+        return m_associated_data.get();
+    }
+
 	virtual vsc::dm::IModelField *mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
@@ -54,6 +62,7 @@ private:
 	vsc::dm::ITypeExprFieldRefUP				m_target;
 	vsc::dm::ITypeConstraintUP					m_with_c;
 	vsc::dm::IModelFieldFactoryUP				m_factory;
+    vsc::dm::IAssociatedDataUP                  m_associated_data;
 };
 
 }

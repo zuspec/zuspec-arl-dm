@@ -34,7 +34,9 @@ public:
         IContext                *ctxt,
         const std::string       &name,
         vsc::dm::IDataType      *rtype,
-        bool                    own_rtype);
+        bool                    own_rtype,
+        bool                    is_target,
+        bool                    is_solve);
 
     virtual ~DataTypeFunction();
 
@@ -72,6 +74,14 @@ public:
         m_is_export = e;
     }
 
+    virtual bool isTarget() override {
+        return m_is_target;
+    }
+
+    virtual bool isSolve() override {
+        return m_is_solve;
+    }
+
     virtual ITypeProcStmtScope *getBody() const override {
         return m_body.get();
     }
@@ -81,6 +91,14 @@ public:
     }
 
     virtual void addImportSpec(IDataTypeFunctionImport *spec) override;
+
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
+        m_associated_data = vsc::dm::IAssociatedDataUP(data);
+    }
+
+    virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
+        return m_associated_data.get();
+    }
 
     virtual void accept(vsc::dm::IVisitor *v) override;
 
@@ -92,9 +110,12 @@ private:
     std::vector<ITypeProcStmtVarDecl *>             m_variables;
     vsc::dm::IDataTypeStruct                        *m_context;
     bool                                            m_is_export;
+    bool                                            m_is_target;
+    bool                                            m_is_solve;
     ITypeProcStmtScopeUP                            m_param_scope;
     ITypeProcStmtScopeUP                            m_body;
     std::vector<IDataTypeFunctionImportUP>          m_import_specs;
+    vsc::dm::IAssociatedDataUP                      m_associated_data;
 
 
 };

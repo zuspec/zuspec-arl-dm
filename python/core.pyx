@@ -474,6 +474,23 @@ cdef class DataTypeFunction(vsc.ObjBase):
     cpdef name(self):
         return self.asFunction().name().decode()
     
+    cpdef bool isTarget(self):
+        return self.asFunction().isTarget()
+
+    cpdef bool isSolve(self):
+        return self.asFunction().isSolve()
+
+    cpdef object getAssociatedData(self):
+        cdef vsc_decl.AssociatedDataClosure *ad = dynamic_cast[vsc_decl.AssociatedDataClosureP](self.asFunction().getAssociatedData())
+        if ad == NULL:
+            return None
+        else:
+            return ad.getData()
+
+    cpdef void setAssociatedData(self, object obj):
+        cdef vsc_decl.AssociatedDataClosure *closure = new vsc_decl.AssociatedDataClosure(<cpy_ref.PyObject *>(obj))
+        self.asFunction().setAssociatedData(closure)
+
     cdef decl.IDataTypeFunction *asFunction(self):
         return dynamic_cast[decl.IDataTypeFunctionP](self._hndl)
 

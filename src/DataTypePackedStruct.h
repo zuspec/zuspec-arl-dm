@@ -65,6 +65,14 @@ public:
         vsc::dm::IModelStructCreateHook *hook,
         bool                            owned=true) override;
 
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
+        m_associated_data = vsc::dm::IAssociatedDataUP(data);
+    }
+
+    virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
+        return m_associated_data.get();
+    }
+
 	virtual vsc::dm::IModelField *mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
@@ -82,6 +90,7 @@ private:
 	std::vector<vsc::dm::ITypeFieldUP>		 	    m_fields;
 	std::vector<vsc::dm::ITypeConstraintUP>		    m_constraints;
 	vsc::dm::IModelStructCreateHookUP			    m_create_hook;
+    vsc::dm::IAssociatedDataUP                      m_associated_data;
 
 };
 

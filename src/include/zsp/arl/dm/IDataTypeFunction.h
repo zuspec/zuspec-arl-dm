@@ -22,6 +22,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "vsc/dm/IAssociatedData.h"
 #include "vsc/dm/IDataTypeStruct.h"
 #include "zsp/arl/dm/IDataTypeFunctionImport.h"
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
@@ -60,11 +61,19 @@ public:
 
     virtual void setIsExport(bool e) = 0;
 
+    virtual bool isTarget() = 0;
+
+    virtual bool isSolve() = 0;
+
     virtual ITypeProcStmtScope *getBody() const = 0;
 
     virtual const std::vector<IDataTypeFunctionImportUP> &getImportSpecs() const = 0;
 
     virtual void addImportSpec(IDataTypeFunctionImport *spec) = 0;
+
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) = 0;
+
+    virtual vsc::dm::IAssociatedData *getAssociatedData() const = 0;
 
 };
 

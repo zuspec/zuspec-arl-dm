@@ -60,6 +60,14 @@ public:
         bool                    owned) override;
 
 	virtual void addActivityField(ITypeFieldActivity *a) override;
+    
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
+        m_associated_data = vsc::dm::IAssociatedDataUP(data);
+    }
+
+    virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
+        return m_associated_data.get();
+    }
 
 	virtual vsc::dm::IModelField *mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
@@ -77,6 +85,7 @@ private:
 	vsc::dm::IModelStructCreateHookUP			m_create_hook;
 
 	std::vector<ITypeFieldActivityUP>			m_activities;
+    vsc::dm::IAssociatedDataUP                  m_associated_data;
 
 };
 

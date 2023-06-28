@@ -40,14 +40,18 @@ public:
 	virtual IDataTypeFunction *mkDataTypeFunction(
 			const std::string		&name,
 			vsc::dm::IDataType			*rtype,
-			bool					own_rtype) override;
+			bool					own_rtype,
+            bool                    is_target=false,
+            bool                    is_solve=false) override;
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) override;
 
     virtual const std::vector<IDataTypeFunction *> &getDataTypeFunctions() const override;
 
     virtual IDataTypeFunctionImport *mkDataTypeFunctionImport(
-            const std::string       &lang) override;
+            const std::string       &lang,
+            bool                    is_target,
+            bool                    is_solve) override;
 
 	virtual IDataTypeFunctionParamDecl *mkDataTypeFunctionParamDecl(
 			const std::string		&name,

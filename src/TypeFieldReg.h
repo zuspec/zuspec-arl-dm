@@ -19,6 +19,8 @@
  *     Author: 
  */
 #pragma once
+#include "zsp/arl/dm/ITypeFieldReg.h"
+#include "TypeField.h"
 
 namespace zsp {
 namespace arl {
@@ -26,11 +28,30 @@ namespace dm {
 
 
 
-class TypeFieldReg {
+class TypeFieldReg : 
+    public virtual ITypeFieldReg,
+    public virtual TypeField {
 public:
-    TypeFieldReg();
+    TypeFieldReg(
+        const std::string   &name,
+        vsc::dm::IDataType  *type,
+        bool                owned
+    );
+
+    virtual int64_t getOffset() override {
+        return m_offset;
+    }
+
+    virtual void setOffset(int64_t off) override {
+        m_offset = off;
+    }
 
     virtual ~TypeFieldReg();
+
+    virtual void accept(vsc::dm::IVisitor *v) override;
+
+private:
+    int64_t                 m_offset;
 
 };
 

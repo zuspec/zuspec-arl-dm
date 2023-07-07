@@ -203,6 +203,16 @@ public:
 			vsc::dm::TypeFieldAttr		attr,
 			int32_t					decl_size) override;
 
+    virtual ITypeFieldReg *mkTypeFieldReg(
+            const std::string       &name,
+            vsc::dm::IDataType      *type,
+            bool                    own) override;
+
+    virtual ITypeFieldRegGroup *mkTypeFieldRegGroup(
+            const std::string       &name,
+            vsc::dm::IDataType      *type,
+            bool                    own) override;
+
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
 			vsc::dm::ITypeExprFieldRef		*lhs,
 			TypeProcStmtAssignOp		op,

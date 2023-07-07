@@ -50,6 +50,8 @@
 #include "TypeFieldExecutorClaim.h"
 #include "TypeFieldInOut.h"
 #include "TypeFieldPool.h"
+#include "TypeFieldReg.h"
+#include "TypeFieldRegGroup.h"
 #include "TypeProcStmtAssign.h"
 #include "TypeProcStmtBreak.h"
 #include "TypeProcStmtContinue.h"
@@ -424,6 +426,20 @@ ITypeFieldPool *Context::mkTypeFieldPool(
 			vsc::dm::TypeFieldAttr		attr,
 			int32_t					decl_size) {
 	return new TypeFieldPool(this, name, type, own, attr, decl_size);
+}
+
+ITypeFieldReg *Context::mkTypeFieldReg(
+            const std::string       &name,
+            vsc::dm::IDataType      *type,
+            bool                    own) {
+    return new TypeFieldReg(name, type, own);
+}
+
+ITypeFieldRegGroup *Context::mkTypeFieldRegGroup(
+            const std::string       &name,
+            vsc::dm::IDataType      *type,
+            bool                    own) {
+    return new TypeFieldRegGroup(name, type, own);
 }
 
 ITypeProcStmtAssign *Context::mkTypeProcStmtAssign(

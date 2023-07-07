@@ -27,10 +27,14 @@ namespace dm {
 
 
 
-class ITypeFieldReg {
+class ITypeFieldReg : public virtual vsc::dm::ITypeField {
 public:
 
     virtual ~ITypeFieldReg() { }
+
+    virtual int64_t getOffset() = 0;
+
+    virtual void setOffset(int64_t off) = 0;
 
 };
 

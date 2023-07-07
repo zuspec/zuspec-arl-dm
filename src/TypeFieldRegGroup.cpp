@@ -1,7 +1,7 @@
 /*
- * TypeFieldReg.cpp
+ * TypeFieldRegGroup.cpp
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -19,7 +19,7 @@
  *     Author:
  */
 #include "zsp/arl/dm/IVisitor.h"
-#include "TypeFieldReg.h"
+#include "TypeFieldRegGroup.h"
 
 
 namespace zsp {
@@ -27,7 +27,7 @@ namespace arl {
 namespace dm {
 
 
-TypeFieldReg::TypeFieldReg(
+TypeFieldRegGroup::TypeFieldRegGroup(
     const std::string       &name,
     vsc::dm::IDataType      *type,
     bool                    owned) : 
@@ -35,13 +35,13 @@ TypeFieldReg::TypeFieldReg(
 
 }
 
-TypeFieldReg::~TypeFieldReg() {
+TypeFieldRegGroup::~TypeFieldRegGroup() {
 
 }
 
-void TypeFieldReg::accept(vsc::dm::IVisitor *v) {
+void TypeFieldRegGroup::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<arl::dm::IVisitor *>(v)) {
-        dynamic_cast<arl::dm::IVisitor *>(v)->visitTypeFieldReg(this);
+        dynamic_cast<arl::dm::IVisitor *>(v)->visitTypeFieldRegGroup(this);
     } else if (v->cascade()) {
         v->visitTypeField(this);
     }

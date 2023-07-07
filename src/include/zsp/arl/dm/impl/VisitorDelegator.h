@@ -27,6 +27,8 @@
 #include "zsp/arl/dm/IModelActivityTraverse.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
 #include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
+#include "zsp/arl/dm/ITypeFieldReg.h"
+#include "zsp/arl/dm/ITypeFieldRegGroup.h"
 #include "vsc/dm/impl/VisitorDelegator.h"
 
 namespace zsp {
@@ -228,6 +230,16 @@ public:
 		delegate(&arl::dm::IVisitor::visitTypeFieldPool,
 				&vsc::dm::IVisitor::visitTypeField, f);
 	}
+
+	virtual void visitTypeFieldReg(ITypeFieldReg *f) override {
+		delegate(&arl::dm::IVisitor::visitTypeFieldReg,
+				&vsc::dm::IVisitor::visitTypeField, f);
+    }
+
+	virtual void visitTypeFieldRegGroup(ITypeFieldRegGroup *f) override {
+		delegate(&arl::dm::IVisitor::visitTypeFieldRegGroup,
+				&vsc::dm::IVisitor::visitTypeField, f);
+    }
 
 	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override {
 		delegate(&arl::dm::IVisitor::visitTypeProcStmtAssign, s);

@@ -38,6 +38,8 @@
 #include "zsp/arl/dm/ITypeFieldExecutorClaim.h"
 #include "zsp/arl/dm/ITypeFieldInOut.h"
 #include "zsp/arl/dm/ITypeFieldPool.h"
+#include "zsp/arl/dm/ITypeFieldReg.h"
+#include "zsp/arl/dm/ITypeFieldRegGroup.h"
 #include "zsp/arl/dm/ITypeProcStmtAssign.h"
 #include "zsp/arl/dm/ITypeProcStmtBreak.h"
 #include "zsp/arl/dm/ITypeProcStmtContinue.h"
@@ -252,6 +254,16 @@ public:
 			bool					own,
 			vsc::dm::TypeFieldAttr		attr,
 			int32_t					decl_size) = 0;
+
+    virtual ITypeFieldReg *mkTypeFieldReg(
+            const std::string       &name,
+            vsc::dm::IDataType      *type,
+            bool                    own) = 0;
+
+    virtual ITypeFieldRegGroup *mkTypeFieldRegGroup(
+            const std::string       &name,
+            vsc::dm::IDataType      *type,
+            bool                    own) = 0;
 
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
 			vsc::dm::ITypeExprFieldRef		*lhs,

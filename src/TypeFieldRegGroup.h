@@ -1,7 +1,7 @@
-/*
- * TypeFieldReg.cpp
+/**
+ * TypeFieldRegGroup.h
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -16,37 +16,40 @@
  * limitations under the License.
  *
  * Created on:
- *     Author:
+ *     Author: 
  */
-#include "zsp/arl/dm/IVisitor.h"
-#include "TypeFieldReg.h"
-
+#pragma once
+#include "vsc/dm/IVisitor.h"
+#include "zsp/arl/dm/ITypeFieldRegGroup.h"
+#include "TypeField.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-TypeFieldReg::TypeFieldReg(
-    const std::string       &name,
-    vsc::dm::IDataType      *type,
-    bool                    owned) : 
-        TypeField(name, type, owned, vsc::dm::TypeFieldAttr::NoAttr) {
+
+class TypeFieldRegGroup :
+    public virtual ITypeFieldRegGroup,
+    public virtual TypeField {
+public:
+    TypeFieldRegGroup(
+        const std::string       &name,
+        vsc::dm::IDataType      *type,
+        bool                    owned);
+
+    virtual ~TypeFieldRegGroup();
+    
+    virtual void accept(vsc::dm::IVisitor *v) override;
+
+private:
+    int64_t                     m_offset;
+
+
+};
 
 }
-
-TypeFieldReg::~TypeFieldReg() {
-
+}
 }
 
-void TypeFieldReg::accept(vsc::dm::IVisitor *v) {
-    if (dynamic_cast<arl::dm::IVisitor *>(v)) {
-        dynamic_cast<arl::dm::IVisitor *>(v)->visitTypeFieldReg(this);
-    } else if (v->cascade()) {
-        v->visitTypeField(this);
-    }
-}
 
-}
-}
-}

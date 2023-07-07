@@ -325,6 +325,20 @@ public:
         return ctxt()->mkTypeFieldPool(name, type, own, attr, decl_size);
     }
 
+	virtual ITypeFieldReg *mkTypeFieldReg(
+			const std::string		&name,
+			vsc::dm::IDataType		*type,
+			bool					own) {
+        return ctxt()->mkTypeFieldReg(name, type, own);
+    }
+
+	virtual ITypeFieldRegGroup *mkTypeFieldRegGroup(
+			const std::string		&name,
+			vsc::dm::IDataType		*type,
+			bool					own) {
+        return ctxt()->mkTypeFieldRegGroup(name, type, own);
+    }
+
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
 			vsc::dm::ITypeExprFieldRef		*lhs,
 			TypeProcStmtAssignOp		op,

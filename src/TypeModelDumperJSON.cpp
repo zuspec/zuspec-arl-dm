@@ -382,12 +382,60 @@ void TypeModelDumperJSON::visitTypeConstraintIfElse(vsc::dm::ITypeConstraintIfEl
 
 void TypeModelDumperJSON::visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) {
     DEBUG_ENTER("visitTypeExprMethodCallContext");
-//    e->getContext()
+    nlohmann::json expr;
+
+    expr["kind"] = "expr-call-method-context";
+
+    std::map<IDataTypeFunction *, int32_t>::const_iterator it = 
+        m_function_m.find(e->getTarget());
+    
+    if (it == m_function_m.end()) {
+        int32_t id = m_function_l.size();
+        m_function_l.push_back(e->getTarget());
+        it = m_function_m.insert({e->getTarget(), id}).first;
+    }
+    expr["function-type"] = it->second;
+    visitExpr(expr["context"], e->getContext());
+
+    nlohmann::json &pvals = (expr["pvals"] = nlohmann::json::array());
+    for (std::vector<vsc::dm::ITypeExprUP>::const_iterator
+        it=e->getParameters().begin();
+        it!=e->getParameters().end(); it++) {
+        nlohmann::json pval;
+        visitExpr(pval, it->get());
+        pvals.push_back(pval);
+    }
+
+    (*m_json_s.back()) = expr;
     DEBUG_LEAVE("visitTypeExprMethodCallContext");
 }
 
 void TypeModelDumperJSON::visitTypeExprMethodCallStatic(ITypeExprMethodCallStatic *e) {
     DEBUG_ENTER("visitTypeExprMethodCallStatic");
+    nlohmann::json expr;
+
+    expr["kind"] = "expr-call-method-static";
+
+    std::map<IDataTypeFunction *, int32_t>::const_iterator it = 
+        m_function_m.find(e->getTarget());
+    
+    if (it == m_function_m.end()) {
+        int32_t id = m_function_l.size();
+        m_function_l.push_back(e->getTarget());
+        it = m_function_m.insert({e->getTarget(), id}).first;
+    }
+    expr["function-type"] = it->second;
+
+    nlohmann::json &pvals = (expr["pvals"] = nlohmann::json::array());
+    for (std::vector<vsc::dm::ITypeExprUP>::const_iterator
+        it=e->getParameters().begin();
+        it!=e->getParameters().end(); it++) {
+        nlohmann::json pval;
+        visitExpr(pval, it->get());
+        pvals.push_back(pval);
+    }
+
+    (*m_json_s.back()) = expr;
     DEBUG_LEAVE("visitTypeExprMethodCallStatic");
 }
 
@@ -470,6 +518,8 @@ void TypeModelDumperJSON::visitTypeExprBin(vsc::dm::ITypeExprBin *e) {
     expr["op"] = binop2str_m[e->op()];
     visitExpr(expr["rhs"], e->rhs());
 
+    (*m_json_s.back()) = expr;
+
     DEBUG_LEAVE("visitTypeExprBin");
 }
 
@@ -479,15 +529,19 @@ void TypeModelDumperJSON::visitTypeExecProc(ITypeExecProc *e) {
 
 static std::map<vsc::dm::ITypeExprFieldRef::RootRefKind, std::string> root_ref_kind_m = {
     {vsc::dm::ITypeExprFieldRef::RootRefKind::TopDownScope, "top-down"},
-    {vsc::dm::ITypeExprFieldRef::RootRefKind::BottomUpScope, "bottom-up"}
+    {vsc::dm::ITypeExprFieldRef::RootRefKind::BottomUpScope, "bottom-up"},
+    {vsc::dm::ITypeExprFieldRef::RootRefKind::RootExpr, "expr-rel"}
 };
 
 void TypeModelDumperJSON::visitTypeExprFieldRef(vsc::dm::ITypeExprFieldRef *e) { 
     nlohmann::json expr;
     expr["kind"] = "type-expr-field-ref";
     expr["root-kind"] = root_ref_kind_m.find(e->getRootRefKind())->second;
-    expr["root-offset"] = e->getRootRefOffset();
-    nlohmann::json &path = (expr["path"] = {});
+    nlohmann::json &path = (expr["path"] = nlohmann::json::array());
+
+    if (e->getRootRefKind() == vsc::dm::ITypeExprFieldRef::RootRefKind::RootExpr) {
+        visitExpr(expr["expr"], e->getRootExpr());
+    }
 
     for (std::vector<int32_t>::const_iterator
         it=e->getPath().begin();

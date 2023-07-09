@@ -162,7 +162,7 @@ public:
             ExecKindT               kind,
             ITypeProcStmtScope      *body) override;
 
-    virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallContext(
+    virtual ITypeExprMethodCallContext *mkTypeExprMethodCallContext(
             IDataTypeFunction                           *target,
             vsc::dm::ITypeExpr                          *context,
             const std::vector<vsc::dm::ITypeExpr *>     &params) override;

@@ -371,11 +371,11 @@ ITypeExecProc *Context::mkTypeExecProc(
     return new TypeExecProc(kind, body);
 }
 
-ITypeExprMethodCallStatic *Context::mkTypeExprMethodCallContext(
+ITypeExprMethodCallContext *Context::mkTypeExprMethodCallContext(
             IDataTypeFunction                           *target,
             vsc::dm::ITypeExpr                          *context,
             const std::vector<vsc::dm::ITypeExpr *>     &params) {
-
+    return new TypeExprMethodCallContext(target, context, params);
 }
 
 ITypeExprMethodCallStatic *Context::mkTypeExprMethodCallStatic(

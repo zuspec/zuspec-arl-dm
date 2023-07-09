@@ -146,6 +146,8 @@ private:
     std::vector<nlohmann::json *>               m_json_s;
     nlohmann::json                              *m_active;
     int32_t                                     m_exec_depth;
+    std::vector<IDataTypeFunction *>            m_function_l;
+    std::map<IDataTypeFunction *, int32_t>      m_function_m;
 };
 
 }

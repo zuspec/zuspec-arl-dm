@@ -214,7 +214,7 @@ public:
             ExecKindT               kind,
             ITypeProcStmtScope      *body) = 0;
 
-    virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallContext(
+    virtual ITypeExprMethodCallContext *mkTypeExprMethodCallContext(
             IDataTypeFunction                           *target,
             vsc::dm::ITypeExpr                          *context,
             const std::vector<vsc::dm::ITypeExpr *>     &params) = 0;

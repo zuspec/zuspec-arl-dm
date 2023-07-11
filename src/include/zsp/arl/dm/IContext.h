@@ -33,6 +33,8 @@
 #include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
 #include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
+#include "zsp/arl/dm/ITypeFieldAddrClaim.h"
+#include "zsp/arl/dm/ITypeFieldAddrClaimTransparent.h"
 #include "zsp/arl/dm/ITypeFieldClaim.h"
 #include "zsp/arl/dm/ITypeFieldExecutor.h"
 #include "zsp/arl/dm/ITypeFieldExecutorClaim.h"
@@ -225,6 +227,16 @@ public:
 			const std::string		&name,
 			IDataTypeActivity		*type,
 			bool					owned) = 0;
+
+    virtual ITypeFieldAddrClaim *mkTypeFieldAddrClaim(
+            const std::string       &name,
+            IDataTypeArlStruct      *trait_t,
+            bool                    owned) = 0;
+
+    virtual ITypeFieldAddrClaimTransparent *mkTypeFieldAddrClaimTransparent(
+            const std::string       &name,
+            IDataTypeArlStruct      *trait_t,
+            bool                    owned) = 0;
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,

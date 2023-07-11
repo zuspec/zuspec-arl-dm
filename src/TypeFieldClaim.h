@@ -17,7 +17,7 @@ class TypeFieldClaim : public virtual ITypeFieldClaim, public TypeField {
 public:
 	TypeFieldClaim(
 			const std::string			&name,
-			vsc::dm::IDataType				*type,
+			vsc::dm::IDataType			*type,
 			bool						is_lock);
 
 	virtual ~TypeFieldClaim();

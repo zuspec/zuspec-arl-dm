@@ -351,11 +351,11 @@ void TypeModelDumperJSON::visitTypeConstraintBlock(vsc::dm::ITypeConstraintBlock
     nlohmann::json constraint;
     constraint["kind"] = "type-constraint-block";
 
-    m_active = &constraint;
+    m_json_s.push_back(&constraint);
     VisitorBase::visitTypeConstraintBlock(c);
-    m_active = 0;
+    m_json_s.pop_back();
 
-    *m_json_s.back() = constraint;
+    (*m_active)["constraints"].push_back(constraint);
 
     DEBUG_LEAVE("visitTypeConstraintBlock");
 }
@@ -365,6 +365,7 @@ void TypeModelDumperJSON::visitTypeConstraintExpr(vsc::dm::ITypeConstraintExpr *
     nlohmann::json constraint;
     constraint["kind"] = "type-constraint-expr";
     visitExpr(constraint["expr"], c->expr());
+    (*m_json_s.back()).push_back(constraint);
     DEBUG_LEAVE("visitTypeConstraintExpr");
 }
 
@@ -377,6 +378,7 @@ void TypeModelDumperJSON::visitTypeConstraintIfElse(vsc::dm::ITypeConstraintIfEl
     if (c->getFalse()) {
         visitConstraint(constraint["false-c"], c->getFalse());
     }
+    (*m_json_s.back()).push_back(constraint);
     DEBUG_LEAVE("visitTypeConstraintIfElse");
 }
 

@@ -22,6 +22,7 @@
 #include "vsc/dm/ITypeExprVal.h"
 #include "TypeModelDumperJSON.h"
 #include "nlohmann/json.hpp"
+#include "zsp/arl/dm/ITypeExec.h"
 
 
 namespace zsp {
@@ -77,8 +78,9 @@ void TypeModelDumperJSON::visitDataTypeAction(IDataTypeAction *i) {
     type["activities"] = {};
 
     m_active = &type;
-    m_this->visitDataTypeStruct(i);
+    dynamic_cast<IVisitor *>(m_this)->visitDataTypeArlStruct(i);
     m_active = 0;
+
 
     // Now,
     DEBUG("Action: %s ; activities=%d", 
@@ -278,6 +280,50 @@ void TypeModelDumperJSON::visitDataTypeInt(vsc::dm::IDataTypeInt *t) {
     addType(t, type);
 }
 
+void TypeModelDumperJSON::visitDataTypeArlStruct(IDataTypeArlStruct *t) {
+    bool is_root = !m_active;
+    DEBUG_ENTER("visitDataTypeArlStruct %s (is_root=%d)", t->name().c_str(), is_root);
+    nlohmann::json type;
+    if (is_root) {
+        m_active = &type;
+        type["kind"] = "data-type-arl-struct";
+    }
+
+    m_this->visitDataTypeStruct(t);
+
+    std::vector<ExecKindT> exec_kinds = {
+        ExecKindT::PreSolve,
+        ExecKindT::PostSolve,
+        ExecKindT::Body
+    };
+    std::vector<std::string> exec_kind_s = {
+        "pre-solve",
+        "post-solve",
+        "body"
+    };
+
+    nlohmann::json &execs_j = (*m_active)["execs"];
+    for (uint32_t i=0; i<exec_kinds.size(); i++) {
+        const std::vector<ITypeExecUP> &execs = t->getExecs(exec_kinds.at(i));
+        if (execs.size()) {
+            nlohmann::json &exec_l = execs_j[exec_kind_s.at(i)];
+            m_json_s.push_back(&exec_l);
+            for (std::vector<ITypeExecUP>::const_iterator
+                it=execs.begin();
+                it!=execs.end(); it++) {
+                (*it)->accept(m_this);
+            }
+            m_json_s.pop_back();
+        }
+    }
+
+    if (is_root) {
+        addType(t, type);
+        m_active = 0;
+    }
+    DEBUG_LEAVE("visitDataTypeArlStruct %s", t->name().c_str());
+}
+
 void TypeModelDumperJSON::visitDataTypeStruct(vsc::dm::IDataTypeStruct *t) {
     bool is_root = !m_active;
     DEBUG_ENTER("visitDataTypeStruct %s (is_root=%d)", t->name().c_str(), is_root);
@@ -305,11 +351,11 @@ void TypeModelDumperJSON::visitTypeConstraintBlock(vsc::dm::ITypeConstraintBlock
     nlohmann::json constraint;
     constraint["kind"] = "type-constraint-block";
 
-    m_active = &constraint;
+    m_json_s.push_back(&constraint);
     VisitorBase::visitTypeConstraintBlock(c);
-    m_active = 0;
+    m_json_s.pop_back();
 
-    *m_json_s.back() = constraint;
+    (*m_active)["constraints"].push_back(constraint);
 
     DEBUG_LEAVE("visitTypeConstraintBlock");
 }
@@ -319,6 +365,7 @@ void TypeModelDumperJSON::visitTypeConstraintExpr(vsc::dm::ITypeConstraintExpr *
     nlohmann::json constraint;
     constraint["kind"] = "type-constraint-expr";
     visitExpr(constraint["expr"], c->expr());
+    (*m_json_s.back()).push_back(constraint);
     DEBUG_LEAVE("visitTypeConstraintExpr");
 }
 
@@ -331,7 +378,67 @@ void TypeModelDumperJSON::visitTypeConstraintIfElse(vsc::dm::ITypeConstraintIfEl
     if (c->getFalse()) {
         visitConstraint(constraint["false-c"], c->getFalse());
     }
+    (*m_json_s.back()).push_back(constraint);
     DEBUG_LEAVE("visitTypeConstraintIfElse");
+}
+
+void TypeModelDumperJSON::visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) {
+    DEBUG_ENTER("visitTypeExprMethodCallContext");
+    nlohmann::json expr;
+
+    expr["kind"] = "expr-call-method-context";
+
+    std::map<IDataTypeFunction *, int32_t>::const_iterator it = 
+        m_function_m.find(e->getTarget());
+    
+    if (it == m_function_m.end()) {
+        int32_t id = m_function_l.size();
+        m_function_l.push_back(e->getTarget());
+        it = m_function_m.insert({e->getTarget(), id}).first;
+    }
+    expr["function-type"] = it->second;
+    visitExpr(expr["context"], e->getContext());
+
+    nlohmann::json &pvals = (expr["pvals"] = nlohmann::json::array());
+    for (std::vector<vsc::dm::ITypeExprUP>::const_iterator
+        it=e->getParameters().begin();
+        it!=e->getParameters().end(); it++) {
+        nlohmann::json pval;
+        visitExpr(pval, it->get());
+        pvals.push_back(pval);
+    }
+
+    (*m_json_s.back()) = expr;
+    DEBUG_LEAVE("visitTypeExprMethodCallContext");
+}
+
+void TypeModelDumperJSON::visitTypeExprMethodCallStatic(ITypeExprMethodCallStatic *e) {
+    DEBUG_ENTER("visitTypeExprMethodCallStatic");
+    nlohmann::json expr;
+
+    expr["kind"] = "expr-call-method-static";
+
+    std::map<IDataTypeFunction *, int32_t>::const_iterator it = 
+        m_function_m.find(e->getTarget());
+    
+    if (it == m_function_m.end()) {
+        int32_t id = m_function_l.size();
+        m_function_l.push_back(e->getTarget());
+        it = m_function_m.insert({e->getTarget(), id}).first;
+    }
+    expr["function-type"] = it->second;
+
+    nlohmann::json &pvals = (expr["pvals"] = nlohmann::json::array());
+    for (std::vector<vsc::dm::ITypeExprUP>::const_iterator
+        it=e->getParameters().begin();
+        it!=e->getParameters().end(); it++) {
+        nlohmann::json pval;
+        visitExpr(pval, it->get());
+        pvals.push_back(pval);
+    }
+
+    (*m_json_s.back()) = expr;
+    DEBUG_LEAVE("visitTypeExprMethodCallStatic");
 }
 
 void TypeModelDumperJSON::visitTypeConstraintImplies(vsc::dm::ITypeConstraintImplies *c) { 
@@ -413,20 +520,30 @@ void TypeModelDumperJSON::visitTypeExprBin(vsc::dm::ITypeExprBin *e) {
     expr["op"] = binop2str_m[e->op()];
     visitExpr(expr["rhs"], e->rhs());
 
+    (*m_json_s.back()) = expr;
+
     DEBUG_LEAVE("visitTypeExprBin");
+}
+
+void TypeModelDumperJSON::visitTypeExecProc(ITypeExecProc *e) {
+    e->getBody()->accept(m_this);
 }
 
 static std::map<vsc::dm::ITypeExprFieldRef::RootRefKind, std::string> root_ref_kind_m = {
     {vsc::dm::ITypeExprFieldRef::RootRefKind::TopDownScope, "top-down"},
-    {vsc::dm::ITypeExprFieldRef::RootRefKind::BottomUpScope, "bottom-up"}
+    {vsc::dm::ITypeExprFieldRef::RootRefKind::BottomUpScope, "bottom-up"},
+    {vsc::dm::ITypeExprFieldRef::RootRefKind::RootExpr, "expr-rel"}
 };
 
 void TypeModelDumperJSON::visitTypeExprFieldRef(vsc::dm::ITypeExprFieldRef *e) { 
     nlohmann::json expr;
     expr["kind"] = "type-expr-field-ref";
     expr["root-kind"] = root_ref_kind_m.find(e->getRootRefKind())->second;
-    expr["root-offset"] = e->getRootRefOffset();
-    nlohmann::json &path = (expr["path"] = {});
+    nlohmann::json &path = (expr["path"] = nlohmann::json::array());
+
+    if (e->getRootRefKind() == vsc::dm::ITypeExprFieldRef::RootRefKind::RootExpr) {
+        visitExpr(expr["expr"], e->getRootExpr());
+    }
 
     for (std::vector<int32_t>::const_iterator
         it=e->getPath().begin();
@@ -485,12 +602,40 @@ void TypeModelDumperJSON::visitTypeFieldPhy(vsc::dm::ITypeFieldPhy *f) {
     (*m_active)["fields"].push_back(field);
 }
 
+void TypeModelDumperJSON::visitTypeFieldPool(ITypeFieldPool *f) {
+    nlohmann::json field;
+    field["kind"] = "type-field-pool";
+    field["name"] = f->name();
+    field["type-id"] = getTypeIdx(f->getDataType());
+
+    (*m_active)["fields"].push_back(field);
+}
+
 void TypeModelDumperJSON::visitTypeFieldRef(vsc::dm::ITypeFieldRef *f) {
     nlohmann::json field;
     field["kind"] = "type-field-ref";
     field["name"] = f->name();
     field["type-id"] = getTypeIdx(f->getDataType());
     
+    (*m_active)["fields"].push_back(field);
+}
+
+void TypeModelDumperJSON::visitTypeFieldReg(ITypeFieldReg *f) {
+    nlohmann::json field;
+    field["kind"] = "type-field-reg";
+    field["name"] = f->name();
+    field["type-id"] = getTypeIdx(f->getDataType());
+    field["offset"] = f->getOffset();
+
+    (*m_active)["fields"].push_back(field);
+}
+
+void TypeModelDumperJSON::visitTypeFieldRegGroup(ITypeFieldRegGroup *f) {
+    nlohmann::json field;
+    field["kind"] = "type-field-reggroup";
+    field["name"] = f->name();
+    field["type-id"] = getTypeIdx(f->getDataType());
+
     (*m_active)["fields"].push_back(field);
 }
 
@@ -517,6 +662,33 @@ void TypeModelDumperJSON::visitTypeProcStmtAssign(ITypeProcStmtAssign *s) {
     visitExpr(stmt["rhs"], s->getRhs());
 
     m_json_s.back()->push_back(stmt);
+}
+
+void TypeModelDumperJSON::visitTypeProcStmtExpr(ITypeProcStmtExpr *s) {
+    DEBUG_ENTER("visitTypeProcStmtExpr");
+    nlohmann::json stmt;
+
+    stmt["kind"] = "proc-stmt-expr";
+    visitExpr(stmt["expr"], s->getExpr());
+
+    m_json_s.back()->push_back(stmt);
+    DEBUG_LEAVE("visitTypeProcStmtExpr");
+}
+
+void TypeModelDumperJSON::visitTypeProcStmtScope(ITypeProcStmtScope *s) {
+    DEBUG_ENTER("visitTypeProcStmtScope");
+    nlohmann::json scope = nlohmann::json::array();
+
+    m_json_s.push_back(&scope);
+    for (std::vector<ITypeProcStmtUP>::const_iterator
+        it=s->getStatements().begin();
+        it!=s->getStatements().end(); it++) {
+        (*it)->accept(m_this);
+    }
+    m_json_s.pop_back();
+
+    m_json_s.back()->push_back(scope);
+    DEBUG_LEAVE("visitTypeProcStmtScope");
 }
 
 int32_t TypeModelDumperJSON::getTypeIdx(vsc::dm::IAccept *t) {

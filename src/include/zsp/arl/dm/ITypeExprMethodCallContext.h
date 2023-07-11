@@ -25,8 +25,8 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
-
-
+class ITypeExprMethodCallContext;
+using ITypeExprMethodCallContextUP=std::unique_ptr<ITypeExprMethodCallContext>;
 class ITypeExprMethodCallContext : public virtual ITypeExprMethodCallStatic {
 public:
 

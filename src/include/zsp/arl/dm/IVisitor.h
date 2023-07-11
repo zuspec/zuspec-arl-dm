@@ -53,6 +53,8 @@ class ITypeFieldExecutor;
 class ITypeFieldExecutorClaim;
 class ITypeFieldInOut;
 class ITypeFieldPool;
+class ITypeFieldReg;
+class ITypeFieldRegGroup;
 class ITypeProcStmtAssign;
 class ITypeProcStmtBreak;
 class ITypeProcStmtContinue;
@@ -149,6 +151,10 @@ public:
 	virtual void visitTypeFieldInOut(ITypeFieldInOut *f) = 0;
 
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) = 0;
+
+	virtual void visitTypeFieldReg(ITypeFieldReg *f) = 0;
+
+	virtual void visitTypeFieldRegGroup(ITypeFieldRegGroup *f) = 0;
 
 	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) = 0;
 

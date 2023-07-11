@@ -47,6 +47,8 @@
 #include "zsp/arl/dm/ITypeFieldExecutorClaim.h"
 #include "zsp/arl/dm/ITypeFieldInOut.h"
 #include "zsp/arl/dm/ITypeFieldPool.h"
+#include "zsp/arl/dm/ITypeFieldReg.h"
+#include "zsp/arl/dm/ITypeFieldRegGroup.h"
 #include "zsp/arl/dm/ITypeProcStmtAssign.h"
 #include "zsp/arl/dm/ITypeProcStmtBreak.h"
 #include "zsp/arl/dm/ITypeProcStmtContinue.h"
@@ -225,6 +227,7 @@ public:
 		m_this->visitModelField(f);
 	}
 
+
     virtual void visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) override {
         visitTypeExprMethodCallStatic(e);
         e->getContext()->accept(m_this);
@@ -264,6 +267,14 @@ public:
 	virtual void visitTypeFieldPool(ITypeFieldPool *f) override {
 		m_this->visitTypeField(f);
 	}
+
+	virtual void visitTypeFieldReg(ITypeFieldReg *f) override {
+        m_this->visitTypeField(f);
+    }
+
+	virtual void visitTypeFieldRegGroup(ITypeFieldRegGroup *f) override {
+        m_this->visitTypeField(f);
+    }
 
 	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override {
 		s->getLhs()->accept(m_this);

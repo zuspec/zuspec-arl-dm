@@ -73,6 +73,8 @@ public:
 
 	virtual void visitDataTypeInt(vsc::dm::IDataTypeInt *t) override;
 
+	virtual void visitDataTypeArlStruct(IDataTypeArlStruct *t) override;
+
 	virtual void visitDataTypeStruct(vsc::dm::IDataTypeStruct *t) override;
 
 	virtual void visitTypeConstraintBlock(vsc::dm::ITypeConstraintBlock *c) override;
@@ -81,17 +83,23 @@ public:
 
 	virtual void visitTypeConstraintIfElse(vsc::dm::ITypeConstraintIfElse *c) override;
 
-	virtual void visitTypeConstraintImplies(vsc::dm::ITypeConstraintImplies *c) override;
+    virtual void visitTypeConstraintImplies(vsc::dm::ITypeConstraintImplies *c) override;
 
-	virtual void visitTypeConstraintScope(vsc::dm::ITypeConstraintScope *c) override;
+    virtual void visitTypeConstraintScope(vsc::dm::ITypeConstraintScope *c) override;
 
-	virtual void visitTypeConstraintSoft(vsc::dm::ITypeConstraintSoft *c) override;
+    virtual void visitTypeConstraintSoft(vsc::dm::ITypeConstraintSoft *c) override;
 
-	virtual void visitTypeConstraintUnique(vsc::dm::ITypeConstraintUnique *c) override;
+    virtual void visitTypeConstraintUnique(vsc::dm::ITypeConstraintUnique *c) override;
 
-	virtual void visitTypeExprBin(vsc::dm::ITypeExprBin *e) override;
+    virtual void visitTypeExecProc(ITypeExecProc *e) override;
 
-	virtual void visitTypeExprFieldRef(vsc::dm::ITypeExprFieldRef *e) override;
+    virtual void visitTypeExprBin(vsc::dm::ITypeExprBin *e) override;
+
+    virtual void visitTypeExprFieldRef(vsc::dm::ITypeExprFieldRef *e) override;
+
+    virtual void visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) override;
+
+    virtual void visitTypeExprMethodCallStatic(ITypeExprMethodCallStatic *e) override;
 
 	virtual void visitTypeExprRange(vsc::dm::ITypeExprRange *e) override;
 
@@ -103,11 +111,21 @@ public:
 
 	virtual void visitTypeFieldPhy(vsc::dm::ITypeFieldPhy *f) override;
 
+	virtual void visitTypeFieldPool(ITypeFieldPool *f) override;
+
 	virtual void visitTypeFieldRef(vsc::dm::ITypeFieldRef *f) override;
+
+	virtual void visitTypeFieldReg(ITypeFieldReg *f) override;
+
+	virtual void visitTypeFieldRegGroup(ITypeFieldRegGroup *f) override;
 
 	virtual void visitTypeFieldVec(vsc::dm::ITypeFieldVec *f) override;
 
 	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override;
+
+	virtual void visitTypeProcStmtExpr(ITypeProcStmtExpr *s) override;
+
+	virtual void visitTypeProcStmtScope(ITypeProcStmtScope *s) override;
 
 private:
     int32_t getTypeIdx(vsc::dm::IAccept *t);
@@ -128,6 +146,8 @@ private:
     std::vector<nlohmann::json *>               m_json_s;
     nlohmann::json                              *m_active;
     int32_t                                     m_exec_depth;
+    std::vector<IDataTypeFunction *>            m_function_l;
+    std::map<IDataTypeFunction *, int32_t>      m_function_m;
 };
 
 }

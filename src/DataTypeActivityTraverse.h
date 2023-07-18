@@ -23,6 +23,10 @@ public:
 
 	virtual ~DataTypeActivityTraverse();
 
+    virtual int32_t getByteSize() const override { return -1; }
+
+    virtual void setByteSize(int32_t sz) override { }
+
 	virtual vsc::dm::ITypeExprFieldRef *getTarget() const override {
 		return m_target.get();
 	}

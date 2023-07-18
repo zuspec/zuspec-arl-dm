@@ -15,14 +15,11 @@ namespace dm {
 
 TypeField::TypeField(
 		const std::string			&name,
-		vsc::dm::IDataType				*type,
+		vsc::dm::IDataType			*type,
 		bool						owned,
-		vsc::dm::TypeFieldAttr			attr) :
-				m_parent(0), m_idx(-1), m_name(name), m_type(type), m_attr(attr) {
-	if (owned) {
-		m_type_owned = vsc::dm::IDataTypeUP(type);
-	}
-
+		vsc::dm::TypeFieldAttr		attr) :
+				m_parent(0), m_idx(-1), m_name(name), 
+                m_offset(-1), m_type(type, owned), m_attr(attr) {
 }
 
 TypeField::~TypeField() {

@@ -149,6 +149,9 @@ public:
 	virtual IModelFieldPool *mkModelFieldPoolType(
 			vsc::dm::ITypeField			*type) override;
 
+	virtual IModelFieldRegGroup *mkModelFieldRegGroup(
+            vsc::dm::ITypeField         *type) override;
+
 	virtual IPoolBindDirective *mkPoolBindDirective(
 			PoolBindKind			kind,
 			vsc::dm::ITypeExprFieldRef	*pool,
@@ -175,6 +178,16 @@ public:
 			const std::string		&name,
 			IDataTypeActivity		*type,
 			bool					owned) override;
+
+    virtual ITypeFieldAddrClaim *mkTypeFieldAddrClaim(
+            const std::string       &name,
+            IDataTypeArlStruct      *trait_t,
+            bool                    owned) override;
+
+    virtual ITypeFieldAddrClaimTransparent *mkTypeFieldAddrClaimTransparent(
+            const std::string       &name,
+            IDataTypeArlStruct      *trait_t,
+            bool                    owned) override;
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,

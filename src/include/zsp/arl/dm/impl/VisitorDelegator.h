@@ -20,6 +20,7 @@
 #include "zsp/arl/dm/IModelFieldComponentRoot.h"
 #include "zsp/arl/dm/IModelFieldExecutor.h"
 #include "zsp/arl/dm/IModelFieldInOut.h"
+#include "zsp/arl/dm/IModelFieldRegGroup.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
 #include "zsp/arl/dm/IModelActivityReplicate.h"
 #include "zsp/arl/dm/IModelActivitySchedule.h"
@@ -182,6 +183,11 @@ public:
 
 	virtual void visitModelFieldPool(IModelFieldPool *f) override {
 		delegate(&arl::dm::IVisitor::visitModelFieldPool,
+				&vsc::dm::IVisitor::visitModelField, f);
+	}
+
+	virtual void visitModelFieldRegGroup(IModelFieldRegGroup *f) override {
+		delegate(&arl::dm::IVisitor::visitModelFieldRegGroup,
 				&vsc::dm::IVisitor::visitModelField, f);
 	}
 

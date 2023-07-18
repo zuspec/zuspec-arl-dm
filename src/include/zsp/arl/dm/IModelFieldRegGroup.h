@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include "vsc/dm/IModelField.h"
 
 namespace zsp {
 namespace arl {
@@ -26,7 +27,7 @@ namespace dm {
 
 
 
-class IModelFieldRegGroup {
+class IModelFieldRegGroup : public virtual vsc::dm::IModelField {
 public:
 
     virtual ~IModelFieldRegGroup() { }

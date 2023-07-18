@@ -37,6 +37,7 @@
 #include "zsp/arl/dm/IModelFieldExecutorClaim.h"
 #include "zsp/arl/dm/IModelFieldInOut.h"
 #include "zsp/arl/dm/IModelFieldPool.h"
+#include "zsp/arl/dm/IModelFieldRegGroup.h"
 #include "zsp/arl/dm/IVisitor.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
 #include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
@@ -227,6 +228,9 @@ public:
 		m_this->visitModelField(f);
 	}
 
+	virtual void visitModelFieldRegGroup(IModelFieldRegGroup *f) override {
+        m_this->visitModelField(f);
+    }
 
     virtual void visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) override {
         visitTypeExprMethodCallStatic(e);

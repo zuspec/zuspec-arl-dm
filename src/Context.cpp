@@ -36,6 +36,7 @@
 #include "ModelFieldExecutorClaim.h"
 #include "ModelFieldInOut.h"
 #include "ModelFieldPool.h"
+#include "ModelFieldRegGroup.h"
 #include "PoolBindDirective.h"
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
@@ -261,7 +262,7 @@ IDataTypePackedStruct *Context::mkDataTypePackedStruct(
 
 bool Context::addDataTypePackedStruct(
             IDataTypePackedStruct   *type) {
-
+    return true;
 }
 
 IModelActivityParallel *Context::mkModelActivityParallel() {
@@ -359,6 +360,13 @@ IPoolBindDirective *Context::mkPoolBindDirective(
 	return new PoolBindDirective(kind, pool, target);
 }
 
+IModelFieldRegGroup *Context::mkModelFieldRegGroup(
+            vsc::dm::ITypeField         *type) {
+    return new ModelFieldRegGroup(
+        type->name(),
+        type->getDataType());
+}
+
 ITypeExecGroup *Context::mkTypeExecGroup(
         ExecKindT           kind,
         ITypeExecGroup      *super) {
@@ -389,6 +397,20 @@ ITypeFieldActivity *Context::mkTypeFieldActivity(
 			IDataTypeActivity		*type,
 			bool					owned) {
 	return new TypeFieldActivity(name, type, owned);
+}
+
+ITypeFieldAddrClaim *Context::mkTypeFieldAddrClaim(
+            const std::string       &name,
+            IDataTypeArlStruct      *trait_t,
+            bool                    owned) {
+    return 0;
+}
+
+ITypeFieldAddrClaimTransparent *Context::mkTypeFieldAddrClaimTransparent(
+            const std::string       &name,
+            IDataTypeArlStruct      *trait_t,
+            bool                    owned) {
+    return 0;
 }
 
 ITypeFieldClaim *Context::mkTypeFieldClaim(

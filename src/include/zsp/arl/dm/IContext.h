@@ -29,6 +29,7 @@
 #include "zsp/arl/dm/IModelFieldComponent.h"
 #include "zsp/arl/dm/IModelFieldExecutor.h"
 #include "zsp/arl/dm/IModelFieldExecutorClaim.h"
+#include "zsp/arl/dm/IModelFieldRegGroup.h"
 #include "zsp/arl/dm/ITypeExecGroup.h"
 #include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
@@ -202,6 +203,9 @@ public:
 
 	virtual IModelFieldPool *mkModelFieldPoolType(
 			vsc::dm::ITypeField			*type) = 0;
+
+	virtual IModelFieldRegGroup *mkModelFieldRegGroup(
+            vsc::dm::ITypeField         *type) = 0;
 
 	virtual IPoolBindDirective *mkPoolBindDirective(
 			PoolBindKind				kind,

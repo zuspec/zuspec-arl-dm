@@ -19,6 +19,7 @@
  *     Author:
  */
 #include "zsp/arl/dm/IVisitor.h"
+#include "zsp/arl/dm/IContext.h"
 #include "TypeFieldRegGroup.h"
 
 
@@ -37,6 +38,12 @@ TypeFieldRegGroup::TypeFieldRegGroup(
 
 TypeFieldRegGroup::~TypeFieldRegGroup() {
 
+}
+
+vsc::dm::IModelField *TypeFieldRegGroup::mkModelField(vsc::dm::IModelBuildContext *ctxt) {
+    IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
+
+    return ctxt_a->mkModelFieldRegGroup(this);
 }
 
 void TypeFieldRegGroup::accept(vsc::dm::IVisitor *v) {

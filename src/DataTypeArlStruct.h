@@ -35,6 +35,14 @@ public:
 		return m_name;
 	}
 
+    virtual int32_t getByteSize() const override {
+        return m_bytesz;
+    }
+
+    virtual void setByteSize(int32_t sz) override {
+        m_bytesz = sz;
+    }
+
 	virtual void addField(
         vsc::dm::ITypeField     *f,
         bool                    owned=true);
@@ -42,6 +50,8 @@ public:
 	virtual const std::vector<vsc::dm::ITypeFieldUP> &getFields() const;
 
 	virtual vsc::dm::ITypeField *getField(int32_t idx);
+
+    virtual int32_t getNumBuiltin() const { return 0; }
 
 	virtual void addConstraint(
         vsc::dm::ITypeConstraint    *c,
@@ -78,6 +88,7 @@ public:
 
 public:
 	std::string								        m_name;
+    int32_t                                         m_bytesz;
 	std::vector<vsc::dm::ITypeFieldUP>		 	    m_fields;
 	std::vector<vsc::dm::ITypeConstraintUP>		    m_constraints;
 	vsc::dm::IModelStructCreateHookUP			    m_create_hook;

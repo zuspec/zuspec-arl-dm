@@ -18,7 +18,8 @@ namespace arl {
 namespace dm {
 
 
-DataTypeArlStruct::DataTypeArlStruct(const std::string &name) : m_name(name) {
+DataTypeArlStruct::DataTypeArlStruct(const std::string &name) : 
+    m_name(name), m_bytesz(-1) {
 	// TODO Auto-generated constructor stub
 
 }

@@ -21,6 +21,10 @@ public:
 
 	virtual const std::string &name() const override { return m_name; }
 
+    virtual int32_t getByteSize() const override { return -1; }
+
+    virtual void setByteSize(int32_t sz) override { }
+
 	virtual void addField(
         vsc::dm::ITypeField     *f,
         bool                    owned=true) override;
@@ -32,6 +36,8 @@ public:
 	virtual vsc::dm::ITypeField *getField(int32_t idx) override {
 		return m_fields.at(idx).get();
 	}
+
+    virtual int32_t getNumBuiltin() const { return 0; }
 
 	virtual void addConstraint(
         vsc::dm::ITypeConstraint    *c,

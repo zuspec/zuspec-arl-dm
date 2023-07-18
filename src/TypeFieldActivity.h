@@ -15,7 +15,9 @@ namespace arl {
 namespace dm {
 
 
-class TypeFieldActivity : public virtual ITypeFieldActivity, public TypeField {
+class TypeFieldActivity : 
+    public virtual ITypeFieldActivity, 
+    public virtual TypeField {
 public:
 	TypeFieldActivity(
 			const std::string			&name,

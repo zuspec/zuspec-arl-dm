@@ -39,6 +39,9 @@ public:
         bool                    owned);
 
     virtual ~TypeFieldRegGroup();
+
+	virtual vsc::dm::IModelField *mkModelField(
+		vsc::dm::IModelBuildContext 			*ctxt) override;
     
     virtual void accept(vsc::dm::IVisitor *v) override;
 

@@ -1,7 +1,7 @@
-/**
- * DataTypeRegGroup.h
+/*
+ * ModelFieldRegGroup.cpp
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -16,26 +16,35 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
+#include "zsp/arl/dm/IVisitor.h"
+#include "ModelFieldRegGroup.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
+ModelFieldRegGroup::ModelFieldRegGroup(
+    const std::string       &name,
+    vsc::dm::IDataType      *type) : m_name(name), m_type(type), m_id(-1) {
 
-class DataTypeRegGroup {
-public:
-    DataTypeRegGroup();
+}
 
-    virtual ~DataTypeRegGroup();
+ModelFieldRegGroup::~ModelFieldRegGroup() {
 
-};
+}
+
+void ModelFieldRegGroup::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<dm::IVisitor *>(v)) {
+        dynamic_cast<dm::IVisitor *>(v)->visitModelFieldRegGroup(this);
+    } else if (v->cascade()) {
+        v->visitModelField(this);
+    }
+}
 
 }
 }
 }
-
-

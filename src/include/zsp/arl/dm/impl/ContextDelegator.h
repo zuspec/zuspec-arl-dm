@@ -249,6 +249,11 @@ public:
         return ctxt()->mkModelFieldPoolType(type);
     }
 
+	virtual IModelFieldRegGroup *mkModelFieldRegGroup(
+			vsc::dm::ITypeField			*type) { 
+        return ctxt()->mkModelFieldRegGroup(type);
+    }
+
 	virtual IPoolBindDirective *mkPoolBindDirective(
 			PoolBindKind				kind,
 			vsc::dm::ITypeExprFieldRef		*pool,
@@ -286,6 +291,20 @@ public:
 			IDataTypeActivity		*type,
 			bool					owned) { 
         return ctxt()->mkTypeFieldActivity(name, type, owned);
+    }
+
+    virtual ITypeFieldAddrClaim *mkTypeFieldAddrClaim(
+            const std::string       &name,
+            IDataTypeArlStruct      *trait_t,
+            bool                    owned) {
+        return ctxt()->mkTypeFieldAddrClaim(name, trait_t, owned);
+    }
+
+    virtual ITypeFieldAddrClaimTransparent *mkTypeFieldAddrClaimTransparent(
+            const std::string       &name,
+            IDataTypeArlStruct      *trait_t,
+            bool                    owned) {
+        return ctxt()->mkTypeFieldAddrClaimTransparent(name, trait_t, owned);
     }
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(

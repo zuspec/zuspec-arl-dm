@@ -31,7 +31,8 @@ namespace dm {
 
 DataTypePackedStruct::DataTypePackedStruct(
     const std::string       &name,
-    Endian                  endian) : m_name(name), m_endian(endian) {
+    Endian                  endian) : 
+        m_name(name), m_endian(endian), m_bytesz(-1) {
 
 }
 

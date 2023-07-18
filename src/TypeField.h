@@ -31,9 +31,9 @@ class TypeField : public virtual vsc::dm::ITypeField {
 public:
 	TypeField(
 			const std::string			&name,
-			vsc::dm::IDataType				*type,
+			vsc::dm::IDataType			*type,
 			bool						owned,
-			vsc::dm::TypeFieldAttr			attr);
+			vsc::dm::TypeFieldAttr		attr);
 
 	virtual ~TypeField();
 
@@ -49,21 +49,22 @@ public:
 
 	virtual void setIndex(int32_t idx) override { m_idx = idx; }
 
+    virtual int32_t getOffset() const override { return m_offset; }
+
+    virtual void setOffset(int32_t off) override { m_offset = off; }
+
 	virtual const std::string &name() const { return m_name; }
 
 	virtual vsc::dm::IDataType *getDataType() const override {
-		return m_type;
+		return m_type.get();
 	}
 
 	virtual void setDataType(vsc::dm::IDataType *t, bool own=false) override {
-		m_type = t;
-		if (own) {
-			m_type_owned = vsc::dm::IDataTypeUP(t);
-		}
+		m_type = vsc::dm::IDataTypeUP(t, own);
 	}
 
     virtual bool isDataTypeOwned() const override { 
-        return m_type_owned.get();
+        return m_type.owned();
     }
 
 	virtual vsc::dm::ITypeField *getField(int32_t idx) const override;
@@ -79,8 +80,8 @@ protected:
 	vsc::dm::ITypeField						*m_parent;
 	int32_t								    m_idx;
 	std::string							    m_name;
-	vsc::dm::IDataType						*m_type;
-	vsc::dm::IDataTypeUP					m_type_owned;
+    int32_t                                 m_offset;
+	vsc::dm::IDataTypeUP				    m_type;
 	vsc::dm::TypeFieldAttr					m_attr;
 };
 

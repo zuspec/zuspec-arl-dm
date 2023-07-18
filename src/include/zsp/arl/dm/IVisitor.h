@@ -43,6 +43,7 @@ class IModelFieldExecutorClaim;
 class IModelFieldClaim;
 class IModelFieldInOut;
 class IModelFieldPool;
+class IModelFieldRegGroup;
 class ITypeExprMethodCallContext;
 class ITypeExprMethodCallStatic;
 class ITypeExec;
@@ -131,6 +132,8 @@ public:
 	virtual void visitModelFieldInOut(IModelFieldInOut *f) = 0;
 
 	virtual void visitModelFieldPool(IModelFieldPool *f) = 0;
+
+	virtual void visitModelFieldRegGroup(IModelFieldRegGroup *f) = 0;
 
     virtual void visitTypeExprMethodCallContext(ITypeExprMethodCallContext *e) = 0;
 

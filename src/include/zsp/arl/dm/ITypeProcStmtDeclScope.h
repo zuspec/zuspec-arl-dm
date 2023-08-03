@@ -33,7 +33,11 @@ public:
 
     virtual ~ITypeProcStmtDeclScope() { }
 
-    virtual const std::vector<ITypeProcStmtVarDecl *> getVariables() const = 0;
+    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) = 0;
+
+    virtual int32_t getNumVariables() = 0;
+
+    virtual const std::vector<ITypeProcStmtVarDeclUP> &getVariables() const = 0;
 
 };
 

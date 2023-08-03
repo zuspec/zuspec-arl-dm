@@ -36,13 +36,17 @@ public:
 
     virtual void addStatement(ITypeProcStmt *stmt) override;
 
-    virtual void addVariable(ITypeProcStmtVarDecl *v) override;
+    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) override;
+
+    virtual int32_t getNumVariables() override {
+        return m_variables.size();
+    }
 
     virtual const std::vector<ITypeProcStmtUP> &getStatements() const override {
         return m_statements;
     }
 
-    virtual const std::vector<ITypeProcStmtVarDecl *> getVariables() const override {
+    virtual const std::vector<ITypeProcStmtVarDeclUP> &getVariables() const override {
         return m_variables;
     }
 
@@ -50,7 +54,7 @@ public:
 
 private:
     std::vector<ITypeProcStmtUP>                m_statements;
-    std::vector<ITypeProcStmtVarDecl *>         m_variables;
+    std::vector<ITypeProcStmtVarDeclUP>         m_variables;
 };
 
 }

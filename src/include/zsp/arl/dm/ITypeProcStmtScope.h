@@ -40,8 +40,6 @@ public:
 
     virtual void addStatement(ITypeProcStmt *stmt) = 0;
 
-    virtual void addVariable(ITypeProcStmtVarDecl *v) = 0;
-
     virtual const std::vector<ITypeProcStmtUP> &getStatements() const = 0;
 
 };

@@ -39,7 +39,6 @@ namespace dm {
 class IDataTypeFunction;
 using IDataTypeFunctionUP=vsc::dm::UP<IDataTypeFunction>;
 class IDataTypeFunction : 
-    public virtual ITypeProcStmtDeclScope,
     public virtual vsc::dm::IAccept {
 public:
 

@@ -41,9 +41,11 @@ void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt) {
     m_statements.push_back(ITypeProcStmtUP(stmt));
 }
 
-void TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
+int32_t TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
     m_statements.push_back(ITypeProcStmtUP(v));
-    m_variables.push_back(v);
+    int32_t ret = m_variables.size();
+    m_variables.push_back(ITypeProcStmtVarDeclUP(v, false));
+    return ret;
 }
 
 void TypeProcStmtScope::accept(vsc::dm::IVisitor *v) {

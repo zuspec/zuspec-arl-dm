@@ -58,10 +58,6 @@ public:
         return m_param_scope.get();
     }
 
-    virtual const std::vector<ITypeProcStmtVarDecl *> getVariables() const override {
-        return m_variables;
-    }
-
     virtual vsc::dm::IDataTypeStruct *getContext() const override {
         return m_context;
     }
@@ -107,7 +103,6 @@ private:
     vsc::dm::IDataType                              *m_ret_type;
     vsc::dm::IDataTypeUP                            m_ret_type_u;
     std::vector<IDataTypeFunctionParamDecl *>       m_parameters;
-    std::vector<ITypeProcStmtVarDecl *>             m_variables;
     vsc::dm::IDataTypeStruct                        *m_context;
     bool                                            m_is_export;
     bool                                            m_is_target;

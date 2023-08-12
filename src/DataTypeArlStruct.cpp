@@ -84,6 +84,14 @@ void DataTypeArlStruct::addExec(ITypeExec *exec) {
     it->second.push_back(ITypeExecUP(exec));
 }
 
+void DataTypeArlStruct::addFunction(IDataTypeFunction *f, bool owned) {
+    m_functions.push_back(IDataTypeFunctionUP(f, owned));
+}
+
+const std::vector<IDataTypeFunctionUP> &DataTypeArlStruct::getFunctions() {
+    return m_functions;
+}
+
 vsc::dm::IModelField *DataTypeArlStruct::mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,

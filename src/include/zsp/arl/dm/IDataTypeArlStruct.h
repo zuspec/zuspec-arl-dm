@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "vsc/dm/IDataTypeStruct.h"
+#include "zsp/arl/dm/IDataTypeFunction.h"
 #include "zsp/arl/dm/ITypeExecGroup.h"
 
 namespace zsp {
@@ -37,6 +38,9 @@ public:
 
     virtual void addExec(ITypeExec *exec) = 0;
 
+    virtual void addFunction(IDataTypeFunction *f, bool owned=true) = 0;
+
+    virtual const std::vector<IDataTypeFunctionUP> &getFunctions() = 0;
 
 };
 

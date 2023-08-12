@@ -69,6 +69,10 @@ public:
 
     virtual void addExec(ITypeExec *exec) override;
 
+    virtual void addFunction(IDataTypeFunction *f, bool owned=true) override;
+
+    virtual const std::vector<IDataTypeFunctionUP> &getFunctions() override;
+
     virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
         m_associated_data = vsc::dm::IAssociatedDataUP(data);
     }
@@ -94,6 +98,7 @@ public:
 	vsc::dm::IModelStructCreateHookUP			    m_create_hook;
     static std::vector<ITypeExecUP>                 m_empty_exec_l;
     std::map<ExecKindT, std::vector<ITypeExecUP>>   m_exec_m;
+    std::vector<IDataTypeFunctionUP>                m_functions;
     vsc::dm::IAssociatedDataUP                      m_associated_data;
 
 

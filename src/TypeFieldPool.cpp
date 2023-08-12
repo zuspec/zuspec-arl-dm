@@ -6,6 +6,7 @@
  */
 
 #include "TypeFieldPool.h"
+#include "vsc/dm/impl/ValRefInt.h"
 #include "zsp/arl/dm/IVisitor.h"
 
 namespace zsp {
@@ -29,15 +30,14 @@ TypeFieldPool::TypeFieldPool(
 	}
 
 	vsc::dm::IDataTypeStruct *pool_t = ctxt->mkDataTypeStruct(name + "_pool_t");
-	vsc::dm::IModelValUP val(ctxt->mkModelVal());
-	val->setBits(32);
-	val->set_val_i(decl_size);
+    vsc::dm::ValRefInt val(decl_size, true, 32);
 	pool_t->addField(ctxt->mkTypeFieldPhy(
 		"size",
 		i32_t,
 		false,
 		vsc::dm::TypeFieldAttr::NoAttr,
-		val.release()));
+        val.vp(),
+        true));
 	setDataType(pool_t, true);
 }
 

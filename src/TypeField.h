@@ -37,6 +37,11 @@ public:
 
 	virtual ~TypeField();
 
+    virtual void initVal(uintptr_t vp) override { }
+
+    virtual void finiVal(uintptr_t vp) override { }
+
+
 	virtual vsc::dm::ITypeField *getParent() const override {
 		return m_parent;
 	}

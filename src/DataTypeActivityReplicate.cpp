@@ -42,9 +42,9 @@ DataTypeActivityReplicate::DataTypeActivityReplicate(
     }
 
     addField(ctxt->mkTypeFieldPhy("__count", ui16, false,
-        vsc::dm::TypeFieldAttr::Rand, 0));
+        vsc::dm::TypeFieldAttr::Rand, 0, false));
     addField(ctxt->mkTypeFieldPhy("__index", ui16, false,
-        vsc::dm::TypeFieldAttr::NoAttr, 0));
+        vsc::dm::TypeFieldAttr::NoAttr, 0, false));
 
     vsc::dm::ITypeExprFieldRef *count_r = ctxt->mkTypeExprFieldRef(
         vsc::dm::ITypeExprFieldRef::RootRefKind::BottomUpScope,

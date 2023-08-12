@@ -37,6 +37,12 @@ public:
 
     virtual ~DataTypePackedStruct();
 
+    virtual void initVal(uintptr_t vp) override { }
+
+    virtual void finiVal(uintptr_t vp) override { }
+
+	virtual void finalize(vsc::dm::IContext *ctxt) override { }
+
 	virtual const std::string &name() const {
 		return m_name;
 	}

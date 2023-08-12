@@ -7,6 +7,7 @@
 #pragma once
 #include "zsp/arl/dm/IDataTypeActivityTraverse.h"
 #include "vsc/dm/ITypeConstraint.h"
+#include "DataTypeActivityStmt.h"
 
 
 namespace zsp {
@@ -15,7 +16,8 @@ namespace dm {
 
 
 class DataTypeActivityTraverse : 
-	public virtual IDataTypeActivityTraverse {
+	public virtual IDataTypeActivityTraverse,
+    public virtual DataTypeActivityStmt {
 public:
 	DataTypeActivityTraverse(
 			vsc::dm::ITypeExprFieldRef		*target,

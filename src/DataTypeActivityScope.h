@@ -7,13 +7,16 @@
 
 #pragma once
 #include "zsp/arl/dm/IDataTypeActivityScope.h"
+#include "DataTypeActivityStmt.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class DataTypeActivityScope : public virtual IDataTypeActivityScope {
+class DataTypeActivityScope : 
+    public virtual IDataTypeActivityScope,
+    public virtual DataTypeActivityStmt {
 public:
 	DataTypeActivityScope(const std::string &name);
 

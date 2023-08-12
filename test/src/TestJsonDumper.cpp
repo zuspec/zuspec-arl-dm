@@ -44,9 +44,9 @@ TEST_F(TestJsonDumper, smoke) {
     ITypeModelDumperUP dumper(m_arl_dm_factory->mkTypeModelDumperJSON(&out, 2));
     vsc::dm::IDataTypeStructUP my_s(m_ctxt->mkDataTypeStruct("my_s"));
     my_s->addField(m_ctxt->mkTypeFieldPhy("f1", int32.get(), false, 
-        vsc::dm::TypeFieldAttr::NoAttr, 0));
+        vsc::dm::TypeFieldAttr::NoAttr, 0, false));
     my_s->addField(m_ctxt->mkTypeFieldPhy("f2", uint16.get(), false, 
-        vsc::dm::TypeFieldAttr::NoAttr, 0));
+        vsc::dm::TypeFieldAttr::NoAttr, 0, false));
 
     dumper->dumpTypeModel({my_s.get()});
 

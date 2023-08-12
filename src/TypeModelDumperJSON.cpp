@@ -561,7 +561,8 @@ void TypeModelDumperJSON::visitTypeExprRangelist(vsc::dm::ITypeExprRangelist *e)
 void TypeModelDumperJSON::visitTypeExprVal(vsc::dm::ITypeExprVal *e) { 
     char tmp[64];
 
-    sprintf(tmp, "%lld", e->val()->val_u());
+    strcpy(tmp, "TODO: type-expr-val");
+//    sprintf(tmp, "%lld", e->val()->val_u());
 
     nlohmann::json expr;
     expr["kind"] = "type-expr-val";

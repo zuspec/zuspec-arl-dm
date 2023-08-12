@@ -33,7 +33,7 @@ DataTypeComponent::DataTypeComponent(
 		ui32, 
 		false, 
 		vsc::dm::TypeFieldAttr::Rand,
-		0);
+		0, false);
 	addField(m_comp_id);
 }
 

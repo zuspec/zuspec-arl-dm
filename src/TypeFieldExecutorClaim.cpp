@@ -41,7 +41,8 @@ TypeFieldExecutorClaim::~TypeFieldExecutorClaim() {
 }
 
 vsc::dm::IModelField *TypeFieldExecutorClaim::mkModelField(
-		vsc::dm::IModelBuildContext 			*ctxt) {
+		vsc::dm::IModelBuildContext 		*ctxt,
+        const vsc::dm::ValRef               &va) {
     IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     return ctxt_a->mkModelFieldExecutorClaim(this);
 }

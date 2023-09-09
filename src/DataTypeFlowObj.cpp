@@ -36,8 +36,7 @@ DataTypeFlowObj::DataTypeFlowObj(
         ui32_t,
         false,
         vsc::dm::TypeFieldAttr::Rand,
-        0, false);
-
+        vsc::dm::ValRef());
 }
 
 DataTypeFlowObj::~DataTypeFlowObj() {

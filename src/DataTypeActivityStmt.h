@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include "vsc/dm/impl/ValRef.h"
 #include "zsp/arl/dm/IDataTypeActivity.h"
 
 namespace zsp {
@@ -33,9 +34,11 @@ public:
 
     virtual ~DataTypeActivityStmt();
 
-    virtual void initVal(uintptr_t vp) override { }
+    virtual void initVal(vsc::dm::ValRef &v) override { }
 
-    virtual void finiVal(uintptr_t vp) override { }
+    virtual void finiVal(vsc::dm::ValRef &v) override { }
+
+    virtual vsc::dm::ValRef copyVal(const vsc::dm::ValRef &v) override { }
 
 	virtual void finalize(vsc::dm::IContext *ctxt) override { }
 

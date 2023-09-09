@@ -21,14 +21,6 @@ public:
 
 	virtual ~Context();
 
-	virtual IModelFieldAction *buildModelAction(
-			IDataTypeAction 	*t,
-			const std::string	&name) override;
-
-	virtual IModelFieldComponent *buildModelComponent(
-			IDataTypeComponent 	*t,
-			const std::string	&name) override;
-
 	virtual IDataTypeAction *findDataTypeAction(const std::string &) override;
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override;

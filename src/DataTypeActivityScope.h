@@ -26,8 +26,6 @@ public:
 
     virtual int32_t getByteSize() const override { return -1; }
 
-    virtual void setByteSize(int32_t sz) override { }
-
 	virtual void addField(
         vsc::dm::ITypeField     *f,
         bool                    owned=true) override;
@@ -85,7 +83,8 @@ public:
 
 	virtual vsc::dm::IModelField *mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		vsc::dm::ITypeField				*type) override;
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) override;
 
 private:
 	std::string									m_name;

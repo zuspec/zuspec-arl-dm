@@ -84,13 +84,13 @@ vsc::dm::IModelField *DataTypePackedStruct::mkRootField(
 	if (is_ref) {
 		ret = ctxt->ctxt()->mkModelFieldRefRoot(this, name);
 	} else {
-		ret = ctxt->ctxt()->mkModelFieldRoot(this, name);
+        vsc::dm::ValRefStruct val_s(ctxt->ctxt()->mkValRefStruct(this));
+		ret = ctxt->ctxt()->mkModelFieldRoot(this, name, val_s);
 
 		// Need to build sub-fields and constraints
-		for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
-			it=getFields().begin();
-			it!=getFields().end(); it++) {
-			ret->addField((*it)->mkModelField(ctxt));
+		for (uint32_t i=0; i<getFields().size(); i++) {
+            vsc::dm::ValRef val_f(val_s.getField(i));
+			ret->addField(getField(i)->mkModelField(ctxt, val_f));
 		}
 	}
 
@@ -103,18 +103,19 @@ vsc::dm::IModelField *DataTypePackedStruct::mkRootField(
 
 vsc::dm::IModelField *DataTypePackedStruct::mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		vsc::dm::ITypeField				*type) {
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) {
 	vsc::dm::IModelField *ret;
+    vsc::dm::ValRefStruct val_s(val);
 
 	if (vsc::dm::TaskIsTypeFieldRef().eval(type)) {
 		ret = ctxt->ctxt()->mkModelFieldRefType(type);
 	} else {
-		ret = ctxt->ctxt()->mkModelFieldType(type);
+		ret = ctxt->ctxt()->mkModelFieldType(type, val_s);
 
-		for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
-			it=getFields().begin();
-			it!=getFields().end(); it++) {
-			ret->addField((*it)->mkModelField(ctxt));
+		for (uint32_t i=0; i<getFields().size(); i++) {
+            vsc::dm::ValRef val_f(val_s.getField(i));
+			ret->addField(getField(i)->mkModelField(ctxt, val_f));
 		}
 	}
 

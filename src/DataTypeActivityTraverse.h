@@ -27,8 +27,6 @@ public:
 
     virtual int32_t getByteSize() const override { return -1; }
 
-    virtual void setByteSize(int32_t sz) override { }
-
 	virtual vsc::dm::ITypeExprFieldRef *getTarget() const override {
 		return m_target.get();
 	}
@@ -60,7 +58,8 @@ public:
 
 	virtual vsc::dm::IModelField *mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		vsc::dm::ITypeField				*type) override { return 0; }
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) override { return 0; }
 
 	virtual void accept(vsc::dm::IVisitor *v) override;
 

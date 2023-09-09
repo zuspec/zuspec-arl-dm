@@ -37,11 +37,6 @@ public:
 
 	virtual ~TypeField();
 
-    virtual void initVal(uintptr_t vp) override { }
-
-    virtual void finiVal(uintptr_t vp) override { }
-
-
 	virtual vsc::dm::ITypeField *getParent() const override {
 		return m_parent;
 	}
@@ -79,7 +74,8 @@ public:
 	}
 
 	virtual vsc::dm::IModelField *mkModelField(
-		vsc::dm::IModelBuildContext 			*ctxt) override;
+		vsc::dm::IModelBuildContext 		*ctxt,
+        const vsc::dm::ValRef               &val) override;
 
 protected:
 	vsc::dm::ITypeField						*m_parent;

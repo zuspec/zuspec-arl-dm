@@ -32,7 +32,8 @@ public:
 	virtual bool isInput() const override { return m_is_input; }
 
 	virtual vsc::dm::IModelField *mkModelField(
-		vsc::dm::IModelBuildContext 			*ctxt) override;
+		vsc::dm::IModelBuildContext 	*ctxt,
+        const vsc::dm::ValRef           &val) override;
 
 	virtual void accept(vsc::dm::IVisitor *v) override;
 

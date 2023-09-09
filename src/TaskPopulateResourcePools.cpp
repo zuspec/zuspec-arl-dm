@@ -63,6 +63,7 @@ void TaskPopulateResourcePools::visitModelFieldPool(IModelFieldPool *f) {
 
 void TaskPopulateResourcePools::visitDataTypeResource(IDataTypeResource *t) {
     DEBUG_ENTER("visitDataTypeResource %s (pool=%p)", t->name().c_str(), m_pool);
+#ifdef UNDEFINED
     vsc::dm::ModelBuildContext build_ctxt(m_ctxt);
 
     if (m_pool) {
@@ -83,6 +84,7 @@ void TaskPopulateResourcePools::visitDataTypeResource(IDataTypeResource *t) {
             m_pool->addObject(obj);
         }
     }
+#endif // UNDEFINED
 
     DEBUG_LEAVE("visitDataTypeResource %s (pool=%p)", t->name().c_str(), m_pool);
 }

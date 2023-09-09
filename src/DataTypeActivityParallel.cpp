@@ -47,9 +47,11 @@ IModelActivity *DataTypeActivityParallel::mkActivity(
 	for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 		it=getFields().begin();
 		it!=getFields().end(); it++) {
+        vsc::dm::ValRef todo;
 		ret->addField(it->get()->getDataType()->mkTypeField(
 			ctxt,
-			it->get()));
+			it->get(),
+            todo));
 	}
 
     fprintf(stdout, "Parallel: %d activities\n", getActivities().size());

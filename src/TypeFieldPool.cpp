@@ -36,8 +36,7 @@ TypeFieldPool::TypeFieldPool(
 		i32_t,
 		false,
 		vsc::dm::TypeFieldAttr::NoAttr,
-        val.vp(),
-        true));
+        val));
 	setDataType(pool_t, true);
 }
 
@@ -46,18 +45,21 @@ TypeFieldPool::~TypeFieldPool() {
 }
 
 vsc::dm::IModelField *TypeFieldPool::mkModelField(
-		vsc::dm::IModelBuildContext 			*ctxt) {
+		vsc::dm::IModelBuildContext 	*ctxt,
+        const vsc::dm::ValRef           &val) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 	IModelFieldPool *pool = ctxt_a->mkModelFieldPoolType(this);
 
 	pool->setDataTypePool(m_pool_t);
 
 	// Fill in details
+    /** TODO
 	for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
 		it=getDataTypeT<vsc::dm::IDataTypeStruct>()->getFields().begin();
 		it!=getDataTypeT<vsc::dm::IDataTypeStruct>()->getFields().end(); it++) {
 		pool->addField((*it)->mkModelField(ctxt));
 	}
+     */
 
 	return pool;
 }

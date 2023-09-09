@@ -37,31 +37,19 @@ public:
 
     virtual ~ContextDelegator() { }
 
-	virtual IModelFieldAction *buildModelAction(
-			IDataTypeAction 	*t,
-			const std::string	&name) { 
-        return ctxt()->buildModelAction(t, name);
-    }
-
-	virtual IModelFieldComponent *buildModelComponent(
-			IDataTypeComponent 	*t,
-			const std::string	&name) { 
-        return ctxt()->buildModelComponent(t, name);
-    }
-
-	virtual IDataTypeAction *findDataTypeAction(const std::string &name) { 
+	virtual IDataTypeAction *findDataTypeAction(const std::string &name) override { 
         return ctxt()->findDataTypeAction(name);
     }
 
-	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) { 
+	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override { 
         return ctxt()->mkDataTypeAction(name);
     }
 
-	virtual bool addDataTypeAction(IDataTypeAction *t) { 
+	virtual bool addDataTypeAction(IDataTypeAction *t) override { 
         return ctxt()->addDataTypeAction(t);
     }
 
-	virtual IDataTypeFunction *findDataTypeFunction(const std::string &name) { 
+	virtual IDataTypeFunction *findDataTypeFunction(const std::string &name) override { 
         return ctxt()->findDataTypeFunction(name);
     }
 
@@ -70,7 +58,7 @@ public:
 			vsc::dm::IDataType		*rtype,
 			bool					own_rtype,
             bool                    is_target,
-            bool                    is_solve) { 
+            bool                    is_solve) override { 
         return ctxt()->mkDataTypeFunction(name, rtype, own_rtype, is_target, is_solve);
     }
     

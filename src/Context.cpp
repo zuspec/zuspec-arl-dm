@@ -80,20 +80,6 @@ Context::~Context() {
 
 }
 
-IModelFieldAction *Context::buildModelAction(
-		IDataTypeAction 	*t,
-		const std::string	&name) {
-	ModelBuildContext ctxt(this);
-	return TaskBuildModelAction(&ctxt).build(t, name);
-}
-
-IModelFieldComponent *Context::buildModelComponent(
-		IDataTypeComponent 	*t,
-		const std::string	&name) {
-	ModelBuildContext ctxt(this);
-	return TaskBuildModelComponent(&ctxt).build(t, name);
-}
-
 IDataTypeAction *Context::findDataTypeAction(const std::string &name) {
 	std::unordered_map<std::string,IDataTypeActionUP>::const_iterator it;
 

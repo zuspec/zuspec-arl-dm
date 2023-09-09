@@ -6,6 +6,7 @@
  */
 #pragma once
 #include "vsc/dm/IModelField.h"
+#include "vsc/dm/impl/ValRef.h"
 
 namespace zsp {
 namespace arl {
@@ -46,12 +47,10 @@ public:
 
 	virtual vsc::dm::IModelField *getField(int32_t idx) override;
 
-	virtual const vsc::dm::IModelVal *val() const override {
-		return m_val.get();
+	virtual vsc::dm::ValRef getImmVal() const override {
 	}
 
-	virtual vsc::dm::IModelVal *val() override {
-		return m_val.get();
+	virtual vsc::dm::ValRef getMutVal() const override {
 	}
 
 	virtual vsc::dm::ModelFieldFlag flags() const override {

@@ -94,20 +94,20 @@ const std::vector<IDataTypeFunctionUP> &DataTypeArlStruct::getFunctions() {
 
 vsc::dm::IModelField *DataTypeArlStruct::mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		const std::string			&name,
-		bool						is_ref) {
+		const std::string			    &name,
+		bool						    is_ref) {
 	vsc::dm::IModelField *ret;
 
 	if (is_ref) {
 		ret = ctxt->ctxt()->mkModelFieldRefRoot(this, name);
 	} else {
-		ret = ctxt->ctxt()->mkModelFieldRoot(this, name);
+        vsc::dm::ValRefStruct val(ctxt->ctxt()->mkValRefStruct(this));
+		ret = ctxt->ctxt()->mkModelFieldRoot(this, name, val);
 
 		// Need to build sub-fields and constraints
-		for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
-			it=getFields().begin();
-			it!=getFields().end(); it++) {
-			ret->addField((*it)->mkModelField(ctxt));
+		for (uint32_t i=0; i<getFields().size(); i++) {
+            vsc::dm::ValRef val_s(val.getField(i));
+			ret->addField(getField(i)->mkModelField(ctxt, val_s));
 		}
 	}
 
@@ -120,18 +120,19 @@ vsc::dm::IModelField *DataTypeArlStruct::mkRootField(
 
 vsc::dm::IModelField *DataTypeArlStruct::mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		vsc::dm::ITypeField				*type) {
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) {
 	vsc::dm::IModelField *ret;
 
 	if (vsc::dm::TaskIsTypeFieldRef().eval(type)) {
 		ret = ctxt->ctxt()->mkModelFieldRefType(type);
 	} else {
-		ret = ctxt->ctxt()->mkModelFieldType(type);
+        vsc::dm::ValRefStruct val_s(val);
+		ret = ctxt->ctxt()->mkModelFieldType(type, val_s);
 
-		for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator
-			it=getFields().begin();
-			it!=getFields().end(); it++) {
-			ret->addField((*it)->mkModelField(ctxt));
+		for (uint32_t i=0; i<getFields().size(); i++) {
+            vsc::dm::ValRef val_f(val_s.getField(i));
+			ret->addField(getField(i)->mkModelField(ctxt, val_f));
 		}
 	}
 

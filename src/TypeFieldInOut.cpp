@@ -29,7 +29,8 @@ TypeFieldInOut::~TypeFieldInOut() {
 }
 
 vsc::dm::IModelField *TypeFieldInOut::mkModelField(
-		vsc::dm::IModelBuildContext 			*ctxt) {
+		vsc::dm::IModelBuildContext 		*ctxt,
+        const vsc::dm::ValRef               &val) {
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 	return ctxt_a->mkModelFieldInOut(this);
 }

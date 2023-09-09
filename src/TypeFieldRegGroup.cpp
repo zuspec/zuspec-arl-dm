@@ -40,7 +40,9 @@ TypeFieldRegGroup::~TypeFieldRegGroup() {
 
 }
 
-vsc::dm::IModelField *TypeFieldRegGroup::mkModelField(vsc::dm::IModelBuildContext *ctxt) {
+vsc::dm::IModelField *TypeFieldRegGroup::mkModelField(
+    vsc::dm::IModelBuildContext     *ctxt,
+    const vsc::dm::ValRef           &val) {
     IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
     return ctxt_a->mkModelFieldRegGroup(this);

@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include "vsc/dm/impl/ValRef.h"
 #include "zsp/arl/dm/IDataTypePackedStruct.h"
 
 namespace zsp {
@@ -37,9 +38,11 @@ public:
 
     virtual ~DataTypePackedStruct();
 
-    virtual void initVal(uintptr_t vp) override { }
+    virtual void initVal(vsc::dm::ValRef &v) override { }
 
-    virtual void finiVal(uintptr_t vp) override { }
+    virtual void finiVal(vsc::dm::ValRef &v) override { }
+
+    virtual vsc::dm::ValRef copyVal(const vsc::dm::ValRef &v) override { }
 
 	virtual void finalize(vsc::dm::IContext *ctxt) override { }
 
@@ -52,8 +55,6 @@ public:
     }
 
     virtual int32_t getByteSize() const override { return m_bytesz; }
-
-    virtual void setByteSize(int32_t sz) override { m_bytesz = sz; }
 
 	virtual void addField(
         vsc::dm::ITypeField     *f,
@@ -92,7 +93,8 @@ public:
 
 	virtual vsc::dm::IModelField *mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		vsc::dm::ITypeField				*type) override;
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) override;
 
     virtual void accept(vsc::dm::IVisitor *v) override;
 

@@ -43,9 +43,10 @@ void DataTypeAction::addActivity(ITypeFieldActivity *activity) {
 
 vsc::dm::IModelField *DataTypeAction::mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		const std::string			&name,
-		bool						is_ref) {
+		const std::string			    &name,
+		bool						    is_ref) {
     DEBUG_ENTER("mkRootField %s", name.c_str());
+    vsc::dm::ValRefStruct val(ctxt->ctxt()->mkValRefStruct(this));
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     IModelFieldAction *ret;
 
@@ -53,13 +54,13 @@ vsc::dm::IModelField *DataTypeAction::mkRootField(
 
     // Push the new field just for completeness
     ctxt->pushTopDownScope(ret);
-    for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator 
-        it=getFields().begin();
-        it!=getFields().end(); it++) {
-        vsc::dm::IModelField *field = (*it)->mkModelField(ctxt);
+    for (uint32_t i=0; i<getFields().size(); i++) {
+        vsc::dm::ValRef val_s(val.getField(i));
+        vsc::dm::IModelField *field = getField(i)->mkModelField(ctxt, val_s);
 
         if (!field) {
-            fprintf(stdout, "Error: Construction of field %s failed\n", (*it)->name().c_str());
+            fprintf(stdout, "Error: Construction of field %s failed\n", 
+                getField(i)->name().c_str());
         }
 		ret->addField(field);
     }
@@ -96,8 +97,10 @@ vsc::dm::IModelField *DataTypeAction::mkRootField(
 
 vsc::dm::IModelField *DataTypeAction::mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		vsc::dm::ITypeField				*type) {
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) {
     DEBUG_ENTER("mkTypeField %s", type->name().c_str());
+    vsc::dm::ValRefStruct val_s(val);
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
     IModelFieldAction *ret = ctxt_a->mkModelFieldActionType(type);
@@ -105,10 +108,9 @@ vsc::dm::IModelField *DataTypeAction::mkTypeField(
 
     // Push the new field just for completeness
     ctxt->pushTopDownScope(ret);
-    for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator 
-        it=getFields().begin();
-        it!=getFields().end(); it++) {
-        vsc::dm::IModelField *field = (*it)->mkModelField(ctxt);
+    for (uint32_t i=0; i<getFields().size(); i++) {
+        vsc::dm::ValRef val_f(val_s.getField(i));
+        vsc::dm::IModelField *field = getField(i)->mkModelField(ctxt, val_f);
 		ret->addField(field);
     }
 

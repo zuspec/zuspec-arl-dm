@@ -51,7 +51,7 @@ DataTypeResource::DataTypeResource(
         ui32_t,
         false,
         vsc::dm::TypeFieldAttr::Rand,
-        0, false);
+        vsc::dm::ValRef());
     addField(m_instance_id);
 
     m_initial = ctxt->mkTypeFieldPhy(
@@ -59,7 +59,7 @@ DataTypeResource::DataTypeResource(
         ui1_t,
         false,
         vsc::dm::TypeFieldAttr::Rand,
-        0, false);
+        vsc::dm::ValRef());
     addField(m_initial);
 }
 

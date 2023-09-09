@@ -48,7 +48,8 @@ void TaskBuildModelComponent::visitDataTypeComponent(IDataTypeComponent *t) {
 }
 
 void TaskBuildModelComponent::visitTypeFieldPool(ITypeFieldPool *f) {
-	vsc::dm::IModelFieldType *field = m_ctxt->ctxt()->mkModelFieldType(f);
+    vsc::dm::ValRef todo;
+	vsc::dm::IModelFieldType *field = m_ctxt->ctxt()->mkModelFieldType(f, todo);
 	m_ctxt->getTopDownScope()->addField(field);
 
 	// A Pool-type field is not an instance of the contained type,
@@ -62,8 +63,10 @@ void TaskBuildModelComponent::visitTypeFieldPool(ITypeFieldPool *f) {
 		m_ctxt->ctxt()->addDataTypeInt(vsc_int32_t);
 	}
 
-	vsc::dm::IModelField *size = m_ctxt->ctxt()->mkModelFieldRoot(vsc_int32_t, "size");
-	size->val()->set_val_i(f->getDeclSize());
+	vsc::dm::IModelField *size = m_ctxt->ctxt()->mkModelFieldRoot(
+        vsc_int32_t, "size", todo);
+    // TODO:
+//	size->val()->set_val_i(f->getDeclSize());
 	field->addField(size);
 }
 

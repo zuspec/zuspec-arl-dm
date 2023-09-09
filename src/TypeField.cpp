@@ -36,8 +36,9 @@ vsc::dm::ITypeField *TypeField::getField(int32_t idx) const {
 }
 
 vsc::dm::IModelField *TypeField::mkModelField(
-		vsc::dm::IModelBuildContext 			*ctxt) {
-	return getDataType()->mkTypeField(ctxt, this);
+		vsc::dm::IModelBuildContext 	*ctxt,
+        const vsc::dm::ValRef           &val) {
+	return getDataType()->mkTypeField(ctxt, this, val);
 }
 
 }

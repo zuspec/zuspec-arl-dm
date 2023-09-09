@@ -45,7 +45,8 @@ public:
 
 	virtual vsc::dm::IModelField *mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		vsc::dm::ITypeField				*type) override;
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) override;
 
 	virtual void accept(vsc::dm::IVisitor *v) override;
 

@@ -33,7 +33,7 @@ DataTypeComponent::DataTypeComponent(
 		ui32, 
 		false, 
 		vsc::dm::TypeFieldAttr::Rand,
-		0, false);
+        vsc::dm::ValRef());
 	addField(m_comp_id);
 }
 
@@ -60,25 +60,26 @@ void DataTypeComponent::accept(vsc::dm::IVisitor *v) {
 
 vsc::dm::IModelField *DataTypeComponent::mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		const std::string			&name,
-		bool						is_ref) {
+		const std::string			    &name,
+		bool						    is_ref) {
 	vsc::dm::IModelField *ret;
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
 	if (is_ref) {
 		ret = ctxt_a->mkModelFieldRefRoot(this, name);
 	} else {
+        vsc::dm::ValRefStruct val_s(ctxt->ctxt()->mkValRefStruct(this));
 		ret = ctxt_a->mkModelFieldComponentRoot(this, name);
 
 		// Need to build sub-fields and constraints
 	    // Push the new field just for completeness
 	    ctxt->pushTopDownScope(ret);
-	    for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator 
-	        it=getFields().begin();
-	        it!=getFields().end(); it++) {
-	        vsc::dm::IModelField *field = (*it)->mkModelField(ctxt);
+	    for (uint32_t i=0; i<getFields().size(); i++) {
+            vsc::dm::ValRef val_f(val_s.getField(i));
+	        vsc::dm::IModelField *field = getField(i)->mkModelField(ctxt, val_f);
 	        if (!field) {
-	            fprintf(stdout, "Error: Construction of field %s failed\n", (*it)->name().c_str());
+	            fprintf(stdout, "Error: Construction of field %s failed\n",
+                    getField(i)->name().c_str());
 	        }
 			ret->addField(field);
 	    }
@@ -95,21 +96,22 @@ vsc::dm::IModelField *DataTypeComponent::mkRootField(
 
 vsc::dm::IModelField *DataTypeComponent::mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		vsc::dm::ITypeField				*type) {
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) {
 	vsc::dm::IModelField *ret;
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
 	if (vsc::dm::TaskIsTypeFieldRef().eval(type)) {
 		ret = ctxt->ctxt()->mkModelFieldRefType(type);
 	} else {
+        vsc::dm::ValRefStruct val_s(ctxt->ctxt()->mkValRefStruct(this));
 		ret = ctxt_a->mkModelFieldComponentType(type);
 
 	    // Push the new field just for completeness
 	    ctxt->pushTopDownScope(ret);
-	    for (std::vector<vsc::dm::ITypeFieldUP>::const_iterator 
-	        it=getFields().begin();
-	        it!=getFields().end(); it++) {
-	        vsc::dm::IModelField *field = (*it)->mkModelField(ctxt);
+	    for (uint32_t i=0; i<getFields().size(); i++) {
+            vsc::dm::ValRef val_f(val_s.getField(i));
+	        vsc::dm::IModelField *field = getField(i)->mkModelField(ctxt, val_f);
 			ret->addField(field);
 	    }
 	    ctxt->popTopDownScope();

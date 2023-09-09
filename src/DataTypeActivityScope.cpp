@@ -57,7 +57,8 @@ vsc::dm::IModelField *DataTypeActivityScope::mkRootField(
 
 vsc::dm::IModelField *DataTypeActivityScope::mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
-		vsc::dm::ITypeField				*type) {
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) {
 			
 }
 

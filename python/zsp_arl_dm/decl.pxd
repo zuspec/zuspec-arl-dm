@@ -41,12 +41,6 @@ ctypedef ITypeProcStmtDeclScope *ITypeProcStmtDeclScopeP
 
 cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
     cdef cppclass IContext(vsc.IContext):
-        vsc.IModelField *buildModelAction(
-            IDataTypeAction *t,
-            const cpp_string &)
-        IModelFieldComponent *buildModelComponent(
-            IDataTypeComponent *t,
-            const cpp_string &)
         IDataTypeAction *findDataTypeAction(const cpp_string &)
         IDataTypeAction *mkDataTypeAction(const cpp_string &)
         IDataTypeActivityParallel *mkDataTypeActivityParallel()

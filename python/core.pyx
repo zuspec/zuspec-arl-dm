@@ -57,16 +57,6 @@ cdef class Factory(object):
 
 cdef class Context(vsc.Context):
 
-    cpdef vsc.ModelField buildModelAction(self, DataTypeAction t, name):
-        return vsc.ModelField.mk(self.asContext().buildModelAction(
-            t.asAction(), name.encode()), True)
-
-    cpdef ModelFieldComponent buildModelComponent(self, DataTypeComponent t, name):
-        return ModelFieldComponent.mk(
-            self.asContext().buildModelComponent(
-                t.asComponent(), name.encode()), 
-            True)
-    
     cpdef DataTypeAction findDataTypeAction(self, name):
         cdef decl.IDataTypeAction *a = self.asContext().findDataTypeAction(name.encode())
         if a != NULL:

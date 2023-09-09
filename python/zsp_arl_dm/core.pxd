@@ -17,8 +17,6 @@ cdef class Factory(object):
 
 cdef class Context(vsc.Context):
 
-    cpdef vsc.ModelField buildModelAction(self, DataTypeAction t, name)
-    cpdef ModelFieldComponent buildModelComponent(self, DataTypeComponent t, name)
     cpdef DataTypeAction findDataTypeAction(self, name)
     cpdef DataTypeAction mkDataTypeAction(self, name)
     cpdef DataTypeActivityParallel mkDataTypeActivityParallel(self)

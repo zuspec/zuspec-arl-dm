@@ -42,7 +42,9 @@ public:
 
     virtual void finiVal(vsc::dm::ValRef &v) override { }
 
-    virtual vsc::dm::ValRef copyVal(const vsc::dm::ValRef &v) override { }
+    virtual vsc::dm::ValRef copyVal(const vsc::dm::ValRef &v) override { 
+        return vsc::dm::ValRef();
+    }
 
 	virtual void finalize(vsc::dm::IContext *ctxt) override { }
 

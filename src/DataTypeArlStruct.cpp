@@ -106,7 +106,7 @@ vsc::dm::IModelField *DataTypeArlStruct::mkRootField(
 
 		// Need to build sub-fields and constraints
 		for (uint32_t i=0; i<getFields().size(); i++) {
-            vsc::dm::ValRef val_s(val.getField(i));
+            vsc::dm::ValRef val_s(val.getFieldRef(i));
 			ret->addField(getField(i)->mkModelField(ctxt, val_s));
 		}
 	}
@@ -131,7 +131,7 @@ vsc::dm::IModelField *DataTypeArlStruct::mkTypeField(
 		ret = ctxt->ctxt()->mkModelFieldType(type, val_s);
 
 		for (uint32_t i=0; i<getFields().size(); i++) {
-            vsc::dm::ValRef val_f(val_s.getField(i));
+            vsc::dm::ValRef val_f(val_s.getFieldRef(i));
 			ret->addField(getField(i)->mkModelField(ctxt, val_f));
 		}
 	}

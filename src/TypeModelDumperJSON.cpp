@@ -502,11 +502,12 @@ static std::map<vsc::dm::BinOp, std::string> binop2str_m = {
 	{ vsc::dm::BinOp::Mod, "mod" },
 	{ vsc::dm::BinOp::BinAnd, "bin-and" },
 	{ vsc::dm::BinOp::BinOr, "bin-or" },
+	{ vsc::dm::BinOp::BinXor, "bin-xor" },
 	{ vsc::dm::BinOp::LogAnd, "log-and" },
 	{ vsc::dm::BinOp::LogOr, "log-or" },
+	{ vsc::dm::BinOp::LogXor, "log-xor" },
 	{ vsc::dm::BinOp::Sll, "sll" },
 	{ vsc::dm::BinOp::Srl, "srl" },
-	{ vsc::dm::BinOp::Xor, "xor" },
 	{ vsc::dm::BinOp::Not, "not" }
 };
 

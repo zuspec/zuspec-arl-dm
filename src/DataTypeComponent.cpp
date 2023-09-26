@@ -75,7 +75,7 @@ vsc::dm::IModelField *DataTypeComponent::mkRootField(
 	    // Push the new field just for completeness
 	    ctxt->pushTopDownScope(ret);
 	    for (uint32_t i=0; i<getFields().size(); i++) {
-            vsc::dm::ValRef val_f(val_s.getField(i));
+            vsc::dm::ValRef val_f(val_s.getFieldRef(i));
 	        vsc::dm::IModelField *field = getField(i)->mkModelField(ctxt, val_f);
 	        if (!field) {
 	            fprintf(stdout, "Error: Construction of field %s failed\n",
@@ -110,7 +110,7 @@ vsc::dm::IModelField *DataTypeComponent::mkTypeField(
 	    // Push the new field just for completeness
 	    ctxt->pushTopDownScope(ret);
 	    for (uint32_t i=0; i<getFields().size(); i++) {
-            vsc::dm::ValRef val_f(val_s.getField(i));
+            vsc::dm::ValRef val_f(val_s.getFieldRef(i));
 	        vsc::dm::IModelField *field = getField(i)->mkModelField(ctxt, val_f);
 			ret->addField(field);
 	    }

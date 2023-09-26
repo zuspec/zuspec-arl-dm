@@ -55,7 +55,7 @@ vsc::dm::IModelField *DataTypeAction::mkRootField(
     // Push the new field just for completeness
     ctxt->pushTopDownScope(ret);
     for (uint32_t i=0; i<getFields().size(); i++) {
-        vsc::dm::ValRef val_s(val.getField(i));
+        vsc::dm::ValRef val_s(val.getFieldRef(i));
         vsc::dm::IModelField *field = getField(i)->mkModelField(ctxt, val_s);
 
         if (!field) {
@@ -109,7 +109,7 @@ vsc::dm::IModelField *DataTypeAction::mkTypeField(
     // Push the new field just for completeness
     ctxt->pushTopDownScope(ret);
     for (uint32_t i=0; i<getFields().size(); i++) {
-        vsc::dm::ValRef val_f(val_s.getField(i));
+        vsc::dm::ValRef val_f(val_s.getFieldRef(i));
         vsc::dm::IModelField *field = getField(i)->mkModelField(ctxt, val_f);
 		ret->addField(field);
     }

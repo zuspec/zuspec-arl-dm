@@ -89,7 +89,7 @@ vsc::dm::IModelField *DataTypePackedStruct::mkRootField(
 
 		// Need to build sub-fields and constraints
 		for (uint32_t i=0; i<getFields().size(); i++) {
-            vsc::dm::ValRef val_f(val_s.getField(i));
+            vsc::dm::ValRef val_f(val_s.getFieldRef(i));
 			ret->addField(getField(i)->mkModelField(ctxt, val_f));
 		}
 	}
@@ -114,7 +114,7 @@ vsc::dm::IModelField *DataTypePackedStruct::mkTypeField(
 		ret = ctxt->ctxt()->mkModelFieldType(type, val_s);
 
 		for (uint32_t i=0; i<getFields().size(); i++) {
-            vsc::dm::ValRef val_f(val_s.getField(i));
+            vsc::dm::ValRef val_f(val_s.getFieldRef(i));
 			ret->addField(getField(i)->mkModelField(ctxt, val_f));
 		}
 	}

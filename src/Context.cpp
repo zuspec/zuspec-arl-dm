@@ -509,6 +509,11 @@ ITypeProcStmtScope *Context::mkTypeProcStmtScope() {
 	return new TypeProcStmtScope();
 }
 
+ITypeProcStmtScope *Context::mkTypeProcStmtScope(
+    const std::vector<ITypeProcStmt *> &stmts) { 
+	return new TypeProcStmtScope(stmts);
+}
+
 ITypeProcStmtVarDecl *Context::mkTypeProcStmtVarDecl(
 			const std::string	 &name,
 			vsc::dm::IDataType		 *type,

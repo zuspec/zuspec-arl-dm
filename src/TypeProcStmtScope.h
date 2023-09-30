@@ -32,6 +32,8 @@ class TypeProcStmtScope : public virtual ITypeProcStmtScope {
 public:
     TypeProcStmtScope();
 
+    TypeProcStmtScope(const std::vector<ITypeProcStmt *> &stmts);
+
     virtual ~TypeProcStmtScope();
 
     virtual void addStatement(ITypeProcStmt *stmt) override;

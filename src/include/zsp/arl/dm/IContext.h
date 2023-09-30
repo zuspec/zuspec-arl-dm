@@ -310,6 +310,10 @@ public:
 
 	virtual ITypeProcStmtScope *mkTypeProcStmtScope() = 0;
 
+	virtual ITypeProcStmtScope *mkTypeProcStmtScope(
+        const std::vector<ITypeProcStmt *> &stmts
+    ) = 0;
+
 	virtual ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(
 			const std::string	 &name,
 			vsc::dm::IDataType		 *type,

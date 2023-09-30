@@ -255,6 +255,10 @@ public:
 
 	virtual ITypeProcStmtScope *mkTypeProcStmtScope() override;
 
+	virtual ITypeProcStmtScope *mkTypeProcStmtScope(
+        const std::vector<ITypeProcStmt *> &stmts
+    ) override;
+
 	virtual ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(
 			const std::string	 &name,
 			vsc::dm::IDataType		 *type,

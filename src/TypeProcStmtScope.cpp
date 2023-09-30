@@ -33,6 +33,14 @@ TypeProcStmtScope::TypeProcStmtScope() {
 
 }
 
+TypeProcStmtScope::TypeProcStmtScope(const std::vector<ITypeProcStmt *> &stmts) {
+    for (std::vector<ITypeProcStmt *>::const_iterator
+        it=stmts.begin();
+        it!=stmts.end(); it++) {
+        addStatement(*it);
+    }
+}
+
 TypeProcStmtScope::~TypeProcStmtScope() {
 
 }

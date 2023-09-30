@@ -403,6 +403,10 @@ public:
         return ctxt()->mkTypeProcStmtScope();
     }
 
+	virtual ITypeProcStmtScope *mkTypeProcStmtScope(const std::vector<ITypeProcStmt *> &stmts) { 
+        return ctxt()->mkTypeProcStmtScope(stmts);
+    }
+
 	virtual ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(
 			const std::string	 &name,
 			vsc::dm::IDataType		 *type,

@@ -81,10 +81,10 @@ Context::~Context() {
 }
 
 IDataTypeAction *Context::findDataTypeAction(const std::string &name) {
-	std::unordered_map<std::string,IDataTypeActionUP>::const_iterator it;
+	std::unordered_map<std::string,IDataTypeAction *>::const_iterator it;
 
 	if ((it=m_action_type_m.find(name)) != m_action_type_m.end()) {
-		return it->second.get();
+		return it->second;
 	} else {
 		return 0;
 	}
@@ -95,7 +95,12 @@ IDataTypeAction *Context::mkDataTypeAction(const std::string &name) {
 }
 
 bool Context::addDataTypeAction(IDataTypeAction *t) {
-	return m_action_type_m.insert({t->name(), IDataTypeActionUP(t)}).second;
+	if (m_action_type_m.insert({t->name(), t}).second) {
+        m_action_type_l.push_back(IDataTypeActionUP(t));
+        return true;
+    } else {
+        return false;
+    }
 }
 
 IDataTypeFunction *Context::findDataTypeFunction(const std::string &name) {
@@ -112,9 +117,8 @@ IDataTypeFunction *Context::mkDataTypeFunction(
 		const std::string		&name,
 		vsc::dm::IDataType		*rtype,
 		bool					own,
-        bool                    is_target,
-        bool                    is_solve) {
-	return new DataTypeFunction(this, name, rtype, own, is_target, is_solve);
+        DataTypeFunctionFlags   flags) {
+	return new DataTypeFunction(this, name, rtype, own, flags);
 }
 
 bool Context::addDataTypeFunction(IDataTypeFunction *f) {
@@ -171,10 +175,10 @@ IDataTypeActivityTraverse *Context::mkDataTypeActivityTraverse(
 }
 
 IDataTypeComponent *Context::findDataTypeComponent(const std::string &name) {
-	std::unordered_map<std::string,IDataTypeComponentUP>::const_iterator it;
+	std::unordered_map<std::string,IDataTypeComponent *>::const_iterator it;
 
 	if ((it=m_component_type_m.find(name)) != m_component_type_m.end()) {
-		return it->second.get();
+		return it->second;
 	} else {
 		return 0;
 	}
@@ -185,10 +189,11 @@ IDataTypeComponent *Context::mkDataTypeComponent(const std::string &name) {
 }
 
 bool Context::addDataTypeComponent(IDataTypeComponent *t) {
-	std::unordered_map<std::string,IDataTypeComponentUP>::const_iterator it;
+	std::unordered_map<std::string,IDataTypeComponent *>::const_iterator it;
 
 	if ((it=m_component_type_m.find(t->name())) == m_component_type_m.end()) {
-		m_component_type_m.insert({t->name(), IDataTypeComponentUP(t)});
+		m_component_type_m.insert({t->name(), t});
+        m_component_type_l.push_back(IDataTypeComponentUP(t));
 		return true;
 	} else {
 		return false;

@@ -40,6 +40,10 @@ TypeFieldRegGroup::~TypeFieldRegGroup() {
 
 }
 
+int32_t TypeFieldRegGroup::getByteSize() const {
+    return 8;
+}
+
 vsc::dm::IModelField *TypeFieldRegGroup::mkModelField(
     vsc::dm::IModelBuildContext     *ctxt,
     const vsc::dm::ValRef           &val) {

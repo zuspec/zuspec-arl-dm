@@ -144,10 +144,6 @@ cdef class DataTypeFunction(vsc.ObjBase):
 
     cpdef name(self)
 
-    cpdef bool isTarget(self)
-
-    cpdef bool isSolve(self)
-
     cpdef object getAssociatedData(self)
 
     cpdef void setAssociatedData(self, object obj)

@@ -30,11 +30,10 @@ public:
 	virtual IDataTypeFunction *findDataTypeFunction(const std::string &name) override;
 
 	virtual IDataTypeFunction *mkDataTypeFunction(
-			const std::string		&name,
+			const std::string		    &name,
 			vsc::dm::IDataType			*rtype,
-			bool					own_rtype,
-            bool                    is_target=false,
-            bool                    is_solve=false) override;
+			bool					    own_rtype,
+            DataTypeFunctionFlags       flags) override;
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) override;
 
@@ -273,8 +272,10 @@ private:
 	using FlowObjMapT=std::unordered_map<std::string,IDataTypeFlowObjUP>;
 
 private:
-	std::unordered_map<std::string, IDataTypeActionUP>			m_action_type_m;
-	std::unordered_map<std::string, IDataTypeComponentUP>		m_component_type_m;
+	std::unordered_map<std::string, IDataTypeAction *>			m_action_type_m;
+    std::vector<IDataTypeActionUP>                              m_action_type_l;
+	std::unordered_map<std::string, IDataTypeComponent *>		m_component_type_m;
+    std::vector<IDataTypeComponentUP>                           m_component_type_l;
 	std::unordered_map<std::string, IDataTypeFunctionUP>		m_function_type_m;
     std::vector<IDataTypeFunction *>                            m_function_type_l;
 	std::unordered_map<FlowObjKindE, FlowObjMapT>				m_flowobj_kind_m;

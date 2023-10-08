@@ -81,8 +81,7 @@ public:
 			const std::string		&name,
 			vsc::dm::IDataType		*rtype,
 			bool					own_rtype,
-            bool                    is_target=false,
-            bool                    is_solve=false) = 0;
+            DataTypeFunctionFlags   flags=DataTypeFunctionFlags::NoFlags) = 0;
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) = 0;
 

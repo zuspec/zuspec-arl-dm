@@ -152,8 +152,6 @@ cdef extern from "zsp/arl/dm/ITypeProcStmtDeclScope.h" namespace "zsp::arl::dm":
 cdef extern from "zsp/arl/dm/IDataTypeFunction.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeFunction(ITypeProcStmtDeclScope):
         const cpp_string &name()
-        bool isTarget()
-        bool isSolve()
 
 cdef extern from "zsp/arl/dm/IFactory.h" namespace "zsp::arl::dm":
     cdef cppclass IFactory:

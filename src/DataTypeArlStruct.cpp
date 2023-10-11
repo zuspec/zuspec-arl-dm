@@ -18,8 +18,10 @@ namespace arl {
 namespace dm {
 
 
-DataTypeArlStruct::DataTypeArlStruct(const std::string &name) : 
-    m_name(name), m_bytesz(-1) {
+DataTypeArlStruct::DataTypeArlStruct(
+    const std::string   &name,
+    int32_t             num_builtin) : 
+    m_name(name), m_num_builtin(num_builtin), m_bytesz(0) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -32,6 +34,20 @@ void DataTypeArlStruct::addField(
     vsc::dm::ITypeField     *f,
     bool                    owned) {
 	f->setIndex(m_fields.size());
+    int32_t offset = m_bytesz;
+    if (m_fields.size()) {
+        int32_t new_sz = f->getByteSize();
+        int32_t align = 1;
+        if (new_sz <= vsc::dm::ValRefInt::native_sz()) {
+            align = new_sz;
+        }
+
+        int32_t pad = (m_bytesz%align)?(align - (m_bytesz % align)):0;
+        offset += pad;
+        m_bytesz += pad;
+    }
+    m_bytesz += f->getByteSize();
+    f->setOffset(offset);
 	m_fields.push_back(vsc::dm::ITypeFieldUP(f, owned));
 }
 
@@ -40,7 +56,12 @@ const std::vector<vsc::dm::ITypeFieldUP> &DataTypeArlStruct::getFields() const {
 }
 
 vsc::dm::ITypeField *DataTypeArlStruct::getField(int32_t idx) {
-	return m_fields.at(idx).get();
+    int32_t field_idx = m_num_builtin + idx;
+    if (field_idx >= 0 && field_idx < m_fields.size()) {
+        return m_fields.at(field_idx).get();
+    } else {
+        return 0;
+    }
 }
 
 void DataTypeArlStruct::addConstraint(

@@ -26,6 +26,8 @@ public:
 
 	virtual ~DataTypeAction();
 
+    virtual int32_t getByteSize() const override;
+
 	virtual IDataTypeComponent *getComponentType() override {
 		return m_component_t;
 	}
@@ -34,11 +36,13 @@ public:
 
 	virtual vsc::dm::ITypeFieldRef *getCompField() const override { return m_comp; }
 
-	virtual const std::vector<ITypeFieldActivity *> &activities() const override {
+	virtual const std::vector<ITypeFieldActivityUP> &activities() const override {
 		return m_activities;
 	}
 
 	virtual void addActivity(ITypeFieldActivity *activity) override;
+
+    virtual int32_t getActivityOffset() const override;
 
 	virtual vsc::dm::IModelField *mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
@@ -55,7 +59,8 @@ public:
 private:
 	IDataTypeComponent					            *m_component_t;
 	vsc::dm::ITypeFieldRef				            *m_comp;
-	std::vector<ITypeFieldActivity *>	            m_activities;
+	std::vector<ITypeFieldActivityUP>	            m_activities;
+    int32_t                                         m_activity_sz;
 
 };
 

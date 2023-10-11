@@ -24,7 +24,9 @@ public:
 
 	virtual const std::string &name() const override { return m_name; }
 
-    virtual int32_t getByteSize() const override { return -1; }
+    virtual int32_t getByteSize() const override;
+
+    virtual int32_t getActivityOffset() const override;
 
 	virtual void addField(
         vsc::dm::ITypeField     *f,
@@ -89,6 +91,9 @@ public:
 private:
 	std::string									m_name;
 	std::vector<vsc::dm::ITypeFieldUP>			m_fields;
+    int32_t                                     m_field_sz;
+    int32_t                                     m_activity_sz;
+
 	std::vector<vsc::dm::ITypeConstraintUP>		m_constraints;
 	vsc::dm::IModelStructCreateHookUP			m_create_hook;
 

@@ -192,6 +192,7 @@ bool Context::addDataTypeComponent(IDataTypeComponent *t) {
 	std::unordered_map<std::string,IDataTypeComponent *>::const_iterator it;
 
 	if ((it=m_component_type_m.find(t->name())) == m_component_type_m.end()) {
+        t->finalize(this);
 		m_component_type_m.insert({t->name(), t});
         m_component_type_l.push_back(IDataTypeComponentUP(t));
 		return true;
@@ -313,8 +314,9 @@ IModelFieldClaim *Context::mkModelFieldClaim(
 
 IModelFieldComponent *Context::mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,
-			const std::string		&name) {
-	return new ModelFieldComponentRoot(this, name, type);
+			const std::string		&name,
+            const vsc::dm::ValRef   &val) {
+	return new ModelFieldComponentRoot(this, name, type, val);
 }
 
 IModelFieldComponent *Context::mkModelFieldComponentType(

@@ -123,7 +123,8 @@ public:
 
 	virtual IModelFieldComponent *mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,
-			const std::string		&name) override;
+			const std::string		&name,
+            const vsc::dm::ValRef   &val) override;
 
 	virtual IModelFieldComponent *mkModelFieldComponentType(
 			vsc::dm::ITypeField         *type) override;

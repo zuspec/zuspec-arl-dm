@@ -178,7 +178,8 @@ public:
 
 	virtual IModelFieldComponent *mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,
-			const std::string		&name) = 0;
+			const std::string		&name,
+            const vsc::dm::ValRef   &val) = 0;
 
 	virtual IModelFieldComponent *mkModelFieldComponentType(
 			vsc::dm::ITypeField			*type) = 0;

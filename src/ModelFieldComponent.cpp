@@ -18,8 +18,10 @@ namespace dm {
 
 ModelFieldComponent::ModelFieldComponent(
 	const std::string		&name,
-	IDataTypeComponent		*type) : m_name(name), m_dt(type), m_type(0) {
+	IDataTypeComponent		*type,
+    const vsc::dm::ValRef   &val) : m_name(name), m_dt(type), m_type(0) {
 	m_id = -1;
+    m_val = val;
 }
 
 ModelFieldComponent::ModelFieldComponent(

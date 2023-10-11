@@ -1,7 +1,7 @@
 /**
- * ITypeExec.h
+ * ValRefAction.h
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -19,30 +19,20 @@
  *     Author: 
  */
 #pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
+#include "vsc/dm/impl/ValRefStruct.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    InitDown,
-    InitUp,
-    PreSolve,
-    PostSolve,
-};
 
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
+
+class ValRefAction : public vsc::dm::ValRefStruct{
 public:
 
-    virtual ~ITypeExec() { }
+    ValRefAction(const vsc::dm::ValRef &rhs) : ValRefStruct(rhs) { }
 
-    virtual ExecKindT getKind() const = 0;
-
+    virtual ~ValRefAction() { }
 
 };
 

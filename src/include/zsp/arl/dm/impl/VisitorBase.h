@@ -80,7 +80,7 @@ public:
 
 	virtual void visitDataTypeAction(IDataTypeAction *i) override {
 		m_this->visitDataTypeStruct(i);
-		for (std::vector<ITypeFieldActivity *>::const_iterator
+		for (std::vector<ITypeFieldActivityUP>::const_iterator
 				it=i->activities().begin();
 				it!=i->activities().end(); it++) {
 			(*it)->accept(m_this);

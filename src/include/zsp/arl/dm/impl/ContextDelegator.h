@@ -207,8 +207,9 @@ public:
 
 	virtual IModelFieldComponent *mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,
-			const std::string		&name) { 
-        return ctxt()->mkModelFieldComponentRoot(type, name);
+			const std::string		&name,
+            const vsc::dm::ValRef   &val) { 
+        return ctxt()->mkModelFieldComponentRoot(type, name, val);
     }
 
 	virtual IModelFieldComponent *mkModelFieldComponentType(

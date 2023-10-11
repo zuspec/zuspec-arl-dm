@@ -19,8 +19,17 @@ namespace dm {
 
 DataTypeAction::DataTypeAction(
 		IContext			*ctxt,
-		const std::string 	&name) : DataTypeArlStruct(name), m_component_t(0) {
+		const std::string 	&name) : DataTypeArlStruct(name, 0), m_component_t(0) {
 //    DEBUG_INIT("DataTypeAction", ctxt->getDebugMgr());
+
+/*
+    // Add the activity pointer field
+    vsc::dm::ITypeFieldRef *activity_p = ctxt->mkTypeFieldRef(
+        "__activity_p", 
+        0, 
+        vsc::dm::TypeFieldAttr::NoAttr);
+    addField(activity_p);
+ */
 
 	// Add the built-in 'comp' ref
 	m_comp = ctxt->mkTypeFieldRef("comp", 0, vsc::dm::TypeFieldAttr::NoAttr);
@@ -31,14 +40,37 @@ DataTypeAction::~DataTypeAction() {
 	// TODO Auto-generated destructor stub
 }
 
+int32_t DataTypeAction::getByteSize() const {
+    return m_activity_sz + DataTypeArlStruct::getByteSize();
+}
+
 void DataTypeAction::setComponentType(IDataTypeComponent *t) {
 	m_component_t = t;
     m_comp->setDataType(t);
 }
 
+int32_t DataTypeAction::getActivityOffset() const {
+    return DataTypeArlStruct::getByteSize();
+}
+
 void DataTypeAction::addActivity(ITypeFieldActivity *activity) {
+    int32_t offset = m_activity_sz;
+    if (m_activities.size()) {
+        int32_t new_sz = activity->getByteSize();
+        int32_t align = 1;
+        if (new_sz <= vsc::dm::ValRefInt::native_sz()) {
+            align = new_sz;
+        }
+
+        int32_t pad = (m_activity_sz%align)?(align - (m_activity_sz % align)):0;
+        offset += pad;
+        m_activity_sz += pad;
+    }
+    m_activity_sz += activity->getByteSize();
+
+    activity->setOffset(offset);
 	activity->setIndex(m_activities.size());
-	m_activities.push_back(activity);
+	m_activities.push_back(ITypeFieldActivityUP(activity));
 }
 
 vsc::dm::IModelField *DataTypeAction::mkRootField(
@@ -48,9 +80,12 @@ vsc::dm::IModelField *DataTypeAction::mkRootField(
     DEBUG_ENTER("mkRootField %s", name.c_str());
     vsc::dm::ValRefStruct val(ctxt->ctxt()->mkValRefStruct(this));
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
-    IModelFieldAction *ret;
+    vsc::dm::IModelField *ret;
 
-	ret = ctxt_a->mkModelFieldActionRoot(name, this);
+    ret = ctxt_a->mkModelFieldRoot(
+        this,
+        name,
+        val);
 
     // Push the new field just for completeness
     ctxt->pushTopDownScope(ret);
@@ -66,6 +101,7 @@ vsc::dm::IModelField *DataTypeAction::mkRootField(
     }
 
 	// Build out any activities
+#ifdef UNDEFINED
     if (activities().size() == 1) {
         ret->setActivity(dynamic_cast<IModelActivityScope *>(
             activities().at(0)->mkActivity(ctxt)));
@@ -85,6 +121,7 @@ vsc::dm::IModelField *DataTypeAction::mkRootField(
     // Finally, build out constraints on this field and sub-fields
     vsc::dm::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
     constraint_builder.build(ret, this);
+#endif /* UNDEFINED */
 
     if (getCreateHook()) {
         getCreateHook()->create(ret);
@@ -103,8 +140,7 @@ vsc::dm::IModelField *DataTypeAction::mkTypeField(
     vsc::dm::ValRefStruct val_s(val);
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
-    IModelFieldAction *ret = ctxt_a->mkModelFieldActionType(type);
-
+    vsc::dm::IModelField *ret = ctxt_a->mkModelFieldType(type, val);
 
     // Push the new field just for completeness
     ctxt->pushTopDownScope(ret);
@@ -114,6 +150,7 @@ vsc::dm::IModelField *DataTypeAction::mkTypeField(
 		ret->addField(field);
     }
 
+#ifdef UNDEFINED
     if (activities().size() == 1) {
         ret->setActivity(dynamic_cast<IModelActivityScope *>(
             activities().at(0)->mkActivity(ctxt)));
@@ -133,6 +170,7 @@ vsc::dm::IModelField *DataTypeAction::mkTypeField(
     // Finally, build out constraints on this field and sub-fields
     vsc::dm::TaskBuildModelFieldConstraints<> constraint_builder(ctxt);
     constraint_builder.build(ret, this);
+#endif
 
     if (getCreateHook()) {
         getCreateHook()->create(ret);

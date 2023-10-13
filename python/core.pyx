@@ -242,7 +242,7 @@ cdef class DataTypeAction(vsc.DataTypeStruct):
         ret = []
         for i in range(self.asAction().activities().size()):
             ret.append(TypeFieldActivity.mk(
-                self.asAction().activities().at(i),
+                self.asAction().activities().at(i).get(),
                 False))
         
         return ret

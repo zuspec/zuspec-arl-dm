@@ -79,7 +79,7 @@ cdef extern from "zsp/arl/dm/IDataTypeAction.h" namespace "zsp::arl::dm":
         IDataTypeComponent *getComponentType()
         void setComponentType(IDataTypeComponent *)
         vsc.ITypeFieldRef *getCompField() const
-        const cpp_vector[ITypeFieldActivityP] &activities() const
+        const cpp_vector[ITypeFieldActivityUP] &activities() const
         void addActivity(ITypeFieldActivity *)
         
 cdef extern from "zsp/arl/dm/IDataTypeActivity.h" namespace "zsp::arl::dm":

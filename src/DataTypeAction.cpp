@@ -19,7 +19,8 @@ namespace dm {
 
 DataTypeAction::DataTypeAction(
 		IContext			*ctxt,
-		const std::string 	&name) : DataTypeArlStruct(name, 0), m_component_t(0) {
+		const std::string 	&name) : DataTypeArlStruct(name, 0), 
+        m_component_t(0), m_activity_sz(0) {
 //    DEBUG_INIT("DataTypeAction", ctxt->getDebugMgr());
 
 /*
@@ -78,6 +79,7 @@ vsc::dm::IModelField *DataTypeAction::mkRootField(
 		const std::string			    &name,
 		bool						    is_ref) {
     DEBUG_ENTER("mkRootField %s", name.c_str());
+    DEBUG("byteSize: %d", getByteSize());
     vsc::dm::ValRefStruct val(ctxt->ctxt()->mkValRefStruct(this));
 	IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
     vsc::dm::IModelField *ret;

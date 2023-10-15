@@ -465,7 +465,12 @@ cdef class DataTypeFunction(vsc.ObjBase):
         return self.asFunction().name().decode()
     
     cpdef object getAssociatedData(self):
-        cdef vsc_decl.AssociatedDataClosure *ad = dynamic_cast[vsc_decl.AssociatedDataClosureP](self.asFunction().getAssociatedData())
+        cdef decl.IDataTypeFunction *f = self.asFunction()
+        cdef vsc_decl.AssociatedDataClosure *ad
+        if f == NULL:
+            return None
+        else:
+            ad = dynamic_cast[vsc_decl.AssociatedDataClosureP](f.getAssociatedData())
         if ad == NULL:
             return None
         else:

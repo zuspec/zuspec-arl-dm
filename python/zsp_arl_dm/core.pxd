@@ -1,5 +1,6 @@
 
 import ctypes
+from typing import List
 cimport debug_mgr.core as dm_core
 from zsp_arl_dm cimport decl
 
@@ -19,6 +20,7 @@ cdef class Context(vsc.Context):
 
     cpdef DataTypeAction findDataTypeAction(self, name)
     cpdef DataTypeAction mkDataTypeAction(self, name)
+    cpdef getDataTypeFunctions(self)
     cpdef DataTypeActivityParallel mkDataTypeActivityParallel(self)
     cpdef DataTypeActivityReplicate mkDataTypeActivityReplicate(self, vsc.TypeExpr count)
     cpdef DataTypeActivitySchedule mkDataTypeActivitySchedule(self)
@@ -268,6 +270,8 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitDataTypeComponent(self, DataTypeComponent t)
 
     cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t)
+
+    cpdef visitDataTypeFunction(self, DataTypeFunction t)
 
     cpdef visitModelFieldAction(self, ModelFieldAction a)
 

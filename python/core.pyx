@@ -10,6 +10,7 @@ from libcpp cimport bool
 from libcpp.cast cimport dynamic_cast, static_cast
 from libcpp.vector cimport vector as cpp_vector
 from enum import IntEnum
+from typing import List
 from zsp_arl_dm cimport decl
 cimport vsc_dm.core as vsc
 cimport vsc_dm.decl as vsc_decl
@@ -66,6 +67,15 @@ cdef class Context(vsc.Context):
         
     cpdef DataTypeAction mkDataTypeAction(self, name):
         return DataTypeAction.mk(self.asContext().mkDataTypeAction(name.encode()), True)
+
+    cpdef getDataTypeFunctions(self):
+        cdef const cpp_vector[decl.IDataTypeFunctionP] *funcs = &self.asContext().getDataTypeFunctions()
+
+        ret = []
+        for i in range(funcs.size()):
+            ret.append(DataTypeFunction.mk(funcs.at(i), False))
+
+        return ret
     
     cpdef bool addDataTypeAction(self, DataTypeAction a):
         a._owned = False
@@ -736,6 +746,9 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t):
         pass
 
+    cpdef visitDataTypeFunction(self, DataTypeFunction t):
+        pass
+
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         pass
 
@@ -756,6 +769,9 @@ cdef public void VisitorProxy_visitDataTypeComponent(obj, decl.IDataTypeComponen
 
 cdef public void VisitorProxy_visitDataTypeFlowObj(obj, decl.IDataTypeFlowObj *t) with gil:
     obj.visitDataTypeFlowObj(DataTypeFlowObj.mk(t, False))
+
+cdef public void VisitorProxy_visitDataTypeFunction(obj, decl.IDataTypeFunction *t) with gil:
+    obj.visitDataTypeFunction(DataTypeFunction.mk(t, False))
 
 cdef public void VisitorProxy_visitModelFieldAction(obj, decl.IModelFieldAction *a) with gil:
     obj.visitModelFieldAction(ModelFieldAction.mk(a, False))

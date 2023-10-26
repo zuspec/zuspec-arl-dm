@@ -48,6 +48,10 @@ void VisitorProxy::visitDataTypeFlowObj(IDataTypeFlowObj *t) {
     VisitorProxy_visitDataTypeFlowObj(m_obj, t);
 }
 
+void VisitorProxy::visitDataTypeFunction(IDataTypeFunction *t) {
+    VisitorProxy_visitDataTypeFunction(m_obj, t);
+}
+
 void VisitorProxy::visitModelFieldAction(IModelFieldAction *f) {
     VisitorProxy_visitModelFieldAction(m_obj, f);
 }

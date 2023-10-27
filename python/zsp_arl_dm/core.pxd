@@ -142,9 +142,28 @@ cdef class DataTypeFlowObj(vsc.DataTypeStruct):
     @staticmethod
     cdef DataTypeFlowObj mk(decl.IDataTypeFlowObj *hndl, bool owned=*)
 
+
+# cdef class DataTypeFunctionParamDecl(TypeProcStmtVarDecl):
+
+#     cpdef getDirection(self)
+
+#     cdef decl.IDataTypeFunctionParamDecl *asParamDecl(self)
+
+#     @staticmethod
+#     cdef DataTypeFunctionParamDecl mk(decl.IDataTypeFunctionParamDecl *, bool owned=*)
+
+
 cdef class DataTypeFunction(vsc.ObjBase):
 
     cpdef name(self)
+
+    cpdef vsc.DataType getReturnType(self)
+
+    cpdef getParameters(self)
+
+    cpdef getFlags(self)
+
+    cpdef bool hasFlags(self, flags)
 
     cpdef object getAssociatedData(self)
 
@@ -262,6 +281,20 @@ cdef class TypeFieldPool(vsc.TypeField):
     
     @staticmethod
     cdef TypeFieldPool mk(decl.ITypeFieldPool *, bool owned=*)
+
+cdef class TypeProcStmt(vsc.ObjBase):
+    pass
+
+cdef class TypeProcStmtVarDecl(TypeProcStmt):
+
+    cpdef str name(self)
+    cpdef vsc.DataType getDataType(self)
+    cpdef vsc.TypeExpr getInit(self)
+
+    cdef decl.ITypeProcStmtVarDecl *asVarDecl(self)
+
+    @staticmethod
+    cdef TypeProcStmtVarDecl mk(decl.ITypeProcStmtVarDecl *, bool owned=*)
 
 cdef class VisitorBase(vsc.VisitorBase):
 

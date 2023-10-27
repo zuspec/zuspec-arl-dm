@@ -22,6 +22,7 @@ ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
 ctypedef IDataTypeFunction *IDataTypeFunctionP
+ctypedef IDataTypeFunctionParamDecl *IDataTypeFunctionParamDeclP
 ctypedef IFactory *IFactoryP
 ctypedef IModelEvalIterator *IModelEvalIteratorP
 ctypedef IModelFieldAction *IModelFieldActionP
@@ -38,6 +39,7 @@ ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
 ctypedef ITypeProcStmt *ITypeProcStmtP 
 ctypedef ITypeProcStmtDeclScope *ITypeProcStmtDeclScopeP 
+ctypedef ITypeProcStmtVarDecl *ITypeProcStmtVarDeclP 
 
 cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
     cdef cppclass IContext(vsc.IContext):
@@ -150,9 +152,34 @@ cdef extern from "zsp/arl/dm/ITypeProcStmtDeclScope.h" namespace "zsp::arl::dm":
         void setAssociatedData(vsc.IAssociatedData *)
         pass
 
+cdef extern from "zsp/arl/dm/ITypeProcStmtVarDecl.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtVarDecl(ITypeProcStmt):
+        const cpp_string &name() const
+        vsc.IDataType *getDataType() const
+        vsc.ITypeExpr *getInit() const
+
+cdef extern from "zsp/arl/dm/IDataTypeFunctionParamDecl.h" namespace "zsp::arl::dm":
+    cdef enum ParamDir:
+        In    "zsp::arl::dm::ParamDir::In"
+        Out   "zsp::arl::dm::ParamDir::Out"
+        InOut "zsp::arl::dm::ParamDir::InOut"
+
+    cdef cppclass IDataTypeFunctionParamDecl(ITypeProcStmtVarDecl):
+        ParamDir getDirection() const
+
 cdef extern from "zsp/arl/dm/IDataTypeFunction.h" namespace "zsp::arl::dm":
+    cdef enum DataTypeFunctionFlags:
+        NoFlags "zsp::arl::dm::DataTypeFunctionFlags::NoFlags"
+        Solve "zsp::arl::dm::DataTypeFunctionFlags::Solve"
+        Target "zsp::arl::dm::DataTypeFunctionFlags::Target"
+        Core "zsp::arl::dm::DataTypeFunctionFlags::Core"
+
     cdef cppclass IDataTypeFunction(ITypeProcStmtDeclScope):
         const cpp_string &name()
+        vsc.IDataType *getReturnType() const
+        const cpp_vector[IDataTypeFunctionParamDeclP] &getParameters() const
+        DataTypeFunctionFlags getFlags() const
+        bool hasFlags(DataTypeFunctionFlags) const
 
 cdef extern from "zsp/arl/dm/IFactory.h" namespace "zsp::arl::dm":
     cdef cppclass IFactory:

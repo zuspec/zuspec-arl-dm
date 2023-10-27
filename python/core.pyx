@@ -9,7 +9,7 @@ from libc.stdint cimport intptr_t
 from libcpp cimport bool
 from libcpp.cast cimport dynamic_cast, static_cast
 from libcpp.vector cimport vector as cpp_vector
-from enum import IntEnum
+from enum import IntEnum, IntFlag
 from typing import List
 from zsp_arl_dm cimport decl
 cimport vsc_dm.core as vsc
@@ -469,10 +469,60 @@ cdef class DataTypeFlowObj(vsc.DataTypeStruct):
         ret._owned = owned
         return ret
 
+class ParamDir(IntEnum):
+    In    = decl.ParamDir.In
+    Out   = decl.ParamDir.Out
+    InOut = decl.ParamDir.InOut
+
+cdef class DataTypeFunctionParamDecl(TypeProcStmtVarDecl):
+
+    cpdef getDirection(self):
+        cdef int dir_i = int(self.asParamDecl().getDirection())
+        return ParamDir(dir_i)
+
+    cdef decl.IDataTypeFunctionParamDecl *asParamDecl(self):
+        return dynamic_cast[decl.IDataTypeFunctionParamDeclP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeFunctionParamDecl mk(decl.IDataTypeFunctionParamDecl *hndl, bool owned=True):
+        ret = DataTypeFunctionParamDecl()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+class DataTypeFunctionFlags(IntFlag):
+    NoFlags = decl.DataTypeFunctionFlags.NoFlags
+    Solve = decl.DataTypeFunctionFlags.Solve
+    Target = decl.DataTypeFunctionFlags.Target
+    Core = decl.DataTypeFunctionFlags.Core
+
 cdef class DataTypeFunction(vsc.ObjBase):
 
     cpdef name(self):
         return self.asFunction().name().decode()
+
+    cpdef vsc.DataType getReturnType(self):
+        cdef vsc_decl.IDataType *t = self.asFunction().getReturnType()
+        if t == NULL:
+            return None
+        else:
+            return vsc.WrapperBuilder().mkObj(t, False)
+
+    cpdef getParameters(self):
+        cdef const cpp_vector[decl.IDataTypeFunctionParamDeclP] *p = &self.asFunction().getParameters()
+
+        ret = []
+        for i in range(p.size()):
+            ret.append(DataTypeFunctionParamDecl.mk(p.at(i), False))
+        return ret
+
+    cpdef getFlags(self):
+        cdef int flags_i = int(self.asFunction().getFlags())
+        return DataTypeFunctionFlags(flags_i)
+
+    cpdef bool hasFlags(self, flags):
+        cdef int flags_i = int(flags)
+        return self.asFunction().hasFlags(<decl.DataTypeFunctionFlags>(flags_i))
     
     cpdef object getAssociatedData(self):
         cdef decl.IDataTypeFunction *f = self.asFunction()
@@ -731,6 +781,35 @@ cdef class TypeFieldPool(vsc.TypeField):
         ret._owned = owned
         return ret
 
+cdef class TypeProcStmt(vsc.ObjBase):
+    pass
+
+cdef class TypeProcStmtVarDecl(TypeProcStmt):
+
+    cpdef str name(self):
+        return self.asVarDecl().name().decode()
+
+    cpdef vsc.DataType getDataType(self):
+        cdef vsc_decl.IDataType *type = self.asVarDecl().getDataType()
+        return vsc.WrapperBuilder().mkObj(type, False)
+
+    cpdef vsc.TypeExpr getInit(self):
+        cdef vsc_decl.ITypeExpr *i = self.asVarDecl().getInit()
+        if i == NULL:
+            return None
+        else:
+            return vsc.TypeExpr.mk(i, False)
+
+    cdef decl.ITypeProcStmtVarDecl *asVarDecl(self):
+        return dynamic_cast[decl.ITypeProcStmtVarDeclP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtVarDecl mk(decl.ITypeProcStmtVarDecl *hndl, bool owned=True):
+        ret = TypeProcStmtVarDecl()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
 cdef class VisitorBase(vsc.VisitorBase):
 
     def __init__(self):
@@ -761,8 +840,25 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitModelFieldPool(self, ModelFieldPool f):
         pass
 
+# cdef public void VisitorProxy_visitDataTypeEnum(obj, vsc_decl.IDataTypeEnum *t) with gil:
+#     obj.enter()
+#     obj.visitDataTypeEnum(vsc.DataTypeEnum.mk(t, False))
+#     obj.leave()
+
+# cdef public void VisitorProxy_visitDataTypeInt(obj, vsc_decl.IDataTypeInt *t) with gil:
+#     obj.enter()
+#     obj.visitDataTypeInt(vsc.DataTypeInt.mk(t, False))
+#     obj.leave()
+
+# cdef public void VisitorProxy_visitDataTypeStruct(obj, vsc_decl.IDataTypeStruct *t) with gil:
+#     obj.enter()
+#     obj.visitDataTypeStruct(DataTypeStruct.mk(t, False))
+#     obj.leave()
+
 cdef public void VisitorProxy_visitDataTypeAction(obj, decl.IDataTypeAction *t) with gil:
+    obj.enter()
     obj.visitDataTypeAction(DataTypeAction.mk(t, False))
+    obj.leave()
 
 cdef public void VisitorProxy_visitDataTypeComponent(obj, decl.IDataTypeComponent *t) with gil:
     obj.visitDataTypeComponent(DataTypeComponent.mk(t, False))

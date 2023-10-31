@@ -454,7 +454,10 @@ ITypeFieldRegGroup *Context::mkTypeFieldRegGroup(
             const std::string       &name,
             vsc::dm::IDataType      *type,
             bool                    own) {
-    return new TypeFieldRegGroup(name, type, own);
+    return new TypeFieldRegGroup(
+        name,
+        findDataTypeWrapper(findDataTypeInt(false, 64), type, true),
+        own);
 }
 
 ITypeProcStmtAssign *Context::mkTypeProcStmtAssign(

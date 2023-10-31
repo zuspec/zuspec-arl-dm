@@ -39,6 +39,8 @@ public:
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override;
 
+	virtual void visitDataTypeFunction(IDataTypeFunction *t) override;
+
 	virtual void visitModelFieldAction(IModelFieldAction *f) override;
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;

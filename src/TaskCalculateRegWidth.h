@@ -1,7 +1,7 @@
 /**
- * ITypeFieldReg.h
+ * TaskCalculateRegWidth.h
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/ITypeField.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {
 namespace arl {
@@ -27,21 +27,29 @@ namespace dm {
 
 
 
-class ITypeFieldReg : public virtual vsc::dm::ITypeField {
+class TaskCalculateRegWidth : public virtual VisitorBase {
 public:
+    TaskCalculateRegWidth();
 
-    virtual ~ITypeFieldReg() { }
+    virtual ~TaskCalculateRegWidth();
 
-    virtual int64_t getOffset() = 0;
+    int32_t width(vsc::dm::IDataType *t);
 
-    virtual void setOffset(int64_t off) = 0;
+	virtual void visitDataTypeBool(vsc::dm::IDataTypeBool *t) override;
 
-    virtual int32_t getWidth() const = 0;
+	virtual void visitDataTypeEnum(vsc::dm::IDataTypeEnum *t) override;
+
+	virtual void visitDataTypeInt(vsc::dm::IDataTypeInt *t) override;
+
+	virtual void visitDataTypeStruct(vsc::dm::IDataTypeStruct *t) override;
+
+private:
+    int32_t             m_width;
 
 };
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+}
+}
+}
 
 

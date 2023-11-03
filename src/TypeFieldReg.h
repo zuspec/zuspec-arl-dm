@@ -46,12 +46,17 @@ public:
         m_offset = off;
     }
 
+    virtual int32_t getWidth() const override {
+        return m_width;
+    }
+
     virtual ~TypeFieldReg();
 
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     int64_t                 m_offset;
+    int32_t                 m_width;
 
 };
 

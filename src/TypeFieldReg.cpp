@@ -19,6 +19,7 @@
  *     Author:
  */
 #include "zsp/arl/dm/IVisitor.h"
+#include "TaskCalculateRegWidth.h"
 #include "TypeFieldReg.h"
 
 
@@ -32,7 +33,7 @@ TypeFieldReg::TypeFieldReg(
     vsc::dm::IDataType      *type,
     bool                    owned) : 
         TypeField(name, type, owned, vsc::dm::TypeFieldAttr::NoAttr) {
-
+    m_width = TaskCalculateRegWidth().width(type);
 }
 
 TypeFieldReg::~TypeFieldReg() {

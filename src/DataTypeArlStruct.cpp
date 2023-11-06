@@ -42,9 +42,11 @@ void DataTypeArlStruct::addField(
             align = new_sz;
         }
 
-        int32_t pad = (m_bytesz%align)?(align - (m_bytesz % align)):0;
-        offset += pad;
-        m_bytesz += pad;
+        if (m_bytesz) {
+            int32_t pad = (m_bytesz%align)?(align - (m_bytesz % align)):0;
+            offset += pad;
+            m_bytesz += pad;
+        }
     }
     m_bytesz += f->getByteSize();
     f->setOffset(offset);

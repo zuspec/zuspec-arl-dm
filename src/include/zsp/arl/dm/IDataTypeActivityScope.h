@@ -30,6 +30,8 @@ public:
         ITypeFieldActivity      *a,
         bool                    owned=true) = 0;
 
+    virtual int32_t getActivityOffset() const = 0;
+
 	virtual void addActivityField(ITypeFieldActivity *a) = 0;
 
 };

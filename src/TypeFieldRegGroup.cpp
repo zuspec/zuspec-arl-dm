@@ -21,6 +21,7 @@
 #include "zsp/arl/dm/IVisitor.h"
 #include "zsp/arl/dm/IContext.h"
 #include "TypeFieldRegGroup.h"
+#include "vsc/dm/impl/ValRefPtr.h"
 
 
 namespace zsp {
@@ -38,6 +39,11 @@ TypeFieldRegGroup::TypeFieldRegGroup(
 
 TypeFieldRegGroup::~TypeFieldRegGroup() {
 
+}
+
+int32_t TypeFieldRegGroup::getByteSize() const {
+    // Field holds the base address of the register group
+    return vsc::dm::ValRefPtr::size();
 }
 
 vsc::dm::IModelField *TypeFieldRegGroup::mkModelField(

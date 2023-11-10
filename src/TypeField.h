@@ -53,6 +53,8 @@ public:
 
     virtual void setOffset(int32_t off) override { m_offset = off; }
 
+    virtual int32_t getByteSize() const override { return m_type->getByteSize(); }
+
 	virtual const std::string &name() const { return m_name; }
 
 	virtual vsc::dm::IDataType *getDataType() const override {

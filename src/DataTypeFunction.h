@@ -35,8 +35,7 @@ public:
         const std::string       &name,
         vsc::dm::IDataType      *rtype,
         bool                    own_rtype,
-        bool                    is_target,
-        bool                    is_solve);
+        DataTypeFunctionFlags   flags);
 
     virtual ~DataTypeFunction();
 
@@ -70,14 +69,6 @@ public:
         m_is_export = e;
     }
 
-    virtual bool isTarget() override {
-        return m_is_target;
-    }
-
-    virtual bool isSolve() override {
-        return m_is_solve;
-    }
-
     virtual ITypeProcStmtScope *getBody() const override {
         return m_body.get();
     }
@@ -87,6 +78,14 @@ public:
     }
 
     virtual void addImportSpec(IDataTypeFunctionImport *spec) override;
+
+    virtual DataTypeFunctionFlags getFlags() const override {
+        return m_flags;
+    }
+
+    virtual bool hasFlags(DataTypeFunctionFlags f) const override {
+        return (m_flags & f) != DataTypeFunctionFlags::NoFlags;
+    }
 
     virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
         m_associated_data = vsc::dm::IAssociatedDataUP(data);
@@ -105,8 +104,7 @@ private:
     std::vector<IDataTypeFunctionParamDecl *>       m_parameters;
     vsc::dm::IDataTypeStruct                        *m_context;
     bool                                            m_is_export;
-    bool                                            m_is_target;
-    bool                                            m_is_solve;
+    DataTypeFunctionFlags                           m_flags;
     ITypeProcStmtScopeUP                            m_param_scope;
     ITypeProcStmtScopeUP                            m_body;
     std::vector<IDataTypeFunctionImportUP>          m_import_specs;

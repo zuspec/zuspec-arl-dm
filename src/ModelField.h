@@ -48,9 +48,11 @@ public:
 	virtual vsc::dm::IModelField *getField(int32_t idx) override;
 
 	virtual vsc::dm::ValRef getImmVal() const override {
+        return m_val.toImmutable();
 	}
 
 	virtual vsc::dm::ValRef getMutVal() const override {
+        return m_val.toMutable();
 	}
 
 	virtual vsc::dm::ModelFieldFlag flags() const override {
@@ -84,7 +86,7 @@ public:
 protected:
 	vsc::dm::IModelField						*m_parent;
 	vsc::dm::IModelFieldDataUP					m_data;
-	vsc::dm::IModelValUP						m_val;
+    vsc::dm::ValRef                             m_val;
 
 	std::vector<vsc::dm::IModelFieldUP>			m_fields;
 	std::vector<vsc::dm::IModelConstraintUP>	m_constraints;

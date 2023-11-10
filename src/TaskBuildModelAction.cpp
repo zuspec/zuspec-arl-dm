@@ -34,7 +34,7 @@ IModelFieldAction *TaskBuildModelAction::build(
 	// Now, build out the activity
 	m_ctxt->pushTopDownScope(ret);
 	for (auto it=t->activities().begin(); it!=t->activities().end(); it++) {
-		IModelActivity *activity = TaskBuildModelActivity(m_ctxt).build(*it);
+//		IModelActivity *activity = TaskBuildModelActivity(m_ctxt).build(*it);
 		// The activity is already a field and, thus, is already part
 		// of the action model's activity list
 	}

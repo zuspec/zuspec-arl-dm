@@ -77,6 +77,8 @@ public:
 
 	virtual void visitDataTypeStruct(vsc::dm::IDataTypeStruct *t) override;
 
+	virtual void visitDataTypeWrapper(vsc::dm::IDataTypeWrapper *t) override;
+
 	virtual void visitTypeConstraintBlock(vsc::dm::ITypeConstraintBlock *c) override;
 
 	virtual void visitTypeConstraintExpr(vsc::dm::ITypeConstraintExpr *c) override;

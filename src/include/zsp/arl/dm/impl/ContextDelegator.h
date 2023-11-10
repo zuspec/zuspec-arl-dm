@@ -57,9 +57,8 @@ public:
 			const std::string		&name,
 			vsc::dm::IDataType		*rtype,
 			bool					own_rtype,
-            bool                    is_target,
-            bool                    is_solve) override { 
-        return ctxt()->mkDataTypeFunction(name, rtype, own_rtype, is_target, is_solve);
+            DataTypeFunctionFlags   flags) override {
+        return ctxt()->mkDataTypeFunction(name, rtype, own_rtype, flags);
     }
     
     virtual IDataTypeFunctionImport *mkDataTypeFunctionImport(
@@ -208,8 +207,9 @@ public:
 
 	virtual IModelFieldComponent *mkModelFieldComponentRoot(
 			IDataTypeComponent		*type,
-			const std::string		&name) { 
-        return ctxt()->mkModelFieldComponentRoot(type, name);
+			const std::string		&name,
+            const vsc::dm::ValRef   &val) { 
+        return ctxt()->mkModelFieldComponentRoot(type, name, val);
     }
 
 	virtual IModelFieldComponent *mkModelFieldComponentType(

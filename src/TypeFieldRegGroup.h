@@ -40,6 +40,8 @@ public:
 
     virtual ~TypeFieldRegGroup();
 
+    virtual int32_t getByteSize() const override;
+
 	virtual vsc::dm::IModelField *mkModelField(
 		vsc::dm::IModelBuildContext 	*ctxt,
         const vsc::dm::ValRef           &val) override;

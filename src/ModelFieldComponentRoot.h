@@ -36,9 +36,10 @@ class ModelFieldComponentRoot :
     public virtual ModelFieldComponent {
 public:
     ModelFieldComponentRoot(
-        IContext            *ctxt,
-        const std::string   &name,
-        IDataTypeComponent  *type);
+        IContext                *ctxt,
+        const std::string       &name,
+        IDataTypeComponent      *type,
+        const vsc::dm::ValRef   &val);
 
     virtual ~ModelFieldComponentRoot();
 

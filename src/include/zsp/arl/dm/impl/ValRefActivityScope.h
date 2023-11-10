@@ -1,7 +1,7 @@
 /**
- * ITypeFieldReg.h
+ * ValRefActivity.h
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -19,7 +19,8 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/ITypeField.h"
+#include "vsc/dm/impl/ValRefStruct.h"
+#include "zsp/arl/dm/IDataTypeActivity.h"
 
 namespace zsp {
 namespace arl {
@@ -27,16 +28,19 @@ namespace dm {
 
 
 
-class ITypeFieldReg : public virtual vsc::dm::ITypeField {
+class ValRefActivity : public vsc::dm::ValRefStruct {
 public:
 
-    virtual ~ITypeFieldReg() { }
+    ValRefActivity(const ValRef &rhs) : ValRefStruct(rhs) { }
 
-    virtual int64_t getOffset() = 0;
+    virtual ~ValRefActivity() { }
 
-    virtual void setOffset(int64_t off) = 0;
+    int32_t getNumActivities() const {
+        return dynamic_cast<IDataTypeActivity *>(type())->getA
 
-    virtual int32_t getWidth() const = 0;
+    }
+
+    ValRef getActivityRef(int32_t)
 
 };
 

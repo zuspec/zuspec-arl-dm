@@ -35,6 +35,22 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
+enum class DataTypeFunctionFlags {
+    NoFlags = 0,
+    Solve   = (1 << 0),
+    Target  = (1 << 1),
+    Core    = (1 << 2)
+};
+
+static inline DataTypeFunctionFlags operator | (const DataTypeFunctionFlags lhs, const DataTypeFunctionFlags rhs) {
+        return static_cast<DataTypeFunctionFlags>(
+                        static_cast<uint32_t>(lhs) | static_cast<uint32_t>(rhs));
+}
+
+static inline DataTypeFunctionFlags operator & (const DataTypeFunctionFlags lhs, const DataTypeFunctionFlags rhs) {
+        return static_cast<DataTypeFunctionFlags>(
+                        static_cast<uint32_t>(lhs) & static_cast<uint32_t>(rhs));
+}
 
 class IDataTypeFunction;
 using IDataTypeFunctionUP=vsc::dm::UP<IDataTypeFunction>;
@@ -60,15 +76,15 @@ public:
 
     virtual void setIsExport(bool e) = 0;
 
-    virtual bool isTarget() = 0;
-
-    virtual bool isSolve() = 0;
-
     virtual ITypeProcStmtScope *getBody() const = 0;
 
     virtual const std::vector<IDataTypeFunctionImportUP> &getImportSpecs() const = 0;
 
     virtual void addImportSpec(IDataTypeFunctionImport *spec) = 0;
+
+    virtual DataTypeFunctionFlags getFlags() const = 0;
+
+    virtual bool hasFlags(DataTypeFunctionFlags f) const = 0;
 
     virtual void setAssociatedData(vsc::dm::IAssociatedData *data) = 0;
 

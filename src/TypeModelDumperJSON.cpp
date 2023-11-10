@@ -56,7 +56,17 @@ bool TypeModelDumperJSON::dumpTypeModel(
         getTypeIdx(*it);
     }
 
-    m_json_s.pop_back();
+//    m_json_s.pop_back();
+
+#ifdef UNDEFINED
+    root["function-decl"] = {};
+    m_types = &root["function-decl"];
+    m_active = 0;
+
+    for (uint32_t i=0; i<m_function_l.size(); i++) {
+        m_function_l.at(i)->accept(m_this);
+    }
+#endif
 
     root["root-types"] = {};
 
@@ -88,7 +98,7 @@ void TypeModelDumperJSON::visitDataTypeAction(IDataTypeAction *i) {
         i->activities().size());
     m_active = &type;
     m_json_s.push_back(&type["activities"]);
-	for (std::vector<ITypeFieldActivity *>::const_iterator
+	for (std::vector<ITypeFieldActivityUP>::const_iterator
 			it=i->activities().begin();
 			it!=i->activities().end(); it++) {
 		(*it)->accept(m_this);
@@ -346,6 +356,20 @@ void TypeModelDumperJSON::visitDataTypeStruct(vsc::dm::IDataTypeStruct *t) {
     DEBUG_LEAVE("visitDataTypeStruct %s", t->name().c_str());
 }
 
+void TypeModelDumperJSON::visitDataTypeWrapper(vsc::dm::IDataTypeWrapper *t) {
+    bool is_root = !m_active;
+    DEBUG_ENTER("visitDataTypeWrapper");
+    nlohmann::json type;
+
+    type["kind"] = "data-type-wrapper";
+
+    type["vtype-id"] = getTypeIdx(t->getDataTypeVirt());
+    type["ptype-id"] = getTypeIdx(t->getDataTypePhy());
+
+    addType(t, type);
+    DEBUG_LEAVE("visitDataTypeWrapper");
+}
+
 void TypeModelDumperJSON::visitTypeConstraintBlock(vsc::dm::ITypeConstraintBlock *c) { 
     DEBUG_ENTER("visitTypeConstraintBlock");
     nlohmann::json constraint;
@@ -390,11 +414,16 @@ void TypeModelDumperJSON::visitTypeExprMethodCallContext(ITypeExprMethodCallCont
 
     std::map<IDataTypeFunction *, int32_t>::const_iterator it = 
         m_function_m.find(e->getTarget());
+
+    DEBUG("Target function=%p", e->getTarget());
     
     if (it == m_function_m.end()) {
         int32_t id = m_function_l.size();
         m_function_l.push_back(e->getTarget());
         it = m_function_m.insert({e->getTarget(), id}).first;
+        if (e->getTarget()) {
+            e->getTarget()->accept(m_this);
+        }
     }
     expr["function-type"] = it->second;
     visitExpr(expr["context"], e->getContext());
@@ -420,11 +449,16 @@ void TypeModelDumperJSON::visitTypeExprMethodCallStatic(ITypeExprMethodCallStati
 
     std::map<IDataTypeFunction *, int32_t>::const_iterator it = 
         m_function_m.find(e->getTarget());
+        
+    DEBUG("Target function=%p", e->getTarget());
     
     if (it == m_function_m.end()) {
         int32_t id = m_function_l.size();
         m_function_l.push_back(e->getTarget());
         it = m_function_m.insert({e->getTarget(), id}).first;
+        if (e->getTarget()) {
+            e->getTarget()->accept(m_this);
+        }
     }
     expr["function-type"] = it->second;
 

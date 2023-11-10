@@ -31,7 +31,8 @@ class ModelFieldComponent :
 public:
 	ModelFieldComponent(
 		const std::string			&name,
-		IDataTypeComponent			*type);
+		IDataTypeComponent			*type,
+        const vsc::dm::ValRef       &val);
 
 	ModelFieldComponent(
 		vsc::dm::ITypeField				*type);

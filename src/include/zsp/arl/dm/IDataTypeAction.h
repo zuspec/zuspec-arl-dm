@@ -30,9 +30,11 @@ public:
 
 	virtual vsc::dm::ITypeFieldRef *getCompField() const = 0;
 
-	virtual const std::vector<ITypeFieldActivity *> &activities() const = 0;
+	virtual const std::vector<ITypeFieldActivityUP> &activities() const = 0;
 
 	virtual void addActivity(ITypeFieldActivity *activity) = 0;
+
+    virtual int32_t getActivityOffset() const = 0;
 
 };
 

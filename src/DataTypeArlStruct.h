@@ -28,7 +28,9 @@ namespace dm {
 
 class DataTypeArlStruct : public virtual IDataTypeArlStruct {
 public:
-	DataTypeArlStruct(const std::string &name);
+	DataTypeArlStruct(
+        const std::string   &name,
+        int32_t             num_builtin=0);
 
 	virtual ~DataTypeArlStruct();
 
@@ -56,7 +58,9 @@ public:
 
 	virtual vsc::dm::ITypeField *getField(int32_t idx);
 
-    virtual int32_t getNumBuiltin() const { return 0; }
+    virtual int32_t getNumBuiltin() const { 
+        return m_num_builtin; 
+    }
 
 	virtual void addConstraint(
         vsc::dm::ITypeConstraint    *c,
@@ -98,6 +102,7 @@ public:
 
 public:
 	std::string								        m_name;
+    int32_t                                         m_num_builtin;
     int32_t                                         m_bytesz;
 	std::vector<vsc::dm::ITypeFieldUP>		 	    m_fields;
 	std::vector<vsc::dm::ITypeConstraintUP>		    m_constraints;

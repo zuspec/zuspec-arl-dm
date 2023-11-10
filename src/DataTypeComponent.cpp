@@ -19,6 +19,7 @@ DataTypeComponent::DataTypeComponent(
 	IContext			*ctxt,
 	const std::string 	&name) : DataTypeArlStruct(name) {
 
+#ifdef UNDEFINED
 	// Could back-patch this once we know the number of 
 	// instances
 	vsc::dm::IDataTypeInt *ui32 = ctxt->findDataTypeInt(false, 32);
@@ -35,6 +36,7 @@ DataTypeComponent::DataTypeComponent(
 		vsc::dm::TypeFieldAttr::Rand,
         vsc::dm::ValRef());
 	addField(m_comp_id);
+#endif
 }
 
 DataTypeComponent::~DataTypeComponent() {
@@ -69,14 +71,15 @@ vsc::dm::IModelField *DataTypeComponent::mkRootField(
 		ret = ctxt_a->mkModelFieldRefRoot(this, name);
 	} else {
         vsc::dm::ValRefStruct val_s(ctxt->ctxt()->mkValRefStruct(this));
-		ret = ctxt_a->mkModelFieldComponentRoot(this, name);
+		ret = ctxt_a->mkModelFieldComponentRoot(this, name, val_s);
 
 		// Need to build sub-fields and constraints
 	    // Push the new field just for completeness
 	    ctxt->pushTopDownScope(ret);
 	    for (uint32_t i=0; i<getFields().size(); i++) {
-            vsc::dm::ValRef val_f(val_s.getFieldRef(i));
-	        vsc::dm::IModelField *field = getField(i)->mkModelField(ctxt, val_f);
+	        vsc::dm::IModelField *field = getField(i)->mkModelField(
+                ctxt, 
+                val_s.getFieldRef(i));
 	        if (!field) {
 	            fprintf(stdout, "Error: Construction of field %s failed\n",
                     getField(i)->name().c_str());

@@ -1,7 +1,7 @@
 /**
- * ITypeFieldReg.h
+ * ValRefRegGroup.h
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -19,29 +19,14 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/ITypeField.h"
-
-namespace zsp {
-namespace arl {
-namespace dm {
 
 
 
-class ITypeFieldReg : public virtual vsc::dm::ITypeField {
+class ValRefRegGroup {
 public:
 
-    virtual ~ITypeFieldReg() { }
-
-    virtual int64_t getOffset() = 0;
-
-    virtual void setOffset(int64_t off) = 0;
-
-    virtual int32_t getWidth() const = 0;
+    virtual ~ValRefRegGroup() { }
 
 };
-
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
 
 

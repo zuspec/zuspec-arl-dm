@@ -28,6 +28,8 @@ namespace dm {
 
 enum class ExecKindT {
     Body,
+    InitDown,
+    InitUp,
     PreSolve,
     PostSolve,
 };

@@ -36,9 +36,10 @@ namespace arl {
 namespace dm {
 
 ModelFieldComponentRoot::ModelFieldComponentRoot(
-    IContext            *ctxt,
-    const std::string   &name,
-    IDataTypeComponent  *type) : ModelFieldComponent(name, type), m_ctxt(ctxt) {
+    IContext                *ctxt,
+    const std::string       &name,
+    IDataTypeComponent      *type,
+    const vsc::dm::ValRef   &val) : ModelFieldComponent(name, type, val), m_ctxt(ctxt) {
     m_init_pass = 0;
 
     DEBUG_INIT("ModelFieldComponentRoot", ctxt->getDebugMgr());

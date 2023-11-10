@@ -41,7 +41,6 @@ public:
 
     virtual ExecKindT getKind() const = 0;
 
-
 };
 
 } /* namespace dm */

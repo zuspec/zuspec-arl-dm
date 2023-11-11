@@ -21,7 +21,7 @@ namespace dm {
 DataTypeArlStruct::DataTypeArlStruct(
     const std::string   &name,
     int32_t             num_builtin) : 
-    m_name(name), m_num_builtin(num_builtin), m_bytesz(0) {
+    m_name(name), m_num_builtin(num_builtin) {
 	// TODO Auto-generated constructor stub
 
 }

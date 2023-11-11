@@ -11,6 +11,7 @@
 #include <vector>
 #include "vsc/dm/impl/ValRef.h"
 #include "zsp/arl/dm/IDataTypeArlStruct.h"
+#include "DataTypeArl.h"
 
 namespace vsc {
 namespace dm {
@@ -26,7 +27,9 @@ namespace arl {
 namespace dm {
 
 
-class DataTypeArlStruct : public virtual IDataTypeArlStruct {
+class DataTypeArlStruct : 
+    public virtual IDataTypeArlStruct,
+    public virtual DataTypeArl {
 public:
 	DataTypeArlStruct(
         const std::string   &name,
@@ -45,10 +48,6 @@ public:
 	virtual const std::string &name() const {
 		return m_name;
 	}
-
-    virtual int32_t getByteSize() const override {
-        return m_bytesz;
-    }
 
 	virtual void addField(
         vsc::dm::ITypeField     *f,
@@ -82,14 +81,6 @@ public:
 
     virtual const std::vector<IDataTypeFunctionUP> &getFunctions() override;
 
-    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
-        m_associated_data = vsc::dm::IAssociatedDataUP(data);
-    }
-
-    virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
-        return m_associated_data.get();
-    }
-
 	virtual vsc::dm::IModelField *mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
@@ -103,15 +94,12 @@ public:
 public:
 	std::string								        m_name;
     int32_t                                         m_num_builtin;
-    int32_t                                         m_bytesz;
 	std::vector<vsc::dm::ITypeFieldUP>		 	    m_fields;
 	std::vector<vsc::dm::ITypeConstraintUP>		    m_constraints;
 	vsc::dm::IModelStructCreateHookUP			    m_create_hook;
     static std::vector<ITypeExecUP>                 m_empty_exec_l;
     std::map<ExecKindT, std::vector<ITypeExecUP>>   m_exec_m;
     std::vector<IDataTypeFunctionUP>                m_functions;
-    vsc::dm::IAssociatedDataUP                      m_associated_data;
-
 
 };
 

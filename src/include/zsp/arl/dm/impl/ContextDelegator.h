@@ -37,6 +37,18 @@ public:
 
     virtual ~ContextDelegator() { }
 
+    virtual vsc::dm::IValOps *getValOps(DataTypeKind kind) override {
+        return ctxt()->getValOps(kind);
+    }
+
+    virtual void setValOps(DataTypeKind kind, vsc::dm::IValOps *ops, bool owned=true) {
+        ctxt()->setValOps(kind, ops, owned);
+    }
+
+    virtual vsc::dm::IDataType *getDataTypeCore(DataTypeCoreE t) override {
+        return ctxt()->getDataTypeCore(t);
+    }
+
 	virtual IDataTypeAction *findDataTypeAction(const std::string &name) override { 
         return ctxt()->findDataTypeAction(name);
     }

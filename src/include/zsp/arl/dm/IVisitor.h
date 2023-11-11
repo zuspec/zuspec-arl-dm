@@ -26,6 +26,7 @@ class IDataTypeFunctionImport;
 class IDataTypeFunction;
 class IDataTypeFunctionParamDecl;
 class IDataTypePackedStruct;
+class IDataTypePyObj;
 class IDataTypeResource;
 class IDataTypeArlStruct;
 class IModelActivityBind;
@@ -100,6 +101,8 @@ public:
 	virtual void visitDataTypeFunctionParamDecl(IDataTypeFunctionParamDecl *t) = 0;
 
 	virtual void visitDataTypePackedStruct(IDataTypePackedStruct *t) = 0;
+
+    virtual void visitDataTypePyObj(IDataTypePyObj *t) = 0;
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) = 0;
 

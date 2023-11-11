@@ -18,6 +18,7 @@
 #include "DataTypeFunctionImport.h"
 #include "DataTypeFunctionParamDecl.h"
 #include "DataTypePackedStruct.h"
+#include "DataTypePyObj.h"
 #include "DataTypeResource.h"
 #include "ModelActivityIterator.h"
 #include "ModelActivityParallel.h"
@@ -73,11 +74,24 @@ namespace dm {
 
 
 Context::Context(vsc::dm::IContext *ctxt) : vsc::dm::ContextDelegator(ctxt) {
+    m_core_types[(int)DataTypeCoreE::PyObj] = new DataTypePyObj(this);
 
 }
 
 Context::~Context() {
 
+}
+
+vsc::dm::IValOps *Context::getValOps(DataTypeKind kind) {
+    return m_ops[(int)kind].get();
+}
+
+void Context::setValOps(DataTypeKind kind, vsc::dm::IValOps *ops, bool owned) {
+    m_ops[(int)kind] = vsc::dm::UP<vsc::dm::IValOps>(ops, owned);
+}
+
+vsc::dm::IDataType *Context::getDataTypeCore(DataTypeCoreE t) {
+    return m_core_types[(int)t].get();
 }
 
 IDataTypeAction *Context::findDataTypeAction(const std::string &name) {

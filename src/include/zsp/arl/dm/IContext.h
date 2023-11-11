@@ -61,6 +61,16 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
+enum class DataTypeKind {
+    PyObj,
+    NumKinds
+};
+
+enum class DataTypeCoreE {
+    PyObj,
+    NumKinds
+};
+
 
 class IContext;
 using IContextUP=vsc::dm::UP<IContext>;
@@ -68,6 +78,12 @@ class IContext : public virtual vsc::dm::IContext {
 public:
 
 	virtual ~IContext() { }
+
+    virtual vsc::dm::IValOps *getValOps(DataTypeKind kind) = 0;
+
+    virtual void setValOps(DataTypeKind kind, vsc::dm::IValOps *ops, bool owned=true) = 0;
+
+    virtual vsc::dm::IDataType *getDataTypeCore(DataTypeCoreE t) = 0;
 
 	virtual IDataTypeAction *findDataTypeAction(const std::string &name) = 0;
 

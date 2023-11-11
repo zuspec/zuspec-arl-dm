@@ -141,6 +141,10 @@ public:
         m_this->visitDataTypeStruct(t);
     }
 
+    virtual void visitDataTypePyObj(IDataTypePyObj *t) override {
+        // 
+    }
+
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {
 		dynamic_cast<IVisitor *>(m_this)->visitDataTypeFlowObj(t);
 	}

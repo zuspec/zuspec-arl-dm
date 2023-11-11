@@ -21,6 +21,12 @@ public:
 
 	virtual ~Context();
 
+    virtual vsc::dm::IValOps *getValOps(DataTypeKind kind) override;
+
+    virtual void setValOps(DataTypeKind kind, vsc::dm::IValOps *ops, bool owned=true) override;
+
+    virtual vsc::dm::IDataType *getDataTypeCore(DataTypeCoreE t) override;
+
 	virtual IDataTypeAction *findDataTypeAction(const std::string &) override;
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override;
@@ -273,6 +279,8 @@ private:
 	using FlowObjMapT=std::unordered_map<std::string,IDataTypeFlowObjUP>;
 
 private:
+    vsc::dm::UP<vsc::dm::IValOps>                               m_ops[(int)DataTypeKind::NumKinds];
+    vsc::dm::UP<vsc::dm::IDataType>                             m_core_types[(int)DataTypeCoreE::NumKinds];
 	std::unordered_map<std::string, IDataTypeAction *>			m_action_type_m;
     std::vector<IDataTypeActionUP>                              m_action_type_l;
 	std::unordered_map<std::string, IDataTypeComponent *>		m_component_type_m;

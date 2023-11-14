@@ -261,6 +261,25 @@ public:
         return ctxt()->mkPoolBindDirective(kind, pool, target);
     }
 
+    virtual IPyImport *findPyImport(
+            const std::string           &path,
+            bool                        create=true) override {
+        return ctxt()->findPyImport(path, create);
+    }
+
+    virtual const std::vector<IPyImportUP> &getPyImports() const override {
+        return ctxt()->getPyImports();
+    }
+
+    virtual IPyImport *mkPyImport(
+            const std::string           &path) override {
+        return ctxt()->mkPyImport(path);
+    }
+
+    virtual bool addPyImport(IPyImport *imp) override {
+        return ctxt()->addPyImport(imp);
+    }
+
     virtual ITypeExecGroup *mkTypeExecGroup(
             ExecKindT           kind,
             ITypeExecGroup      *super) override {
@@ -284,6 +303,26 @@ public:
             IDataTypeFunction                           *target,
             const std::vector<vsc::dm::ITypeExpr *>     &params) { 
         return ctxt()->mkTypeExprMethodCallStatic(target, params);
+    }
+
+    virtual ITypeExprPythonFieldRef *mkTypeExprPythonFieldRef(
+        vsc::dm::ITypeExpr      *base,
+        bool                    owned,
+        const std::string       &name) override {
+        return ctxt()->mkTypeExprPythonFieldRef(base, owned, name);
+    }
+
+    virtual ITypeExprPythonMethodCall *mkTypeExprPythonMethodCall(
+        vsc::dm::ITypeExpr                          *base,
+        bool                                        owned,
+        const std::string                           &name,
+        const std::vector<vsc::dm::ITypeExpr *>     &params) override {
+        return ctxt()->mkTypeExprPythonMethodCall(base, owned, name, params);
+    }
+
+    virtual ITypeExprPythonModuleRef *mkTypeExprPythonModuleRef(
+        IPyImport                                   *imp) override {
+        return ctxt()->mkTypeExprPythonModuleRef(imp);
     }
 
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
@@ -429,8 +468,12 @@ public:
 
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*body) { 
+			ITypeProcStmt		*body) override { 
         return ctxt()->mkTypeProcStmtWhile(cond, body);
+    }
+
+    virtual ValRefPyObj mkValPyObj(pyapi::PyEvalObj *obj) override {
+        return ctxt()->mkValPyObj(obj);
     }
 
 protected:

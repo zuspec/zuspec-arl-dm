@@ -4,7 +4,7 @@
  *  Created on: Apr 16, 2022
  *      Author: mballance
  */
-
+#include "vsc/dm/impl/ValRef.h"
 #include "Context.h"
 #include "DataTypeAction.h"
 #include "DataTypeActivityParallel.h"
@@ -39,6 +39,7 @@
 #include "ModelFieldPool.h"
 #include "ModelFieldRegGroup.h"
 #include "PoolBindDirective.h"
+#include "PyImport.h"
 #include "TaskBuildModelAction.h"
 #include "TaskBuildModelComponent.h"
 #include "TaskBuildModelField.h"
@@ -46,6 +47,9 @@
 #include "TypeExprMethodCallStatic.h"
 #include "TypeExecGroup.h"
 #include "TypeExecProc.h"
+#include "TypeExprPythonFieldRef.h"
+#include "TypeExprPythonMethodCall.h"
+#include "TypeExprPythonModuleRef.h"
 #include "TypeFieldActivity.h"
 #include "TypeFieldClaim.h"
 #include "TypeFieldExecutor.h"
@@ -374,6 +378,42 @@ IModelFieldRegGroup *Context::mkModelFieldRegGroup(
         type->getDataType());
 }
 
+IPyImport *Context::findPyImport(
+            const std::string           &path,
+            bool                        create) {
+    std::unordered_map<std::string,IPyImport *>::iterator it;
+    IPyImport *ret = 0;
+
+    if ((it=m_pyimport_m.find(path)) != m_pyimport_m.end()) {
+        ret = it->second;
+    } else if (create) {
+        ret = new PyImport(path);
+        m_pyimport_m.insert({path, ret});
+        m_pyimport_l.push_back(IPyImportUP(ret));
+    }
+    return ret;
+}
+
+const std::vector<IPyImportUP> &Context::getPyImports() const {
+    return m_pyimport_l;
+}
+
+IPyImport *Context::mkPyImport(
+            const std::string           &path) {
+    return new PyImport(path);
+}
+
+bool Context::addPyImport(IPyImport *imp) {
+    std::unordered_map<std::string,IPyImport *>::iterator it;
+    if ((it=m_pyimport_m.find(imp->path())) == m_pyimport_m.end()) {
+        m_pyimport_m.insert({imp->path(), imp});
+        m_pyimport_l.push_back(IPyImportUP(imp));
+        return true;
+    } else {
+        return false;
+    }
+}
+
 ITypeExecGroup *Context::mkTypeExecGroup(
         ExecKindT           kind,
         ITypeExecGroup      *super) {
@@ -397,6 +437,26 @@ ITypeExprMethodCallStatic *Context::mkTypeExprMethodCallStatic(
             IDataTypeFunction                           *target,
             const std::vector<vsc::dm::ITypeExpr *>     &params) {
     return new TypeExprMethodCallStatic(target, params);
+}
+
+ITypeExprPythonFieldRef *Context::mkTypeExprPythonFieldRef(
+        vsc::dm::ITypeExpr      *base,
+        bool                    owned,
+        const std::string       &name) {
+    return new TypeExprPythonFieldRef(base, owned, name);
+}
+
+ITypeExprPythonMethodCall *Context::mkTypeExprPythonMethodCall(
+        vsc::dm::ITypeExpr                          *base,
+        bool                                        owned,
+        const std::string                           &name,
+        const std::vector<vsc::dm::ITypeExpr *>     &params) {
+    return new TypeExprPythonMethodCall(base, owned, name, params);
+}
+
+ITypeExprPythonModuleRef *Context::mkTypeExprPythonModuleRef(
+        IPyImport                                   *imp) {
+    return new TypeExprPythonModuleRef(imp);
 }
 
 ITypeFieldActivity *Context::mkTypeFieldActivity(
@@ -550,6 +610,14 @@ ITypeProcStmtWhile *Context::mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) { 
 
+}
+
+ValRefPyObj Context::mkValPyObj(pyapi::PyEvalObj *obj) {
+    return ValRefPyObj(vsc::dm::ValRef(
+        reinterpret_cast<uintptr_t>(obj),
+        m_core_types[(int)DataTypeCoreE::PyObj].get(),
+        vsc::dm::ValRef::Flags::None
+    ));
 }
 
 }

@@ -41,6 +41,9 @@
 #include "zsp/arl/dm/IVisitor.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
 #include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
+#include "zsp/arl/dm/ITypeExprPythonFieldRef.h"
+#include "zsp/arl/dm/ITypeExprPythonMethodCall.h"
+#include "zsp/arl/dm/ITypeExprPythonModuleRef.h"
 #include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeFieldActivity.h"
 #include "zsp/arl/dm/ITypeFieldClaim.h"
@@ -250,6 +253,17 @@ public:
 	virtual void visitTypeExecProc(ITypeExecProc *e) override {
         dynamic_cast<IVisitor *>(m_this)->visitTypeExec(e);
         e->getBody()->accept(m_this);
+    }
+
+    virtual void visitTypeExprPythonFieldRef(ITypeExprPythonFieldRef *t) override {
+        t->getBase()->accept(m_this);
+    }
+
+    virtual void visitTypeExprPythonMethodCall(ITypeExprPythonMethodCall *t) override {
+    }
+
+    virtual void visitTypeExprPythonModuleRef(ITypeExprPythonModuleRef *t) override {
+        //
     }
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {

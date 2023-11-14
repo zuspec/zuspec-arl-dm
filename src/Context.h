@@ -155,6 +155,17 @@ public:
 			vsc::dm::ITypeExprFieldRef	*pool,
 			vsc::dm::ITypeExprFieldRef	*target) override;
 
+    virtual IPyImport *findPyImport(
+            const std::string           &path,
+            bool                        create=true) override;
+
+    virtual const std::vector<IPyImportUP> &getPyImports() const override;
+
+    virtual IPyImport *mkPyImport(
+            const std::string           &path) override;
+
+    virtual bool addPyImport(IPyImport *imp) override;
+
     virtual ITypeExecGroup *mkTypeExecGroup(
             ExecKindT           kind,
             ITypeExecGroup      *super) override;
@@ -171,6 +182,20 @@ public:
     virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallStatic(
             IDataTypeFunction                           *target,
             const std::vector<vsc::dm::ITypeExpr *>     &params) override;
+
+    virtual ITypeExprPythonFieldRef *mkTypeExprPythonFieldRef(
+        vsc::dm::ITypeExpr      *base,
+        bool                    owned,
+        const std::string       &name) override;
+
+    virtual ITypeExprPythonMethodCall *mkTypeExprPythonMethodCall(
+        vsc::dm::ITypeExpr                          *base,
+        bool                                        owned,
+        const std::string                           &name,
+        const std::vector<vsc::dm::ITypeExpr *>     &params) override;
+
+    virtual ITypeExprPythonModuleRef *mkTypeExprPythonModuleRef(
+        IPyImport                                   *imp) override;
 
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
@@ -275,6 +300,8 @@ public:
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) override;
 
+    virtual ValRefPyObj mkValPyObj(pyapi::PyEvalObj *obj) override;
+
 private:
 	using FlowObjMapT=std::unordered_map<std::string,IDataTypeFlowObjUP>;
 
@@ -288,6 +315,8 @@ private:
 	std::unordered_map<std::string, IDataTypeFunctionUP>		m_function_type_m;
     std::vector<IDataTypeFunction *>                            m_function_type_l;
 	std::unordered_map<FlowObjKindE, FlowObjMapT>				m_flowobj_kind_m;
+    std::unordered_map<std::string, IPyImport *>                m_pyimport_m;
+    std::vector<IPyImportUP>                                    m_pyimport_l;
 
 };
 

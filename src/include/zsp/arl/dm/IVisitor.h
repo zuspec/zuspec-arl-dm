@@ -49,6 +49,9 @@ class ITypeExprMethodCallContext;
 class ITypeExprMethodCallStatic;
 class ITypeExec;
 class ITypeExecProc;
+class ITypeExprPythonFieldRef;
+class ITypeExprPythonMethodCall;
+class ITypeExprPythonModuleRef;
 class ITypeFieldActivity;
 class ITypeFieldClaim;
 class ITypeFieldExecutor;
@@ -145,6 +148,12 @@ public:
 	virtual void visitTypeExec(ITypeExec *e) = 0;
 
 	virtual void visitTypeExecProc(ITypeExecProc *e) = 0;
+
+    virtual void visitTypeExprPythonFieldRef(ITypeExprPythonFieldRef *t) = 0;
+
+    virtual void visitTypeExprPythonMethodCall(ITypeExprPythonMethodCall *t) = 0;
+
+    virtual void visitTypeExprPythonModuleRef(ITypeExprPythonModuleRef *t) = 0;
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) = 0;
 

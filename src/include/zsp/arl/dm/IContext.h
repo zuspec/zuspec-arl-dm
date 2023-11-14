@@ -30,10 +30,14 @@
 #include "zsp/arl/dm/IModelFieldExecutor.h"
 #include "zsp/arl/dm/IModelFieldExecutorClaim.h"
 #include "zsp/arl/dm/IModelFieldRegGroup.h"
+#include "zsp/arl/dm/IPyImport.h"
 #include "zsp/arl/dm/ITypeExecGroup.h"
 #include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
 #include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
+#include "zsp/arl/dm/ITypeExprPythonFieldRef.h"
+#include "zsp/arl/dm/ITypeExprPythonMethodCall.h"
+#include "zsp/arl/dm/ITypeExprPythonModuleRef.h"
 #include "zsp/arl/dm/ITypeFieldAddrClaim.h"
 #include "zsp/arl/dm/ITypeFieldAddrClaimTransparent.h"
 #include "zsp/arl/dm/ITypeFieldClaim.h"
@@ -56,6 +60,7 @@
 #include "zsp/arl/dm/ITypeProcStmtScope.h"
 #include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
 #include "zsp/arl/dm/ITypeProcStmtWhile.h"
+#include "zsp/arl/dm/impl/ValRefPyObj.h"
 
 namespace zsp {
 namespace arl {
@@ -220,6 +225,17 @@ public:
 			vsc::dm::ITypeExprFieldRef		*pool,
 			vsc::dm::ITypeExprFieldRef		*target) = 0;
 
+    virtual IPyImport *findPyImport(
+            const std::string           &path,
+            bool                        create=true) = 0;
+
+    virtual const std::vector<IPyImportUP> &getPyImports() const = 0;
+
+    virtual IPyImport *mkPyImport(
+            const std::string           &path) = 0;
+
+    virtual bool addPyImport(IPyImport *imp) = 0;
+
     virtual ITypeExecGroup *mkTypeExecGroup(
             ExecKindT               kind,
             ITypeExecGroup          *super) = 0;
@@ -236,6 +252,20 @@ public:
     virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallStatic(
             IDataTypeFunction                           *target,
             const std::vector<vsc::dm::ITypeExpr *>     &params) = 0;
+
+    virtual ITypeExprPythonFieldRef *mkTypeExprPythonFieldRef(
+        vsc::dm::ITypeExpr      *base,
+        bool                    owned,
+        const std::string       &name) = 0;
+
+    virtual ITypeExprPythonMethodCall *mkTypeExprPythonMethodCall(
+        vsc::dm::ITypeExpr                          *base,
+        bool                                        owned,
+        const std::string                           &name,
+        const std::vector<vsc::dm::ITypeExpr *>     &params) = 0;
+
+    virtual ITypeExprPythonModuleRef *mkTypeExprPythonModuleRef(
+        IPyImport                                   *imp) = 0;
 
 	virtual ITypeFieldActivity *mkTypeFieldActivity(
 			const std::string		&name,
@@ -339,6 +369,14 @@ public:
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) = 0;
+
+    /**
+     * @brief Creates a new Val to hold a Python object. 
+     * 
+     * @param obj 
+     * @return ValRefPyObj 
+     */
+    virtual ValRefPyObj mkValPyObj(pyapi::PyEvalObj *obj) = 0;
 
 };
 

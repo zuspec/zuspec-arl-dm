@@ -94,7 +94,7 @@ void Context::setValOps(DataTypeKind kind, vsc::dm::IValOps *ops, bool owned) {
     m_ops[(int)kind] = vsc::dm::UP<vsc::dm::IValOps>(ops, owned);
 }
 
-vsc::dm::IDataType *Context::getDataTypeCore(DataTypeCoreE t) {
+vsc::dm::IDataType *Context::getDataTypeCoreArl(DataTypeCoreE t) {
     return m_core_types[(int)t].get();
 }
 

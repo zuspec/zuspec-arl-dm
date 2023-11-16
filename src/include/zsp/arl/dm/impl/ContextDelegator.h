@@ -45,8 +45,8 @@ public:
         ctxt()->setValOps(kind, ops, owned);
     }
 
-    virtual vsc::dm::IDataType *getDataTypeCore(DataTypeCoreE t) override {
-        return ctxt()->getDataTypeCore(t);
+    virtual vsc::dm::IDataType *getDataTypeCoreArl(DataTypeCoreE t) override {
+        return ctxt()->getDataTypeCoreArl(t);
     }
 
 	virtual IDataTypeAction *findDataTypeAction(const std::string &name) override { 

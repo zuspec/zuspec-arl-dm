@@ -25,7 +25,7 @@ public:
 
     virtual void setValOps(DataTypeKind kind, vsc::dm::IValOps *ops, bool owned=true) override;
 
-    virtual vsc::dm::IDataType *getDataTypeCore(DataTypeCoreE t) override;
+    virtual vsc::dm::IDataType *getDataTypeCoreArl(DataTypeCoreE t) override;
 
 	virtual IDataTypeAction *findDataTypeAction(const std::string &) override;
 

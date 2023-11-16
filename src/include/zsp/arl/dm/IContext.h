@@ -88,7 +88,7 @@ public:
 
     virtual void setValOps(DataTypeKind kind, vsc::dm::IValOps *ops, bool owned=true) = 0;
 
-    virtual vsc::dm::IDataType *getDataTypeCore(DataTypeCoreE t) = 0;
+    virtual vsc::dm::IDataType *getDataTypeCoreArl(DataTypeCoreE t) = 0;
 
 	virtual IDataTypeAction *findDataTypeAction(const std::string &name) = 0;
 

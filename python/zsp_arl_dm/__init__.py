@@ -1,6 +1,7 @@
 
 import os
 from .val_ref_to_py_val import ValRefToPyVal
+from .py_val_to_val_ref import PyValToValRef
 
 def get_deps():
     return []

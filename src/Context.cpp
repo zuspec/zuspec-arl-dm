@@ -47,6 +47,7 @@
 #include "TypeExprMethodCallStatic.h"
 #include "TypeExecGroup.h"
 #include "TypeExecProc.h"
+#include "TypeExprPyImportRef.h"
 #include "TypeExprPythonFieldRef.h"
 #include "TypeExprPythonMethodCall.h"
 #include "TypeExprPythonModuleRef.h"
@@ -437,6 +438,11 @@ ITypeExprMethodCallStatic *Context::mkTypeExprMethodCallStatic(
             IDataTypeFunction                           *target,
             const std::vector<vsc::dm::ITypeExpr *>     &params) {
     return new TypeExprMethodCallStatic(target, params);
+}
+
+ITypeExprPyImportRef *Context::mkTypeExprPyImportRef(
+            IPyImport                                   *imp) {
+    return new TypeExprPyImportRef(imp);
 }
 
 ITypeExprPythonFieldRef *Context::mkTypeExprPythonFieldRef(

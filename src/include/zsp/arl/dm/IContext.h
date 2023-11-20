@@ -35,6 +35,7 @@
 #include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
 #include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
+#include "zsp/arl/dm/ITypeExprPyImportRef.h"
 #include "zsp/arl/dm/ITypeExprPythonFieldRef.h"
 #include "zsp/arl/dm/ITypeExprPythonMethodCall.h"
 #include "zsp/arl/dm/ITypeExprPythonModuleRef.h"
@@ -252,6 +253,9 @@ public:
     virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallStatic(
             IDataTypeFunction                           *target,
             const std::vector<vsc::dm::ITypeExpr *>     &params) = 0;
+
+    virtual ITypeExprPyImportRef *mkTypeExprPyImportRef(
+            IPyImport                                   *imp) = 0;
 
     virtual ITypeExprPythonFieldRef *mkTypeExprPythonFieldRef(
         vsc::dm::ITypeExpr      *base,

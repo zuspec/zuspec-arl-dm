@@ -183,6 +183,9 @@ public:
             IDataTypeFunction                           *target,
             const std::vector<vsc::dm::ITypeExpr *>     &params) override;
 
+    virtual ITypeExprPyImportRef *mkTypeExprPyImportRef(
+            IPyImport                                   *imp) override;
+
     virtual ITypeExprPythonFieldRef *mkTypeExprPythonFieldRef(
         vsc::dm::ITypeExpr      *base,
         bool                    owned,

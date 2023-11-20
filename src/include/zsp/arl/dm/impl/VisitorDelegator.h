@@ -199,6 +199,10 @@ public:
         delegate(&arl::dm::IVisitor::visitTypeExprMethodCallStatic, e);
     }
 
+    virtual void visitTypeExprPyImportRef(ITypeExprPyImportRef *t) override { 
+        delegate(&arl::dm::IVisitor::visitTypeExprPyImportRef, t);
+    }
+
 	virtual void visitTypeExec(ITypeExec *e) override {
         delegate(&arl::dm::IVisitor::visitTypeExec, e);
     }

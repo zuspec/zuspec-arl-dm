@@ -41,6 +41,7 @@
 #include "zsp/arl/dm/IVisitor.h"
 #include "zsp/arl/dm/ITypeExprMethodCallContext.h"
 #include "zsp/arl/dm/ITypeExprMethodCallStatic.h"
+#include "zsp/arl/dm/ITypeExprPyImportRef.h"
 #include "zsp/arl/dm/ITypeExprPythonFieldRef.h"
 #include "zsp/arl/dm/ITypeExprPythonMethodCall.h"
 #include "zsp/arl/dm/ITypeExprPythonModuleRef.h"
@@ -254,6 +255,8 @@ public:
         dynamic_cast<IVisitor *>(m_this)->visitTypeExec(e);
         e->getBody()->accept(m_this);
     }
+
+    virtual void visitTypeExprPyImportRef(ITypeExprPyImportRef *t) override { }
 
     virtual void visitTypeExprPythonFieldRef(ITypeExprPythonFieldRef *t) override {
         t->getBase()->accept(m_this);

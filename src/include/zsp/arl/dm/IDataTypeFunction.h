@@ -39,7 +39,8 @@ enum class DataTypeFunctionFlags {
     NoFlags = 0,
     Solve   = (1 << 0),
     Target  = (1 << 1),
-    Core    = (1 << 2)
+    Core    = (1 << 2),
+    Import  = (1 << 3)
 };
 
 static inline DataTypeFunctionFlags operator | (const DataTypeFunctionFlags lhs, const DataTypeFunctionFlags rhs) {
@@ -68,6 +69,10 @@ public:
 
     virtual void addParameter(IDataTypeFunctionParamDecl *p) = 0;
 
+    // Returns the data type of the parameters frame
+    virtual vsc::dm::IDataTypeStruct *getParametersType() const = 0;
+
+    // Appears to not be used
     virtual ITypeProcStmtScope *getParamScope() const = 0;
 
     virtual vsc::dm::IDataTypeStruct *getContext() const = 0;

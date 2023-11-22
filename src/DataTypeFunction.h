@@ -53,6 +53,10 @@ public:
 
     virtual void addParameter(IDataTypeFunctionParamDecl *p) override;
 
+    virtual vsc::dm::IDataTypeStruct *getParametersType() const override {
+        return m_parameters_t.get();
+    }
+
     virtual ITypeProcStmtScope *getParamScope() const override {
         return m_param_scope.get();
     }
@@ -98,10 +102,12 @@ public:
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
+    IContext                                        *m_ctxt;
     std::string                                     m_name;
     vsc::dm::IDataType                              *m_ret_type;
     vsc::dm::IDataTypeUP                            m_ret_type_u;
     std::vector<IDataTypeFunctionParamDecl *>       m_parameters;
+    vsc::dm::IDataTypeStructUP                      m_parameters_t;
     vsc::dm::IDataTypeStruct                        *m_context;
     bool                                            m_is_export;
     DataTypeFunctionFlags                           m_flags;

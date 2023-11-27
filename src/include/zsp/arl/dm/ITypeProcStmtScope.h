@@ -42,6 +42,8 @@ public:
 
     virtual const std::vector<ITypeProcStmtUP> &getStatements() const = 0;
 
+    virtual vsc::dm::IDataTypeStruct *getLocalsT() const = 0;
+
 };
 
 }

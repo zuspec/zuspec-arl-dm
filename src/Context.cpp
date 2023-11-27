@@ -596,12 +596,12 @@ ITypeProcStmtReturn *Context::mkTypeProcStmtReturn(
 }
 
 ITypeProcStmtScope *Context::mkTypeProcStmtScope() { 
-	return new TypeProcStmtScope();
+	return new TypeProcStmtScope(this);
 }
 
 ITypeProcStmtScope *Context::mkTypeProcStmtScope(
     const std::vector<ITypeProcStmt *> &stmts) { 
-	return new TypeProcStmtScope(stmts);
+	return new TypeProcStmtScope(this, stmts);
 }
 
 ITypeProcStmtVarDecl *Context::mkTypeProcStmtVarDecl(

@@ -29,11 +29,13 @@ namespace dm {
 
 
 
-TypeProcStmtScope::TypeProcStmtScope() {
+TypeProcStmtScope::TypeProcStmtScope(IContext *ctxt) : m_ctxt(ctxt) {
 
 }
 
-TypeProcStmtScope::TypeProcStmtScope(const std::vector<ITypeProcStmt *> &stmts) {
+TypeProcStmtScope::TypeProcStmtScope(
+    IContext                            *ctxt,
+    const std::vector<ITypeProcStmt *>  &stmts) : m_ctxt(ctxt) {
     for (std::vector<ITypeProcStmt *>::const_iterator
         it=stmts.begin();
         it!=stmts.end(); it++) {
@@ -53,6 +55,17 @@ int32_t TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
     m_statements.push_back(ITypeProcStmtUP(v));
     int32_t ret = m_variables.size();
     m_variables.push_back(ITypeProcStmtVarDeclUP(v, false));
+    if (!m_locals_t) {
+        m_locals_t = vsc::dm::IDataTypeStructUP(m_ctxt->mkDataTypeStruct(""));
+    }
+    m_locals_t->addField(m_ctxt->mkTypeFieldPhy(
+        v->name(),
+        v->getDataType(),
+        false,
+        vsc::dm::TypeFieldAttr::NoAttr,
+        vsc::dm::ValRef() // ->getInit()
+    ));
+
     return ret;
 }
 

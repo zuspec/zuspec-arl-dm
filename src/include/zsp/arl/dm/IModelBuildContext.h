@@ -14,7 +14,8 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
-
+class IModelBuildContext;
+using IModelBuildContextUP=vsc::dm::UP<IModelBuildContext>;
 class IModelBuildContext : public virtual vsc::dm::IModelBuildContext {
 public:
 

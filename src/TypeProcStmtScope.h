@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include "zsp/arl/dm/IContext.h"
 #include "zsp/arl/dm/ITypeProcStmtScope.h"
 
 namespace zsp {
@@ -30,9 +31,13 @@ namespace dm {
 
 class TypeProcStmtScope : public virtual ITypeProcStmtScope {
 public:
-    TypeProcStmtScope();
+    TypeProcStmtScope(
+        IContext                            *ctxt
+    );
 
-    TypeProcStmtScope(const std::vector<ITypeProcStmt *> &stmts);
+    TypeProcStmtScope(
+        IContext                            *ctxt,
+        const std::vector<ITypeProcStmt *>  &stmts);
 
     virtual ~TypeProcStmtScope();
 
@@ -52,11 +57,17 @@ public:
         return m_variables;
     }
 
+    virtual vsc::dm::IDataTypeStruct *getLocalsT() const override {
+        return m_locals_t.get();
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
+    IContext                                    *m_ctxt;
     std::vector<ITypeProcStmtUP>                m_statements;
     std::vector<ITypeProcStmtVarDeclUP>         m_variables;
+    vsc::dm::IDataTypeStructUP                  m_locals_t;
 };
 
 }

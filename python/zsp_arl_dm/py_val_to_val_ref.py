@@ -28,7 +28,7 @@ class PyValToValRef(object):
     def toValRef(self, v):
         ret = None
         if type(v) == int:
-            is_signed = v < 0
+            is_signed = (v < 0)
             if v > 0xFFFFFFFF:
                 width = 64
             elif v > 0xFFFF:

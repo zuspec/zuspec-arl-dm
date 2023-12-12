@@ -32,9 +32,9 @@ public:
 
     virtual ~ITypeFieldReg() { }
 
-    virtual int64_t getOffset() = 0;
+    virtual int64_t getAddrOffset() = 0;
 
-    virtual void setOffset(int64_t off) = 0;
+    virtual void setAddrOffset(int64_t off) = 0;
 
     virtual int32_t getWidth() const = 0;
 

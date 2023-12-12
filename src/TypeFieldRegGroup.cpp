@@ -32,8 +32,7 @@ namespace dm {
 TypeFieldRegGroup::TypeFieldRegGroup(
     const std::string       &name,
     vsc::dm::IDataType      *type,
-    bool                    owned) : 
-        TypeField(name, type, owned, vsc::dm::TypeFieldAttr::NoAttr) {
+    bool                    owned) : TypeFieldReg(name, type, owned) {
 
 }
 

@@ -21,7 +21,7 @@
 #pragma once
 #include "vsc/dm/IVisitor.h"
 #include "zsp/arl/dm/ITypeFieldRegGroup.h"
-#include "TypeField.h"
+#include "TypeFieldReg.h"
 
 namespace zsp {
 namespace arl {
@@ -31,7 +31,7 @@ namespace dm {
 
 class TypeFieldRegGroup :
     public virtual ITypeFieldRegGroup,
-    public virtual TypeField {
+    public TypeFieldReg {
 public:
     TypeFieldRegGroup(
         const std::string       &name,
@@ -49,7 +49,6 @@ public:
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    int64_t                     m_offset;
 
 
 };

@@ -30,7 +30,7 @@ namespace dm {
 
 class TypeFieldReg : 
     public virtual ITypeFieldReg,
-    public virtual TypeField {
+    public TypeField {
 public:
     TypeFieldReg(
         const std::string   &name,
@@ -38,11 +38,11 @@ public:
         bool                owned
     );
 
-    virtual int64_t getOffset() override {
+    virtual int64_t getAddrOffset() override {
         return m_offset;
     }
 
-    virtual void setOffset(int64_t off) override {
+    virtual void setAddrOffset(int64_t off) override {
         m_offset = off;
     }
 

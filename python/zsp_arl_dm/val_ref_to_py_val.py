@@ -39,7 +39,6 @@ class ValRefToPyVal(VisitorBase):
 
         self._ref = v
 
-        print("toPyVal: %s" % str(v.type()))
         self.visit(v.type())
         
         return self._val

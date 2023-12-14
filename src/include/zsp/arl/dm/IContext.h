@@ -74,6 +74,7 @@ enum class DataTypeKind {
 
 enum class DataTypeCoreE {
     PyObj,
+    TransparentAddrSpaceC,
     NumKinds
 };
 

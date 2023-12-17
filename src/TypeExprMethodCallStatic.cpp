@@ -29,11 +29,12 @@ namespace dm {
 
 TypeExprMethodCallStatic::TypeExprMethodCallStatic(
     IDataTypeFunction                       *target,
-    const std::vector<vsc::dm::ITypeExpr *> &params) : m_target(target) {
+    const std::vector<vsc::dm::ITypeExpr *> &params,
+    bool                                    owned) : m_target(target) {
     for (std::vector<vsc::dm::ITypeExpr *>::const_iterator
         it=params.begin();
         it!=params.end(); it++) {
-        m_params.push_back(vsc::dm::ITypeExprUP(*it));
+        m_params.push_back(vsc::dm::ITypeExprUP(*it, owned));
     }
 }
 

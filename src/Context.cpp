@@ -430,14 +430,16 @@ ITypeExecProc *Context::mkTypeExecProc(
 ITypeExprMethodCallContext *Context::mkTypeExprMethodCallContext(
             IDataTypeFunction                           *target,
             vsc::dm::ITypeExpr                          *context,
-            const std::vector<vsc::dm::ITypeExpr *>     &params) {
-    return new TypeExprMethodCallContext(target, context, params);
+            const std::vector<vsc::dm::ITypeExpr *>     &params,
+            bool                                        owned) {
+    return new TypeExprMethodCallContext(target, context, params, owned);
 }
 
 ITypeExprMethodCallStatic *Context::mkTypeExprMethodCallStatic(
             IDataTypeFunction                           *target,
-            const std::vector<vsc::dm::ITypeExpr *>     &params) {
-    return new TypeExprMethodCallStatic(target, params);
+            const std::vector<vsc::dm::ITypeExpr *>     &params,
+            bool                                        owned) {
+    return new TypeExprMethodCallStatic(target, params, owned);
 }
 
 ITypeExprPyImportRef *Context::mkTypeExprPyImportRef(

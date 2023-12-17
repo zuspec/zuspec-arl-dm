@@ -177,11 +177,13 @@ public:
     virtual ITypeExprMethodCallContext *mkTypeExprMethodCallContext(
             IDataTypeFunction                           *target,
             vsc::dm::ITypeExpr                          *context,
-            const std::vector<vsc::dm::ITypeExpr *>     &params) override;
+            const std::vector<vsc::dm::ITypeExpr *>     &params,
+            bool                                        owned=true) override;
 
     virtual ITypeExprMethodCallStatic *mkTypeExprMethodCallStatic(
             IDataTypeFunction                           *target,
-            const std::vector<vsc::dm::ITypeExpr *>     &params) override;
+            const std::vector<vsc::dm::ITypeExpr *>     &params,
+            bool                                        owned=true) override;
 
     virtual ITypeExprPyImportRef *mkTypeExprPyImportRef(
             IPyImport                                   *imp) override;

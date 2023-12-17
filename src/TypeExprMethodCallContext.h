@@ -35,7 +35,8 @@ public:
     TypeExprMethodCallContext(
         IDataTypeFunction                           *target,
         vsc::dm::ITypeExpr                          *context,
-        const std::vector<vsc::dm::ITypeExpr *>     &params);
+        const std::vector<vsc::dm::ITypeExpr *>     &params,
+        bool                                        owned);
 
     virtual ~TypeExprMethodCallContext();
 

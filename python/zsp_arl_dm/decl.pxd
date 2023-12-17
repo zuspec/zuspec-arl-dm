@@ -44,6 +44,7 @@ ctypedef ITypeProcStmtVarDecl *ITypeProcStmtVarDeclP
 cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
     cdef cppclass IContext(vsc.IContext):
         IDataTypeAction *findDataTypeAction(const cpp_string &)
+        IDataTypeFunction *findDataTypeFunction(const cpp_string &)
         IDataTypeAction *mkDataTypeAction(const cpp_string &)
         const cpp_vector[IDataTypeFunctionP] &getDataTypeFunctions() const
         IDataTypeActivityParallel *mkDataTypeActivityParallel()

@@ -68,6 +68,13 @@ cdef class Context(vsc.Context):
     cpdef DataTypeAction mkDataTypeAction(self, name):
         return DataTypeAction.mk(self.asContext().mkDataTypeAction(name.encode()), True)
 
+    cpdef DataTypeFunction findDataTypeFunction(self, name):
+        cdef decl.IDataTypeFunction *f = self.asContext().findDataTypeFunction(name.encode())
+        if f != NULL:
+            return DataTypeFunction.mk(f, False)
+        else:
+            return None
+
     cpdef getDataTypeFunctions(self):
         cdef const cpp_vector[decl.IDataTypeFunctionP] *funcs = &self.asContext().getDataTypeFunctions()
 

@@ -40,7 +40,8 @@ enum class DataTypeFunctionFlags {
     Solve   = (1 << 0),
     Target  = (1 << 1),
     Core    = (1 << 2),
-    Import  = (1 << 3)
+    Import  = (1 << 3),
+    Export  = (1 << 4)
 };
 
 static inline DataTypeFunctionFlags operator | (const DataTypeFunctionFlags lhs, const DataTypeFunctionFlags rhs) {

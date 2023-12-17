@@ -31,7 +31,8 @@ class TypeExprMethodCallStatic : public virtual ITypeExprMethodCallStatic {
 public:
     TypeExprMethodCallStatic(
         IDataTypeFunction                           *target,
-        const std::vector<vsc::dm::ITypeExpr *>     &params);
+        const std::vector<vsc::dm::ITypeExpr *>     &params,
+        bool                                        owned);
 
     virtual ~TypeExprMethodCallStatic();
 

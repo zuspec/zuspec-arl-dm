@@ -30,8 +30,9 @@ namespace dm {
 TypeExprMethodCallContext::TypeExprMethodCallContext(
     IDataTypeFunction                           *target,
     vsc::dm::ITypeExpr                          *context,
-    const std::vector<vsc::dm::ITypeExpr *>     &params) :
-        TypeExprMethodCallStatic(target, params), m_context(context) {
+    const std::vector<vsc::dm::ITypeExpr *>     &params,
+    bool                                        owned) :
+        TypeExprMethodCallStatic(target, params, owned), m_context(context) {
 
 }
 

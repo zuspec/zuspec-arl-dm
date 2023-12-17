@@ -19,6 +19,7 @@ cdef class Factory(object):
 cdef class Context(vsc.Context):
 
     cpdef DataTypeAction findDataTypeAction(self, name)
+    cpdef DataTypeFunction findDataTypeFunction(self, name)
     cpdef DataTypeAction mkDataTypeAction(self, name)
     cpdef getDataTypeFunctions(self)
     cpdef DataTypeActivityParallel mkDataTypeActivityParallel(self)

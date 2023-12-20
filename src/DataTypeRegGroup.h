@@ -1,7 +1,7 @@
 /**
- * IDataTypeRegGroup.h
+ * DataTypeRegGroup.h
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -19,22 +19,31 @@
  *     Author: 
  */
 #pragma once
-#include "zsp/arl/dm/IDataTypeComponent.h"
+#include "zsp/arl/dm/IDataTypeRegGroup.h"
+#include "DataTypeComponent.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class IDataTypeRegGroup : public virtual IDataTypeComponent {
-public:
 
-    virtual ~IDataTypeRegGroup() { }
+class DataTypeRegGroup : 
+    public virtual IDataTypeRegGroup,
+    public DataTypeComponent {
+public:
+    DataTypeRegGroup(
+        IContext            *ctxt,
+        const std::string   &name);
+
+    virtual ~DataTypeRegGroup();
+
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
 };
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+}
+}
+}
 
 

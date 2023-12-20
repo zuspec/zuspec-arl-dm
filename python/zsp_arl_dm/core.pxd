@@ -283,6 +283,19 @@ cdef class TypeFieldPool(vsc.TypeField):
     @staticmethod
     cdef TypeFieldPool mk(decl.ITypeFieldPool *, bool owned=*)
 
+cdef class TypeFieldReg(vsc.TypeField):
+
+    cpdef int getAddrOffset(self)
+
+    cpdef void setAddrOffset(self, int off)
+
+    cpdef int getWidth(self)
+
+    cdef decl.ITypeFieldReg *asReg(self)
+
+    @staticmethod
+    cdef TypeFieldReg mk(decl.ITypeFieldReg *, bool owned=*)
+
 cdef class TypeProcStmt(vsc.ObjBase):
     pass
 
@@ -314,6 +327,8 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitModelFieldComponentRoot(self, ModelFieldComponentRoot c)
 
     cpdef visitModelFieldPool(self, ModelFieldPool f)
+
+    cpdef visitTypeFieldReg(self, TypeFieldReg f)
 
 cdef class WrapperBuilder(VisitorBase):
     cdef list _obj

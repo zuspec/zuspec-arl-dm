@@ -19,6 +19,7 @@
 #include "DataTypeFunctionParamDecl.h"
 #include "DataTypePackedStruct.h"
 #include "DataTypePyObj.h"
+#include "DataTypeRegGroup.h"
 #include "DataTypeResource.h"
 #include "ModelActivityIterator.h"
 #include "ModelActivityParallel.h"
@@ -168,6 +169,10 @@ IDataTypeFunctionParamDecl *Context::mkDataTypeFunctionParamDecl(
 			bool					own,
 			vsc::dm::ITypeExpr		*dflt) {
 	return new DataTypeFunctionParamDecl(name, dir, type, own, dflt);
+}
+
+IDataTypeRegGroup *Context::mkDataTypeRegGroup(const std::string &name) {
+    return new DataTypeRegGroup(this, name);
 }
 
 IDataTypeActivityParallel *Context::mkDataTypeActivityParallel() {

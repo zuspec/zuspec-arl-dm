@@ -18,7 +18,7 @@ namespace dm {
 
 class DataTypeComponent : 
 	public virtual IDataTypeComponent, 
-	public virtual DataTypeArlStruct {
+	public DataTypeArlStruct {
 public:
 	DataTypeComponent(
 		IContext			*ctxt,

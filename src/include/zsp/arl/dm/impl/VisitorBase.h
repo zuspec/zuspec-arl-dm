@@ -20,6 +20,7 @@
 #include "zsp/arl/dm/IDataTypeFunction.h"
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
 #include "zsp/arl/dm/IDataTypePackedStruct.h"
+#include "zsp/arl/dm/IDataTypeRegGroup.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
 #include "zsp/arl/dm/IDataTypeArlStruct.h"
 #include "zsp/arl/dm/IModelActivityBind.h"
@@ -147,6 +148,10 @@ public:
 
     virtual void visitDataTypePyObj(IDataTypePyObj *t) override {
         // 
+    }
+
+    virtual void visitDataTypeRegGroup(IDataTypeRegGroup *t) override {
+        dynamic_cast<IVisitor *>(m_this)->visitDataTypeComponent(t);
     }
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) override {

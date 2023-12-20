@@ -68,6 +68,10 @@ void VisitorProxy::visitModelFieldPool(IModelFieldPool *f) {
     VisitorProxy_visitModelFieldPool(m_obj, f);
 }
 
+void VisitorProxy::visitTypeFieldReg(ITypeFieldReg *f) {
+    VisitorProxy_visitTypeFieldReg(m_obj, f);
+}
+
 }
 }
 }

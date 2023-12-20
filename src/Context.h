@@ -57,6 +57,8 @@ public:
 			bool					own,
 			vsc::dm::ITypeExpr		*dflt) override;
 
+    virtual IDataTypeRegGroup *mkDataTypeRegGroup(const std::string &name) override;
+
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() override;
 
 	virtual IDataTypeActivityReplicate *mkDataTypeActivityReplicate(

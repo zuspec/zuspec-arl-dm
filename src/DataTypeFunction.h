@@ -28,7 +28,9 @@ namespace dm {
 
 
 
-class DataTypeFunction : public virtual IDataTypeFunction {
+class DataTypeFunction : 
+    public virtual IDataTypeFunction,
+    public virtual ITypeProcStmtDeclScope {
 public:
     DataTypeFunction(
         IContext                *ctxt,
@@ -57,8 +59,8 @@ public:
         return m_parameters_t.get();
     }
 
-    virtual ITypeProcStmtScope *getParamScope() const override {
-        return m_param_scope.get();
+    virtual ITypeProcStmtDeclScope *getParamScope() override {
+        return this;
     }
 
     virtual vsc::dm::IDataTypeStruct *getContext() const override {
@@ -99,6 +101,17 @@ public:
         return m_associated_data.get();
     }
 
+    // Implementation of ITypeProcStmtDeclScope for function parameters
+    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) override { }
+
+    virtual int32_t getNumVariables() override {
+        return m_variables.size();
+    };
+
+    virtual const std::vector<ITypeProcStmtVarDeclUP> &getVariables() const override {
+        return m_variables;
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
@@ -107,11 +120,11 @@ private:
     vsc::dm::IDataType                              *m_ret_type;
     vsc::dm::IDataTypeUP                            m_ret_type_u;
     std::vector<IDataTypeFunctionParamDecl *>       m_parameters;
+    std::vector<ITypeProcStmtVarDeclUP>             m_variables;
     vsc::dm::IDataTypeStructUP                      m_parameters_t;
     vsc::dm::IDataTypeStruct                        *m_context;
     bool                                            m_is_export;
     DataTypeFunctionFlags                           m_flags;
-    ITypeProcStmtScopeUP                            m_param_scope;
     ITypeProcStmtScopeUP                            m_body;
     std::vector<IDataTypeFunctionImportUP>          m_import_specs;
     vsc::dm::IAssociatedDataUP                      m_associated_data;

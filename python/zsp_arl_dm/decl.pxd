@@ -7,6 +7,8 @@ from libcpp.vector cimport vector as cpp_vector
 from libcpp.memory cimport unique_ptr
 from libcpp cimport bool
 from libc.stdint cimport int32_t
+from libc.stdint cimport int64_t
+from libc.stdint cimport uint64_t
 cimport cpython.ref as cpy_ref
 
 ctypedef IContext *IContextP
@@ -37,6 +39,7 @@ ctypedef vsc.UP[ITypeFieldActivity] ITypeFieldActivityUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
 ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
+ctypedef ITypeFieldReg *ITypeFieldRegP
 ctypedef ITypeProcStmt *ITypeProcStmtP 
 ctypedef ITypeProcStmtDeclScope *ITypeProcStmtDeclScopeP 
 ctypedef ITypeProcStmtVarDecl *ITypeProcStmtVarDeclP 
@@ -266,6 +269,12 @@ cdef extern from "zsp/arl/dm/ITypeFieldInOut.h" namespace "zsp::arl::dm":
 cdef extern from "zsp/arl/dm/ITypeFieldPool.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeFieldPool(vsc.ITypeField):
         int32_t getDeclSize()
+
+cdef extern from "zsp/arl/dm/ITypeFieldReg.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeFieldReg(vsc.ITypeField):
+        int64_t getAddrOffset()
+        void setAddrOffset(int64_t off)
+        int32_t getWidth() const
 
 cdef extern from "zsp/arl/dm/IVisitor.h" namespace "zsp::arl::dm":
     cdef cppclass IVisitor(vsc.IVisitor):

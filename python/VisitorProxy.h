@@ -49,6 +49,8 @@ public:
 
 	virtual void visitModelFieldPool(IModelFieldPool *f) override;
 
+	virtual void visitTypeFieldReg(ITypeFieldReg *f) override;
+
 private:
     PyObject                *m_obj;
 

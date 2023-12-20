@@ -74,7 +74,7 @@ public:
     virtual vsc::dm::IDataTypeStruct *getParametersType() const = 0;
 
     // Appears to not be used
-    virtual ITypeProcStmtScope *getParamScope() const = 0;
+    virtual ITypeProcStmtDeclScope *getParamScope() = 0;
 
     virtual vsc::dm::IDataTypeStruct *getContext() const = 0;
 

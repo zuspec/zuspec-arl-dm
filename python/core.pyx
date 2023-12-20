@@ -788,6 +788,27 @@ cdef class TypeFieldPool(vsc.TypeField):
         ret._owned = owned
         return ret
 
+cdef class TypeFieldReg(vsc.TypeField):
+
+    cpdef int getAddrOffset(self):
+        return self.asReg().getAddrOffset()
+
+    cpdef void setAddrOffset(self, int off):
+        self.asReg().setAddrOffset(off)
+
+    cpdef int getWidth(self):
+        return self.asReg().getWidth()
+
+    cdef decl.ITypeFieldReg *asReg(self):
+        return dynamic_cast[decl.ITypeFieldRegP](self._hndl)
+
+    @staticmethod
+    cdef TypeFieldReg mk(decl.ITypeFieldReg *hndl, bool owned=True):
+        ret = TypeFieldReg()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
 cdef class TypeProcStmt(vsc.ObjBase):
     pass
 
@@ -846,6 +867,9 @@ cdef class VisitorBase(vsc.VisitorBase):
 
     cpdef visitModelFieldPool(self, ModelFieldPool f):
         pass
+    
+    cpdef visitTypeFieldReg(self, TypeFieldReg f):
+        pass
 
 # cdef public void VisitorProxy_visitDataTypeEnum(obj, vsc_decl.IDataTypeEnum *t) with gil:
 #     obj.enter()
@@ -887,6 +911,9 @@ cdef public void VisitorProxy_visitModelFieldComponentRoot(obj, decl.IModelField
 
 cdef public void VisitorProxy_visitModelFieldPool(obj, decl.IModelFieldPool *c) with gil:
     obj.visitModelFieldPool(ModelFieldPool.mk(c, False))
+
+cdef public void VisitorProxy_visitTypeFieldReg(obj, decl.ITypeFieldReg *c) with gil:
+    obj.visitTypeFieldReg(TypeFieldReg.mk(c, False))
 
 
 cdef class WrapperBuilder(VisitorBase):
@@ -931,6 +958,10 @@ cdef class WrapperBuilder(VisitorBase):
 
     cpdef visitModelFieldPool(self, ModelFieldPool f):
         print("visitModelFieldPool")
+        self._set_obj(f)
+    
+    cpdef visitTypeFieldReg(self, TypeFieldReg f):
+        print("visitTypeFieldReg")
         self._set_obj(f)
 
 cdef class WrapperBuilderVsc(vsc.WrapperBuilder):

@@ -36,7 +36,6 @@ DataTypeFunction::DataTypeFunction(
     DataTypeFunctionFlags       flags) :
         m_ctxt(ctxt), m_name(name), m_ret_type(rtype), 
         m_ret_type_u(own_rtype?rtype:0), m_flags(flags), 
-        m_param_scope(ctxt->mkTypeProcStmtScope()),
         m_body(ctxt->mkTypeProcStmtScope()) {
     m_parameters_t = vsc::dm::IDataTypeStructUP(
         ctxt->mkDataTypeStruct(name + "_params"));
@@ -48,7 +47,7 @@ DataTypeFunction::~DataTypeFunction() {
 
 void DataTypeFunction::addParameter(IDataTypeFunctionParamDecl *p) {
     m_parameters.push_back(p);
-    m_param_scope->addVariable(p);
+    m_variables.push_back(ITypeProcStmtVarDeclUP(p, false));
     m_parameters_t->addField(m_ctxt->mkTypeFieldPhy(
         p->name(),
         p->getDataType(),

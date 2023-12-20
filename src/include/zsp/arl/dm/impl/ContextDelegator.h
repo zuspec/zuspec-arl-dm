@@ -99,6 +99,10 @@ public:
         return ctxt()->getDataTypeFunctions();
     }
 
+    virtual IDataTypeRegGroup *mkDataTypeRegGroup(const std::string &name) override {
+        return ctxt()->mkDataTypeRegGroup(name);
+    }
+
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() { 
         return ctxt()->mkDataTypeActivityParallel();
     }

@@ -18,6 +18,7 @@
 #include "zsp/arl/dm/IDataTypeFunctionImport.h"
 #include "zsp/arl/dm/IDataTypeFunctionParamDecl.h"
 #include "zsp/arl/dm/IDataTypePackedStruct.h"
+#include "zsp/arl/dm/IDataTypeRegGroup.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
 #include "zsp/arl/dm/IModelActivitySchedule.h"
 #include "zsp/arl/dm/IModelActivityScope.h"
@@ -122,6 +123,7 @@ public:
 			bool					own,
 			vsc::dm::ITypeExpr		*init) = 0;
 
+    virtual IDataTypeRegGroup *mkDataTypeRegGroup(const std::string &name) = 0;
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() = 0;
 

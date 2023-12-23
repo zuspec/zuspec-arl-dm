@@ -1,7 +1,7 @@
 /*
- * TypeProcStmtIfElse.cpp
+ * TypeProcStmtIfClause.cpp
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -19,7 +19,7 @@
  *     Author:
  */
 #include "zsp/arl/dm/IVisitor.h"
-#include "TypeProcStmtIfElse.h"
+#include "TypeProcStmtIfClause.h"
 
 
 namespace zsp {
@@ -27,25 +27,20 @@ namespace arl {
 namespace dm {
 
 
-
-TypeProcStmtIfElse::TypeProcStmtIfElse(
-    const std::vector<ITypeProcStmtIfClause *>  &if_clauses,
-    ITypeProcStmt                               *else_clause) : 
-    m_else_clause(else_clause) {
-    for (std::vector<ITypeProcStmtIfClause *>::const_iterator
-        it=if_clauses.begin();
-        it!=if_clauses.end(); it++) {
-        m_if_clauses.push_back(ITypeProcStmtIfClauseUP(*it));
-    }
-}
-
-TypeProcStmtIfElse::~TypeProcStmtIfElse() {
+TypeProcStmtIfClause::TypeProcStmtIfClause(
+        vsc::dm::ITypeExpr          *cond,
+        ITypeProcStmt               *stmt) :
+        m_cond(cond), m_stmt(stmt) {
 
 }
 
-void TypeProcStmtIfElse::accept(vsc::dm::IVisitor *v) {
+TypeProcStmtIfClause::~TypeProcStmtIfClause() {
+
+}
+
+void TypeProcStmtIfClause::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtIfElse(this);
+        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtIfClause(this);
     }
 }
 

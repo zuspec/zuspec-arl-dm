@@ -271,6 +271,10 @@ public:
 		delegate(&arl::dm::IVisitor::visitTypeProcStmtForeach, s);
 	}
 
+	virtual void visitTypeProcStmtIfClause(ITypeProcStmtIfClause *s) override {
+		delegate(&arl::dm::IVisitor::visitTypeProcStmtIfClause, s);
+	}
+
 	virtual void visitTypeProcStmtIfElse(ITypeProcStmtIfElse *s) override {
 		delegate(&arl::dm::IVisitor::visitTypeProcStmtIfElse, s);
 	}

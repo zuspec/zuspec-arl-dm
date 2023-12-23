@@ -429,15 +429,20 @@ public:
 
 	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(
 			vsc::dm::ITypeExpr		*target,
-			ITypeProcStmt		*body) { 
+			ITypeProcStmt		    *body) override { 
         return ctxt()->mkTypeProcStmtForeach(target, body);
     }
 
+	virtual ITypeProcStmtIfClause *mkTypeProcStmtIfClause(
+            vsc::dm::ITypeExpr          *cond,
+            ITypeProcStmt               *stmt) override {
+        return ctxt()->mkTypeProcStmtIfClause(cond, stmt);
+    }
+
 	virtual ITypeProcStmtIfElse *mkTypeProcStmtIfElse(
-			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*true_s,
-			ITypeProcStmt		*false_s) { 
-        return ctxt()->mkTypeProcStmtIfElse(cond, true_s, false_s);
+        const std::vector<ITypeProcStmtIfClause *>      &if_c,
+        ITypeProcStmt                                   *else_c) override {
+        return ctxt()->mkTypeProcStmtIfElse(if_c, else_c);
     }
 	
 	virtual ITypeProcStmtMatch *mkTypeProcStmtMatch(

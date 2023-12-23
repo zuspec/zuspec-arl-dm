@@ -344,10 +344,13 @@ public:
 			vsc::dm::ITypeExpr		*target,
 			ITypeProcStmt		*body) = 0;
 
+	virtual ITypeProcStmtIfClause *mkTypeProcStmtIfClause(
+            vsc::dm::ITypeExpr          *cond,
+            ITypeProcStmt               *stmt) = 0;
+
 	virtual ITypeProcStmtIfElse *mkTypeProcStmtIfElse(
-			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*true_s,
-			ITypeProcStmt		*false_s) = 0;
+        const std::vector<ITypeProcStmtIfClause *>      &if_c,
+        ITypeProcStmt                                   *else_c) = 0;
 	
 	virtual ITypeProcStmtMatch *mkTypeProcStmtMatch(
 			vsc::dm::ITypeExpr		*cond) = 0;

@@ -272,10 +272,13 @@ public:
 			vsc::dm::ITypeExpr		*target,
 			ITypeProcStmt		*body) override;
 
+	virtual ITypeProcStmtIfClause *mkTypeProcStmtIfClause(
+            vsc::dm::ITypeExpr          *cond,
+            ITypeProcStmt               *stmt) override;
+
 	virtual ITypeProcStmtIfElse *mkTypeProcStmtIfElse(
-			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*true_s,
-			ITypeProcStmt		*false_s) override;
+        const std::vector<ITypeProcStmtIfClause *>      &if_c,
+        ITypeProcStmt                                   *else_c) override;
 	
 	virtual ITypeProcStmtMatch *mkTypeProcStmtMatch(
 			vsc::dm::ITypeExpr		*cond) override;

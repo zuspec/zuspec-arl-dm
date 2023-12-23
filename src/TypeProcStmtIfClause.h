@@ -1,7 +1,7 @@
 /**
- * ITypeProcStmtIfElse.h
+ * TypeProcStmtIfClause.h
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -19,30 +19,35 @@
  *     Author: 
  */
 #pragma once
-#include <vector>
-#include "zsp/arl/dm/ITypeProcStmt.h"
 #include "zsp/arl/dm/ITypeProcStmtIfClause.h"
-#include "vsc/dm/ITypeExpr.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-
-
-class ITypeProcStmtIfElse : public virtual ITypeProcStmt {
+class TypeProcStmtIfClause : public virtual ITypeProcStmtIfClause {
 public:
+    TypeProcStmtIfClause(
+        vsc::dm::ITypeExpr          *cond,
+        ITypeProcStmt               *stmt);
 
-    virtual ~ITypeProcStmtIfElse() { }
+    virtual ~TypeProcStmtIfClause();
 
-    virtual const std::vector<ITypeProcStmtIfClauseUP> &getIfClauses() const = 0;
+    virtual vsc::dm::ITypeExpr *getCond() const override {
+        return m_cond.get();
+    }
 
-    virtual void addIfClause(ITypeProcStmtIfClause *if_c) = 0;
+    virtual ITypeProcStmt *getStmt() const override {
+        return m_stmt.get();
+    }
 
-    virtual ITypeProcStmt *getElseClause() const = 0;
+    virtual void accept(vsc::dm::IVisitor *v) override;
 
-    virtual void setElseClause(ITypeProcStmt *else_c) = 0;
+private:
+    vsc::dm::ITypeExprUP            m_cond;
+    ITypeProcStmtUP                 m_stmt;
+
 
 };
 

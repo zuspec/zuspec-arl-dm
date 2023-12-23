@@ -67,6 +67,7 @@ class ITypeProcStmtBreak;
 class ITypeProcStmtContinue;
 class ITypeProcStmtExpr;
 class ITypeProcStmtForeach;
+class ITypeProcStmtIfClause;
 class ITypeProcStmtIfElse;
 class ITypeProcStmtMatch;
 class ITypeProcStmtRepeat;
@@ -186,6 +187,8 @@ public:
 	virtual void visitTypeProcStmtExpr(ITypeProcStmtExpr *s) = 0;
 
 	virtual void visitTypeProcStmtForeach(ITypeProcStmtForeach *s) = 0;
+
+	virtual void visitTypeProcStmtIfClause(ITypeProcStmtIfClause *s) = 0;
 
 	virtual void visitTypeProcStmtIfElse(ITypeProcStmtIfElse *s) = 0;
 

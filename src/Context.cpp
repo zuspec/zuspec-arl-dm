@@ -65,6 +65,7 @@
 #include "TypeProcStmtContinue.h"
 #include "TypeProcStmtExpr.h"
 #include "TypeProcStmtForeach.h"
+#include "TypeProcStmtIfClause.h"
 #include "TypeProcStmtIfElse.h"
 #include "TypeProcStmtMatch.h"
 #include "TypeProcStmtRepeat.h"
@@ -573,11 +574,16 @@ ITypeProcStmtForeach *Context::mkTypeProcStmtForeach(
 
 }
 
+ITypeProcStmtIfClause *Context::mkTypeProcStmtIfClause(
+            vsc::dm::ITypeExpr          *cond,
+            ITypeProcStmt               *stmt) {
+    return new TypeProcStmtIfClause(cond, stmt);
+}
+
 ITypeProcStmtIfElse *Context::mkTypeProcStmtIfElse(
-			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*true_s,
-			ITypeProcStmt		*false_s) { 
-	return new TypeProcStmtIfElse(cond, true_s, false_s);
+        const std::vector<ITypeProcStmtIfClause *>      &if_c,
+        ITypeProcStmt                                   *else_c) {
+    return new TypeProcStmtIfElse(if_c, else_c);
 }
 	
 ITypeProcStmtMatch *Context::mkTypeProcStmtMatch(

@@ -60,6 +60,7 @@
 #include "zsp/arl/dm/ITypeProcStmtContinue.h"
 #include "zsp/arl/dm/ITypeProcStmtExpr.h"
 #include "zsp/arl/dm/ITypeProcStmtForeach.h"
+#include "zsp/arl/dm/ITypeProcStmtIfClause.h"
 #include "zsp/arl/dm/ITypeProcStmtIfElse.h"
 #include "zsp/arl/dm/ITypeProcStmtMatch.h"
 #include "zsp/arl/dm/ITypeProcStmtRepeat.h"
@@ -326,13 +327,21 @@ public:
 	virtual void visitTypeProcStmtForeach(ITypeProcStmtForeach *s) override {
 
 	}
+    
+	virtual void visitTypeProcStmtIfClause(ITypeProcStmtIfClause *s) override {
+        s->getCond()->accept(m_this);
+        s->getStmt()->accept(m_this);
+    }
 
 	virtual void visitTypeProcStmtIfElse(ITypeProcStmtIfElse *s) override {
-		s->getCond()->accept(m_this);
-		s->getTrue()->accept(m_this);
-		if (s->getFalse()) {
-			s->getFalse()->accept(m_this);
-		}
+        for (std::vector<ITypeProcStmtIfClauseUP>::const_iterator
+            it=s->getIfClauses().begin();
+            it!=s->getIfClauses().end(); it++) {
+            (*it)->accept(m_this);
+        }
+        if (s->getElseClause()) {
+            s->getElseClause()->accept(m_this);
+        }
 	}
 
 	virtual void visitTypeProcStmtMatch(ITypeProcStmtMatch *s) override {

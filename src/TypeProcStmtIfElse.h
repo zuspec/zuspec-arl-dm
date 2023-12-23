@@ -31,31 +31,32 @@ namespace dm {
 class TypeProcStmtIfElse : public virtual ITypeProcStmtIfElse {
 public:
     TypeProcStmtIfElse(
-        vsc::dm::ITypeExpr          *cond,
-        ITypeProcStmt           *true_s,
-        ITypeProcStmt           *false_s
-    );
+        const std::vector<ITypeProcStmtIfClause *>  &if_clauses,
+        ITypeProcStmt                               *else_clause);
 
     virtual ~TypeProcStmtIfElse();
 
-    virtual vsc::dm::ITypeExpr *getCond() const override {
-        return m_cond.get();
+    virtual const std::vector<ITypeProcStmtIfClauseUP> &getIfClauses() const override {
+        return m_if_clauses;
     }
 
-    virtual ITypeProcStmt *getTrue() const override {
-        return m_true.get();
+    virtual void addIfClause(ITypeProcStmtIfClause *if_c) override {
+        m_if_clauses.push_back(ITypeProcStmtIfClauseUP(if_c));
+    };
+
+    virtual ITypeProcStmt *getElseClause() const override {
+        return m_else_clause.get();
     }
 
-    virtual ITypeProcStmt *getFalse() const override {
-        return m_false.get();
+    virtual void setElseClause(ITypeProcStmt *else_c) override {
+        m_else_clause = ITypeProcStmtUP(else_c);
     }
 
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    vsc::dm::ITypeExprUP            m_cond;
-    ITypeProcStmtUP             m_true;
-    ITypeProcStmtUP             m_false;
+    std::vector<ITypeProcStmtIfClauseUP>        m_if_clauses;
+    ITypeProcStmtUP                             m_else_clause;
 };
 
 }

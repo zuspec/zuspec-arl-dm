@@ -330,7 +330,9 @@ public:
     
 	virtual void visitTypeProcStmtIfClause(ITypeProcStmtIfClause *s) override {
         s->getCond()->accept(m_this);
-        s->getStmt()->accept(m_this);
+        if (s->getStmt()) {
+            s->getStmt()->accept(m_this);
+        }
     }
 
 	virtual void visitTypeProcStmtIfElse(ITypeProcStmtIfElse *s) override {

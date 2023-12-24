@@ -29,7 +29,7 @@ namespace dm {
 
 
 
-class ITypeProcStmtWhile {
+class ITypeProcStmtWhile : public virtual ITypeProcStmt {
 public:
 
     virtual ~ITypeProcStmtWhile() { }

@@ -308,7 +308,7 @@ public:
 
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*body) override;
+			ITypeProcStmt		    *body) override;
 
     virtual ValRefPyObj mkValPyObj(pyapi::PyEvalObj *obj) override;
 

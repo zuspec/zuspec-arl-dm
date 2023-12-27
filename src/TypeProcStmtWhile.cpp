@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtWhile.h"
 
 
@@ -27,12 +28,20 @@ namespace dm {
 
 
 
-TypeProcStmtWhile::TypeProcStmtWhile() {
+TypeProcStmtWhile::TypeProcStmtWhile(
+    vsc::dm::ITypeExpr          *cond,
+    ITypeProcStmt               *body) : m_cond(cond), m_body(body) {
 
 }
 
 TypeProcStmtWhile::~TypeProcStmtWhile() {
 
+}
+
+void TypeProcStmtWhile::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtWhile(this);
+    }
 }
 
 }

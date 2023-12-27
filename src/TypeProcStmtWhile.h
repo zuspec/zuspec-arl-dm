@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include "zsp/arl/dm/ITypeProcStmtWhile.h"
 
 namespace zsp {
 namespace arl {
@@ -27,12 +28,27 @@ namespace dm {
 
 
 
-class TypeProcStmtWhile {
+class TypeProcStmtWhile : public virtual ITypeProcStmtWhile {
 public:
-    TypeProcStmtWhile();
+    TypeProcStmtWhile(
+        vsc::dm::ITypeExpr  *cond,
+        ITypeProcStmt       *body);
 
     virtual ~TypeProcStmtWhile();
 
+    virtual vsc::dm::ITypeExpr *getCond() const override {
+        return m_cond.get();
+    }
+
+    virtual ITypeProcStmt *getBody() const override {
+        return m_body.get();
+    }
+
+    virtual void accept(vsc::dm::IVisitor *v) override;
+
+private:
+    vsc::dm::ITypeExprUP        m_cond;
+    ITypeProcStmtUP             m_body;
 };
 
 }

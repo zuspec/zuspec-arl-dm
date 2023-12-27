@@ -34,7 +34,7 @@ public:
 
     virtual ~ITypeProcStmtWhile() { }
 
-    virtual vsc::dm::ITypeExpr *getExpr() const = 0;
+    virtual vsc::dm::ITypeExpr *getCond() const = 0;
 
     virtual ITypeProcStmt *getBody() const = 0;
 

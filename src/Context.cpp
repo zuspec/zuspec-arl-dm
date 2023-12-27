@@ -627,8 +627,8 @@ ITypeProcStmtVarDecl *Context::mkTypeProcStmtVarDecl(
 
 ITypeProcStmtWhile *Context::mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*body) { 
-
+			ITypeProcStmt		    *body) { 
+    return new TypeProcStmtWhile(cond, body);
 }
 
 ValRefPyObj Context::mkValPyObj(pyapi::PyEvalObj *obj) {

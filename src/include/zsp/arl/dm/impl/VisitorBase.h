@@ -382,7 +382,7 @@ public:
 	}
 
 	virtual void visitTypeProcStmtWhile(ITypeProcStmtWhile *s) override {
-		s->getExpr()->accept(m_this);
+		s->getCond()->accept(m_this);
 		s->getBody()->accept(m_this);
 	}
 };

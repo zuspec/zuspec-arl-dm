@@ -68,6 +68,7 @@
 #include "TypeProcStmtIfClause.h"
 #include "TypeProcStmtIfElse.h"
 #include "TypeProcStmtMatch.h"
+#include "TypeProcStmtMatchChoice.h"
 #include "TypeProcStmtRepeat.h"
 #include "TypeProcStmtRepeatWhile.h"
 #include "TypeProcStmtReturn.h"
@@ -589,6 +590,12 @@ ITypeProcStmtIfElse *Context::mkTypeProcStmtIfElse(
 ITypeProcStmtMatch *Context::mkTypeProcStmtMatch(
 			vsc::dm::ITypeExpr		*cond) { 
 	return new TypeProcStmtMatch(cond);
+}
+
+ITypeProcStmtMatchChoice *Context::mkTypeProcStmtMatchChoice(
+            vsc::dm::ITypeExprRangelist     *cond,
+            ITypeProcStmt                   *body) {
+    return new TypeProcStmtMatchChoice(cond, body);
 }
 
 ITypeProcStmtRepeat *Context::mkTypeProcStmtRepeat(

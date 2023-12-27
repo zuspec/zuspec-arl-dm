@@ -27,7 +27,9 @@ namespace dm {
 
 
 
-TypeProcStmtMatchChoice::TypeProcStmtMatchChoice() {
+TypeProcStmtMatchChoice::TypeProcStmtMatchChoice(
+        vsc::dm::ITypeExprRangelist         *cond,
+        ITypeProcStmt                       *body) : m_cond(cond), m_body(body) {
 
 }
 

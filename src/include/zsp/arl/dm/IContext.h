@@ -355,6 +355,10 @@ public:
 	virtual ITypeProcStmtMatch *mkTypeProcStmtMatch(
 			vsc::dm::ITypeExpr		*cond) = 0;
 
+    virtual ITypeProcStmtMatchChoice *mkTypeProcStmtMatchChoice(
+            vsc::dm::ITypeExprRangelist     *cond,
+            ITypeProcStmt                   *body) = 0;
+
 	virtual ITypeProcStmtRepeat *mkTypeProcStmtRepeat(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) = 0;

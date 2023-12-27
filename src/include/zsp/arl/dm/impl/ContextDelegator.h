@@ -450,6 +450,12 @@ public:
         return ctxt()->mkTypeProcStmtMatch(cond);
     }
 
+    virtual ITypeProcStmtMatchChoice *mkTypeProcStmtMatchChoice(
+            vsc::dm::ITypeExprRangelist     *cond,
+            ITypeProcStmt                   *body) override {
+        return ctxt()->mkTypeProcStmtMatchChoice(cond, body);
+    }
+
 	virtual ITypeProcStmtRepeat *mkTypeProcStmtRepeat(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) { 

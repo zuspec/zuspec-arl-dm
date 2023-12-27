@@ -283,6 +283,10 @@ public:
 	virtual ITypeProcStmtMatch *mkTypeProcStmtMatch(
 			vsc::dm::ITypeExpr		*cond) override;
 
+    virtual ITypeProcStmtMatchChoice *mkTypeProcStmtMatchChoice(
+            vsc::dm::ITypeExprRangelist     *cond,
+            ITypeProcStmt                   *body) override;
+
 	virtual ITypeProcStmtRepeat *mkTypeProcStmtRepeat(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) override;

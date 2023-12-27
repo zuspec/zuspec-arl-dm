@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include "zsp/arl/dm/ITypeProcStmtMatchChoice.h"
 
 namespace zsp {
 namespace arl {
@@ -27,11 +28,25 @@ namespace dm {
 
 
 
-class TypeProcStmtMatchChoice {
+class TypeProcStmtMatchChoice : public ITypeProcStmtMatchChoice {
 public:
-    TypeProcStmtMatchChoice();
+    TypeProcStmtMatchChoice(
+        vsc::dm::ITypeExprRangelist         *cond,
+        ITypeProcStmt                       *body);
 
     virtual ~TypeProcStmtMatchChoice();
+
+    virtual vsc::dm::ITypeExprRangelist *getCond() const override {
+        return m_cond.get();
+    }
+
+    virtual ITypeProcStmt *getBody() const override {
+        return m_body.get();
+    }
+
+private:
+    vsc::dm::ITypeExprRangelistUP           m_cond;
+    ITypeProcStmtUP                         m_body;
 
 };
 

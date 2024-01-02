@@ -22,6 +22,7 @@
 #include "vsc/dm/impl/TaskIsTypeFieldRef.h"
 #include "vsc/dm/impl/ValRefPtr.h"
 #include "zsp/arl/dm/IVisitor.h"
+#include "zsp/arl/dm/IModelBuildContext.h"
 #include "DataTypePyObj.h"
 
 
@@ -74,15 +75,16 @@ vsc::dm::IModelField *DataTypePyObj::mkRootField(
 		const std::string			    &name,
 		bool						    is_ref) {
 	vsc::dm::IModelField *ret = 0;
+    IContext *ctxt_a = dynamic_cast<IContext *>(ctxt->ctxt());
 
-/*
 	if (is_ref) {
 		ret = ctxt->ctxt()->mkModelFieldRefRoot(this, name);
 	} else {
-        vsc::dm::ValRefStruct val(ctxt->ctxt()->mkValRefStruct(this));
-		ret = ctxt->ctxt()->mkModelFieldRoot(this, name, val);
+		ret = ctxt->ctxt()->mkModelFieldRoot(
+            this, 
+            name, 
+            ctxt_a->mkValPyObj(0));
 	}
- */
 
 	return ret;
 }

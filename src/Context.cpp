@@ -642,7 +642,7 @@ ValRefPyObj Context::mkValPyObj(pyapi::PyEvalObj *obj) {
     return ValRefPyObj(vsc::dm::ValRef(
         reinterpret_cast<uintptr_t>(obj),
         m_core_types[(int)DataTypeCoreE::PyObj].get(),
-        vsc::dm::ValRef::Flags::None
+        vsc::dm::ValRef::Flags::Mutable
     ));
 }
 

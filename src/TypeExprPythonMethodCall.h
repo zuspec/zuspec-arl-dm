@@ -29,17 +29,19 @@ namespace dm {
 
 
 class TypeExprPythonMethodCall : 
-    public virtual ITypeExprPythonMethodCall,
-    public virtual TypeExprPythonFieldRef {
+    public virtual ITypeExprPythonMethodCall {
 public:
     TypeExprPythonMethodCall(
         vsc::dm::ITypeExpr                      *base,
         bool                                    owned,
-        const std::string                       &name,
         const std::vector<vsc::dm::ITypeExpr *> &params
     );
 
     virtual ~TypeExprPythonMethodCall();
+
+    virtual vsc::dm::ITypeExpr *getBase() const override {
+        return m_base.get();
+    }
 
     virtual const std::vector<vsc::dm::ITypeExprUP> &getParameters() const override {
         return m_params;
@@ -48,6 +50,7 @@ public:
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
+    vsc::dm::ITypeExprUP                        m_base;
     std::vector<vsc::dm::ITypeExprUP>           m_params;
 
 };

@@ -30,9 +30,7 @@ namespace dm {
 TypeExprPythonMethodCall::TypeExprPythonMethodCall(
     vsc::dm::ITypeExpr                          *base,
     bool                                        owned,
-    const std::string                           &name,
-    const std::vector<vsc::dm::ITypeExpr *>     &params) :
-    TypeExprPythonFieldRef(base, owned, name) {
+    const std::vector<vsc::dm::ITypeExpr *>     &params) : m_base(base, owned) {
     for (std::vector<vsc::dm::ITypeExpr *>::const_iterator
         it=params.begin();
         it!=params.end(); it++) {

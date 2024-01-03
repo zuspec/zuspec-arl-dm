@@ -326,9 +326,8 @@ public:
     virtual ITypeExprPythonMethodCall *mkTypeExprPythonMethodCall(
         vsc::dm::ITypeExpr                          *base,
         bool                                        owned,
-        const std::string                           &name,
         const std::vector<vsc::dm::ITypeExpr *>     &params) override {
-        return ctxt()->mkTypeExprPythonMethodCall(base, owned, name, params);
+        return ctxt()->mkTypeExprPythonMethodCall(base, owned, params);
     }
 
     virtual ITypeExprPythonModuleRef *mkTypeExprPythonModuleRef(

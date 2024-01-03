@@ -464,9 +464,8 @@ ITypeExprPythonFieldRef *Context::mkTypeExprPythonFieldRef(
 ITypeExprPythonMethodCall *Context::mkTypeExprPythonMethodCall(
         vsc::dm::ITypeExpr                          *base,
         bool                                        owned,
-        const std::string                           &name,
         const std::vector<vsc::dm::ITypeExpr *>     &params) {
-    return new TypeExprPythonMethodCall(base, owned, name, params);
+    return new TypeExprPythonMethodCall(base, owned, params);
 }
 
 ITypeExprPythonModuleRef *Context::mkTypeExprPythonModuleRef(

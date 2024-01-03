@@ -29,10 +29,12 @@ namespace dm {
 
 
 
-class ITypeExprPythonMethodCall : public virtual ITypeExprPythonFieldRef {
+class ITypeExprPythonMethodCall : public virtual vsc::dm::ITypeExpr {
 public:
 
     virtual ~ITypeExprPythonMethodCall() { }
+
+    virtual vsc::dm::ITypeExpr *getBase() const = 0;
 
     virtual const std::vector<vsc::dm::ITypeExprUP> &getParameters() const = 0;
 

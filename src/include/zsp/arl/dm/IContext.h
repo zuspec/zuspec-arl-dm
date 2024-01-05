@@ -12,7 +12,11 @@
 #include "zsp/arl/dm/IDataTypeActivitySequence.h"
 #include "zsp/arl/dm/IDataTypeActivityTraverse.h"
 #include "zsp/arl/dm/IDataTypeAction.h"
+#include "zsp/arl/dm/IDataTypeAddrHandle.h"
+#include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
+#include "zsp/arl/dm/IDataTypeAddrSpaceTransparentC.h"
 #include "zsp/arl/dm/IDataTypeComponent.h"
+#include "zsp/arl/dm/IDataTypeCoreLibComponent.h"
 #include "zsp/arl/dm/IDataTypeFlowObj.h"
 #include "zsp/arl/dm/IDataTypeFunction.h"
 #include "zsp/arl/dm/IDataTypeFunctionImport.h"
@@ -75,7 +79,6 @@ enum class DataTypeKind {
 
 enum class DataTypeCoreE {
     PyObj,
-    TransparentAddrSpaceC,
     NumKinds
 };
 
@@ -96,6 +99,12 @@ public:
 	virtual IDataTypeAction *findDataTypeAction(const std::string &name) = 0;
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) = 0;
+
+    virtual IDataTypeAddrHandle *mkDataTypeAddrHandle(const std::string &name) = 0;
+
+	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(const std::string &name) = 0;
+
+	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(const std::string &name) = 0;
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) = 0;
 

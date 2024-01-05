@@ -57,6 +57,18 @@ public:
         return ctxt()->mkDataTypeAction(name);
     }
 
+	virtual IDataTypeAddrHandle *mkDataTypeAddrHandle(const std::string &name) override { 
+        return ctxt()->mkDataTypeAddrHandle(name);
+    }
+
+	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(const std::string &name) override { 
+        return ctxt()->mkDataTypeAddrSpaceC(name);
+    }
+
+	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(const std::string &name) override { 
+        return ctxt()->mkDataTypeAddrSpaceTransparentC(name);
+    }
+
 	virtual bool addDataTypeAction(IDataTypeAction *t) override { 
         return ctxt()->addDataTypeAction(t);
     }

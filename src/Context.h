@@ -31,7 +31,13 @@ public:
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override;
 
+    virtual IDataTypeAddrHandle *mkDataTypeAddrHandle(const std::string &name) override;
+
+	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(const std::string &name) override;
+
 	virtual bool addDataTypeAction(IDataTypeAction *t) override;
+
+	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(const std::string &name) override;
 
 	virtual IDataTypeFunction *findDataTypeFunction(const std::string &name) override;
 

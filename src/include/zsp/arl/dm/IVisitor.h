@@ -20,6 +20,9 @@ class IDataTypeActivityReplicate;
 class IDataTypeActivitySchedule;
 class IDataTypeActivitySequence;
 class IDataTypeActivityTraverse;
+class IDataTypeAddrHandle;
+class IDataTypeAddrSpaceC;
+class IDataTypeAddrSpaceTransparentC;
 class IDataTypeComponent;
 class IDataTypeFlowObj;
 class IDataTypeFunctionImport;
@@ -95,6 +98,12 @@ public:
 	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) = 0;
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) = 0;
+
+	virtual void visitDataTypeAddrHandle(IDataTypeAddrHandle *t) = 0;
+
+	virtual void visitDataTypeAddrSpaceC(IDataTypeAddrSpaceC *t) = 0;
+
+	virtual void visitDataTypeAddrSpaceTransparentC(IDataTypeAddrSpaceTransparentC *t) = 0;
 
 	virtual void visitDataTypeArlStruct(IDataTypeArlStruct *t) = 0;
 

@@ -12,6 +12,9 @@
 #include "DataTypeActivitySchedule.h"
 #include "DataTypeActivitySequence.h"
 #include "DataTypeActivityTraverse.h"
+#include "DataTypeAddrHandle.h"
+#include "DataTypeAddrSpaceC.h"
+#include "DataTypeAddrSpaceTransparentC.h"
 #include "DataTypeComponent.h"
 #include "DataTypeFlowObj.h"
 #include "DataTypeFunction.h"
@@ -83,7 +86,6 @@ namespace dm {
 
 Context::Context(vsc::dm::IContext *ctxt) : vsc::dm::ContextDelegator(ctxt) {
     m_core_types[(int)DataTypeCoreE::PyObj] = new DataTypePyObj(this);
-
 }
 
 Context::~Context() {
@@ -114,6 +116,18 @@ IDataTypeAction *Context::findDataTypeAction(const std::string &name) {
 
 IDataTypeAction *Context::mkDataTypeAction(const std::string &name) {
 	return new DataTypeAction(this, name);
+}
+
+IDataTypeAddrHandle *Context::mkDataTypeAddrHandle(const std::string &name) {
+    return new DataTypeAddrHandle(this, name);
+}
+
+IDataTypeAddrSpaceC *Context::mkDataTypeAddrSpaceC(const std::string &name) {
+	return new DataTypeAddrSpaceC(this, name);
+}
+
+IDataTypeAddrSpaceTransparentC *Context::mkDataTypeAddrSpaceTransparentC(const std::string &name) {
+	return new DataTypeAddrSpaceTransparentC(this, name);
 }
 
 bool Context::addDataTypeAction(IDataTypeAction *t) {

@@ -76,6 +76,24 @@ public:
 		delegate(&arl::dm::IVisitor::visitDataTypeActivityTraverse, t);
 	}
 
+	virtual void visitDataTypeAddrHandle(IDataTypeAddrHandle *t) override {
+        delegate(
+            &arl::dm::IVisitor::visitDataTypeAddrHandle,
+            &vsc::dm::IVisitor::visitDataTypeStruct, t);
+    }
+
+    virtual void visitDataTypeAddrSpaceC(IDataTypeAddrSpaceC *t) override {
+        delegate(
+            &arl::dm::IVisitor::visitDataTypeAddrSpaceC,
+            &vsc::dm::IVisitor::visitDataTypeStruct, t);
+    }
+
+    virtual void visitDataTypeAddrSpaceTransparentC(IDataTypeAddrSpaceTransparentC *t) override {
+        delegate(
+            &arl::dm::IVisitor::visitDataTypeAddrSpaceTransparentC,
+            &vsc::dm::IVisitor::visitDataTypeStruct, t);
+    }
+
     virtual void visitDataTypeArlStruct(IDataTypeArlStruct *t) override {
         delegate(
             &arl::dm::IVisitor::visitDataTypeArlStruct,

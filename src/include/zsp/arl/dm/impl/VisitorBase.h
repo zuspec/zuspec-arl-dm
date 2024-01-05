@@ -15,6 +15,9 @@
 #include "zsp/arl/dm/IDataTypeActivitySchedule.h"
 #include "zsp/arl/dm/IDataTypeActivitySequence.h"
 #include "zsp/arl/dm/IDataTypeActivityTraverse.h"
+#include "zsp/arl/dm/IDataTypeAddrHandle.h"
+#include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
+#include "zsp/arl/dm/IDataTypeAddrSpaceTransparentC.h"
 #include "zsp/arl/dm/IDataTypeComponent.h"
 #include "zsp/arl/dm/IDataTypeFlowObj.h"
 #include "zsp/arl/dm/IDataTypeFunction.h"
@@ -119,6 +122,18 @@ public:
 	}
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { }
+
+	virtual void visitDataTypeAddrSpaceC(IDataTypeAddrSpaceC *t) override {
+        m_this->visitDataTypeStruct(t);
+    }
+
+	virtual void visitDataTypeAddrSpaceTransparentC(IDataTypeAddrSpaceTransparentC *t) override {
+        visitDataTypeAddrSpaceC(t);
+    }
+
+	virtual void visitDataTypeAddrHandle(IDataTypeAddrHandle *t) override {
+        m_this->visitDataTypeStruct(t);
+    }
 
 	virtual void visitDataTypeArlStruct(IDataTypeArlStruct *t) override {
 		m_this->visitDataTypeStruct(t);

@@ -32,7 +32,7 @@ namespace dm {
 
 DataTypeArlStructValOpsDelegator::DataTypeArlStructValOpsDelegator(
         IContext            *ctxt,
-        const std::string   &name) : m_name(name) {
+        const std::string   &name) : m_name(name), m_bytesz(0), m_num_builtin(0) {
 
 }
 
@@ -165,8 +165,9 @@ vsc::dm::IModelField *DataTypeArlStructValOpsDelegator::mkTypeField(
 		ret = ctxt->ctxt()->mkModelFieldType(type, val_s);
 
 		for (uint32_t i=0; i<getFields().size(); i++) {
-            vsc::dm::ValRef val_f(val_s.getFieldRef(i));
-			ret->addField(getField(i)->mkModelField(ctxt, val_f));
+            int32_t idx = i - m_num_builtin;
+            vsc::dm::ValRef val_f(val_s.getFieldRef(idx));
+			ret->addField(getField(idx)->mkModelField(ctxt, val_f));
 		}
 	}
 

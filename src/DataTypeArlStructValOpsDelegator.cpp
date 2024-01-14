@@ -139,8 +139,9 @@ vsc::dm::IModelField *DataTypeArlStructValOpsDelegator::mkRootField(
 
 		// Need to build sub-fields and constraints
 		for (uint32_t i=0; i<getFields().size(); i++) {
-            vsc::dm::ValRef val_s(val.getFieldRef(i));
-			ret->addField(getField(i)->mkModelField(ctxt, val_s));
+            int32_t idx = i - getNumBuiltin();
+            vsc::dm::ValRef val_s(val.getFieldRef(idx));
+			ret->addField(getField(idx)->mkModelField(ctxt, val_s));
 		}
 	}
 

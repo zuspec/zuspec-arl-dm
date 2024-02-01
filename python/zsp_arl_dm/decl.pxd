@@ -21,6 +21,7 @@ ctypedef IDataTypeActivityReplicate *IDataTypeActivityReplicateP
 ctypedef IDataTypeActivitySchedule *IDataTypeActivityScheduleP
 ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
+ctypedef IDataTypeAddrHandle *IDataTypeAddrHandleP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
 ctypedef IDataTypeFunction *IDataTypeFunctionP
@@ -127,6 +128,10 @@ cdef extern from "zsp/arl/dm/IDataTypeActivityTraverse.h" namespace "zsp::arl::d
         vsc.ITypeExprFieldRef *getTarget() const
         vsc.ITypeConstraint *getWithC() const
         void setWithC(vsc.ITypeConstraint *c)
+
+cdef extern from "zsp/arl/dm/IDataTypeAddrHandle.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypeAddrHandle(vsc.IDataTypeStruct):
+        pass
     
 cdef extern from "zsp/arl/dm/IDataTypeComponent.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeComponent(vsc.IDataTypeStruct):

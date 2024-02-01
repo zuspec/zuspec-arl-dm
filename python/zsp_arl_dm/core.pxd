@@ -117,6 +117,13 @@ cdef class DataTypeActivityTraverse(DataTypeActivity):
     
     @staticmethod
     cdef mk(decl.IDataTypeActivityTraverse *hndl, bool owned=*)
+
+cdef class DataTypeAddrHandle(vsc.DataTypeStruct):
+
+    cdef decl.IDataTypeAddrHandle *asAddrHandle(self)
+
+    @staticmethod
+    cdef DataTypeAddrHandle mk(decl.IDataTypeAddrHandle *, bool owned=*)
     
     
 cdef class DataTypeComponent(vsc.DataTypeStruct):
@@ -313,6 +320,8 @@ cdef class TypeProcStmtVarDecl(TypeProcStmt):
 cdef class VisitorBase(vsc.VisitorBase):
 
     cpdef visitDataTypeAction(self, DataTypeAction t)
+
+    cpdef visitDataTypeAddrHandle(self, DataTypeAddrHandle t)
 
     cpdef visitDataTypeComponent(self, DataTypeComponent t)
 

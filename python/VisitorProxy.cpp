@@ -40,6 +40,12 @@ void VisitorProxy::visitDataTypeAction(IDataTypeAction *t) {
     VisitorProxy_visitDataTypeAction(m_obj, t);
 }
 
+void VisitorProxy::visitDataTypeAddrHandle(IDataTypeAddrHandle *t) {
+    fprintf(stdout, "VisitorProxy::visitDataTypeAddrHandle\n");
+    fflush(stdout);
+    VisitorProxy_visitDataTypeAddrHandle(m_obj, t);
+}
+
 void VisitorProxy::visitDataTypeComponent(IDataTypeComponent *t) {
     VisitorProxy_visitDataTypeComponent(m_obj, t);
 }

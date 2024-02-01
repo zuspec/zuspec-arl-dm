@@ -35,6 +35,8 @@ public:
 
     virtual void visitDataTypeAction(IDataTypeAction *t) override;
 
+	virtual void visitDataTypeAddrHandle(IDataTypeAddrHandle *t) override;
+
     virtual void visitDataTypeComponent(IDataTypeComponent *t) override;
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override;

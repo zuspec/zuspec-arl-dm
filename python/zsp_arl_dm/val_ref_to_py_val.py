@@ -24,24 +24,31 @@ from zsp_arl_dm.core import VisitorBase
 
 class ValRefToPyVal(VisitorBase):
 
-    def __init__(self):
+    def __init__(self, thread):
         super().__init__()
         self._ref = None
         self._val = None
+        self._thread = thread
         pass
 
     def toPyVal(self, v : vsc.ValRef):
         if not v.valid():
             raise Exception("ValRef is not valid")
 
-        if v.type() is None:
+        vt = v.type()
+        if vt is None:
             raise Exception("ValRef does not have a type")
 
         self._ref = v
 
-        self.visit(v.type())
+        self.visit(vt)
         
         return self._val
+    
+    def visitDataTypeAddrHandle(self, i):
+        print("AddrHandle")
+        val = self._thread.getAddrHandleValue(self._ref)
+        self._val = val.get_val_u()
 
     def visitDataTypeInt(self, i):
         vi = vsc.ValRefInt.fromValRef(self._ref)

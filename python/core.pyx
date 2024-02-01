@@ -421,6 +421,18 @@ cdef class DataTypeActivityTraverse(DataTypeActivity):
         ret._owned = owned
         return ret    
 
+cdef class DataTypeAddrHandle(vsc.DataTypeStruct):
+
+    cdef decl.IDataTypeAddrHandle *asAddrHandle(self):
+        return dynamic_cast[decl.IDataTypeAddrHandleP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeAddrHandle mk(decl.IDataTypeAddrHandle *hndl, bool owned=True):
+        ret = DataTypeAddrHandle()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
 cdef class DataTypeComponent(vsc.DataTypeStruct):
 
     cpdef getActionTypes(self):
@@ -847,6 +859,9 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitDataTypeAction(self, DataTypeAction t):
         pass
 
+    cpdef visitDataTypeAddrHandle(self, DataTypeAddrHandle t):
+        pass
+
     cpdef visitDataTypeComponent(self, DataTypeComponent t):
         pass
 
@@ -889,6 +904,11 @@ cdef class VisitorBase(vsc.VisitorBase):
 cdef public void VisitorProxy_visitDataTypeAction(obj, decl.IDataTypeAction *t) with gil:
     obj.enter()
     obj.visitDataTypeAction(DataTypeAction.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitDataTypeAddrHandle(obj, decl.IDataTypeAddrHandle *t) with gil:
+    obj.enter()
+    obj.visitDataTypeAddrHandle(DataTypeAddrHandle.mk(t, False))
     obj.leave()
 
 cdef public void VisitorProxy_visitDataTypeComponent(obj, decl.IDataTypeComponent *t) with gil:
@@ -938,6 +958,9 @@ cdef class WrapperBuilder(VisitorBase):
         self._obj[-1] = obj
 
     cpdef visitDataTypeAction(self, DataTypeAction t):
+        self._set_obj(t)
+
+    cpdef visitDataTypeAddrHandle(self, DataTypeAddrHandle t):
         self._set_obj(t)
 
     cpdef visitDataTypeComponent(self, DataTypeComponent t):

@@ -26,6 +26,7 @@ ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
 ctypedef IDataTypeFunction *IDataTypeFunctionP
 ctypedef IDataTypeFunctionParamDecl *IDataTypeFunctionParamDeclP
+ctypedef IDataTypePackedStruct *IDataTypePackedStructP
 ctypedef IFactory *IFactoryP
 ctypedef IModelEvalIterator *IModelEvalIteratorP
 ctypedef IModelFieldAction *IModelFieldActionP
@@ -189,6 +190,10 @@ cdef extern from "zsp/arl/dm/IDataTypeFunction.h" namespace "zsp::arl::dm":
         const cpp_vector[IDataTypeFunctionParamDeclP] &getParameters() const
         DataTypeFunctionFlags getFlags() const
         bool hasFlags(DataTypeFunctionFlags) const
+
+cdef extern from "zsp/arl/dm/IDataTypePackedStruct.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypePackedStruct(vsc.IDataTypeStruct):
+        pass
 
 cdef extern from "zsp/arl/dm/IFactory.h" namespace "zsp::arl::dm":
     cdef cppclass IFactory:

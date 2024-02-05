@@ -569,6 +569,18 @@ cdef class DataTypeFunction(vsc.ObjBase):
         ret._owned = owned
         return ret
 
+cdef class DataTypePackedStruct(vsc.DataTypeStruct):
+
+    cdef decl.IDataTypePackedStruct *asPacked(self):
+        return dynamic_cast[decl.IDataTypePackedStructP](self._hndl)
+
+    @staticmethod
+    cdef DataTypePackedStruct mk(decl.IDataTypePackedStruct *hndl, bool owned=True):
+        ret = DataTypePackedStruct()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
 cdef class ModelBuildContext(vsc.ModelBuildContext):
 
     def __init__(self, Context ctxt):
@@ -871,6 +883,9 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitDataTypeFunction(self, DataTypeFunction t):
         pass
 
+    cpdef visitDataTypePackedStruct(self, DataTypePackedStruct t):
+        pass
+
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         pass
 
@@ -920,6 +935,11 @@ cdef public void VisitorProxy_visitDataTypeFlowObj(obj, decl.IDataTypeFlowObj *t
 cdef public void VisitorProxy_visitDataTypeFunction(obj, decl.IDataTypeFunction *t) with gil:
     obj.visitDataTypeFunction(DataTypeFunction.mk(t, False))
 
+cdef public void VisitorProxy_visitDataTypePackedStruct(obj, decl.IDataTypePackedStruct *t) with gil:
+    obj.enter()
+    obj.visitDataTypePackedStruct(DataTypePackedStruct.mk(t, False))
+    obj.leave()
+
 cdef public void VisitorProxy_visitModelFieldAction(obj, decl.IModelFieldAction *a) with gil:
     obj.visitModelFieldAction(ModelFieldAction.mk(a, False))
 
@@ -967,6 +987,9 @@ cdef class WrapperBuilder(VisitorBase):
         self._set_obj(t)
 
     cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t):
+        self._set_obj(t)
+
+    cpdef visitDataTypePackedStruct(self, DataTypePackedStruct t):
         self._set_obj(t)
 
     cpdef visitModelFieldAction(self, ModelFieldAction a):

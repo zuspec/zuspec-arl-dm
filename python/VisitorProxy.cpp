@@ -55,6 +55,10 @@ void VisitorProxy::visitDataTypeFunction(IDataTypeFunction *t) {
     VisitorProxy_visitDataTypeFunction(m_obj, t);
 }
 
+void VisitorProxy::visitDataTypePackedStruct(IDataTypePackedStruct *t) {
+    VisitorProxy_visitDataTypePackedStruct(m_obj, t);
+}
+
 void VisitorProxy::visitModelFieldAction(IModelFieldAction *f) {
     VisitorProxy_visitModelFieldAction(m_obj, f);
 }

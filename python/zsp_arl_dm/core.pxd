@@ -182,6 +182,13 @@ cdef class DataTypeFunction(vsc.ObjBase):
     @staticmethod
     cdef DataTypeFunction mk(decl.IDataTypeFunction *hndl, bool owned=*)
 
+cdef class DataTypePackedStruct(vsc.DataTypeStruct):
+
+    cdef decl.IDataTypePackedStruct *asPacked(self)
+
+    @staticmethod
+    cdef DataTypePackedStruct mk(decl.IDataTypePackedStruct *hndl, bool owned=*)
+
 cdef class ModelBuildContext(vsc.ModelBuildContext):
     pass
 
@@ -328,6 +335,8 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t)
 
     cpdef visitDataTypeFunction(self, DataTypeFunction t)
+
+    cpdef visitDataTypePackedStruct(self, DataTypePackedStruct t)
 
     cpdef visitModelFieldAction(self, ModelFieldAction a)
 

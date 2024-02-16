@@ -31,13 +31,13 @@ namespace dm {
 class TypeProcStmtAssign : public virtual ITypeProcStmtAssign {
 public:
     TypeProcStmtAssign(
-        vsc::dm::ITypeExprFieldRef      *lhs,
-        TypeProcStmtAssignOp        op,
-        vsc::dm::ITypeExpr              *rhs);
+        vsc::dm::ITypeExpr      *lhs,
+        TypeProcStmtAssignOp    op,
+        vsc::dm::ITypeExpr      *rhs);
 
     virtual ~TypeProcStmtAssign();
 
-    virtual vsc::dm::ITypeExprFieldRef *getLhs() override {
+    virtual vsc::dm::ITypeExpr *getLhs() override {
         return m_lhs.get();
     }
 
@@ -52,9 +52,9 @@ public:
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    vsc::dm::ITypeExprFieldRefUP                m_lhs;
-    TypeProcStmtAssignOp                    m_op;
-    vsc::dm::ITypeExprUP                        m_rhs;
+    vsc::dm::ITypeExprUP                m_lhs;
+    TypeProcStmtAssignOp                m_op;
+    vsc::dm::ITypeExprUP                m_rhs;
 
 };
 

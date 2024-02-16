@@ -48,8 +48,8 @@ DataTypeActivityReplicate::DataTypeActivityReplicate(
 
     vsc::dm::ITypeExprFieldRef *count_r = ctxt->mkTypeExprFieldRef(
         vsc::dm::ITypeExprFieldRef::RootRefKind::BottomUpScope,
-        -1);
-    count_r->addPathElem(0);
+        -1,
+        0);
     addConstraint(ctxt->mkTypeConstraintExpr(
         ctxt->mkTypeExprBin(
             count_r,

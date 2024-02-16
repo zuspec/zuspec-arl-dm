@@ -44,7 +44,7 @@ public:
 
     virtual ~ITypeProcStmtAssign() { }
 
-    virtual vsc::dm::ITypeExprFieldRef *getLhs() = 0;
+    virtual vsc::dm::ITypeExpr *getLhs() = 0;
 
     virtual TypeProcStmtAssignOp op() const = 0;
 

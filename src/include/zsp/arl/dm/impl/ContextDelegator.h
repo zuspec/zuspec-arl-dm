@@ -420,9 +420,9 @@ public:
     }
 
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
-			vsc::dm::ITypeExprFieldRef		*lhs,
-			TypeProcStmtAssignOp		op,
-			vsc::dm::ITypeExpr				*rhs) { 
+			vsc::dm::ITypeExpr		*lhs,
+			TypeProcStmtAssignOp	op,
+			vsc::dm::ITypeExpr		*rhs) { 
         return ctxt()->mkTypeProcStmtAssign(lhs, op, rhs);
     }
 

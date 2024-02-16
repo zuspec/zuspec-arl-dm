@@ -574,17 +574,6 @@ void TypeModelDumperJSON::visitTypeExprFieldRef(vsc::dm::ITypeExprFieldRef *e) {
     nlohmann::json expr;
     expr["kind"] = "type-expr-field-ref";
     expr["root-kind"] = root_ref_kind_m.find(e->getRootRefKind())->second;
-    nlohmann::json &path = (expr["path"] = nlohmann::json::array());
-
-    if (e->getRootRefKind() == vsc::dm::ITypeExprFieldRef::RootRefKind::RootExpr) {
-        visitExpr(expr["expr"], e->getRootExpr());
-    }
-
-    for (std::vector<int32_t>::const_iterator
-        it=e->getPath().begin();
-        it!=e->getPath().end(); it++) {
-        path.push_back(*it);
-    }
 
     *m_json_s.back() = expr;
 }

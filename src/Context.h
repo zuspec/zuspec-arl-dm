@@ -262,9 +262,9 @@ public:
             bool                    own) override;
 
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
-			vsc::dm::ITypeExprFieldRef		*lhs,
-			TypeProcStmtAssignOp		op,
-			vsc::dm::ITypeExpr				*rhs) override;
+			vsc::dm::ITypeExpr		*lhs,
+			TypeProcStmtAssignOp	op,
+			vsc::dm::ITypeExpr		*rhs) override;
 
 	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() override;
 

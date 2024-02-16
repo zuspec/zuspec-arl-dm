@@ -337,9 +337,9 @@ public:
             bool                    own) = 0;
 
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
-			vsc::dm::ITypeExprFieldRef		*lhs,
-			TypeProcStmtAssignOp		op,
-			vsc::dm::ITypeExpr				*rhs) = 0;
+			vsc::dm::ITypeExpr		*lhs,
+			TypeProcStmtAssignOp	op,
+			vsc::dm::ITypeExpr		*rhs) = 0;
 
 	virtual ITypeProcStmtBreak *mkTypeProcStmtBreak() = 0;
 

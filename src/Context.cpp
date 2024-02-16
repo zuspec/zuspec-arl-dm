@@ -563,9 +563,9 @@ ITypeFieldRegGroup *Context::mkTypeFieldRegGroup(
 }
 
 ITypeProcStmtAssign *Context::mkTypeProcStmtAssign(
-			vsc::dm::ITypeExprFieldRef		*lhs,
-			TypeProcStmtAssignOp		op,
-			vsc::dm::ITypeExpr				*rhs) {
+			vsc::dm::ITypeExpr		*lhs,
+			TypeProcStmtAssignOp	op,
+			vsc::dm::ITypeExpr		*rhs) {
 	return new TypeProcStmtAssign(lhs, op, rhs);
 }
 

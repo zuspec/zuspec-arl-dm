@@ -29,9 +29,9 @@ namespace dm {
 
 
 TypeProcStmtAssign::TypeProcStmtAssign(
-        vsc::dm::ITypeExprFieldRef      *lhs,
-        TypeProcStmtAssignOp        op,
-        vsc::dm::ITypeExpr              *rhs) : m_lhs(lhs), m_op(op), m_rhs(rhs) {
+        vsc::dm::ITypeExpr      *lhs,
+        TypeProcStmtAssignOp    op,
+        vsc::dm::ITypeExpr      *rhs) : m_lhs(lhs), m_op(op), m_rhs(rhs) {
 
 }
 

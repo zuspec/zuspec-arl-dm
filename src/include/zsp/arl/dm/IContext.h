@@ -53,6 +53,7 @@
 #include "zsp/arl/dm/ITypeFieldPool.h"
 #include "zsp/arl/dm/ITypeFieldReg.h"
 #include "zsp/arl/dm/ITypeFieldRegGroup.h"
+#include "zsp/arl/dm/ITypeFieldRegGroupArr.h"
 #include "zsp/arl/dm/ITypeProcStmtAssign.h"
 #include "zsp/arl/dm/ITypeProcStmtBreak.h"
 #include "zsp/arl/dm/ITypeProcStmtContinue.h"
@@ -335,6 +336,14 @@ public:
             const std::string       &name,
             vsc::dm::IDataType      *type,
             bool                    own) = 0;
+
+    virtual ITypeFieldRegGroupArr *mkTypeFieldRegGroupArr(
+            const std::string       &name,
+            vsc::dm::IDataType      *type,
+            bool                    own_type,
+            vsc::dm::IDataType      *elem_type,
+            bool                    own_elem_type,
+            int32_t                 size) = 0;
 
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
 			vsc::dm::ITypeExpr		*lhs,

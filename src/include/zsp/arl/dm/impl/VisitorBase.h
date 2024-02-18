@@ -58,6 +58,7 @@
 #include "zsp/arl/dm/ITypeFieldPool.h"
 #include "zsp/arl/dm/ITypeFieldReg.h"
 #include "zsp/arl/dm/ITypeFieldRegGroup.h"
+#include "zsp/arl/dm/ITypeFieldRegGroupArr.h"
 #include "zsp/arl/dm/ITypeProcStmtAssign.h"
 #include "zsp/arl/dm/ITypeProcStmtBreak.h"
 #include "zsp/arl/dm/ITypeProcStmtContinue.h"
@@ -320,6 +321,10 @@ public:
 
 	virtual void visitTypeFieldRegGroup(ITypeFieldRegGroup *f) override {
         m_this->visitTypeField(f);
+    }
+
+	virtual void visitTypeFieldRegGroupArr(ITypeFieldRegGroupArr *f) override {
+        dynamic_cast<IVisitor *>(m_this)->visitTypeFieldRegGroup(f);
     }
 
 	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override {

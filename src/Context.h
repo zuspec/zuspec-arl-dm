@@ -261,6 +261,14 @@ public:
             vsc::dm::IDataType      *type,
             bool                    own) override;
 
+    virtual ITypeFieldRegGroupArr *mkTypeFieldRegGroupArr(
+            const std::string       &name,
+            vsc::dm::IDataType      *type,
+            bool                    own_type,
+            vsc::dm::IDataType      *elem_type,
+            bool                    own_elem_type,
+            int32_t                 size) override;
+
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(
 			vsc::dm::ITypeExpr		*lhs,
 			TypeProcStmtAssignOp	op,

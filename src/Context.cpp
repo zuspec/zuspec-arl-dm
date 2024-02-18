@@ -63,6 +63,7 @@
 #include "TypeFieldPool.h"
 #include "TypeFieldReg.h"
 #include "TypeFieldRegGroup.h"
+#include "TypeFieldRegGroupArr.h"
 #include "TypeProcStmtAssign.h"
 #include "TypeProcStmtBreak.h"
 #include "TypeProcStmtContinue.h"
@@ -560,6 +561,16 @@ ITypeFieldRegGroup *Context::mkTypeFieldRegGroup(
         name,
         findDataTypeWrapper(findDataTypeInt(false, 64), type, true),
         own);
+}
+
+ITypeFieldRegGroupArr *Context::mkTypeFieldRegGroupArr(
+    const std::string       &name,
+    vsc::dm::IDataType      *type,
+    bool                    own_type,
+    vsc::dm::IDataType      *elem_type,
+    bool                    own_elem_type,
+    int32_t                 size) {
+    return new TypeFieldRegGroupArr(name, type, own_type, elem_type, own_elem_type, size);
 }
 
 ITypeProcStmtAssign *Context::mkTypeProcStmtAssign(

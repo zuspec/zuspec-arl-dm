@@ -408,15 +408,26 @@ public:
 	virtual ITypeFieldReg *mkTypeFieldReg(
 			const std::string		&name,
 			vsc::dm::IDataType		*type,
-			bool					own) {
+			bool					own) override {
         return ctxt()->mkTypeFieldReg(name, type, own);
     }
 
 	virtual ITypeFieldRegGroup *mkTypeFieldRegGroup(
 			const std::string		&name,
 			vsc::dm::IDataType		*type,
-			bool					own) {
+			bool					own) override {
         return ctxt()->mkTypeFieldRegGroup(name, type, own);
+    }
+
+    virtual ITypeFieldRegGroupArr *mkTypeFieldRegGroupArr(
+            const std::string       &name,
+            vsc::dm::IDataType      *type,
+            bool                    own_type,
+            vsc::dm::IDataType      *elem_type,
+            bool                    own_elem_type,
+            int32_t                 size) override {
+        return ctxt()->mkTypeFieldRegGroupArr(name, type,
+            own_type, elem_type, own_elem_type, size);
     }
 
 	virtual ITypeProcStmtAssign *mkTypeProcStmtAssign(

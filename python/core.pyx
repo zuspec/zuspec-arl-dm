@@ -39,8 +39,17 @@ cdef class Factory(object):
 
         if _inst is None:
             ext_dir = os.path.dirname(os.path.abspath(__file__))
+            build_dir = os.path.abspath(os.path.join(ext_dir, "../../build"))
 
-            core_lib = os.path.join(ext_dir, "libzsp-arl-dm.so")
+            core_lib = None
+            libname = "libzsp-arl-dm.so"
+            for libdir in ("lib", "lib64"):
+                if os.path.isfile(os.path.join(build_dir, libdir, libname)):
+                    core_lib = os.path.join(build_dir, libdir, libname)
+                    break
+            if core_lib is None:
+                core_lib = os.path.join(ext_dir, libname)
+
             if not os.path.isfile(core_lib):
                 raise Exception("Extension library core \"%s\" desn't exist" % core_lib)
             so = ctypes.cdll.LoadLibrary(core_lib)

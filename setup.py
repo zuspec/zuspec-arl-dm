@@ -2,6 +2,7 @@
 #* setup.py for zuspec-arl-dm
 #****************************************************************************
 import os
+import sys
 from setuptools import Extension, find_namespace_packages
 
 version="0.0.1"
@@ -64,7 +65,7 @@ setup_args = dict(
   ],
   entry_points={
     'ivpm.pkginfo': [
-        'zuspec-arl-dm = zsp_arl_dm.pkginfo.PkgInfo'
+        'zuspec-arl-dm = zsp_arl_dm.pkginfo:PkgInfo'
     ]
   },
   setup_requires=[
@@ -85,5 +86,6 @@ if isSrcBuild:
         ]
     }
 
+print("path: %s" % str(sys.path))
 setup(**setup_args)
 

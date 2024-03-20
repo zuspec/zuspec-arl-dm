@@ -52,7 +52,8 @@ IContext *Factory::mkContext(vsc::dm::IContext *ctxt) {
 IRewriteContext *Factory::mkRewriteContext(
             IContext                                *ctxt,
             const std::vector<vsc::dm::IAccept *>   &roots) {
-    return new RewriteContext(ctxt, roots);
+//    return new RewriteContext(ctxt, roots);
+    return 0;
 }
 
 ITypeModelDumper *Factory::mkTypeModelDumperJSON(

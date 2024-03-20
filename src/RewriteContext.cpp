@@ -25,12 +25,10 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
-
+#ifdef UNDEFINED
 RewriteContext::RewriteContext(
     IContext                                *ctxt,
-    const std::vector<vsc::dm::IAccept *>   &roots) : 
-    ContextDelegator(ctxt, false),
-    vsc::dm::ContextDelegator(ctxt, false) {
+    const std::vector<vsc::dm::IAccept *>   &roots) : ContextDelegator(ctxt, false) {
     
     m_context_s.push_back({});
     for (std::vector<vsc::dm::IAccept *>::const_iterator
@@ -77,6 +75,8 @@ void RewriteContext::popContext() {
 int32_t RewriteContext::contextDepth() {
     return m_context_s.size()-1;
 }
+
+#endif /* UNDEFINED */
 
 }
 }

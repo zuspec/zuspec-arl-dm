@@ -26,9 +26,10 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
+#ifdef UNDEFINED
 class RewriteContext :
     public virtual IRewriteContext,
-    public virtual zsp::arl::dm::ContextDelegator {
+    public ContextDelegator {
 public:
     RewriteContext(
         IContext                                *ctxt,
@@ -52,6 +53,8 @@ private:
     using ContextT=std::vector<vsc::dm::UP<vsc::dm::IAccept>>;
     std::vector<ContextT>                       m_context_s;
 };
+
+#endif
 
 }
 }

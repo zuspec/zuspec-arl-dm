@@ -29,9 +29,8 @@ namespace dm {
 
 
 class IRewriteContext :
-    public virtual IContext,
     public virtual vsc::dm::IRewriteContext,
-    public virtual ContextDelegator {
+    public virtual IContext {
 public:
 
     virtual ~IRewriteContext() { }

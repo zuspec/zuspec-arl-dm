@@ -284,7 +284,7 @@ bool Context::addDataTypeFlowObj(IDataTypeFlowObj *t) {
 
 IDataTypePackedStruct *Context::findDataTypePackedStruct(
             const std::string   &name) {
-
+    return 0;
 }
 
 IDataTypePackedStruct *Context::mkDataTypePackedStruct(
@@ -596,7 +596,7 @@ ITypeProcStmtExpr *Context::mkTypeProcStmtExpr(
 ITypeProcStmtForeach *Context::mkTypeProcStmtForeach(
 			vsc::dm::ITypeExpr		*target,
 			ITypeProcStmt		*body) { 
-
+    return 0;
 }
 
 ITypeProcStmtIfClause *Context::mkTypeProcStmtIfClause(

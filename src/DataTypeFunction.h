@@ -102,7 +102,9 @@ public:
     }
 
     // Implementation of ITypeProcStmtDeclScope for function parameters
-    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) override { }
+    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) override { 
+        return -1;
+    }
 
     virtual int32_t getNumVariables() override {
         return m_variables.size();

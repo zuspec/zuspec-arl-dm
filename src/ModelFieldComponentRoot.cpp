@@ -205,14 +205,12 @@ void ModelFieldComponentRoot::enterComponentScope(int32_t level, int32_t idx, IM
         comp->getDataTypeT<IDataTypeComponent>());
 
     if (ct_it == m_comp_type_inst_m.end()) {
+        CompType2InstData data;
+        data.instances = {comp};
+        data.subinst_m = {CompType2InstIdMapT()};
+        
         comp->setId(0);
-        ct_it = m_comp_type_inst_m.insert({
-            comp->getDataTypeT<IDataTypeComponent>(),
-            {
-                .instances={comp},
-                .subinst_m={CompType2InstIdMapT()}
-            }
-        }).first;
+        ct_it = m_comp_type_inst_m.insert({comp->getDataTypeT<IDataTypeComponent>(), data}).first;
         m_comp_type_l.push_back(comp->getDataTypeT<IDataTypeComponent>());
 
         // Since we know this is the first entry of its type,

@@ -25,6 +25,7 @@ jobs:
             BUILD_NUM: ${{ github.run_id }}
           run: |
             echo "BUILD_NUM=${BUILD_NUM}" >> python/zsp_arl_dm/__build_num__.py
+            ls python/zsp_arl_dm
             ${IVPM_PYTHON} -m pip install ivpm cython
             ${IVPM_PYTHON} -m ivpm update -a
         - name: Build packages
@@ -66,6 +67,7 @@ jobs:
             BUILD_NUM: ${{ github.run_id }}
           run: |
             echo "BUILD_NUM=${BUILD_NUM}" >> python/zsp_arl_dm/__build_num__.py
+            ls python/zsp_arl_dm
             ./packages/python/bin/python3 setup.py bdist_wheel
         - name: Publish to PyPi
           if: startsWith(github.ref, 'refs/heads/main')

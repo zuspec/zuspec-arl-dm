@@ -43,7 +43,7 @@ jobs:
               rm $whl
             done
         - name: Publish to PyPi
-          if: startsWith(github.ref, 'refs/heads/master')
+          if: startsWith(github.ref, 'refs/heads/main')
           env:
             IVPM_PYTHON: ./packages/python/bin/python
             BUILD_NUM: ${{ github.run_id }}

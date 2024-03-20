@@ -87,14 +87,14 @@ vsc::dm::IModelField *DataTypeActivityScope::mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
 		bool						is_ref) {
-
+    return 0;
 }
 
 vsc::dm::IModelField *DataTypeActivityScope::mkTypeField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		vsc::dm::ITypeField				*type,
         const vsc::dm::ValRef           &val) {
-			
+    return 0;
 }
 
 }

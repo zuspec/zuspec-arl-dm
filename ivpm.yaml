@@ -12,14 +12,14 @@ package:
     - name: vsc-dm
       url: https://github.com/vsc-tools/vsc-dm.git
     - name: json
-      url: https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz
+      url: https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
 
   - name: default-dev
     deps:
     - name: vsc-dm
       url: https://github.com/vsc-tools/vsc-dm.git
     - name: json
-      url: https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz
+      url: https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
     - name: ninja
       src: pypi
     - name: cython

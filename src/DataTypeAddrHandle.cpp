@@ -30,6 +30,7 @@ namespace dm {
 DataTypeAddrHandle::DataTypeAddrHandle(
     IContext            *ctxt,
     const std::string   &name) : DataTypeArlStructValOpsDelegator(ctxt, name) {
+#ifdef UNDEFINED
     addField(ctxt->mkTypeFieldPhy(
         "hndl",
         ctxt->getDataTypeCore(vsc::dm::DataTypeCoreE::Ptr),
@@ -37,6 +38,7 @@ DataTypeAddrHandle::DataTypeAddrHandle(
         vsc::dm::TypeFieldAttr::NoAttr,
         vsc::dm::ValRef()));
     m_num_builtin++;
+#endif /* UNDEFINED */
 }
 
 DataTypeAddrHandle::~DataTypeAddrHandle() {

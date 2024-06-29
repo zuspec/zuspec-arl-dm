@@ -12,6 +12,7 @@
 #include "DataTypeActivitySchedule.h"
 #include "DataTypeActivitySequence.h"
 #include "DataTypeActivityTraverse.h"
+#include "DataTypeActivityTraverseType.h"
 #include "DataTypeAddrHandle.h"
 #include "DataTypeAddrSpaceC.h"
 #include "DataTypeAddrSpaceTransparentC.h"
@@ -213,6 +214,12 @@ IDataTypeActivityTraverse *Context::mkDataTypeActivityTraverse(
 		vsc::dm::ITypeExprFieldRef	*target,
 		vsc::dm::ITypeConstraint	*with_c) {
 	return new DataTypeActivityTraverse(target, with_c);
+}
+
+IDataTypeActivityTraverseType *Context::mkDataTypeActivityTraverseType(
+            arl::dm::IDataTypeAction        *target,
+			vsc::dm::ITypeConstraint		*with_c) {
+    return new DataTypeActivityTraverseType(target, with_c);
 }
 
 IDataTypeComponent *Context::findDataTypeComponent(const std::string &name) {

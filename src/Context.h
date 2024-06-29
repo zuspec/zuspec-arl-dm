@@ -80,6 +80,10 @@ public:
 			vsc::dm::ITypeExprFieldRef	*target,
 			vsc::dm::ITypeConstraint	*with_c) override;
 
+	virtual IDataTypeActivityTraverseType *mkDataTypeActivityTraverseType(
+            arl::dm::IDataTypeAction        *target,
+			vsc::dm::ITypeConstraint		*with_c) override;
+
 	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) override;
 
 	virtual IDataTypeComponent *mkDataTypeComponent(const std::string &name) override;

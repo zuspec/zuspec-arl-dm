@@ -148,6 +148,10 @@ public:
 			vsc::dm::ITypeExprFieldRef 		*target,
 			vsc::dm::ITypeConstraint		*with_c) = 0;
 
+	virtual IDataTypeActivityTraverseType *mkDataTypeActivityTraverseType(
+            arl::dm::IDataTypeAction        *target,
+			vsc::dm::ITypeConstraint		*with_c) = 0;
+
 	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) = 0;
 
 	virtual IDataTypeComponent *mkDataTypeComponent(const std::string &name) = 0;

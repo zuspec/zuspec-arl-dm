@@ -15,6 +15,7 @@
 #include "zsp/arl/dm/IDataTypeActivitySchedule.h"
 #include "zsp/arl/dm/IDataTypeActivitySequence.h"
 #include "zsp/arl/dm/IDataTypeActivityTraverse.h"
+#include "zsp/arl/dm/IDataTypeActivityTraverseType.h"
 #include "zsp/arl/dm/IDataTypeAddrHandle.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceTransparentC.h"
@@ -97,7 +98,10 @@ public:
 		}
 	}
 
+    virtual void visitDataTypeActivity(IDataTypeActivity *t) override { }
+
 	virtual void visitDataTypeActivityBind(IDataTypeActivityBind *t) override {
+        visitDataTypeActivity(t);
 		for (std::vector<vsc::dm::ITypeExprFieldRefUP>::const_iterator
 			it=t->getTargets().begin();
 			it!=t->getTargets().end(); it++) {
@@ -106,23 +110,33 @@ public:
 	}
 
 	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) override {
+        visitDataTypeActivity(t);
 		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivityReplicate(IDataTypeActivityReplicate *t) override {
+        visitDataTypeActivity(t);
 		t->getCount()->accept(m_this);
 		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override {
+        visitDataTypeActivity(t);
 		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) override {
+        visitDataTypeActivity(t);
 		m_this->visitDataTypeStruct(t);
 	}
 
-	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { }
+	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { 
+        visitDataTypeActivity(t);
+    }
+
+	virtual void visitDataTypeActivityTraverseType(IDataTypeActivityTraverseType *t) override { 
+        visitDataTypeActivity(t);
+    }
 
 	virtual void visitDataTypeAddrSpaceC(IDataTypeAddrSpaceC *t) override {
         m_this->visitDataTypeStruct(t);

@@ -14,12 +14,14 @@ namespace dm {
 
 
 class IDataTypeAction;
+class IDataTypeActivity;
 class IDataTypeActivityBind;
 class IDataTypeActivityParallel;
 class IDataTypeActivityReplicate;
 class IDataTypeActivitySchedule;
 class IDataTypeActivitySequence;
 class IDataTypeActivityTraverse;
+class IDataTypeActivityTraverseType;
 class IDataTypeAddrHandle;
 class IDataTypeAddrSpaceC;
 class IDataTypeAddrSpaceTransparentC;
@@ -88,6 +90,8 @@ public:
 
 	virtual void visitDataTypeAction(IDataTypeAction *t) = 0;
 
+	virtual void visitDataTypeActivity(IDataTypeActivity *t) = 0;
+
 	virtual void visitDataTypeActivityBind(IDataTypeActivityBind *t) = 0;
 
 	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) = 0;
@@ -99,6 +103,8 @@ public:
 	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) = 0;
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) = 0;
+
+	virtual void visitDataTypeActivityTraverseType(IDataTypeActivityTraverseType *t) = 0;
 
 	virtual void visitDataTypeAddrHandle(IDataTypeAddrHandle *t) = 0;
 

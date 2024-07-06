@@ -16,6 +16,8 @@
 #include "zsp/arl/dm/IDataTypeActivitySequence.h"
 #include "zsp/arl/dm/IDataTypeActivityTraverse.h"
 #include "zsp/arl/dm/IDataTypeActivityTraverseType.h"
+#include "zsp/arl/dm/IDataTypeAddrClaim.h"
+#include "zsp/arl/dm/IDataTypeAddrClaimTransparent.h"
 #include "zsp/arl/dm/IDataTypeAddrHandle.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceTransparentC.h"
@@ -52,6 +54,8 @@
 #include "zsp/arl/dm/ITypeExprPythonModuleRef.h"
 #include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeFieldActivity.h"
+#include "zsp/arl/dm/ITypeFieldAddrClaim.h"
+#include "zsp/arl/dm/ITypeFieldAddrClaimTransparent.h"
 #include "zsp/arl/dm/ITypeFieldClaim.h"
 #include "zsp/arl/dm/ITypeFieldExecutor.h"
 #include "zsp/arl/dm/ITypeFieldExecutorClaim.h"
@@ -136,6 +140,14 @@ public:
 
 	virtual void visitDataTypeActivityTraverseType(IDataTypeActivityTraverseType *t) override { 
         visitDataTypeActivity(t);
+    }
+
+	virtual void visitDataTypeAddrClaim(IDataTypeAddrClaim *t) override {
+        visitDataTypeArlStruct(t);
+    }
+
+	virtual void visitDataTypeAddrClaimTransparent(IDataTypeAddrClaimTransparent *t) override {
+        visitDataTypeAddrClaim(t);
     }
 
 	virtual void visitDataTypeAddrSpaceC(IDataTypeAddrSpaceC *t) override {
@@ -308,6 +320,14 @@ public:
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) override {
 		m_this->visitTypeField(f);
 	}
+
+	virtual void visitTypeFieldAddrClaim(ITypeFieldAddrClaim *f) override {
+        m_this->visitTypeField(f);
+    }
+
+	virtual void visitTypeFieldAddrClaimTransparent(ITypeFieldAddrClaimTransparent *f) override {
+        dynamic_cast<IVisitor *>(m_this)->visitTypeFieldAddrClaim(f);
+    }
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
 		m_this->visitTypeFieldRef(f);

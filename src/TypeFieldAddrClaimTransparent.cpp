@@ -1,5 +1,5 @@
 /*
- * DataTypeAddrSpaceC.cpp
+ * TypeFieldAddrClaimTransparent.cpp
  *
  * Copyright 2023 Matthew Ballance and Contributors
  *
@@ -19,7 +19,7 @@
  *     Author:
  */
 #include "zsp/arl/dm/IVisitor.h"
-#include "DataTypeAddrSpaceC.h"
+#include "TypeFieldAddrClaimTransparent.h"
 
 
 namespace zsp {
@@ -27,34 +27,25 @@ namespace arl {
 namespace dm {
 
 
-DataTypeAddrSpaceC::DataTypeAddrSpaceC(
-        IContext                    *ctxt,
-        const std::string           &name,
-        vsc::dm::IDataTypeStruct    *trait_t) : 
-        DataTypeComponentValOpsDelegator(ctxt, name),
+TypeFieldAddrClaimTransparent::TypeFieldAddrClaimTransparent(
+        const std::string               &name,
+        vsc::dm::IDataType              *type,
+        bool                            owned,
+        vsc::dm::IDataTypeStruct        *trait_t) :
+        TypeField(name, type, owned, vsc::dm::TypeFieldAttr::NoAttr),
         m_trait_t(trait_t) {
-#ifdef UNDEFINED
-    addField(ctxt->mkTypeFieldPhy(
-        "self",
-        ctxt->getDataTypeCore(vsc::dm::DataTypeCoreE::Ptr),
-        false,
-        vsc::dm::TypeFieldAttr::NoAttr,
-        vsc::dm::ValRef()
-    ));
-    m_num_builtin++;
-#endif /* UNDEFINED */
 
 }
 
-DataTypeAddrSpaceC::~DataTypeAddrSpaceC() {
+TypeFieldAddrClaimTransparent::~TypeFieldAddrClaimTransparent() {
 
 }
 
-void DataTypeAddrSpaceC::accept(vsc::dm::IVisitor *v) {
+void TypeFieldAddrClaimTransparent::accept(vsc::dm::IVisitor *v) {
     if (dynamic_cast<IVisitor *>(v)) {
-        dynamic_cast<IVisitor *>(v)->visitDataTypeAddrSpaceC(this);
+        dynamic_cast<IVisitor *>(v)->visitTypeFieldAddrClaimTransparent(this);
     } else if (v->cascade()) {
-        v->visitDataTypeStruct(this);
+        v->visitTypeField(this);
     }
 }
 

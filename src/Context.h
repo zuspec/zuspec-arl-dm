@@ -31,13 +31,21 @@ public:
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override;
 
+    virtual IDataTypeAddrClaim *mkDataTypeAddrClaim(const std::string &name) override;
+
+    virtual IDataTypeAddrClaimTransparent *mkDataTypeAddrClaimTransparent(const std::string &name) override;
+
     virtual IDataTypeAddrHandle *mkDataTypeAddrHandle(const std::string &name) override;
 
-	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(const std::string &name) override;
+	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) override;
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) override;
 
-	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(const std::string &name) override;
+	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) override;
 
 	virtual IDataTypeFunction *findDataTypeFunction(const std::string &name) override;
 
@@ -219,14 +227,16 @@ public:
 			bool					owned) override;
 
     virtual ITypeFieldAddrClaim *mkTypeFieldAddrClaim(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) override;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) override;
 
     virtual ITypeFieldAddrClaimTransparent *mkTypeFieldAddrClaimTransparent(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) override;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) override;
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,

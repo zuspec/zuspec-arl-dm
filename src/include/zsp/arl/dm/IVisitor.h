@@ -22,6 +22,8 @@ class IDataTypeActivitySchedule;
 class IDataTypeActivitySequence;
 class IDataTypeActivityTraverse;
 class IDataTypeActivityTraverseType;
+class IDataTypeAddrClaim;
+class IDataTypeAddrClaimTransparent;
 class IDataTypeAddrHandle;
 class IDataTypeAddrSpaceC;
 class IDataTypeAddrSpaceTransparentC;
@@ -60,6 +62,8 @@ class ITypeExprPythonFieldRef;
 class ITypeExprPythonMethodCall;
 class ITypeExprPythonModuleRef;
 class ITypeFieldActivity;
+class ITypeFieldAddrClaim;
+class ITypeFieldAddrClaimTransparent;
 class ITypeFieldClaim;
 class ITypeFieldExecutor;
 class ITypeFieldExecutorClaim;
@@ -105,6 +109,10 @@ public:
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) = 0;
 
 	virtual void visitDataTypeActivityTraverseType(IDataTypeActivityTraverseType *t) = 0;
+
+	virtual void visitDataTypeAddrClaim(IDataTypeAddrClaim *t) = 0;
+
+	virtual void visitDataTypeAddrClaimTransparent(IDataTypeAddrClaimTransparent *t) = 0;
 
 	virtual void visitDataTypeAddrHandle(IDataTypeAddrHandle *t) = 0;
 
@@ -179,6 +187,10 @@ public:
     virtual void visitTypeExprPythonModuleRef(ITypeExprPythonModuleRef *t) = 0;
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) = 0;
+
+	virtual void visitTypeFieldAddrClaim(ITypeFieldAddrClaim *f) = 0;
+
+	virtual void visitTypeFieldAddrClaimTransparent(ITypeFieldAddrClaimTransparent *f) = 0;
 
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) = 0;
 

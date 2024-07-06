@@ -1,5 +1,5 @@
 /**
- * DataTypeAddrSpaceC.h
+ * TaskIsPackedStruct.h
  *
  * Copyright 2023 Matthew Ballance and Contributors
  *
@@ -19,9 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/impl/ValOpsDelegatorBase.h"
-#include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
-#include "DataTypeComponentValOpsDelegator.h"
+#include "zsp/arl/dm/impl/VisitorBase.h"
 
 namespace zsp {
 namespace arl {
@@ -29,32 +27,31 @@ namespace dm {
 
 
 
-class DataTypeAddrSpaceC : 
-    public virtual IDataTypeAddrSpaceC,
-    public DataTypeComponentValOpsDelegator {
+class TaskIsPackedStruct :
+    public virtual VisitorBase {
 public:
 
-    DataTypeAddrSpaceC(
-        IContext                    *ctxt,
-        const std::string           &name,
-        vsc::dm::IDataTypeStruct    *trait_t);
+    TaskIsPackedStruct() { }
 
-    virtual ~DataTypeAddrSpaceC();
+    virtual ~TaskIsPackedStruct() { }
 
-    virtual vsc::dm::IDataTypeStruct *getTraitType() override {
-        return m_trait_t;
+    IDataTypePackedStruct *check(vsc::dm::IDataType *t) {
+        m_packed = 0;
+        t->accept(m_this);
+        return m_packed;
     }
 
-    virtual void accept(vsc::dm::IVisitor *v) override;
+    virtual void visitDataTypePackedStruct(arl::dm::IDataTypePackedStruct *t) {
+        m_packed = t;
+    }
 
-protected:
-    vsc::dm::IValOps            *m_ops;
-    vsc::dm::IDataTypeStruct    *m_trait_t;
+private:
+    arl::dm::IDataTypePackedStruct *m_packed;
 
 };
 
-}
-}
-}
+} /* namespace dm */
+} /* namespace arl */
+} /* namespace zsp */
 
 

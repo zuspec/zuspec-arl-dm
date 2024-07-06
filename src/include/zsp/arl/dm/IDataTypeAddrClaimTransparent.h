@@ -1,5 +1,5 @@
 /**
- * DataTypeAddrSpaceC.h
+ * IDataTypeAddrClaimTransparent.h
  *
  * Copyright 2023 Matthew Ballance and Contributors
  *
@@ -19,9 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/impl/ValOpsDelegatorBase.h"
-#include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
-#include "DataTypeComponentValOpsDelegator.h"
+#include "zsp/arl/dm/IDataTypeAddrClaim.h"
 
 namespace zsp {
 namespace arl {
@@ -29,32 +27,16 @@ namespace dm {
 
 
 
-class DataTypeAddrSpaceC : 
-    public virtual IDataTypeAddrSpaceC,
-    public DataTypeComponentValOpsDelegator {
+class IDataTypeAddrClaimTransparent :
+    public virtual IDataTypeAddrClaim {
 public:
 
-    DataTypeAddrSpaceC(
-        IContext                    *ctxt,
-        const std::string           &name,
-        vsc::dm::IDataTypeStruct    *trait_t);
-
-    virtual ~DataTypeAddrSpaceC();
-
-    virtual vsc::dm::IDataTypeStruct *getTraitType() override {
-        return m_trait_t;
-    }
-
-    virtual void accept(vsc::dm::IVisitor *v) override;
-
-protected:
-    vsc::dm::IValOps            *m_ops;
-    vsc::dm::IDataTypeStruct    *m_trait_t;
+    virtual ~IDataTypeAddrClaimTransparent() { }
 
 };
 
-}
-}
-}
+} /* namespace dm */
+} /* namespace arl */
+} /* namespace zsp */
 
 

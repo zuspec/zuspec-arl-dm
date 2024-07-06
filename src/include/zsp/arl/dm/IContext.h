@@ -12,6 +12,8 @@
 #include "zsp/arl/dm/IDataTypeActivitySequence.h"
 #include "zsp/arl/dm/IDataTypeActivityTraverse.h"
 #include "zsp/arl/dm/IDataTypeAction.h"
+#include "zsp/arl/dm/IDataTypeAddrClaim.h"
+#include "zsp/arl/dm/IDataTypeAddrClaimTransparent.h"
 #include "zsp/arl/dm/IDataTypeAddrHandle.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceTransparentC.h"
@@ -101,11 +103,19 @@ public:
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) = 0;
 
+    virtual IDataTypeAddrClaim *mkDataTypeAddrClaim(const std::string &name) = 0;
+
+    virtual IDataTypeAddrClaimTransparent *mkDataTypeAddrClaimTransparent(const std::string &name) = 0;
+
     virtual IDataTypeAddrHandle *mkDataTypeAddrHandle(const std::string &name) = 0;
 
-	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(const std::string &name) = 0;
+	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) = 0;
 
-	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(const std::string &name) = 0;
+	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) = 0;
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) = 0;
 
@@ -295,14 +305,16 @@ public:
 			bool					owned) = 0;
 
     virtual ITypeFieldAddrClaim *mkTypeFieldAddrClaim(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) = 0;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) = 0;
 
     virtual ITypeFieldAddrClaimTransparent *mkTypeFieldAddrClaimTransparent(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) = 0;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) = 0;
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,

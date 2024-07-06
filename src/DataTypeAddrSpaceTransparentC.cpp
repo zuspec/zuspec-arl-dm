@@ -28,8 +28,9 @@ namespace dm {
 
 
 DataTypeAddrSpaceTransparentC::DataTypeAddrSpaceTransparentC(
-    IContext            *ctxt,
-    const std::string   &name) : DataTypeAddrSpaceC(ctxt, name) {
+    IContext                    *ctxt,
+    const std::string           &name,
+    vsc::dm::IDataTypeStruct    *trait_t) : DataTypeComponentValOpsDelegator(ctxt, name), m_trait_t(trait_t) {
 
 }
 

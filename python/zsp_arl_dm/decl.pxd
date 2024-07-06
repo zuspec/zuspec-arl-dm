@@ -21,7 +21,10 @@ ctypedef IDataTypeActivityReplicate *IDataTypeActivityReplicateP
 ctypedef IDataTypeActivitySchedule *IDataTypeActivityScheduleP
 ctypedef IDataTypeActivitySequence *IDataTypeActivitySequenceP
 ctypedef IDataTypeActivityTraverse *IDataTypeActivityTraverseP
+ctypedef IDataTypeAddrClaim *IDataTypeAddrClaimP
+ctypedef IDataTypeAddrClaimTransparent *IDataTypeAddrClaimTransparentP
 ctypedef IDataTypeAddrHandle *IDataTypeAddrHandleP
+ctypedef IDataTypeArlStruct *IDataTypeArlStructP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
 ctypedef IDataTypeFunction *IDataTypeFunctionP
@@ -60,6 +63,9 @@ cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
             vsc.ITypeExprFieldRef *,
             vsc.ITypeConstraint *)
         bool addDataTypeAction(IDataTypeAction *)
+#        IDataTypeArlStructP mkDataTypeArlStruct(const cpp_string &)
+        IDataTypeAddrClaimP mkDataTypeAddrClaim(const cpp_string &)
+        IDataTypeAddrClaimTransparentP mkDataTypeAddrClaimTransparent(const cpp_string &)
         IDataTypeComponent *findDataTypeComponent(const cpp_string &)
         IDataTypeComponent *mkDataTypeComponent(const cpp_string &)
         bool addDataTypeComponent(IDataTypeComponent *)
@@ -129,6 +135,18 @@ cdef extern from "zsp/arl/dm/IDataTypeActivityTraverse.h" namespace "zsp::arl::d
         vsc.ITypeExprFieldRef *getTarget() const
         vsc.ITypeConstraint *getWithC() const
         void setWithC(vsc.ITypeConstraint *c)
+
+cdef extern from "zsp/arl/dm/IDataTypeArlStruct.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypeArlStruct(vsc.IDataTypeStruct):
+        pass
+
+cdef extern from "zsp/arl/dm/IDataTypeAddrClaim.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypeAddrClaim(IDataTypeArlStruct):
+        pass
+
+cdef extern from "zsp/arl/dm/IDataTypeAddrClaimTransparent.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypeAddrClaimTransparent(IDataTypeAddrClaim):
+        pass
 
 cdef extern from "zsp/arl/dm/IDataTypeAddrHandle.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeAddrHandle(vsc.IDataTypeStruct):

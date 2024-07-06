@@ -77,6 +77,15 @@ cdef class Context(vsc.Context):
     cpdef DataTypeAction mkDataTypeAction(self, name):
         return DataTypeAction.mk(self.asContext().mkDataTypeAction(name.encode()), True)
 
+#    cpdef DataTypeArlStruct mkDataTypeArlStruct(self, name):
+#        return DataTypeArlStruct.mk(self.asContext().mkDataTypeArlStruct(name.encode()), True)
+
+    cpdef DataTypeAddrClaim mkDataTypeAddrClaim(self, name):
+        return DataTypeAddrClaim.mk(self.asContext().mkDataTypeAddrClaim(name.encode()), True)
+
+    cpdef DataTypeAddrClaimTransparent mkDataTypeAddrClaimTransparent(self, name):
+        return DataTypeAddrClaimTransparent.mk(self.asContext().mkDataTypeAddrClaimTransparent(name.encode()), True)
+
     cpdef DataTypeFunction findDataTypeFunction(self, name):
         cdef decl.IDataTypeFunction *f = self.asContext().findDataTypeFunction(name.encode())
         if f != NULL:
@@ -429,6 +438,41 @@ cdef class DataTypeActivityTraverse(DataTypeActivity):
         ret._hndl = hndl
         ret._owned = owned
         return ret    
+
+cdef class DataTypeArlStruct(vsc.DataTypeStruct):
+    cdef decl.IDataTypeArlStruct *asArlStruct(self):
+        return dynamic_cast[decl.IDataTypeArlStructP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeArlStruct mk(decl.IDataTypeArlStruct *hndl, bool owned=True):
+        ret = DataTypeArlStruct()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class DataTypeAddrClaim(DataTypeArlStruct):
+
+    cdef decl.IDataTypeAddrClaim *asAddrClaim(self):
+        return dynamic_cast[decl.IDataTypeAddrClaimP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeAddrClaim mk(decl.IDataTypeAddrClaim *hndl, bool owned=True):
+        ret = DataTypeAddrClaim()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class DataTypeAddrClaimTransparent(DataTypeAddrClaim):
+
+    cdef decl.IDataTypeAddrClaimTransparent *asAddrClaimTransparent(self):
+        return dynamic_cast[decl.IDataTypeAddrClaimTransparentP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeAddrClaimTransparent mk(decl.IDataTypeAddrClaimTransparent *hndl, bool owned=True):
+        ret = DataTypeAddrClaimTransparent()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
 
 cdef class DataTypeAddrHandle(vsc.DataTypeStruct):
 
@@ -880,6 +924,15 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitDataTypeAction(self, DataTypeAction t):
         pass
 
+    cpdef visitDataTypeArlStruct(self, DataTypeArlStruct t):
+        pass
+
+    cpdef visitDataTypeAddrClaim(self, DataTypeAddrClaim t):
+        pass
+
+    cpdef visitDataTypeAddrClaimTransparent(self, DataTypeAddrClaimTransparent t):
+        pass
+
     cpdef visitDataTypeAddrHandle(self, DataTypeAddrHandle t):
         pass
 
@@ -928,6 +981,21 @@ cdef class VisitorBase(vsc.VisitorBase):
 cdef public void VisitorProxy_visitDataTypeAction(obj, decl.IDataTypeAction *t) with gil:
     obj.enter()
     obj.visitDataTypeAction(DataTypeAction.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitDataTypeArlStruct(obj, decl.IDataTypeArlStruct *t) with gil:
+    obj.enter()
+    obj.visitDataTypeArlStruct(DataTypeArlStruct.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitDataTypeAddrClaim(obj, decl.IDataTypeAddrClaim *t) with gil:
+    obj.enter()
+    obj.visitDataTypeAddrClaim(DataTypeAddrClaim.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitDataTypeAddrClaimTransparent(obj, decl.IDataTypeAddrClaimTransparent *t) with gil:
+    obj.enter()
+    obj.visitDataTypeAddrClaimTransparent(DataTypeAddrClaimTransparent.mk(t, False))
     obj.leave()
 
 cdef public void VisitorProxy_visitDataTypeAddrHandle(obj, decl.IDataTypeAddrHandle *t) with gil:
@@ -987,6 +1055,15 @@ cdef class WrapperBuilder(VisitorBase):
         self._obj[-1] = obj
 
     cpdef visitDataTypeAction(self, DataTypeAction t):
+        self._set_obj(t)
+
+    cpdef visitDataTypeArlStruct(self, DataTypeArlStruct t):
+        self._set_obj(t)
+
+    cpdef visitDataTypeAddrClaim(self, DataTypeAddrClaim t):
+        self._set_obj(t)
+
+    cpdef visitDataTypeAddrClaimTransparent(self, DataTypeAddrClaimTransparent t):
         self._set_obj(t)
 
     cpdef visitDataTypeAddrHandle(self, DataTypeAddrHandle t):

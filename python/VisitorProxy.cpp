@@ -39,6 +39,18 @@ void VisitorProxy::visitDataTypeAction(IDataTypeAction *t) {
     VisitorProxy_visitDataTypeAction(m_obj, t);
 }
 
+void VisitorProxy::visitDataTypeArlStruct(IDataTypeArlStruct *t) {
+    VisitorProxy_visitDataTypeArlStruct(m_obj, t);
+}
+
+void VisitorProxy::visitDataTypeAddrClaim(IDataTypeAddrClaim *t) {
+    VisitorProxy_visitDataTypeAddrClaim(m_obj, t);
+}
+
+void VisitorProxy::visitDataTypeAddrClaimTransparent(IDataTypeAddrClaimTransparent *t) {
+    VisitorProxy_visitDataTypeAddrClaimTransparent(m_obj, t);
+}
+
 void VisitorProxy::visitDataTypeAddrHandle(IDataTypeAddrHandle *t) {
     VisitorProxy_visitDataTypeAddrHandle(m_obj, t);
 }

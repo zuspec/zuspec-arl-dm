@@ -43,7 +43,7 @@ void DataTypeArlStruct::addField(
         }
 
         if (m_bytesz) {
-            int32_t pad = (m_bytesz%align)?(align - (m_bytesz % align)):0;
+            int32_t pad = (align && m_bytesz%align)?(align - (m_bytesz % align)):0;
             offset += pad;
             m_bytesz += pad;
         }

@@ -61,12 +61,16 @@ public:
         return ctxt()->mkDataTypeAddrHandle(name);
     }
 
-	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(const std::string &name) override { 
-        return ctxt()->mkDataTypeAddrSpaceC(name);
+	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) override { 
+        return ctxt()->mkDataTypeAddrSpaceC(name, trait_t);
     }
 
-	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(const std::string &name) override { 
-        return ctxt()->mkDataTypeAddrSpaceTransparentC(name);
+	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) override { 
+        return ctxt()->mkDataTypeAddrSpaceTransparentC(name, trait_t);
     }
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) override { 
@@ -355,17 +359,19 @@ public:
     }
 
     virtual ITypeFieldAddrClaim *mkTypeFieldAddrClaim(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) {
-        return ctxt()->mkTypeFieldAddrClaim(name, trait_t, owned);
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) {
+        return ctxt()->mkTypeFieldAddrClaim(name, type, owned, trait_t);
     }
 
     virtual ITypeFieldAddrClaimTransparent *mkTypeFieldAddrClaimTransparent(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) {
-        return ctxt()->mkTypeFieldAddrClaimTransparent(name, trait_t, owned);
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) {
+        return ctxt()->mkTypeFieldAddrClaimTransparent(name, type, owned, trait_t);
     }
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(

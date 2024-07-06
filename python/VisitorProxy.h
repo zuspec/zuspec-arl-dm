@@ -35,6 +35,12 @@ public:
 
     virtual void visitDataTypeAction(IDataTypeAction *t) override;
 
+	virtual void visitDataTypeArlStruct(IDataTypeArlStruct *t) override;
+
+	virtual void visitDataTypeAddrClaim(IDataTypeAddrClaim *t) override;
+
+	virtual void visitDataTypeAddrClaimTransparent(IDataTypeAddrClaimTransparent *t) override;
+
 	virtual void visitDataTypeAddrHandle(IDataTypeAddrHandle *t) override;
 
     virtual void visitDataTypeComponent(IDataTypeComponent *t) override;

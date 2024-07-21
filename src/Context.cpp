@@ -84,6 +84,7 @@
 #include "TypeProcStmtScope.h"
 #include "TypeProcStmtVarDecl.h"
 #include "TypeProcStmtWhile.h"
+#include "TypeProcStmtYield.h"
 
 namespace zsp {
 namespace arl {
@@ -685,6 +686,10 @@ ITypeProcStmtWhile *Context::mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		    *body) { 
     return new TypeProcStmtWhile(cond, body);
+}
+
+ITypeProcStmtYield *Context::mkTypeProcStmtYield() {
+    return new TypeProcStmtYield();
 }
 
 ValRefPyObj Context::mkValPyObj(pyapi::PyEvalObj *obj) {

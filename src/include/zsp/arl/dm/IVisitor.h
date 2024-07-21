@@ -86,6 +86,7 @@ class ITypeProcStmtReturn;
 class ITypeProcStmtScope;
 class ITypeProcStmtVarDecl;
 class ITypeProcStmtWhile;
+class ITypeProcStmtYield;
 
 class IVisitor : public virtual vsc::dm::IVisitor {
 public:
@@ -235,6 +236,8 @@ public:
 	virtual void visitTypeProcStmtVarDecl(ITypeProcStmtVarDecl *s) = 0;
 
 	virtual void visitTypeProcStmtWhile(ITypeProcStmtWhile *s) = 0;
+
+	virtual void visitTypeProcStmtYield(ITypeProcStmtYield *s) = 0;
 
 };
 

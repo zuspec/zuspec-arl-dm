@@ -522,6 +522,10 @@ public:
         return ctxt()->mkTypeProcStmtWhile(cond, body);
     }
 
+	virtual ITypeProcStmtYield *mkTypeProcStmtYield() {
+        return ctxt()->mkTypeProcStmtYield();
+    }
+
     virtual ValRefPyObj mkValPyObj(pyapi::PyEvalObj *obj) override {
         return ctxt()->mkValPyObj(obj);
     }

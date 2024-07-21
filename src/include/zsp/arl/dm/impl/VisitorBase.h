@@ -78,6 +78,7 @@
 #include "zsp/arl/dm/ITypeProcStmtScope.h"
 #include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
 #include "zsp/arl/dm/ITypeProcStmtWhile.h"
+#include "zsp/arl/dm/ITypeProcStmtYield.h"
 
 namespace zsp {
 namespace arl {
@@ -439,6 +440,8 @@ public:
 		s->getCond()->accept(m_this);
 		s->getBody()->accept(m_this);
 	}
+
+	virtual void visitTypeProcStmtYield(ITypeProcStmtYield *s) override { }
 };
 
 }

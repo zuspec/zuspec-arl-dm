@@ -341,6 +341,8 @@ public:
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		    *body) override;
 
+	virtual ITypeProcStmtYield *mkTypeProcStmtYield() override;
+
     virtual ValRefPyObj mkValPyObj(pyapi::PyEvalObj *obj) override;
 
 private:

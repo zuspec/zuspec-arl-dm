@@ -69,6 +69,7 @@
 #include "zsp/arl/dm/ITypeProcStmtScope.h"
 #include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
 #include "zsp/arl/dm/ITypeProcStmtWhile.h"
+#include "zsp/arl/dm/ITypeProcStmtYield.h"
 #include "zsp/arl/dm/impl/ValRefPyObj.h"
 
 namespace zsp {
@@ -418,6 +419,8 @@ public:
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) = 0;
+
+	virtual ITypeProcStmtYield *mkTypeProcStmtYield() = 0;
 
     /**
      * @brief Creates a new Val to hold a Python object. 

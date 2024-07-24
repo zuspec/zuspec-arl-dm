@@ -18,7 +18,7 @@ jobs:
               - spec: 'cp312-cp312'
         steps:
         - name: checkout
-          uses: actions/checkout@v2
+          uses: actions/checkout@v4
         - name: Fetch source dependencies
           env:
             IVPM_PYTHON: /opt/python/${{ matrix.spec }}/bin/python
@@ -55,7 +55,7 @@ jobs:
     macos:
         runs-on: macos-latest
         steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v4
         - name: Fetch dependencies
           run: |
             python3 --version
@@ -100,7 +100,7 @@ jobs:
                   spec: '3.11'
         steps:
         - name: checkout
-          uses: actions/checkout@v2
+          uses: actions/checkout@v4
 
         - name: Install python ${{ matrix.spec }}
           uses: actions/setup-python@v2

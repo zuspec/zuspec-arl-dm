@@ -7,7 +7,7 @@ on:
 jobs:
     linux:
         runs-on: ubuntu-latest
-        container: quay.io/pypa/manylinux2014_x86_64
+        container: quay.io/pypa/manylinux2014_x86_64:latest
         strategy:
           matrix:
             include:
@@ -18,11 +18,11 @@ jobs:
               - spec: 'cp312-cp312'
         steps:
         - name: node
-          uses: actions/setup-node@v4
+          uses: actions/setup-node@v2
           with:
             node-version: '16.x'
         - name: checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@v2
         - name: Fetch source dependencies
           env:
             IVPM_PYTHON: /opt/python/${{ matrix.spec }}/bin/python

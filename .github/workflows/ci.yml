@@ -17,6 +17,10 @@ jobs:
               - spec: 'cp311-cp311'
               - spec: 'cp312-cp312'
         steps:
+        - name: node
+          uses: actions/setup-node@v4
+          with:
+            node-version: '16.x'
         - name: checkout
           uses: actions/checkout@v4
         - name: Fetch source dependencies

@@ -1,5 +1,5 @@
-/**
- * ITypeFieldAddrClaim.h
+/*
+ * DataTypeAddrClaimTransparent.cpp
  *
  * Copyright 2023 Matthew Ballance and Contributors
  *
@@ -16,37 +16,35 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include "vsc/dm/ITypeField.h"
-#include "zsp/arl/dm/IDataTypeArlStruct.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "DataTypeAddrClaimTransparent.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-/**
- * @brief 
- *
- * Assume field data-type defines the following fields in the following order:
- * - size
- * - permanent
- * - trait
- * - alignment 
- */
 
-class ITypeFieldAddrClaim : public virtual vsc::dm::ITypeField {
-public:
+DataTypeAddrClaimTransparent::DataTypeAddrClaimTransparent(
+        const std::string       &name,
+        int32_t                 num_builtin) : DataTypeArlStruct(name, num_builtin) {
 
-    virtual ~ITypeFieldAddrClaim() { }
+}
 
-    virtual vsc::dm::IDataTypeStruct *getTraitType() = 0;
+DataTypeAddrClaimTransparent::~DataTypeAddrClaimTransparent() {
 
-};
+}
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+void DataTypeAddrClaimTransparent::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitDataTypeAddrClaimTransparent(this);
+    } else {
+        v->visitDataTypeStruct(this);
+    }
+}
 
-
+}
+}
+}

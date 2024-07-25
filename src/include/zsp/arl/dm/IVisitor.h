@@ -14,12 +14,16 @@ namespace dm {
 
 
 class IDataTypeAction;
+class IDataTypeActivity;
 class IDataTypeActivityBind;
 class IDataTypeActivityParallel;
 class IDataTypeActivityReplicate;
 class IDataTypeActivitySchedule;
 class IDataTypeActivitySequence;
 class IDataTypeActivityTraverse;
+class IDataTypeActivityTraverseType;
+class IDataTypeAddrClaim;
+class IDataTypeAddrClaimTransparent;
 class IDataTypeAddrHandle;
 class IDataTypeAddrSpaceC;
 class IDataTypeAddrSpaceTransparentC;
@@ -58,6 +62,8 @@ class ITypeExprPythonFieldRef;
 class ITypeExprPythonMethodCall;
 class ITypeExprPythonModuleRef;
 class ITypeFieldActivity;
+class ITypeFieldAddrClaim;
+class ITypeFieldAddrClaimTransparent;
 class ITypeFieldClaim;
 class ITypeFieldExecutor;
 class ITypeFieldExecutorClaim;
@@ -80,6 +86,7 @@ class ITypeProcStmtReturn;
 class ITypeProcStmtScope;
 class ITypeProcStmtVarDecl;
 class ITypeProcStmtWhile;
+class ITypeProcStmtYield;
 
 class IVisitor : public virtual vsc::dm::IVisitor {
 public:
@@ -87,6 +94,8 @@ public:
 	virtual ~IVisitor() { }
 
 	virtual void visitDataTypeAction(IDataTypeAction *t) = 0;
+
+	virtual void visitDataTypeActivity(IDataTypeActivity *t) = 0;
 
 	virtual void visitDataTypeActivityBind(IDataTypeActivityBind *t) = 0;
 
@@ -99,6 +108,12 @@ public:
 	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) = 0;
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) = 0;
+
+	virtual void visitDataTypeActivityTraverseType(IDataTypeActivityTraverseType *t) = 0;
+
+	virtual void visitDataTypeAddrClaim(IDataTypeAddrClaim *t) = 0;
+
+	virtual void visitDataTypeAddrClaimTransparent(IDataTypeAddrClaimTransparent *t) = 0;
 
 	virtual void visitDataTypeAddrHandle(IDataTypeAddrHandle *t) = 0;
 
@@ -174,6 +189,10 @@ public:
 
 	virtual void visitTypeFieldActivity(ITypeFieldActivity *f) = 0;
 
+	virtual void visitTypeFieldAddrClaim(ITypeFieldAddrClaim *f) = 0;
+
+	virtual void visitTypeFieldAddrClaimTransparent(ITypeFieldAddrClaimTransparent *f) = 0;
+
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) = 0;
 
 	virtual void visitTypeFieldExecutor(ITypeFieldExecutor *f) = 0;
@@ -217,6 +236,8 @@ public:
 	virtual void visitTypeProcStmtVarDecl(ITypeProcStmtVarDecl *s) = 0;
 
 	virtual void visitTypeProcStmtWhile(ITypeProcStmtWhile *s) = 0;
+
+	virtual void visitTypeProcStmtYield(ITypeProcStmtYield *s) = 0;
 
 };
 

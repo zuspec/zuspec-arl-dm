@@ -15,6 +15,9 @@
 #include "zsp/arl/dm/IDataTypeActivitySchedule.h"
 #include "zsp/arl/dm/IDataTypeActivitySequence.h"
 #include "zsp/arl/dm/IDataTypeActivityTraverse.h"
+#include "zsp/arl/dm/IDataTypeActivityTraverseType.h"
+#include "zsp/arl/dm/IDataTypeAddrClaim.h"
+#include "zsp/arl/dm/IDataTypeAddrClaimTransparent.h"
 #include "zsp/arl/dm/IDataTypeAddrHandle.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceTransparentC.h"
@@ -51,6 +54,8 @@
 #include "zsp/arl/dm/ITypeExprPythonModuleRef.h"
 #include "zsp/arl/dm/ITypeExecProc.h"
 #include "zsp/arl/dm/ITypeFieldActivity.h"
+#include "zsp/arl/dm/ITypeFieldAddrClaim.h"
+#include "zsp/arl/dm/ITypeFieldAddrClaimTransparent.h"
 #include "zsp/arl/dm/ITypeFieldClaim.h"
 #include "zsp/arl/dm/ITypeFieldExecutor.h"
 #include "zsp/arl/dm/ITypeFieldExecutorClaim.h"
@@ -73,6 +78,7 @@
 #include "zsp/arl/dm/ITypeProcStmtScope.h"
 #include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
 #include "zsp/arl/dm/ITypeProcStmtWhile.h"
+#include "zsp/arl/dm/ITypeProcStmtYield.h"
 
 namespace zsp {
 namespace arl {
@@ -97,7 +103,10 @@ public:
 		}
 	}
 
+    virtual void visitDataTypeActivity(IDataTypeActivity *t) override { }
+
 	virtual void visitDataTypeActivityBind(IDataTypeActivityBind *t) override {
+        visitDataTypeActivity(t);
 		for (std::vector<vsc::dm::ITypeExprFieldRefUP>::const_iterator
 			it=t->getTargets().begin();
 			it!=t->getTargets().end(); it++) {
@@ -106,23 +115,41 @@ public:
 	}
 
 	virtual void visitDataTypeActivityParallel(IDataTypeActivityParallel *t) override {
+        visitDataTypeActivity(t);
 		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivityReplicate(IDataTypeActivityReplicate *t) override {
+        visitDataTypeActivity(t);
 		t->getCount()->accept(m_this);
 		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivitySchedule(IDataTypeActivitySchedule *t) override {
+        visitDataTypeActivity(t);
 		m_this->visitDataTypeStruct(t);
 	}
 
 	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) override {
+        visitDataTypeActivity(t);
 		m_this->visitDataTypeStruct(t);
 	}
 
-	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { }
+	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { 
+        visitDataTypeActivity(t);
+    }
+
+	virtual void visitDataTypeActivityTraverseType(IDataTypeActivityTraverseType *t) override { 
+        visitDataTypeActivity(t);
+    }
+
+	virtual void visitDataTypeAddrClaim(IDataTypeAddrClaim *t) override {
+        visitDataTypeArlStruct(t);
+    }
+
+	virtual void visitDataTypeAddrClaimTransparent(IDataTypeAddrClaimTransparent *t) override {
+        visitDataTypeAddrClaim(t);
+    }
 
 	virtual void visitDataTypeAddrSpaceC(IDataTypeAddrSpaceC *t) override {
         m_this->visitDataTypeStruct(t);
@@ -295,6 +322,14 @@ public:
 		m_this->visitTypeField(f);
 	}
 
+	virtual void visitTypeFieldAddrClaim(ITypeFieldAddrClaim *f) override {
+        m_this->visitTypeField(f);
+    }
+
+	virtual void visitTypeFieldAddrClaimTransparent(ITypeFieldAddrClaimTransparent *f) override {
+        dynamic_cast<IVisitor *>(m_this)->visitTypeFieldAddrClaim(f);
+    }
+
 	virtual void visitTypeFieldClaim(ITypeFieldClaim *f) override {
 		m_this->visitTypeFieldRef(f);
 	}
@@ -405,6 +440,8 @@ public:
 		s->getCond()->accept(m_this);
 		s->getBody()->accept(m_this);
 	}
+
+	virtual void visitTypeProcStmtYield(ITypeProcStmtYield *s) override { }
 };
 
 }

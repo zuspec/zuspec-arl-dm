@@ -12,6 +12,9 @@
 #include "DataTypeActivitySchedule.h"
 #include "DataTypeActivitySequence.h"
 #include "DataTypeActivityTraverse.h"
+#include "DataTypeActivityTraverseType.h"
+#include "DataTypeAddrClaim.h"
+#include "DataTypeAddrClaimTransparent.h"
 #include "DataTypeAddrHandle.h"
 #include "DataTypeAddrSpaceC.h"
 #include "DataTypeAddrSpaceTransparentC.h"
@@ -56,6 +59,8 @@
 #include "TypeExprPythonMethodCall.h"
 #include "TypeExprPythonModuleRef.h"
 #include "TypeFieldActivity.h"
+#include "TypeFieldAddrClaim.h"
+#include "TypeFieldAddrClaimTransparent.h"
 #include "TypeFieldClaim.h"
 #include "TypeFieldExecutor.h"
 #include "TypeFieldExecutorClaim.h"
@@ -79,6 +84,7 @@
 #include "TypeProcStmtScope.h"
 #include "TypeProcStmtVarDecl.h"
 #include "TypeProcStmtWhile.h"
+#include "TypeProcStmtYield.h"
 
 namespace zsp {
 namespace arl {
@@ -119,16 +125,28 @@ IDataTypeAction *Context::mkDataTypeAction(const std::string &name) {
 	return new DataTypeAction(this, name);
 }
 
+IDataTypeAddrClaim *Context::mkDataTypeAddrClaim(const std::string &name) {
+    return new DataTypeAddrClaim(name);
+}
+
+IDataTypeAddrClaimTransparent *Context::mkDataTypeAddrClaimTransparent(const std::string &name) {
+    return new DataTypeAddrClaimTransparent(name);
+}
+
 IDataTypeAddrHandle *Context::mkDataTypeAddrHandle(const std::string &name) {
     return new DataTypeAddrHandle(this, name);
 }
 
-IDataTypeAddrSpaceC *Context::mkDataTypeAddrSpaceC(const std::string &name) {
-	return new DataTypeAddrSpaceC(this, name);
+IDataTypeAddrSpaceC *Context::mkDataTypeAddrSpaceC(
+    const std::string           &name,
+    vsc::dm::IDataTypeStruct    *trait_t) {
+	return new DataTypeAddrSpaceC(this, name, trait_t);
 }
 
-IDataTypeAddrSpaceTransparentC *Context::mkDataTypeAddrSpaceTransparentC(const std::string &name) {
-	return new DataTypeAddrSpaceTransparentC(this, name);
+IDataTypeAddrSpaceTransparentC *Context::mkDataTypeAddrSpaceTransparentC(
+    const std::string           &name,
+    vsc::dm::IDataTypeStruct    *trait_t) {
+	return new DataTypeAddrSpaceTransparentC(this, name, trait_t);
 }
 
 bool Context::addDataTypeAction(IDataTypeAction *t) {
@@ -213,6 +231,12 @@ IDataTypeActivityTraverse *Context::mkDataTypeActivityTraverse(
 		vsc::dm::ITypeExprFieldRef	*target,
 		vsc::dm::ITypeConstraint	*with_c) {
 	return new DataTypeActivityTraverse(target, with_c);
+}
+
+IDataTypeActivityTraverseType *Context::mkDataTypeActivityTraverseType(
+            arl::dm::IDataTypeAction        *target,
+			vsc::dm::ITypeConstraint		*with_c) {
+    return new DataTypeActivityTraverseType(target, with_c);
 }
 
 IDataTypeComponent *Context::findDataTypeComponent(const std::string &name) {
@@ -496,17 +520,19 @@ ITypeFieldActivity *Context::mkTypeFieldActivity(
 }
 
 ITypeFieldAddrClaim *Context::mkTypeFieldAddrClaim(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) {
-    return 0;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) {
+    return new TypeFieldAddrClaim(name, type, owned, trait_t);
 }
 
 ITypeFieldAddrClaimTransparent *Context::mkTypeFieldAddrClaimTransparent(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) {
-    return 0;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) {
+    return new TypeFieldAddrClaimTransparent(name, type, owned, trait_t);
 }
 
 ITypeFieldClaim *Context::mkTypeFieldClaim(
@@ -660,6 +686,10 @@ ITypeProcStmtWhile *Context::mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		    *body) { 
     return new TypeProcStmtWhile(cond, body);
+}
+
+ITypeProcStmtYield *Context::mkTypeProcStmtYield() {
+    return new TypeProcStmtYield();
 }
 
 ValRefPyObj Context::mkValPyObj(pyapi::PyEvalObj *obj) {

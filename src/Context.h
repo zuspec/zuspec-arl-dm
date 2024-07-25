@@ -31,13 +31,21 @@ public:
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) override;
 
+    virtual IDataTypeAddrClaim *mkDataTypeAddrClaim(const std::string &name) override;
+
+    virtual IDataTypeAddrClaimTransparent *mkDataTypeAddrClaimTransparent(const std::string &name) override;
+
     virtual IDataTypeAddrHandle *mkDataTypeAddrHandle(const std::string &name) override;
 
-	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(const std::string &name) override;
+	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) override;
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) override;
 
-	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(const std::string &name) override;
+	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) override;
 
 	virtual IDataTypeFunction *findDataTypeFunction(const std::string &name) override;
 
@@ -79,6 +87,10 @@ public:
 	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
 			vsc::dm::ITypeExprFieldRef	*target,
 			vsc::dm::ITypeConstraint	*with_c) override;
+
+	virtual IDataTypeActivityTraverseType *mkDataTypeActivityTraverseType(
+            arl::dm::IDataTypeAction        *target,
+			vsc::dm::ITypeConstraint		*with_c) override;
 
 	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) override;
 
@@ -215,14 +227,16 @@ public:
 			bool					owned) override;
 
     virtual ITypeFieldAddrClaim *mkTypeFieldAddrClaim(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) override;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) override;
 
     virtual ITypeFieldAddrClaimTransparent *mkTypeFieldAddrClaimTransparent(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) override;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) override;
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,
@@ -326,6 +340,8 @@ public:
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		    *body) override;
+
+	virtual ITypeProcStmtYield *mkTypeProcStmtYield() override;
 
     virtual ValRefPyObj mkValPyObj(pyapi::PyEvalObj *obj) override;
 

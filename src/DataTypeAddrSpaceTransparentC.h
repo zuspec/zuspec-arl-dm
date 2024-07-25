@@ -20,7 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/IDataTypeAddrSpaceTransparentC.h"
-#include "DataTypeAddrSpaceC.h"
+#include "DataTypeComponentValOpsDelegator.h"
 
 namespace zsp {
 namespace arl {
@@ -30,16 +30,27 @@ namespace dm {
 
 class DataTypeAddrSpaceTransparentC :
     public virtual IDataTypeAddrSpaceTransparentC,
-    public DataTypeAddrSpaceC {
+    public DataTypeComponentValOpsDelegator {
 public:
     DataTypeAddrSpaceTransparentC(
-        IContext            *ctxt,
-        const std::string   &name
+        IContext                    *ctxt,
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t
     );
 
     virtual ~DataTypeAddrSpaceTransparentC();
 
+    virtual vsc::dm::IDataTypeStruct *getTraitType() override {
+        return m_trait_t;
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
+
+protected:
+    vsc::dm::IValOps            *m_ops;
+    vsc::dm::IDataTypeStruct    *m_trait_t;
+
+
 };
 
 }

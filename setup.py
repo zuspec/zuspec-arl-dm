@@ -3,7 +3,13 @@
 #****************************************************************************
 import os
 import sys
+import platform
 from setuptools import Extension, find_namespace_packages
+
+if "IVPM_PYTHONPATH" in os.environ.keys():
+    ps = ";" if platform.system() == "Windows" else ":"
+    for i,p in enumerate(os.environ["IVPM_PYTHONPATH"].split(ps)):
+        sys.path.insert(i, p)
 
 version="0.0.1"
 
@@ -23,10 +29,10 @@ isSrcBuild = False
 try:
     from ivpm.setup import setup
     isSrcBuild = os.path.isdir(os.path.join(proj_dir, "src"))
-    print("vsc-solvers: running IVPM SrcBuild")
+    print("zuspec-arl-dm: running IVPM SrcBuild")
 except ImportError as e:
     from setuptools import setup
-    print("vsc-solvers: running non-src build")
+    print("zuspec-arl-dm: running non-src build")
 
 zuspec_arl_dm_dir = proj_dir
 
@@ -71,8 +77,6 @@ setup_args = dict(
   },
   setup_requires=[
     'setuptools_scm',
-    'vsc-dm',
-    'debug-mgr',
     'cython',
   ],
   ext_modules=[ ext ]

@@ -1,5 +1,5 @@
 /**
- * DataTypeAddrSpaceC.h
+ * TypeProcStmtYield.h
  *
  * Copyright 2023 Matthew Ballance and Contributors
  *
@@ -19,9 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "vsc/dm/impl/ValOpsDelegatorBase.h"
-#include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
-#include "DataTypeComponentValOpsDelegator.h"
+#include "zsp/arl/dm/ITypeProcStmtYield.h"
 
 namespace zsp {
 namespace arl {
@@ -29,27 +27,14 @@ namespace dm {
 
 
 
-class DataTypeAddrSpaceC : 
-    public virtual IDataTypeAddrSpaceC,
-    public DataTypeComponentValOpsDelegator {
+class TypeProcStmtYield :
+    public virtual ITypeProcStmtYield {
 public:
+    TypeProcStmtYield();
 
-    DataTypeAddrSpaceC(
-        IContext                    *ctxt,
-        const std::string           &name,
-        vsc::dm::IDataTypeStruct    *trait_t);
-
-    virtual ~DataTypeAddrSpaceC();
-
-    virtual vsc::dm::IDataTypeStruct *getTraitType() override {
-        return m_trait_t;
-    }
+    virtual ~TypeProcStmtYield();
 
     virtual void accept(vsc::dm::IVisitor *v) override;
-
-protected:
-    vsc::dm::IValOps            *m_ops;
-    vsc::dm::IDataTypeStruct    *m_trait_t;
 
 };
 

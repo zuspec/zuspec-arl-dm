@@ -12,6 +12,8 @@
 #include "zsp/arl/dm/IDataTypeActivitySequence.h"
 #include "zsp/arl/dm/IDataTypeActivityTraverse.h"
 #include "zsp/arl/dm/IDataTypeAction.h"
+#include "zsp/arl/dm/IDataTypeAddrClaim.h"
+#include "zsp/arl/dm/IDataTypeAddrClaimTransparent.h"
 #include "zsp/arl/dm/IDataTypeAddrHandle.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceC.h"
 #include "zsp/arl/dm/IDataTypeAddrSpaceTransparentC.h"
@@ -67,6 +69,7 @@
 #include "zsp/arl/dm/ITypeProcStmtScope.h"
 #include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
 #include "zsp/arl/dm/ITypeProcStmtWhile.h"
+#include "zsp/arl/dm/ITypeProcStmtYield.h"
 #include "zsp/arl/dm/impl/ValRefPyObj.h"
 
 namespace zsp {
@@ -101,11 +104,19 @@ public:
 
 	virtual IDataTypeAction *mkDataTypeAction(const std::string &name) = 0;
 
+    virtual IDataTypeAddrClaim *mkDataTypeAddrClaim(const std::string &name) = 0;
+
+    virtual IDataTypeAddrClaimTransparent *mkDataTypeAddrClaimTransparent(const std::string &name) = 0;
+
     virtual IDataTypeAddrHandle *mkDataTypeAddrHandle(const std::string &name) = 0;
 
-	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(const std::string &name) = 0;
+	virtual IDataTypeAddrSpaceC *mkDataTypeAddrSpaceC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) = 0;
 
-	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(const std::string &name) = 0;
+	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) = 0;
 
 	virtual bool addDataTypeAction(IDataTypeAction *t) = 0;
 
@@ -146,6 +157,10 @@ public:
 
 	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
 			vsc::dm::ITypeExprFieldRef 		*target,
+			vsc::dm::ITypeConstraint		*with_c) = 0;
+
+	virtual IDataTypeActivityTraverseType *mkDataTypeActivityTraverseType(
+            arl::dm::IDataTypeAction        *target,
 			vsc::dm::ITypeConstraint		*with_c) = 0;
 
 	virtual IDataTypeComponent *findDataTypeComponent(const std::string &name) = 0;
@@ -291,14 +306,16 @@ public:
 			bool					owned) = 0;
 
     virtual ITypeFieldAddrClaim *mkTypeFieldAddrClaim(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) = 0;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) = 0;
 
     virtual ITypeFieldAddrClaimTransparent *mkTypeFieldAddrClaimTransparent(
-            const std::string       &name,
-            IDataTypeArlStruct      *trait_t,
-            bool                    owned) = 0;
+            const std::string           &name,
+            vsc::dm::IDataType          *type,
+            bool                        owned,
+            vsc::dm::IDataTypeStruct    *trait_t) = 0;
 
 	virtual ITypeFieldClaim *mkTypeFieldClaim(
 			const std::string		&name,
@@ -402,6 +419,8 @@ public:
 	virtual ITypeProcStmtWhile *mkTypeProcStmtWhile(
 			vsc::dm::ITypeExpr		*cond,
 			ITypeProcStmt		*body) = 0;
+
+	virtual ITypeProcStmtYield *mkTypeProcStmtYield() = 0;
 
     /**
      * @brief Creates a new Val to hold a Python object. 

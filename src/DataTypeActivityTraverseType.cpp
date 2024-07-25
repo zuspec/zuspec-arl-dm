@@ -1,7 +1,7 @@
-/**
- * ITypeExec.h
+/*
+ * DataTypeActivityTraverseType.cpp
  *
- * Copyright 2022 Matthew Ballance and Contributors
+ * Copyright 2023 Matthew Ballance and Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may 
  * not use this file except in compliance with the License.  
@@ -16,38 +16,33 @@
  * limitations under the License.
  *
  * Created on:
- *     Author: 
+ *     Author:
  */
-#pragma once
-#include <memory>
-#include "vsc/dm/IAccept.h"
+#include "zsp/arl/dm/IVisitor.h"
+#include "DataTypeActivityTraverseType.h"
+
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
-enum class ExecKindT {
-    Body,
-    InitDown,
-    InitUp,
-    PreSolve,
-    PostSolve,
-    PreBody,
-};
 
-class ITypeExec;
-using ITypeExecUP=vsc::dm::UP<ITypeExec>;
-class ITypeExec : public virtual vsc::dm::IAccept {
-public:
+DataTypeActivityTraverseType::DataTypeActivityTraverseType(
+    arl::dm::IDataTypeAction        *target,
+    vsc::dm::ITypeConstraint        *with_c) : m_target(target), m_with_c(with_c) {
 
-    virtual ~ITypeExec() { }
+}
 
-    virtual ExecKindT getKind() const = 0;
+DataTypeActivityTraverseType::~DataTypeActivityTraverseType() {
 
-};
+}
 
-} /* namespace dm */
-} /* namespace arl */
-} /* namespace zsp */
+void DataTypeActivityTraverseType::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitDataTypeActivityTraverseType(this);
+    }
+}
 
-
+}
+}
+}

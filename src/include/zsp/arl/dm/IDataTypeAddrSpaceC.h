@@ -34,6 +34,8 @@ class IDataTypeAddrSpaceC :
 public:
 
     virtual ~IDataTypeAddrSpaceC() { }
+    
+    virtual vsc::dm::IDataTypeStruct *getTraitType() = 0;
 
 };
 

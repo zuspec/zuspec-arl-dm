@@ -21,6 +21,9 @@ cdef class Context(vsc.Context):
     cpdef DataTypeAction findDataTypeAction(self, name)
     cpdef DataTypeFunction findDataTypeFunction(self, name)
     cpdef DataTypeAction mkDataTypeAction(self, name)
+#    cpdef DataTypeArlStruct mkDataTypeArlStruct(self, name)
+    cpdef DataTypeAddrClaim mkDataTypeAddrClaim(self, name)
+    cpdef DataTypeAddrClaimTransparent mkDataTypeAddrClaimTransparent(self, name)
     cpdef getDataTypeFunctions(self)
     cpdef DataTypeActivityParallel mkDataTypeActivityParallel(self)
     cpdef DataTypeActivityReplicate mkDataTypeActivityReplicate(self, vsc.TypeExpr count)
@@ -28,6 +31,8 @@ cdef class Context(vsc.Context):
     cpdef DataTypeActivitySequence mkDataTypeActivitySequence(self)
     cpdef bool addDataTypeAction(self, DataTypeAction)
     cpdef DataTypeActivityTraverse mkDataTypeActivityTraverse(self, vsc.TypeExprFieldRef, vsc.TypeConstraint)
+    cpdef DataTypeAddrClaim mkDataTypeAddrClaim(self, name)
+    cpdef DataTypeAddrClaimTransparent mkDataTypeAddrClaimTransparent(self, name)
     cpdef DataTypeComponent findDataTypeComponent(self, name)
     cpdef DataTypeComponent mkDataTypeComponent(self, name)
     cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)
@@ -117,6 +122,26 @@ cdef class DataTypeActivityTraverse(DataTypeActivity):
     
     @staticmethod
     cdef mk(decl.IDataTypeActivityTraverse *hndl, bool owned=*)
+
+cdef class DataTypeArlStruct(vsc.DataTypeStruct):
+    cdef decl.IDataTypeArlStruct *asArlStruct(self)
+
+    @staticmethod
+    cdef DataTypeArlStruct mk(decl.IDataTypeArlStruct *, bool owned=*)
+
+cdef class DataTypeAddrClaim(DataTypeArlStruct):
+
+    cdef decl.IDataTypeAddrClaim *asAddrClaim(self)
+
+    @staticmethod
+    cdef DataTypeAddrClaim mk(decl.IDataTypeAddrClaim *, bool owned=*)
+
+cdef class DataTypeAddrClaimTransparent(DataTypeAddrClaim):
+
+    cdef decl.IDataTypeAddrClaimTransparent *asAddrClaimTransparent(self)
+
+    @staticmethod
+    cdef DataTypeAddrClaimTransparent mk(decl.IDataTypeAddrClaimTransparent *, bool owned=*)
 
 cdef class DataTypeAddrHandle(vsc.DataTypeStruct):
 
@@ -327,6 +352,12 @@ cdef class TypeProcStmtVarDecl(TypeProcStmt):
 cdef class VisitorBase(vsc.VisitorBase):
 
     cpdef visitDataTypeAction(self, DataTypeAction t)
+
+    cpdef visitDataTypeArlStruct(self, DataTypeArlStruct t)
+
+    cpdef visitDataTypeAddrClaim(self, DataTypeAddrClaim t)
+
+    cpdef visitDataTypeAddrClaimTransparent(self, DataTypeAddrClaimTransparent t)
 
     cpdef visitDataTypeAddrHandle(self, DataTypeAddrHandle t)
 

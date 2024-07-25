@@ -28,8 +28,12 @@ namespace dm {
 
 
 DataTypeAddrSpaceC::DataTypeAddrSpaceC(
-        IContext            *ctxt,
-        const std::string   &name) : DataTypeComponentValOpsDelegator(ctxt, name) {
+        IContext                    *ctxt,
+        const std::string           &name,
+        vsc::dm::IDataTypeStruct    *trait_t) : 
+        DataTypeComponentValOpsDelegator(ctxt, name),
+        m_trait_t(trait_t) {
+#ifdef UNDEFINED
     addField(ctxt->mkTypeFieldPhy(
         "self",
         ctxt->getDataTypeCore(vsc::dm::DataTypeCoreE::Ptr),
@@ -38,6 +42,7 @@ DataTypeAddrSpaceC::DataTypeAddrSpaceC(
         vsc::dm::ValRef()
     ));
     m_num_builtin++;
+#endif /* UNDEFINED */
 
 }
 

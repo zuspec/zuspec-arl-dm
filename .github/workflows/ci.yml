@@ -7,7 +7,6 @@ on:
 jobs:
     linux:
         runs-on: ubuntu-latest
-        container: quay.io/pypa/manylinux2014_x86_64
         strategy:
           matrix:
             include:
@@ -18,39 +17,28 @@ jobs:
               - spec: 'cp312-cp312'
         steps:
         - name: checkout
-          uses: actions/checkout@v2
-        - name: Fetch source dependencies
+          uses: actions/checkout@v4
+        - name: Build packages
           env:
             IVPM_PYTHON: /opt/python/${{ matrix.spec }}/bin/python
             BUILD_NUM: ${{ github.run_id }}
-          run: |
-            echo "BUILD_NUM=${BUILD_NUM}" >> python/zsp_arl_dm/__build_num__.py
-            ls python/zsp_arl_dm
-            ${IVPM_PYTHON} -m pip install ivpm cython
-            ${IVPM_PYTHON} -m ivpm update -a
-        - name: Build packages
-          env:
-            IVPM_PYTHON: ./packages/python/bin/python
-          run: |
-            ${IVPM_PYTHON} -m pip install twine auditwheel ninja wheel cython
-            ${IVPM_PYTHON} setup.py bdist_wheel
-        - name: Audit Wheels
-          env:
-            IVPM_PYTHON: ./packages/python/bin/python
-          run: |
-            for whl in dist/*.whl; do
-              ${IVPM_PYTHON} -m auditwheel repair $whl
-              rm $whl
-            done
+          run: >
+            docker run --rm
+            --volume "$(pwd):/io"
+            --env IVPM_PYTHON
+            --env BUILD_NUM
+            --workdir /io
+            quay.io/pypa/manylinux2014_x86_64
+            /io/scripts/build_linux.sh
         - name: Publish to PyPi
           if: startsWith(github.ref, 'refs/heads/main')
           env:
-            IVPM_PYTHON: ./packages/python/bin/python
             BUILD_NUM: ${{ github.run_id }}
             TWINE_USERNAME: __token__
             TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
           run: |
-            ${IVPM_PYTHON} -m twine upload wheelhouse/*.whl
+            python3 -m pip install twine
+            python3 -m twine upload wheelhouse/*.whl
 
     macos:
         runs-on: macos-latest
@@ -59,8 +47,9 @@ jobs:
         - name: Fetch dependencies
           run: |
             python3 --version
-            python3 -m pip install ivpm
-            python3 -m ivpm update -a
+            python3 -m venv trampoline
+            ./trampoilne/bin/python3 -m pip install ivpm
+            ./trampoline/bin/python3 -m ivpm update -a
             ./packages/python/bin/python3 -m pip install cython setuptools wheel build twine
         - name: Build wheel
           env:

@@ -12,7 +12,8 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
-
+class IDataTypeActivitySequence;
+using IDataTypeActivitySequenceUP=vsc::dm::UP<IDataTypeActivitySequence>;
 class IDataTypeActivitySequence : public virtual IDataTypeActivityScope {
 public:
 

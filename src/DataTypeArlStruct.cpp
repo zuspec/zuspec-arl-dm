@@ -11,6 +11,7 @@
 #include "vsc/dm/ITypeField.h"
 #include "vsc/dm/ITypeConstraint.h"
 #include "vsc/dm/impl/TaskIsTypeFieldRef.h"
+#include "zsp/arl/dm/IVisitor.h"
 #include "DataTypeArlStruct.h"
 
 namespace zsp {
@@ -164,6 +165,14 @@ vsc::dm::IModelField *DataTypeArlStruct::mkTypeField(
 	}
 
 	return ret;
+}
+
+void DataTypeArlStruct::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitDataTypeArlStruct(this);
+    } else if (v->cascade()) {
+        v->visitDataTypeStruct(this);
+    }
 }
 
 std::vector<ITypeExecUP> DataTypeArlStruct::m_empty_exec_l;

@@ -93,6 +93,8 @@ public:
 		vsc::dm::ITypeField				*type,
         const vsc::dm::ValRef           &val) override;
 
+    virtual void accept(vsc::dm::IVisitor *v) override;
+
 public:
 	std::string								        m_name;
     int32_t                                         m_num_builtin;

@@ -149,6 +149,11 @@ IDataTypeAddrSpaceTransparentC *Context::mkDataTypeAddrSpaceTransparentC(
 	return new DataTypeAddrSpaceTransparentC(this, name, trait_t);
 }
 
+vsc::dm::IDataTypeStruct *Context::mkDataTypeStruct(
+        const std::string           &name) {
+    return new DataTypeArlStruct(name);
+}
+
 bool Context::addDataTypeAction(IDataTypeAction *t) {
 	if (m_action_type_m.insert({t->name(), t}).second) {
         m_action_type_l.push_back(IDataTypeActionUP(t));

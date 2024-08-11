@@ -41,6 +41,9 @@ public:
         const std::string           &name,
         vsc::dm::IDataTypeStruct    *trait_t) override;
 
+    virtual vsc::dm::IDataTypeStruct *mkDataTypeStruct(
+        const std::string           &name) override;
+
 	virtual bool addDataTypeAction(IDataTypeAction *t) override;
 
 	virtual IDataTypeAddrSpaceTransparentC *mkDataTypeAddrSpaceTransparentC(

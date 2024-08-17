@@ -42,6 +42,7 @@ public:
 
     virtual int32_t getNumBuiltin() const { return 0; }
 
+
 	virtual void addConstraint(
         vsc::dm::ITypeConstraint    *c,
         bool                        owned=true) override;

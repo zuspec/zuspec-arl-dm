@@ -45,9 +45,18 @@ public:
         return m_trait_t;
     }
 
+    virtual vsc::dm::IDataTypeStruct *getSuper() override {
+        return m_super.get();
+    }
+
+    virtual void setSuper(vsc::dm::IDataTypeStruct *t, bool owned=false) override {
+        m_super = vsc::dm::IDataTypeStructUP(t, owned);
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 protected:
+    vsc::dm::IDataTypeStructUP  m_super;
     vsc::dm::IValOps            *m_ops;
     vsc::dm::IDataTypeStruct    *m_trait_t;
 

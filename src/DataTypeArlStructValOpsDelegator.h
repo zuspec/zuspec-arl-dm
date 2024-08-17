@@ -66,6 +66,14 @@ public:
         return m_num_builtin; 
     }
 
+    virtual vsc::dm::IDataTypeStruct *getSuper() override {
+        return m_super.get();
+    }
+
+    virtual void setSuper(vsc::dm::IDataTypeStruct *t, bool owned=false) override {
+        m_super  = vsc::dm::IDataTypeStructUP(t, owned);
+    }
+
 	virtual void addConstraint(
         vsc::dm::ITypeConstraint    *c,
         bool                        owned);
@@ -102,6 +110,7 @@ protected:
     vsc::dm::IAssociatedDataUP                      m_associated_data;
     int32_t                                         m_num_builtin;
 	std::vector<vsc::dm::ITypeFieldUP>		 	    m_fields;
+    vsc::dm::IDataTypeStructUP                      m_super;
 	std::vector<vsc::dm::ITypeConstraintUP>		    m_constraints;
 	vsc::dm::IModelStructCreateHookUP			    m_create_hook;
     static std::vector<ITypeExecUP>                 m_empty_exec_l;

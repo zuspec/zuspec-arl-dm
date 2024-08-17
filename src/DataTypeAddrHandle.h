@@ -40,7 +40,18 @@ public:
 
     virtual ~DataTypeAddrHandle();
 
+    virtual vsc::dm::IDataTypeStruct *getSuper() override {
+        return m_super.get();
+    }
+
+    virtual void setSuper(vsc::dm::IDataTypeStruct *t, bool owned=false) override {
+        m_super = vsc::dm::IDataTypeStructUP(t, owned);
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
+
+private:
+    vsc::dm::IDataTypeStructUP              m_super;
 
 };
 

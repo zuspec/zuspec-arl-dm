@@ -32,6 +32,12 @@ public:
 		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) override;
 
+    virtual vsc::dm::IDataTypeStruct *getSuper() override {
+        return 0;
+    }
+
+    virtual void setSuper(vsc::dm::IDataTypeStruct *t, bool owned=false) override { }
+
 	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:

@@ -89,6 +89,10 @@ public:
         return m_flags;
     }
 
+    virtual void setFlags(DataTypeFunctionFlags flags) override {
+        m_flags = (m_flags | flags);
+    }
+
     virtual bool hasFlags(DataTypeFunctionFlags f) const override {
         return (m_flags & f) != DataTypeFunctionFlags::NoFlags;
     }

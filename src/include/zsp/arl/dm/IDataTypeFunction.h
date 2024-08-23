@@ -90,6 +90,8 @@ public:
 
     virtual DataTypeFunctionFlags getFlags() const = 0;
 
+    virtual void setFlags(DataTypeFunctionFlags flags) = 0;
+
     virtual bool hasFlags(DataTypeFunctionFlags f) const = 0;
 
     virtual void setAssociatedData(vsc::dm::IAssociatedData *data) = 0;

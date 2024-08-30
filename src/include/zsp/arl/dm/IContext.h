@@ -156,7 +156,7 @@ public:
 	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() = 0;
 
 	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
-			vsc::dm::ITypeExprFieldRef 		*target,
+			vsc::dm::ITypeExpr 		        *target,
 			vsc::dm::ITypeConstraint		*with_c) = 0;
 
 	virtual IDataTypeActivityTraverseType *mkDataTypeActivityTraverseType(

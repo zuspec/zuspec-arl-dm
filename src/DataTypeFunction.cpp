@@ -52,8 +52,7 @@ void DataTypeFunction::addParameter(IDataTypeFunctionParamDecl *p) {
         p->name(),
         p->getDataType(),
         false,
-        vsc::dm::TypeFieldAttr::NoAttr,
-        vsc::dm::ValRef()));
+        vsc::dm::TypeFieldAttr::NoAttr, 0));
 }
 
 void DataTypeFunction::addImportSpec(IDataTypeFunctionImport *spec) {

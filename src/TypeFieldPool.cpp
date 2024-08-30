@@ -36,7 +36,7 @@ TypeFieldPool::TypeFieldPool(
 		i32_t,
 		false,
 		vsc::dm::TypeFieldAttr::NoAttr,
-        val));
+        ctxt->mkTypeExprVal(val)));
 	setDataType(pool_t, true);
 }
 

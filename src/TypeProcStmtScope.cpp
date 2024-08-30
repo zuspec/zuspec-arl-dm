@@ -62,8 +62,8 @@ int32_t TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
         v->name(),
         v->getDataType(),
         false,
-        vsc::dm::TypeFieldAttr::NoAttr,
-        vsc::dm::ValRef() // ->getInit()
+        vsc::dm::TypeFieldAttr::NoAttr, 
+        0 // ->getInit()
     ));
 
     return ret;

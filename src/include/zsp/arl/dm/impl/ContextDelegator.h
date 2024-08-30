@@ -137,7 +137,7 @@ public:
     }
 
 	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
-			vsc::dm::ITypeExprFieldRef 		*target,
+			vsc::dm::ITypeExpr 		        *target,
 			vsc::dm::ITypeConstraint		*with_c) { 
         return ctxt()->mkDataTypeActivityTraverse(target, with_c);
     }

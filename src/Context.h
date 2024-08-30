@@ -88,7 +88,7 @@ public:
 	virtual IDataTypeActivitySequence *mkDataTypeActivitySequence() override;
 
 	virtual IDataTypeActivityTraverse *mkDataTypeActivityTraverse(
-			vsc::dm::ITypeExprFieldRef	*target,
+			vsc::dm::ITypeExpr	        *target,
 			vsc::dm::ITypeConstraint	*with_c) override;
 
 	virtual IDataTypeActivityTraverseType *mkDataTypeActivityTraverseType(

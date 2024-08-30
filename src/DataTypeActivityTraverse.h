@@ -20,14 +20,14 @@ class DataTypeActivityTraverse :
     public virtual DataTypeActivityStmt {
 public:
 	DataTypeActivityTraverse(
-			vsc::dm::ITypeExprFieldRef		*target,
+			vsc::dm::ITypeExpr		        *target,
 			vsc::dm::ITypeConstraint		*with_c);
 
 	virtual ~DataTypeActivityTraverse();
 
     virtual int32_t getByteSize() const override { return -1; }
 
-	virtual vsc::dm::ITypeExprFieldRef *getTarget() const override {
+	virtual vsc::dm::ITypeExpr *getTarget() const override {
 		return m_target.get();
 	}
 
@@ -64,7 +64,7 @@ public:
 	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-	vsc::dm::ITypeExprFieldRefUP				m_target;
+	vsc::dm::ITypeExprUP				        m_target;
 	vsc::dm::ITypeConstraintUP					m_with_c;
 	vsc::dm::IModelFieldFactoryUP				m_factory;
     vsc::dm::IAssociatedDataUP                  m_associated_data;

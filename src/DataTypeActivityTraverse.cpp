@@ -19,7 +19,7 @@ namespace dm {
 
 
 DataTypeActivityTraverse::DataTypeActivityTraverse(
-		vsc::dm::ITypeExprFieldRef 		*target,
+		vsc::dm::ITypeExpr 		        *target,
 		vsc::dm::ITypeConstraint		*with_c) : m_target(target), m_with_c(with_c) {
 	// TODO Auto-generated constructor stub
 

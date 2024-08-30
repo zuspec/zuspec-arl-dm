@@ -20,7 +20,7 @@ public:
 
 	virtual ~IDataTypeActivityTraverse() { }
 
-	virtual vsc::dm::ITypeExprFieldRef *getTarget() const = 0;
+	virtual vsc::dm::ITypeExpr *getTarget() const = 0;
 
 	virtual vsc::dm::ITypeConstraint *getWithC() const = 0;
 

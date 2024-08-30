@@ -233,7 +233,7 @@ IDataTypeActivitySequence *Context::mkDataTypeActivitySequence() {
 }
 
 IDataTypeActivityTraverse *Context::mkDataTypeActivityTraverse(
-		vsc::dm::ITypeExprFieldRef	*target,
+		vsc::dm::ITypeExpr	        *target,
 		vsc::dm::ITypeConstraint	*with_c) {
 	return new DataTypeActivityTraverse(target, with_c);
 }

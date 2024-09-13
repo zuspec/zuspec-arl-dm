@@ -44,6 +44,10 @@ public:
         return m_context.get();
     }
 
+    virtual vsc::dm::ITypeExpr *rlsContext() override {
+        return m_context.release();
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:

@@ -34,6 +34,8 @@ public:
 
     virtual vsc::dm::ITypeExpr *getContext() const = 0;
 
+    virtual vsc::dm::ITypeExpr *rlsContext() = 0;
+
 };
 
 } /* namespace dm */

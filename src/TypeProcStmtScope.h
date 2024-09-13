@@ -43,7 +43,15 @@ public:
 
     virtual void addStatement(ITypeProcStmt *stmt) override;
 
+    virtual void insertStatement(
+        int32_t                 i,
+        ITypeProcStmt           *stmt) override;
+
     virtual int32_t addVariable(ITypeProcStmtVarDecl *v) override;
+
+    virtual int32_t insertVariable(
+        int32_t                 i,
+        ITypeProcStmtVarDecl    *v) override;
 
     virtual int32_t getNumVariables() override {
         return m_variables.size();

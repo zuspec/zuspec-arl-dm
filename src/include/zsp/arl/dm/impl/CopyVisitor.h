@@ -38,7 +38,7 @@ public:
     CopyVisitor(
         IContext                *ctxt,
         IModelBuildContext      *build_ctxt=0) : VisitorDelegator(&m_core), 
-        m_ctxt(ctxt), m_build_ctxt(build_ctxt?build_ctxt:&m_build_ctxt_l),
+        m_dbg(0), m_ctxt(ctxt), m_build_ctxt(build_ctxt?build_ctxt:&m_build_ctxt_l),
         m_build_ctxt_l(ctxt), m_core(ctxt, m_build_ctxt, this) { 
         DEBUG_INIT("CopyVisitor", ctxt->getDebugMgr());
     }
@@ -188,7 +188,7 @@ public:
     }
 
 protected:
-    static dmgr::IDebug                     *m_dbg;
+    dmgr::IDebug                            *m_dbg;
     IContext                                *m_ctxt;
     IModelBuildContext                      *m_build_ctxt;
     ModelBuildContext                       m_build_ctxt_l;
@@ -196,7 +196,6 @@ protected:
 
 };
 
-dmgr::IDebug *CopyVisitor::m_dbg = 0;
 
 }
 }

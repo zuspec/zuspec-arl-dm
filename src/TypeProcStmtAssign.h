@@ -49,6 +49,10 @@ public:
         return m_rhs.get();
     }
 
+    virtual void setRhs(vsc::dm::ITypeExpr *e) override {
+        m_rhs = vsc::dm::ITypeExprUP(e);
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:

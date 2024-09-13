@@ -38,6 +38,8 @@ public:
 
     virtual const std::vector<vsc::dm::ITypeExprUP> &getParameters() const = 0;
 
+    virtual std::vector<vsc::dm::ITypeExprUP> &getParameters() = 0;
+
 };
 
 } /* namespace dm */

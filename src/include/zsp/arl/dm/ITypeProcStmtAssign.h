@@ -50,6 +50,8 @@ public:
 
     virtual vsc::dm::ITypeExpr *getRhs() = 0;
 
+    virtual void setRhs(vsc::dm::ITypeExpr *e) = 0;
+
 };
 
 }

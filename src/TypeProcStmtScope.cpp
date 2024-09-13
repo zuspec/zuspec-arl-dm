@@ -51,6 +51,14 @@ void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt) {
     m_statements.push_back(ITypeProcStmtUP(stmt));
 }
 
+void TypeProcStmtScope::insertStatement(
+        int32_t                 i,
+        ITypeProcStmt           *stmt) {
+    m_statements.insert(
+        m_statements.begin()+i,
+        ITypeProcStmtUP(stmt));
+}
+
 int32_t TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
     m_statements.push_back(ITypeProcStmtUP(v));
     int32_t ret = m_variables.size();
@@ -66,6 +74,17 @@ int32_t TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
         0 // ->getInit()
     ));
 
+    return ret;
+}
+
+int32_t TypeProcStmtScope::insertVariable(
+        int32_t                 i,
+        ITypeProcStmtVarDecl    *v) {
+    m_statements.insert(
+        m_statements.begin()+i,
+        ITypeProcStmtUP(v));
+    int32_t ret = m_variables.size();
+    m_variables.push_back(ITypeProcStmtVarDeclUP(v, false));
     return ret;
 }
 

@@ -40,7 +40,16 @@ public:
 
     virtual void addStatement(ITypeProcStmt *stmt) = 0;
 
+    virtual void insertStatement(
+        int32_t             i,
+        ITypeProcStmt       *s) = 0;
+
+    virtual int32_t insertVariable(
+        int32_t                 i,
+        ITypeProcStmtVarDecl    *s) = 0;
+
     virtual const std::vector<ITypeProcStmtUP> &getStatements() const = 0;
+
 
     virtual vsc::dm::IDataTypeStruct *getLocalsT() const = 0;
 

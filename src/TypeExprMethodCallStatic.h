@@ -43,6 +43,10 @@ public:
     virtual const std::vector<vsc::dm::ITypeExprUP> &getParameters() const override {
         return m_params;
     }
+
+    virtual std::vector<vsc::dm::ITypeExprUP> &getParameters() override {
+        return m_params;
+    }
     
     virtual void accept(vsc::dm::IVisitor *v) override;
 

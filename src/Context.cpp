@@ -655,14 +655,14 @@ ITypeProcStmtMatchChoice *Context::mkTypeProcStmtMatchChoice(
 
 ITypeProcStmtRepeat *Context::mkTypeProcStmtRepeat(
 			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*body) { 
-    return 0;
+			ITypeProcStmt		    *body) { 
+    return new TypeProcStmtRepeat(cond, body);
 }
 
 ITypeProcStmtRepeatWhile *Context::mkTypeProcStmtRepeatWhile(
 			vsc::dm::ITypeExpr		*cond,
-			ITypeProcStmt		*body) { 
-    return 0;
+			ITypeProcStmt		    *body) { 
+    return new TypeProcStmtRepeatWhile(cond, body);
 }
 
 ITypeProcStmtReturn *Context::mkTypeProcStmtReturn(

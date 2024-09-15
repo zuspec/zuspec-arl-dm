@@ -19,6 +19,9 @@
  *     Author: 
  */
 #pragma once
+#include "zsp/arl/dm/ITypeProcStmtRepeat.h"
+#include "vsc/dm/ITypeExpr.h"
+#include "zsp/arl/dm/ITypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -27,11 +30,45 @@ namespace dm {
 
 
 
-class TypeProcStmtRepeat {
+class TypeProcStmtRepeat :
+    public virtual ITypeProcStmtRepeat {
 public:
-    TypeProcStmtRepeat();
+    TypeProcStmtRepeat(
+        vsc::dm::ITypeExpr      *cond,
+        ITypeProcStmt           *body
+    );
 
     virtual ~TypeProcStmtRepeat();
+
+    virtual vsc::dm::ITypeExpr *getExpr() const override {
+        return m_cond.get();
+    }
+
+    virtual ITypeProcStmt *getBody() const override {
+        return m_body.get();
+    }
+
+    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) override {
+        int32_t id = m_variables.size();
+        m_variables.push_back(ITypeProcStmtVarDeclUP(v));
+        return id;
+    }
+
+    virtual int32_t getNumVariables() override {
+        return m_variables.size();
+    }
+
+    virtual const std::vector<ITypeProcStmtVarDeclUP> &getVariables() const override {
+        return m_variables;
+    }
+
+    virtual void accept(vsc::dm::IVisitor *v) override;
+
+private:
+    vsc::dm::ITypeExprUP                    m_cond;
+    ITypeProcStmtUP                         m_body;
+    std::vector<ITypeProcStmtVarDeclUP>     m_variables;
+
 
 };
 

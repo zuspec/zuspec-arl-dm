@@ -19,7 +19,7 @@
  *     Author: 
  */
 #pragma once
-#include "zsp/arl/dm/ITypeProcStmt.h"
+#include "zsp/arl/dm/ITypeProcStmtDeclScope.h"
 #include "vsc/dm/ITypeExpr.h"
 
 namespace zsp {
@@ -27,7 +27,9 @@ namespace arl {
 namespace dm {
 
 
-class ITypeProcStmtRepeat : public virtual ITypeProcStmt {
+class ITypeProcStmtRepeat : 
+    public virtual ITypeProcStmt,
+    public virtual ITypeProcStmtDeclScope {
 public:
 
     virtual ~ITypeProcStmtRepeat() { }

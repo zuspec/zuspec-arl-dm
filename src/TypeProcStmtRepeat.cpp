@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtRepeat.h"
 
 
@@ -27,12 +28,21 @@ namespace dm {
 
 
 
-TypeProcStmtRepeat::TypeProcStmtRepeat() {
+TypeProcStmtRepeat::TypeProcStmtRepeat(
+    vsc::dm::ITypeExpr      *cond,
+    ITypeProcStmt           *body) :
+    m_cond(cond), m_body(body) {
 
 }
 
 TypeProcStmtRepeat::~TypeProcStmtRepeat() {
 
+}
+
+void TypeProcStmtRepeat::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+        dynamic_cast<IVisitor *>(v)->visitTypeProcStmtRepeat(this);
+    }
 }
 
 }

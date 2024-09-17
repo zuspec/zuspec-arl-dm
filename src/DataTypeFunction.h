@@ -97,6 +97,10 @@ public:
         return (m_flags & f) != DataTypeFunctionFlags::NoFlags;
     }
 
+    virtual void clrFlags(DataTypeFunctionFlags f) override {
+        m_flags = (m_flags & ~f);
+    }
+
     virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
         m_associated_data = vsc::dm::IAssociatedDataUP(data);
     }

@@ -38,10 +38,12 @@ namespace dm {
 enum class DataTypeFunctionFlags {
     NoFlags = 0,
     Solve   = (1 << 0),
-    Target  = (1 << 1),
-    Core    = (1 << 2),
-    Import  = (1 << 3),
-    Export  = (1 << 4)
+    Target  = (1 << 1), // Target function
+    Blocks  = (1 << 2), // Blocking target function
+    Core    = (1 << 3),
+    Context = (1 << 4), // Non-static member of a containing type
+    Import  = (1 << 5),
+    Export  = (1 << 6),
 };
 
 static inline DataTypeFunctionFlags operator | (const DataTypeFunctionFlags lhs, const DataTypeFunctionFlags rhs) {
@@ -52,6 +54,10 @@ static inline DataTypeFunctionFlags operator | (const DataTypeFunctionFlags lhs,
 static inline DataTypeFunctionFlags operator & (const DataTypeFunctionFlags lhs, const DataTypeFunctionFlags rhs) {
         return static_cast<DataTypeFunctionFlags>(
                         static_cast<uint32_t>(lhs) & static_cast<uint32_t>(rhs));
+}
+
+static inline DataTypeFunctionFlags operator ~ (const DataTypeFunctionFlags lhs) {
+        return static_cast<DataTypeFunctionFlags>(~static_cast<uint32_t>(lhs));
 }
 
 class IDataTypeFunction;
@@ -93,6 +99,8 @@ public:
     virtual void setFlags(DataTypeFunctionFlags flags) = 0;
 
     virtual bool hasFlags(DataTypeFunctionFlags f) const = 0;
+
+    virtual void clrFlags(DataTypeFunctionFlags f) = 0;
 
     virtual void setAssociatedData(vsc::dm::IAssociatedData *data) = 0;
 

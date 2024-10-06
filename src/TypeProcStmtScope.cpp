@@ -59,10 +59,10 @@ void TypeProcStmtScope::insertStatement(
         ITypeProcStmtUP(stmt));
 }
 
-int32_t TypeProcStmtScope::addVariable(ITypeProcStmtVarDecl *v) {
-    m_statements.push_back(ITypeProcStmtUP(v));
+int32_t TypeProcStmtScope::addVariable(vsc::dm::ITypeVar *v, bool owned) {
+    m_statements.push_back(ITypeProcStmtUP(dynamic_cast<ITypeProcStmt *>(v)));
     int32_t ret = m_variables.size();
-    m_variables.push_back(ITypeProcStmtVarDeclUP(v, false));
+    m_variables.push_back(vsc::dm::ITypeVarUP(v, false));
     if (!m_locals_t) {
         m_locals_t = vsc::dm::IDataTypeStructUP(m_ctxt->mkDataTypeStruct(""));
     }
@@ -84,7 +84,7 @@ int32_t TypeProcStmtScope::insertVariable(
         m_statements.begin()+i,
         ITypeProcStmtUP(v));
     int32_t ret = m_variables.size();
-    m_variables.push_back(ITypeProcStmtVarDeclUP(v, false));
+    m_variables.push_back(vsc::dm::ITypeVarUP(v, false));
     return ret;
 }
 

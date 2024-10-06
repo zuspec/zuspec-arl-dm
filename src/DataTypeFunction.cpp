@@ -47,7 +47,7 @@ DataTypeFunction::~DataTypeFunction() {
 
 void DataTypeFunction::addParameter(IDataTypeFunctionParamDecl *p) {
     m_parameters.push_back(p);
-    m_variables.push_back(ITypeProcStmtVarDeclUP(p, false));
+    m_variables.push_back(vsc::dm::ITypeVarUP(p, false));
     m_parameters_t->addField(m_ctxt->mkTypeFieldPhy(
         p->name(),
         p->getDataType(),

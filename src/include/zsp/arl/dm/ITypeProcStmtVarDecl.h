@@ -24,6 +24,7 @@
 #include "zsp/arl/dm/ITypeProcStmt.h"
 #include "vsc/dm/IDataType.h"
 #include "vsc/dm/ITypeExpr.h"
+#include "vsc/dm/ITypeVar.h"
 
 namespace zsp {
 namespace arl {
@@ -31,14 +32,12 @@ namespace dm {
 
 class ITypeProcStmtVarDecl;
 using ITypeProcStmtVarDeclUP=vsc::dm::UP<ITypeProcStmtVarDecl>;
-class ITypeProcStmtVarDecl : public virtual ITypeProcStmt {
+class ITypeProcStmtVarDecl : 
+    public virtual ITypeProcStmt,
+    public virtual vsc::dm::ITypeVar {
 public:
 
     virtual ~ITypeProcStmtVarDecl() { }
-
-    virtual const std::string &name() const = 0;
-
-    virtual vsc::dm::IDataType *getDataType() const = 0;
 
     virtual vsc::dm::ITypeExpr *getInit() const = 0;
 

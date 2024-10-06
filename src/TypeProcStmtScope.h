@@ -47,7 +47,7 @@ public:
         int32_t                 i,
         ITypeProcStmt           *stmt) override;
 
-    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) override;
+    virtual int32_t addVariable(vsc::dm::ITypeVar *v, bool owned=true) override;
 
     virtual int32_t insertVariable(
         int32_t                 i,
@@ -61,7 +61,7 @@ public:
         return m_statements;
     }
 
-    virtual const std::vector<ITypeProcStmtVarDeclUP> &getVariables() const override {
+    virtual const std::vector<vsc::dm::ITypeVarUP> &getVariables() const override {
         return m_variables;
     }
 
@@ -74,7 +74,7 @@ public:
 private:
     IContext                                    *m_ctxt;
     std::vector<ITypeProcStmtUP>                m_statements;
-    std::vector<ITypeProcStmtVarDeclUP>         m_variables;
+    std::vector<vsc::dm::ITypeVarUP>            m_variables;
     vsc::dm::IDataTypeStructUP                  m_locals_t;
 };
 

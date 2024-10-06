@@ -48,9 +48,9 @@ public:
         return m_body.get();
     }
 
-    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) override {
+    virtual int32_t addVariable(vsc::dm::ITypeVar *v, bool owned=true) override {
         int32_t id = m_variables.size();
-        m_variables.push_back(ITypeProcStmtVarDeclUP(v));
+        m_variables.push_back(vsc::dm::ITypeVarUP(v));
         return id;
     }
 
@@ -58,7 +58,7 @@ public:
         return m_variables.size();
     }
 
-    virtual const std::vector<ITypeProcStmtVarDeclUP> &getVariables() const override {
+    virtual const std::vector<vsc::dm::ITypeVarUP> &getVariables() const override {
         return m_variables;
     }
 
@@ -67,7 +67,7 @@ public:
 private:
     vsc::dm::ITypeExprUP                    m_cond;
     ITypeProcStmtUP                         m_body;
-    std::vector<ITypeProcStmtVarDeclUP>     m_variables;
+    std::vector<vsc::dm::ITypeVarUP>        m_variables;
 
 
 };

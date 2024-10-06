@@ -110,7 +110,7 @@ public:
     }
 
     // Implementation of ITypeProcStmtDeclScope for function parameters
-    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) override { 
+    virtual int32_t addVariable(vsc::dm::ITypeVar *v, bool owned=true) override { 
         return -1;
     }
 
@@ -118,7 +118,7 @@ public:
         return m_variables.size();
     };
 
-    virtual const std::vector<ITypeProcStmtVarDeclUP> &getVariables() const override {
+    virtual const std::vector<vsc::dm::ITypeVarUP> &getVariables() const override {
         return m_variables;
     }
 
@@ -130,7 +130,7 @@ private:
     vsc::dm::IDataType                              *m_ret_type;
     vsc::dm::IDataTypeUP                            m_ret_type_u;
     std::vector<IDataTypeFunctionParamDecl *>       m_parameters;
-    std::vector<ITypeProcStmtVarDeclUP>             m_variables;
+    std::vector<vsc::dm::ITypeVarUP>                m_variables;
     vsc::dm::IDataTypeStructUP                      m_parameters_t;
     vsc::dm::IDataTypeStruct                        *m_context;
     bool                                            m_is_export;

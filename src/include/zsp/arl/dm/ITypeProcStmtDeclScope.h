@@ -20,6 +20,7 @@
  */
 #pragma once
 #include <vector>
+#include "vsc/dm/ITypeVarScope.h"
 #include "zsp/arl/dm/ITypeProcStmtVarDecl.h"
 
 namespace zsp {
@@ -28,16 +29,11 @@ namespace dm {
 
 
 
-class ITypeProcStmtDeclScope {
+class ITypeProcStmtDeclScope :
+    public virtual vsc::dm::ITypeVarScope {
 public:
 
     virtual ~ITypeProcStmtDeclScope() { }
-
-    virtual int32_t addVariable(ITypeProcStmtVarDecl *v) = 0;
-
-    virtual int32_t getNumVariables() = 0;
-
-    virtual const std::vector<ITypeProcStmtVarDeclUP> &getVariables() const = 0;
 
 };
 

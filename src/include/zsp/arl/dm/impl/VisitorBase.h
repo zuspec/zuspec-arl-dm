@@ -295,7 +295,9 @@ public:
     }
 
     virtual void visitTypeExprMethodCallStatic(ITypeExprMethodCallStatic *e) override {
-        e->getTarget()->accept(m_this);
+        if (e->getTarget()) {
+            e->getTarget()->accept(m_this);
+        }
     }
 
 	virtual void visitTypeExec(ITypeExec *e) override { }

@@ -36,10 +36,28 @@ public:
     virtual ~TaskGetSubField() { }
 
     vsc::dm::ITypeField *get(vsc::dm::IDataType *base, int32_t idx) {
+        vsc::dm::ITypeField *ret = 0;
+
         m_struct = 0;
         base->accept(m_this);
+        
+        if (m_struct) {
+            ret  = m_struct->getField(idx);
+        }
 
-        return (m_struct)?m_struct->getField(idx):0;
+        if (!ret) {
+            fprintf(stdout, "Failed to get field\n");
+        }
+
+        return ret;
+    }
+
+    virtual void visitDataTypeAddrSpaceC(IDataTypeAddrSpaceC *i) override {
+        m_struct = i;
+    }
+
+    virtual void visitDataTypeAddrSpaceTransparentC(IDataTypeAddrSpaceTransparentC *i) override {
+        m_struct = i;
     }
 
 	virtual void visitDataTypeAction(IDataTypeAction *i) override {

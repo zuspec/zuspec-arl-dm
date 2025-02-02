@@ -1,7 +1,7 @@
 name: CI
 on:
   push:
-  pull_request:
+#  pull_request:
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * 0/2'
@@ -17,6 +17,7 @@ jobs:
               - spec: 'cp310-cp310'
               - spec: 'cp311-cp311'
               - spec: 'cp312-cp312'
+              - spec: 'cp313-cp313'
         steps:
         - name: checkout
           uses: actions/checkout@v4

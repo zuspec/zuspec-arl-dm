@@ -9,6 +9,8 @@ on:
 jobs:
     linux:
         uses: zuspec/zuspec-release/.github/workflows/zuspec-pybuild.yml@main
+        with:
+            version_dir: 'python/zsp_arl_dm'
         secrets:
             PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
 

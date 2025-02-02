@@ -6,16 +6,17 @@ import sys
 import platform
 from setuptools import Extension, find_namespace_packages
 
-version="0.0.5"
 
 proj_dir = os.path.dirname(os.path.abspath(__file__))
 
 try:
     import sys
     sys.path.insert(0, os.path.join(proj_dir, "python/zsp_arl_dm"))
-    from __build_num__ import BUILD_NUM
+    from __version__ import VERSION
+    version = VERSION
     version += ".%s" % str(BUILD_NUM)
 except ImportError as e:
+    version="0.0.5"
     print("Import error: %s" % str(e))
     pass
 

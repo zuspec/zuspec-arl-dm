@@ -14,7 +14,6 @@ try:
     sys.path.insert(0, os.path.join(proj_dir, "python/zsp_arl_dm"))
     from __version__ import VERSION
     version = VERSION
-    version += ".%s" % str(BUILD_NUM)
 except ImportError as e:
     version="0.0.5"
     print("Import error: %s" % str(e))

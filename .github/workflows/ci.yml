@@ -8,7 +8,7 @@ on:
 
 jobs:
     linux:
-        uses: zuspec/zuspec-release/.github/workflows/zuspec-pybuild.yml
+        uses: zuspec/zuspec-release/.github/workflows/zuspec-pybuild.yml@main
         secrets:
             PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
 

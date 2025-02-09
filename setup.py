@@ -12,10 +12,12 @@ proj_dir = os.path.dirname(os.path.abspath(__file__))
 try:
     import sys
     sys.path.insert(0, os.path.join(proj_dir, "python/zsp_arl_dm"))
-    from __version__ import VERSION
+    from __version__ import VERSION, BASE
+    base = BASE
     version = VERSION
 except ImportError as e:
-    version="0.0.5"
+    base="0.0.5"
+    version=base
     print("Import error: %s" % str(e))
     pass
 

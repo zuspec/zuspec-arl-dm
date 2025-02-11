@@ -1,3 +1,3 @@
-BASE="0.0.7"
+BASE="0.0.8"
 SUFFIX=""
 VERSION="%s%s" % (BASE, SUFFIX)

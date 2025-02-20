@@ -85,8 +85,9 @@ public:
 			const std::string		&name,
 			vsc::dm::IDataType		*rtype,
 			bool					own_rtype,
-            DataTypeFunctionFlags   flags) override {
-        return ctxt()->mkDataTypeFunction(name, rtype, own_rtype, flags);
+            DataTypeFunctionFlags   flags,
+            IDataTypeArlStruct      *context) override {
+        return ctxt()->mkDataTypeFunction(name, rtype, own_rtype, flags, context);
     }
     
     virtual IDataTypeFunctionImport *mkDataTypeFunctionImport(

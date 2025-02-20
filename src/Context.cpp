@@ -177,8 +177,9 @@ IDataTypeFunction *Context::mkDataTypeFunction(
 		const std::string		&name,
 		vsc::dm::IDataType		*rtype,
 		bool					own,
-        DataTypeFunctionFlags   flags) {
-	return new DataTypeFunction(this, name, rtype, own, flags);
+        DataTypeFunctionFlags   flags,
+		IDataTypeArlStruct		*context) {
+	return new DataTypeFunction(this, name, rtype, own, flags, context);
 }
 
 bool Context::addDataTypeFunction(IDataTypeFunction *f) {

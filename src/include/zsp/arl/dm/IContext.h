@@ -126,7 +126,8 @@ public:
 			const std::string		&name,
 			vsc::dm::IDataType		*rtype,
 			bool					own_rtype,
-            DataTypeFunctionFlags   flags=DataTypeFunctionFlags::NoFlags) = 0;
+            DataTypeFunctionFlags   flags=DataTypeFunctionFlags::NoFlags,
+			IDataTypeArlStruct		*context=0) = 0;
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) = 0;
 

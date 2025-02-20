@@ -37,7 +37,8 @@ public:
         const std::string       &name,
         vsc::dm::IDataType      *rtype,
         bool                    own_rtype,
-        DataTypeFunctionFlags   flags);
+        DataTypeFunctionFlags   flags,
+        IDataTypeArlStruct      *context);
 
     virtual ~DataTypeFunction();
 
@@ -132,7 +133,7 @@ private:
     std::vector<IDataTypeFunctionParamDecl *>       m_parameters;
     std::vector<vsc::dm::ITypeVarUP>                m_variables;
     vsc::dm::IDataTypeStructUP                      m_parameters_t;
-    vsc::dm::IDataTypeStruct                        *m_context;
+    IDataTypeArlStruct                              *m_context;
     bool                                            m_is_export;
     DataTypeFunctionFlags                           m_flags;
     ITypeProcStmtScopeUP                            m_body;

@@ -56,7 +56,8 @@ public:
 			const std::string		    &name,
 			vsc::dm::IDataType			*rtype,
 			bool					    own_rtype,
-            DataTypeFunctionFlags       flags) override;
+            DataTypeFunctionFlags       flags,
+			IDataTypeArlStruct			*context) override;
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) override;
 

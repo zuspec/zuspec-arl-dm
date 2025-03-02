@@ -34,6 +34,8 @@ public:
 
     virtual vsc::dm::ITypeExpr *getExpr() const = 0;
 
+    virtual void setExpr(vsc::dm::ITypeExpr *e, bool owned=true) = 0;
+
 };
 
 }

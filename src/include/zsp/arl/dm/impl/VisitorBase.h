@@ -133,6 +133,11 @@ public:
 	virtual void visitDataTypeActivitySequence(IDataTypeActivitySequence *t) override {
         visitDataTypeActivity(t);
 		m_this->visitDataTypeStruct(t);
+		for (std::vector<ITypeFieldActivityUP>::const_iterator
+				it=t->getActivities().begin();
+				it!=t->getActivities().end(); it++) {
+			(*it)->accept(m_this);
+		}
 	}
 
 	virtual void visitDataTypeActivityTraverse(IDataTypeActivityTraverse *t) override { 

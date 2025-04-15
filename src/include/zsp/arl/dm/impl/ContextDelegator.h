@@ -120,6 +120,12 @@ public:
         return ctxt()->mkDataTypeRegGroup(name);
     }
 
+    virtual IDataTypeActivityBind *mkDataTypeActivityBind(
+        const std::vector<vsc::dm::ITypeExprFieldRef *> &targets,
+        bool owned=true) override {
+        return ctxt()->mkDataTypeActivityBind(targets, owned);
+    }
+
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() { 
         return ctxt()->mkDataTypeActivityParallel();
     }

@@ -9,6 +9,7 @@
 #include <vector>
 #include "vsc/dm/ITypeExprFieldRef.h"
 #include "zsp/arl/dm/IDataTypeActivity.h"
+#include "zsp/arl/dm/IDataTypeActivityBind.h"
 #include "zsp/arl/dm/ITypeFieldActivity.h"
 #include "vsc/dm/IDataTypeStruct.h"
 
@@ -33,6 +34,10 @@ public:
     virtual int32_t getActivityOffset() const = 0;
 
 	virtual void addActivityField(ITypeFieldActivity *a) = 0;
+
+    virtual const std::vector<IDataTypeActivityBindUP> &getBinds() const = 0;
+
+    virtual void addBind(IDataTypeActivityBind *b) = 0;
 
 };
 

@@ -70,6 +70,14 @@ public:
         bool                    owned) override;
 
 	virtual void addActivityField(ITypeFieldActivity *a) override;
+
+    virtual const std::vector<IDataTypeActivityBindUP> &getBinds() const override {
+        return m_binds;
+    }
+
+    virtual void addBind(IDataTypeActivityBind *b) override {
+        m_binds.push_back(IDataTypeActivityBindUP(b));
+    };
     
     virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
         m_associated_data = vsc::dm::IAssociatedDataUP(data);
@@ -99,6 +107,7 @@ private:
 	vsc::dm::IModelStructCreateHookUP			m_create_hook;
 
 	std::vector<ITypeFieldActivityUP>			m_activities;
+    std::vector<IDataTypeActivityBindUP>        m_binds;
     vsc::dm::IAssociatedDataUP                  m_associated_data;
 
 };

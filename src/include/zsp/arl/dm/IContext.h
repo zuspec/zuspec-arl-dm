@@ -7,6 +7,7 @@
 #pragma once
 #include "vsc/dm/IContext.h"
 #include "zsp/arl/dm/IDataTypeAction.h"
+#include "zsp/arl/dm/IDataTypeActivityBind.h"
 #include "zsp/arl/dm/IDataTypeActivityParallel.h"
 #include "zsp/arl/dm/IDataTypeActivitySchedule.h"
 #include "zsp/arl/dm/IDataTypeActivitySequence.h"
@@ -146,6 +147,10 @@ public:
 			vsc::dm::ITypeExpr		*init) = 0;
 
     virtual IDataTypeRegGroup *mkDataTypeRegGroup(const std::string &name) = 0;
+
+    virtual IDataTypeActivityBind *mkDataTypeActivityBind(
+        const std::vector<vsc::dm::ITypeExprFieldRef *> &targets,
+        bool owned=true) = 0;
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() = 0;
 

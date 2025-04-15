@@ -7,6 +7,7 @@
 #include "vsc/dm/impl/ValRef.h"
 #include "Context.h"
 #include "DataTypeAction.h"
+#include "DataTypeActivityBind.h"
 #include "DataTypeActivityParallel.h"
 #include "DataTypeActivityReplicate.h"
 #include "DataTypeActivitySchedule.h"
@@ -214,6 +215,12 @@ IDataTypeFunctionParamDecl *Context::mkDataTypeFunctionParamDecl(
 
 IDataTypeRegGroup *Context::mkDataTypeRegGroup(const std::string &name) {
     return new DataTypeRegGroup(this, name);
+}
+
+IDataTypeActivityBind *Context::mkDataTypeActivityBind(
+        const std::vector<vsc::dm::ITypeExprFieldRef *> &targets,
+        bool owned) {
+    return new DataTypeActivityBind(targets, owned);
 }
 
 IDataTypeActivityParallel *Context::mkDataTypeActivityParallel() {

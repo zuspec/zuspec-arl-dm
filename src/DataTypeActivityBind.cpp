@@ -29,11 +29,12 @@ namespace dm {
 
 
 DataTypeActivityBind::DataTypeActivityBind(
-    const std::vector<vsc::dm::ITypeExprFieldRef *> &targets) {
+    const std::vector<vsc::dm::ITypeExprFieldRef *> &targets,
+    bool                                            owned) {
     for (std::vector<vsc::dm::ITypeExprFieldRef *>::const_iterator
         it=targets.begin();
         it!=targets.end(); it++) {
-        m_targets.push_back(vsc::dm::ITypeExprFieldRefUP(*it));
+        m_targets.push_back(vsc::dm::ITypeExprFieldRefUP(*it, owned));
     }
 }
 

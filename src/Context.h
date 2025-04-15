@@ -77,6 +77,10 @@ public:
 
     virtual IDataTypeRegGroup *mkDataTypeRegGroup(const std::string &name) override;
 
+    virtual IDataTypeActivityBind *mkDataTypeActivityBind(
+        const std::vector<vsc::dm::ITypeExprFieldRef *> &targets,
+        bool owned=true) override;
+
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() override;
 
 	virtual IDataTypeActivityReplicate *mkDataTypeActivityReplicate(

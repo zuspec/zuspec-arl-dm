@@ -1,5 +1,7 @@
 #!/bin/sh -x
 
+yum install -y glibc-static
+
 echo "BUILD_NUM=${BUILD_NUM}" >> python/zsp_arl_dm/__build_num__.py
 ${IVPM_PYTHON} -m pip install ivpm cython
 ${IVPM_PYTHON} -m ivpm update -a

@@ -1,6 +1,6 @@
 #!/bin/sh -x
 
-yum install -y glibc-static
+yum install -y glibc-static ninja-build
 
 echo "BUILD_NUM=${BUILD_NUM}" >> python/zsp_arl_dm/__build_num__.py
 ${IVPM_PYTHON} -m pip install ivpm cython setuptools --pre

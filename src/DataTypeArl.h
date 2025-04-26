@@ -28,7 +28,8 @@ namespace arl {
 namespace dm {
 
 
-class DataTypeArl : public virtual vsc::dm::IDataType {
+class DataTypeArl : 
+    public virtual vsc::dm::IDataType {
 public:
     DataTypeArl(int32_t bytesz=0);
 
@@ -43,6 +44,14 @@ public:
     virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override;
 
     virtual vsc::dm::IAssociatedData *getAssociatedData() const override;
+
+    virtual vsc::dm::IValIterator *mkValIterator(const vsc::dm::ValRef &src) override {
+        return 0;
+    }
+
+    virtual vsc::dm::IValMutIterator *mkValMutIterator(const vsc::dm::ValRef &src) override {
+        return 0;
+    }
 
 protected:
     int32_t                                         m_bytesz;

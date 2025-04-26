@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/IDataTypeActivityBind.h"
+#include "DataTypeActivityStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -27,20 +28,49 @@ namespace dm {
 
 
 
-class DataTypeActivityBind : public virtual IDataTypeActivityBind {
+class DataTypeActivityBind : 
+    public virtual IDataTypeActivityBind,
+    public virtual DataTypeActivityStmt {
 public:
-    DataTypeActivityBind(const std::vector<vsc::dm::ITypeExprFieldRef *> &targets);
+    DataTypeActivityBind(
+        const std::vector<vsc::dm::ITypeExprFieldRef *> &targets,
+        bool                                            owned=true);
 
     virtual ~DataTypeActivityBind();
+
+    virtual int32_t getByteSize() const override { return -1; }
 
     virtual const std::vector<vsc::dm::ITypeExprFieldRefUP> &getTargets() const override {
         return m_targets;
     }
 
+	virtual IModelActivity *mkActivity(
+		vsc::dm::IModelBuildContext		*ctxt,
+		ITypeFieldActivity			*type) override { return 0; }
+
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
+        m_associated_data = vsc::dm::IAssociatedDataUP(data);
+    }
+
+    virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
+        return m_associated_data.get();
+    }
+
+	virtual vsc::dm::IModelField *mkRootField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		const std::string			&name,
+		bool						is_ref) override { return 0; }
+
+	virtual vsc::dm::IModelField *mkTypeField(
+		vsc::dm::IModelBuildContext		*ctxt,
+		vsc::dm::ITypeField				*type,
+        const vsc::dm::ValRef           &val) override { return 0; }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-    std::vector<vsc::dm::ITypeExprFieldRefUP>           m_targets;
+    std::vector<vsc::dm::ITypeExprFieldRefUP>       m_targets;
+    vsc::dm::IAssociatedDataUP                      m_associated_data;
 
 };
 

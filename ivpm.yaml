@@ -13,6 +13,8 @@ package:
       url: https://github.com/vsc-tools/vsc-dm.git
     - name: json
       url: https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+    - name: debug-mgr
+      url: https://github.com/mballance-utils/debug-mgr.git
 
   - name: default-dev
     deps:

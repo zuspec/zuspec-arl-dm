@@ -38,6 +38,10 @@ public:
         return m_expr.get();
     }
 
+    virtual void setExpr(vsc::dm::ITypeExpr *e, bool owned=true) override {
+        m_expr = vsc::dm::ITypeExprUP(e, owned);
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:

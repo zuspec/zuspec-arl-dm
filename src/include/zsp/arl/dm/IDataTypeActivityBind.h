@@ -27,8 +27,8 @@ namespace zsp {
 namespace arl {
 namespace dm {
 
-
-
+class IDataTypeActivityBind;
+using IDataTypeActivityBindUP=vsc::dm::UP<IDataTypeActivityBind>;
 class IDataTypeActivityBind : public virtual IDataTypeActivity {
 public:
 

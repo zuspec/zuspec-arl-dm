@@ -48,6 +48,14 @@ public:
 
 	virtual void finalize(vsc::dm::IContext *ctxt) override { }
 
+    virtual vsc::dm::IValIterator *mkValIterator(const vsc::dm::ValRef &src) override {
+        return 0;
+    }
+
+    virtual vsc::dm::IValMutIterator *mkValMutIterator(const vsc::dm::ValRef &src) override {
+        return 0;
+    }
+
 	virtual const std::string &name() const {
 		return m_name;
 	}

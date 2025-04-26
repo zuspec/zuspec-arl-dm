@@ -56,7 +56,8 @@ public:
 			const std::string		    &name,
 			vsc::dm::IDataType			*rtype,
 			bool					    own_rtype,
-            DataTypeFunctionFlags       flags) override;
+            DataTypeFunctionFlags       flags,
+			IDataTypeArlStruct			*context) override;
 
 	virtual bool addDataTypeFunction(IDataTypeFunction *f) override;
 
@@ -75,6 +76,10 @@ public:
 			vsc::dm::ITypeExpr		*dflt) override;
 
     virtual IDataTypeRegGroup *mkDataTypeRegGroup(const std::string &name) override;
+
+    virtual IDataTypeActivityBind *mkDataTypeActivityBind(
+        const std::vector<vsc::dm::ITypeExprFieldRef *> &targets,
+        bool owned=true) override;
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() override;
 

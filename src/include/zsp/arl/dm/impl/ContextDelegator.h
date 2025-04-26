@@ -85,8 +85,9 @@ public:
 			const std::string		&name,
 			vsc::dm::IDataType		*rtype,
 			bool					own_rtype,
-            DataTypeFunctionFlags   flags) override {
-        return ctxt()->mkDataTypeFunction(name, rtype, own_rtype, flags);
+            DataTypeFunctionFlags   flags,
+            IDataTypeArlStruct      *context) override {
+        return ctxt()->mkDataTypeFunction(name, rtype, own_rtype, flags, context);
     }
     
     virtual IDataTypeFunctionImport *mkDataTypeFunctionImport(
@@ -117,6 +118,12 @@ public:
 
     virtual IDataTypeRegGroup *mkDataTypeRegGroup(const std::string &name) override {
         return ctxt()->mkDataTypeRegGroup(name);
+    }
+
+    virtual IDataTypeActivityBind *mkDataTypeActivityBind(
+        const std::vector<vsc::dm::ITypeExprFieldRef *> &targets,
+        bool owned=true) override {
+        return ctxt()->mkDataTypeActivityBind(targets, owned);
     }
 
 	virtual IDataTypeActivityParallel *mkDataTypeActivityParallel() { 

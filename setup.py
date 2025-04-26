@@ -6,21 +6,18 @@ import sys
 import platform
 from setuptools import Extension, find_namespace_packages
 
-if "IVPM_PYTHONPATH" in os.environ.keys():
-    ps = ";" if platform.system() == "Windows" else ":"
-    for i,p in enumerate(os.environ["IVPM_PYTHONPATH"].split(ps)):
-        sys.path.insert(i, p)
-
-version="0.0.1"
 
 proj_dir = os.path.dirname(os.path.abspath(__file__))
 
 try:
     import sys
     sys.path.insert(0, os.path.join(proj_dir, "python/zsp_arl_dm"))
-    from __build_num__ import BUILD_NUM
-    version += ".%s" % str(BUILD_NUM)
+    from __version__ import VERSION, BASE
+    base = BASE
+    version = VERSION
 except ImportError as e:
+    base="0.0.5"
+    version=base
     print("Import error: %s" % str(e))
     pass
 
@@ -57,6 +54,9 @@ setup_args = dict(
   version=version,
   packages=['zsp_arl_dm'],
   package_dir = {'' : 'python'},
+  package_data={ 'zsp_arl_dm': [
+      "core.pxd",
+      "decl.pxd" ]},
   author = "Matthew Ballance",
   author_email = "matt.ballance@gmail.com",
   description = ("Core ARL data model library"),
@@ -76,8 +76,10 @@ setup_args = dict(
     ]
   },
   setup_requires=[
-    'setuptools_scm',
     'cython',
+    'ivpm',
+    'vsc-dm',
+    'setuptools_scm',
   ],
   ext_modules=[ ext ]
 )

@@ -33,9 +33,11 @@ DataTypeFunction::DataTypeFunction(
     const std::string           &name,
     vsc::dm::IDataType          *rtype,
     bool                        own_rtype,
-    DataTypeFunctionFlags       flags) :
+    DataTypeFunctionFlags       flags,
+    IDataTypeArlStruct          *context) :
         m_ctxt(ctxt), m_name(name), m_ret_type(rtype), 
         m_ret_type_u(own_rtype?rtype:0), m_flags(flags), 
+        m_context(context),
         m_body(ctxt->mkTypeProcStmtScope()) {
     m_parameters_t = vsc::dm::IDataTypeStructUP(
         ctxt->mkDataTypeStruct(name + "_params"));

@@ -7,6 +7,8 @@ ${IVPM_PYTHON} -m pip install ivpm cython setuptools --pre
 ${IVPM_PYTHON} -m ivpm update -a --py-prerls-packages
 
 PYTHON=./packages/python/bin/python
+echo "IVPM version:"
+${PYTHON}/bin/pip show ivpm
 ${PYTHON} -m pip install twine auditwheel ninja wheel cython
 ${PYTHON} setup.py bdist_wheel
 

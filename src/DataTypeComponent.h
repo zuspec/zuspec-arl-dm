@@ -38,6 +38,14 @@ public:
 		return m_pool_binds;
 	}
 
+	virtual const std::vector<ITypeFieldActivityUP> &activities() const override {
+        return m_activities;
+    }
+
+	virtual void addActivity(ITypeFieldActivity *activity) override {
+        m_activities.push_back(ITypeFieldActivityUP(activity));
+    }
+
 	virtual vsc::dm::IModelField *mkRootField(
 		vsc::dm::IModelBuildContext		*ctxt,
 		const std::string			&name,
@@ -51,10 +59,11 @@ public:
 	virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
-	vsc::dm::ITypeField							*m_comp_id;
+	vsc::dm::ITypeField						*m_comp_id;
 	std::vector<IDataTypeAction *>			m_action_types;
 	std::vector<IPoolBindDirectiveUP>		m_pool_binds;
-	vsc::dm::IModelStructCreateHookUP			m_create_hook;
+    std::vector<ITypeFieldActivityUP>	    m_activities;
+	vsc::dm::IModelStructCreateHookUP		m_create_hook;
 
 };
 

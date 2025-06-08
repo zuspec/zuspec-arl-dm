@@ -10,6 +10,7 @@
 #include "zsp/arl/dm/IAccept.h"
 #include "zsp/arl/dm/IPoolBindDirective.h"
 #include "zsp/arl/dm/IDataTypeArlStruct.h"
+#include "zsp/arl/dm/ITypeFieldActivity.h"
 
 namespace zsp {
 namespace arl {
@@ -32,6 +33,10 @@ public:
 	virtual void addPoolBindDirective(IPoolBindDirective *bind) = 0;
 
 	virtual const std::vector<IPoolBindDirectiveUP> &getPoolBindDirectives() const = 0;
+
+	virtual const std::vector<ITypeFieldActivityUP> &activities() const = 0;
+
+	virtual void addActivity(ITypeFieldActivity *activity) = 0;
 
 };
 

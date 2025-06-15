@@ -47,8 +47,8 @@ TypeProcStmtScope::~TypeProcStmtScope() {
 
 }
 
-void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt) {
-    m_statements.push_back(ITypeProcStmtUP(stmt));
+void TypeProcStmtScope::addStatement(ITypeProcStmt *stmt, bool owned) {
+    m_statements.push_back(ITypeProcStmtUP(stmt, owned));
 }
 
 void TypeProcStmtScope::insertStatement(

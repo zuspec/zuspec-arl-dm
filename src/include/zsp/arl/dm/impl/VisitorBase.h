@@ -369,28 +369,33 @@ public:
         dynamic_cast<IVisitor *>(m_this)->visitTypeFieldRegGroup(f);
     }
 
+	virtual void visitTypeProcStmt(ITypeProcStmt *s) override { }
+
 	virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override {
+        visitTypeProcStmt(s);
 		s->getLhs()->accept(m_this);
 		s->getRhs()->accept(m_this);
 	}
 
 	virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) override {
-
+        visitTypeProcStmt(s);
 	}
 
 	virtual void visitTypeProcStmtContinue(ITypeProcStmtContinue *s) override {
-
+        visitTypeProcStmt(s);
 	}
 
 	virtual void visitTypeProcStmtExpr(ITypeProcStmtExpr *s) override {
+        visitTypeProcStmt(s);
         s->getExpr()->accept(m_this);
 	}
 
 	virtual void visitTypeProcStmtForeach(ITypeProcStmtForeach *s) override {
-
+        visitTypeProcStmt(s);
 	}
     
 	virtual void visitTypeProcStmtIfClause(ITypeProcStmtIfClause *s) override {
+        visitTypeProcStmt(s);
         s->getCond()->accept(m_this);
         if (s->getStmt()) {
             s->getStmt()->accept(m_this);
@@ -409,26 +414,31 @@ public:
 	}
 
 	virtual void visitTypeProcStmtMatch(ITypeProcStmtMatch *s) override {
+        visitTypeProcStmt(s);
 		s->getCond()->accept(m_this);
 	}
 
 	virtual void visitTypeProcStmtRepeat(ITypeProcStmtRepeat *s) override {
+        visitTypeProcStmt(s);
 		s->getExpr()->accept(m_this);
 		s->getBody()->accept(m_this);
 	}
 
 	virtual void visitTypeProcStmtRepeatWhile(ITypeProcStmtRepeatWhile *s) override {
+        visitTypeProcStmt(s);
 		s->getExpr()->accept(m_this);
 		s->getBody()->accept(m_this);
 	}
 
 	virtual void visitTypeProcStmtReturn(ITypeProcStmtReturn *s) override {
+        visitTypeProcStmt(s);
 		if (s->getExpr()) {
 			s->getExpr()->accept(m_this);
 		}
 	}
 
 	virtual void visitTypeProcStmtScope(ITypeProcStmtScope *s) override {
+        visitTypeProcStmt(s);
 		for (std::vector<ITypeProcStmtUP>::const_iterator
 			it=s->getStatements().begin();
 			it!=s->getStatements().end(); it++) {
@@ -437,6 +447,7 @@ public:
 	}
 
 	virtual void visitTypeProcStmtVarDecl(ITypeProcStmtVarDecl *s) override {
+        visitTypeProcStmt(s);
 		s->getDataType()->accept(m_this);
 		if (s->getInit()) {
 			s->getInit()->accept(m_this);
@@ -444,11 +455,14 @@ public:
 	}
 
 	virtual void visitTypeProcStmtWhile(ITypeProcStmtWhile *s) override {
+        visitTypeProcStmt(s);
 		s->getCond()->accept(m_this);
 		s->getBody()->accept(m_this);
 	}
 
-	virtual void visitTypeProcStmtYield(ITypeProcStmtYield *s) override { }
+	virtual void visitTypeProcStmtYield(ITypeProcStmtYield *s) override { 
+        visitTypeProcStmt(s);
+    }
 };
 
 }

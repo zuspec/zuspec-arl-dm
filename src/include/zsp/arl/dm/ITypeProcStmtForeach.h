@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include "zsp/arl/dm/ITypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -27,7 +28,8 @@ namespace dm {
 
 
 
-class ITypeProcStmtForeach {
+class ITypeProcStmtForeach : 
+    public virtual ITypeProcStmt {
 public:
 
     virtual ~ITypeProcStmtForeach() { }

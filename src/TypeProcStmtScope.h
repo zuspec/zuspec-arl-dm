@@ -41,7 +41,7 @@ public:
 
     virtual ~TypeProcStmtScope();
 
-    virtual void addStatement(ITypeProcStmt *stmt) override;
+    virtual void addStatement(ITypeProcStmt *stmt, bool owned=true) override;
 
     virtual void insertStatement(
         int32_t                 i,

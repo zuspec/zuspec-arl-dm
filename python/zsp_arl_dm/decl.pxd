@@ -47,6 +47,7 @@ ctypedef ITypeFieldPool *ITypeFieldPoolP
 ctypedef ITypeFieldReg *ITypeFieldRegP
 ctypedef ITypeProcStmt *ITypeProcStmtP 
 ctypedef ITypeProcStmtDeclScope *ITypeProcStmtDeclScopeP 
+ctypedef ITypeProcStmtScope *ITypeProcStmtScopeP 
 ctypedef ITypeProcStmtVarDecl *ITypeProcStmtVarDeclP 
 
 cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
@@ -180,6 +181,10 @@ cdef extern from "zsp/arl/dm/ITypeProcStmtDeclScope.h" namespace "zsp::arl::dm":
         void setAssociatedData(vsc.IAssociatedData *)
         pass
 
+cdef extern from "zsp/arl/dm/ITypeProcStmtScope.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtScope(ITypeProcStmtDeclScope):
+        pass
+
 cdef extern from "zsp/arl/dm/ITypeProcStmtVarDecl.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeProcStmtVarDecl(ITypeProcStmt):
         const cpp_string &name() const
@@ -206,6 +211,7 @@ cdef extern from "zsp/arl/dm/IDataTypeFunction.h" namespace "zsp::arl::dm":
         const cpp_string &name()
         vsc.IDataType *getReturnType() const
         const cpp_vector[IDataTypeFunctionParamDeclP] &getParameters() const
+        ITypeProcStmtScope *getBody() const
         DataTypeFunctionFlags getFlags() const
         bool hasFlags(DataTypeFunctionFlags) const
 

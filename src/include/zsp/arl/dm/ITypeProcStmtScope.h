@@ -38,7 +38,7 @@ public:
 
     virtual ~ITypeProcStmtScope() { }
 
-    virtual void addStatement(ITypeProcStmt *stmt) = 0;
+    virtual void addStatement(ITypeProcStmt *stmt, bool owned=true) = 0;
 
     virtual void insertStatement(
         int32_t             i,
@@ -49,7 +49,6 @@ public:
         ITypeProcStmtVarDecl    *s) = 0;
 
     virtual const std::vector<ITypeProcStmtUP> &getStatements() const = 0;
-
 
     virtual vsc::dm::IDataTypeStruct *getLocalsT() const = 0;
 

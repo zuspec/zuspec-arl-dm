@@ -588,6 +588,13 @@ cdef class DataTypeFunction(vsc.ObjBase):
             ret.append(DataTypeFunctionParamDecl.mk(p.at(i), False))
         return ret
 
+    cpdef getBody(self):
+        cdef decl.ITypeProcStmtScope *body = self.asFunction().getBody()
+        if body != NULL:
+            return vsc.WrapperBuilder().mkObj(body, False)
+        else:
+            return None
+
     cpdef getFlags(self):
         cdef int flags_i = int(self.asFunction().getFlags())
         return DataTypeFunctionFlags(flags_i)
@@ -889,6 +896,19 @@ cdef class TypeFieldReg(vsc.TypeField):
 cdef class TypeProcStmt(vsc.ObjBase):
     pass
 
+cdef class TypeProcStmtScope(TypeProcStmt):
+
+    cdef decl.ITypeProcStmtScope *asScope(self):
+        return dynamic_cast[decl.ITypeProcStmtScopeP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtScope mk(decl.ITypeProcStmtScope *hndl, bool owned=True):
+        ret = TypeProcStmtScope()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+
 cdef class TypeProcStmtVarDecl(TypeProcStmt):
 
     cpdef str name(self):
@@ -963,6 +983,12 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitTypeFieldReg(self, TypeFieldReg f):
         pass
 
+    cpdef visitTypeProcStmt(self, TypeProcStmt t):
+        pass
+
+    cpdef visitTypeProcStmtScope(self, TypeProcStmtScope t):
+        pass
+
 # cdef public void VisitorProxy_visitDataTypeEnum(obj, vsc_decl.IDataTypeEnum *t) with gil:
 #     obj.enter()
 #     obj.visitDataTypeEnum(vsc.DataTypeEnum.mk(t, False))
@@ -1032,6 +1058,15 @@ cdef public void VisitorProxy_visitModelFieldPool(obj, decl.IModelFieldPool *c) 
 cdef public void VisitorProxy_visitTypeFieldReg(obj, decl.ITypeFieldReg *c) with gil:
     obj.visitTypeFieldReg(TypeFieldReg.mk(c, False))
 
+cdef public void VisitorProxy_visitTypeProcStmt(obj, decl.ITypeProcStmt *t) with gil:
+#    obj.visitTypeProcStmt(TypeProcStmt.mk(t, False))
+    pass
+
+cdef public void VisitorProxy_visitTypeProcStmtScope(obj, decl.ITypeProcStmtScope *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtScope(TypeProcStmtScope.mk(t, False))
+    obj.leave()
+
 
 cdef class WrapperBuilder(VisitorBase):
 
@@ -1095,6 +1130,13 @@ cdef class WrapperBuilder(VisitorBase):
     cpdef visitTypeFieldReg(self, TypeFieldReg f):
         print("visitTypeFieldReg")
         self._set_obj(f)
+
+    cpdef visitTypeProcStmt(self, TypeProcStmt t):
+        # This is a no-op, since we don't have a wrapper for TypeProcStmt
+        pass
+    
+    cpdef visitTypeProcStmtScope(self, TypeProcStmtScope t):
+        self._set_obj(t)
 
 cdef class WrapperBuilderVsc(vsc.WrapperBuilder):
 

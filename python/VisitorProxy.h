@@ -61,6 +61,8 @@ public:
 
 	virtual void visitTypeFieldReg(ITypeFieldReg *f) override;
 
+    virtual void visitTypeProcStmtScope(ITypeProcStmtScope *s) override;
+
 private:
     PyObject                *m_obj;
 

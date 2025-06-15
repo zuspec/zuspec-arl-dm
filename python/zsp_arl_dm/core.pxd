@@ -194,6 +194,8 @@ cdef class DataTypeFunction(vsc.ObjBase):
 
     cpdef getParameters(self)
 
+    cpdef getBody(self)
+
     cpdef getFlags(self)
 
     cpdef bool hasFlags(self, flags)
@@ -338,6 +340,13 @@ cdef class TypeFieldReg(vsc.TypeField):
 cdef class TypeProcStmt(vsc.ObjBase):
     pass
 
+cdef class TypeProcStmtScope(TypeProcStmt):
+    
+    cdef decl.ITypeProcStmtScope *asScope(self)
+
+    @staticmethod
+    cdef TypeProcStmtScope mk(decl.ITypeProcStmtScope *, bool owned=*)
+
 cdef class TypeProcStmtVarDecl(TypeProcStmt):
 
     cpdef str name(self)
@@ -378,6 +387,10 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitModelFieldPool(self, ModelFieldPool f)
 
     cpdef visitTypeFieldReg(self, TypeFieldReg f)
+
+    cpdef visitTypeProcStmt(self, TypeProcStmt t)
+
+    cpdef visitTypeProcStmtScope(self, TypeProcStmtScope t)
 
 cdef class WrapperBuilder(VisitorBase):
     cdef list _obj

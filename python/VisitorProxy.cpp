@@ -91,6 +91,14 @@ void VisitorProxy::visitTypeFieldReg(ITypeFieldReg *f) {
     VisitorProxy_visitTypeFieldReg(m_obj, f);
 }
 
+// void VisitorProxy::visitTypeProcStmt(ITypeProcStmt *s) {
+//     VisitorProxy_visitTypeProcStmt(m_obj, s);
+// }
+
+void VisitorProxy::visitTypeProcStmtScope(ITypeProcStmtScope *s) {
+    VisitorProxy_visitTypeProcStmtScope(m_obj, s);
+}
+
 }
 }
 }

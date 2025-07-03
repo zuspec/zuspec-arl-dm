@@ -29,7 +29,7 @@ namespace dm {
 
 class TypeProcStmtExpr : public virtual ITypeProcStmtExpr {
 public:
-    TypeProcStmtExpr(vsc::dm::ITypeExpr *expr);
+    TypeProcStmtExpr(vsc::dm::ITypeExpr *expr, bool owned=true);
 
     virtual ~TypeProcStmtExpr();
 

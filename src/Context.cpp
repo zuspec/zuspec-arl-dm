@@ -628,8 +628,9 @@ ITypeProcStmtContinue *Context::mkTypeProcStmtContinue() {
 }
 
 ITypeProcStmtExpr *Context::mkTypeProcStmtExpr(
-            vsc::dm::ITypeExpr *e) {
-    return new TypeProcStmtExpr(e);
+            vsc::dm::ITypeExpr  *e,
+            bool                owned) {
+    return new TypeProcStmtExpr(e, owned);
 }
 
 ITypeProcStmtForeach *Context::mkTypeProcStmtForeach(

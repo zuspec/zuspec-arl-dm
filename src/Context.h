@@ -301,7 +301,8 @@ public:
 	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() override;
 
 	virtual ITypeProcStmtExpr *mkTypeProcStmtExpr(
-            vsc::dm::ITypeExpr *e) override;
+            vsc::dm::ITypeExpr  *e,
+            bool                owned=true) override;
 
 	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(
 			vsc::dm::ITypeExpr		*target,

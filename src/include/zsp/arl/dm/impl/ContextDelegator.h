@@ -458,8 +458,8 @@ public:
         return ctxt()->mkTypeProcStmtContinue();
     }
 
-	virtual ITypeProcStmtExpr *mkTypeProcStmtExpr(vsc::dm::ITypeExpr *e) { 
-        return ctxt()->mkTypeProcStmtExpr(e);
+	virtual ITypeProcStmtExpr *mkTypeProcStmtExpr(vsc::dm::ITypeExpr *e, bool owned=true) { 
+        return ctxt()->mkTypeProcStmtExpr(e, owned);
     }
 
 	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(

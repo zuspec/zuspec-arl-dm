@@ -27,7 +27,7 @@ namespace arl {
 namespace dm {
 
 
-TypeProcStmtExpr::TypeProcStmtExpr(vsc::dm::ITypeExpr *e) : m_expr(e) {
+TypeProcStmtExpr::TypeProcStmtExpr(vsc::dm::ITypeExpr *e, bool owned) : m_expr(e, owned) {
 
 }
 

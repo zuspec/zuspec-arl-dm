@@ -378,7 +378,8 @@ public:
 	virtual ITypeProcStmtContinue *mkTypeProcStmtContinue() = 0;
 
 	virtual ITypeProcStmtExpr *mkTypeProcStmtExpr(
-            vsc::dm::ITypeExpr *e) = 0;
+            vsc::dm::ITypeExpr *e,
+            bool owned=true) = 0;
 
 	virtual ITypeProcStmtForeach *mkTypeProcStmtForeach(
 			vsc::dm::ITypeExpr		*target,

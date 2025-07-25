@@ -21,6 +21,7 @@
 #pragma once
 #include "zsp/arl/dm/IContext.h"
 #include "zsp/arl/dm/ITypeProcStmtScope.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -29,7 +30,9 @@ namespace dm {
 
 
 
-class TypeProcStmtScope : public virtual ITypeProcStmtScope {
+class TypeProcStmtScope : 
+    public virtual ITypeProcStmtScope,
+    public TypeProcStmt {
 public:
     TypeProcStmtScope(
         IContext                            *ctxt

@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeProcStmtMatch.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -27,7 +28,9 @@ namespace dm {
 
 
 
-class TypeProcStmtMatch : public virtual ITypeProcStmtMatch {
+class TypeProcStmtMatch : 
+    public virtual ITypeProcStmtMatch,
+    public TypeProcStmt {
 public:
     TypeProcStmtMatch(
         vsc::dm::ITypeExpr          *cond

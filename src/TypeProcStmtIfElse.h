@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeProcStmtIfElse.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -28,7 +29,9 @@ namespace dm {
 
 
 
-class TypeProcStmtIfElse : public virtual ITypeProcStmtIfElse {
+class TypeProcStmtIfElse : 
+    public virtual ITypeProcStmtIfElse,
+    public TypeProcStmt {
 public:
     TypeProcStmtIfElse(
         const std::vector<ITypeProcStmtIfClause *>  &if_clauses,

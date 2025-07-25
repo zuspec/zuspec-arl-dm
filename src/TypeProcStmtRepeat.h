@@ -22,6 +22,7 @@
 #include "zsp/arl/dm/ITypeProcStmtRepeat.h"
 #include "vsc/dm/ITypeExpr.h"
 #include "zsp/arl/dm/ITypeProcStmt.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -31,7 +32,8 @@ namespace dm {
 
 
 class TypeProcStmtRepeat :
-    public virtual ITypeProcStmtRepeat {
+    public virtual ITypeProcStmtRepeat,
+    public TypeProcStmt {
 public:
     TypeProcStmtRepeat(
         vsc::dm::ITypeExpr      *cond,
@@ -62,12 +64,21 @@ public:
         return m_variables;
     }
 
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data, bool owned=true) override {
+        m_assoc_data = vsc::dm::IAssociatedDataUP(data, owned);
+    }
+
+    virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
+        return m_assoc_data.get();
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     vsc::dm::ITypeExprUP                    m_cond;
     ITypeProcStmtUP                         m_body;
     std::vector<vsc::dm::ITypeVarUP>        m_variables;
+    vsc::dm::IAssociatedDataUP              m_assoc_data;
 
 
 };

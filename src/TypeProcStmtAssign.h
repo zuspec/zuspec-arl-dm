@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeProcStmtAssign.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -28,7 +29,9 @@ namespace dm {
 
 
 
-class TypeProcStmtAssign : public virtual ITypeProcStmtAssign {
+class TypeProcStmtAssign : 
+    public virtual ITypeProcStmtAssign,
+    public TypeProcStmt {
 public:
     TypeProcStmtAssign(
         vsc::dm::ITypeExpr      *lhs,

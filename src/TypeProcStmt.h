@@ -19,19 +19,31 @@
  *     Author: 
  */
 #pragma once
+#include "zsp/arl/dm/ITypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-
-
-class TypeProcStmt {
+class TypeProcStmt :
+    public virtual ITypeProcStmt {
 public:
     TypeProcStmt();
 
     virtual ~TypeProcStmt();
+
+    virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
+        return m_assoc_data.get();
+    }
+
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *d, bool owned=true) override {
+        m_assoc_data = vsc::dm::IAssociatedDataUP(d, owned);
+    }
+
+protected:
+    vsc::dm::IAssociatedDataUP          m_assoc_data;
+
 
 };
 

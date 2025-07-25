@@ -19,6 +19,7 @@
  *     Author: 
  */
 #pragma once
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -27,7 +28,8 @@ namespace dm {
 
 
 
-class TypeProcStmtForeach {
+class TypeProcStmtForeach :
+    public TypeProcStmt {
 public:
     TypeProcStmtForeach();
 

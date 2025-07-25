@@ -49,13 +49,22 @@ public:
         return m_init.get();
     }
 
+    virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
+        return m_assoc_data.get();
+    }
+    
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *d, bool owned=true) override {
+        m_assoc_data = vsc::dm::IAssociatedDataUP(d, owned);
+    }
+
     virtual void accept(vsc::dm::IVisitor *v) override;
 
 private:
     std::string                     m_name;
-    vsc::dm::IDataType                  *m_type;
-    vsc::dm::IDataTypeUP                m_type_u;
-    vsc::dm::ITypeExprUP                m_init;
+    vsc::dm::IDataType              *m_type;
+    vsc::dm::IDataTypeUP            m_type_u;
+    vsc::dm::ITypeExprUP            m_init;
+    vsc::dm::IAssociatedDataUP      m_assoc_data;
 };
 
 }

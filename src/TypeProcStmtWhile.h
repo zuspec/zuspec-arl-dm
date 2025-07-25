@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeProcStmtWhile.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -28,7 +29,9 @@ namespace dm {
 
 
 
-class TypeProcStmtWhile : public virtual ITypeProcStmtWhile {
+class TypeProcStmtWhile : 
+    public virtual ITypeProcStmtWhile,
+    public TypeProcStmt {
 public:
     TypeProcStmtWhile(
         vsc::dm::ITypeExpr  *cond,

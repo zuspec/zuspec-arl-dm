@@ -43,8 +43,8 @@ public:
 		vsc::dm::IModelBuildContext		*ctxt,
 		ITypeFieldActivity			*type) override;
 
-    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
-        m_associated_data = vsc::dm::IAssociatedDataUP(data);
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data, bool owned=true) override {
+        m_associated_data = vsc::dm::IAssociatedDataUP(data, owned);
     }
 
     virtual vsc::dm::IAssociatedData *getAssociatedData() const override {

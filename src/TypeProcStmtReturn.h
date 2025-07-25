@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeProcStmtReturn.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -28,7 +29,9 @@ namespace dm {
 
 
 
-class TypeProcStmtReturn : public virtual ITypeProcStmtReturn {
+class TypeProcStmtReturn : 
+    public virtual ITypeProcStmtReturn,
+    public TypeProcStmt {
 public:
     TypeProcStmtReturn(vsc::dm::ITypeExpr *expr);
 

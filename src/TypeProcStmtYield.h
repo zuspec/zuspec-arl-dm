@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeProcStmtYield.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -28,7 +29,8 @@ namespace dm {
 
 
 class TypeProcStmtYield :
-    public virtual ITypeProcStmtYield {
+    public virtual ITypeProcStmtYield,
+    public TypeProcStmt {
 public:
     TypeProcStmtYield();
 

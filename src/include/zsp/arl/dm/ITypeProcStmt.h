@@ -21,6 +21,7 @@
 #pragma once
 #include <memory>
 #include "vsc/dm/IAccept.h"
+#include "vsc/dm/IAssociatedDataAcc.h"
 
 namespace zsp {
 namespace arl {
@@ -29,7 +30,9 @@ namespace dm {
 
 class ITypeProcStmt;
 using ITypeProcStmtUP=vsc::dm::UP<ITypeProcStmt>;
-class ITypeProcStmt : public virtual vsc::dm::IAccept {
+class ITypeProcStmt : 
+    public virtual vsc::dm::IAccept,
+    public virtual vsc::dm::IAssociatedDataAcc {
 public:
 
     virtual ~ITypeProcStmt() { }

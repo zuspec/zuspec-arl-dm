@@ -20,6 +20,7 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeProcStmtExpr.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
@@ -27,7 +28,9 @@ namespace dm {
 
 
 
-class TypeProcStmtExpr : public virtual ITypeProcStmtExpr {
+class TypeProcStmtExpr : 
+    public virtual ITypeProcStmtExpr,
+    public TypeProcStmt {
 public:
     TypeProcStmtExpr(vsc::dm::ITypeExpr *expr, bool owned=true);
 

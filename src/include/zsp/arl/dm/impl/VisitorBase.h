@@ -146,6 +146,7 @@ public:
 
 	virtual void visitDataTypeActivityTraverseType(IDataTypeActivityTraverseType *t) override { 
         visitDataTypeActivity(t);
+        t->getTarget()->accept(m_this);
     }
 
 	virtual void visitDataTypeAddrClaim(IDataTypeAddrClaim *t) override {
@@ -174,6 +175,11 @@ public:
 
 	virtual void visitDataTypeComponent(IDataTypeComponent *t) override {
 		m_this->visitDataTypeStruct(t);
+        for (std::vector<ITypeFieldActivityUP>::const_iterator
+            it=t->activities().begin();
+            it!=t->activities().end(); it++) {
+            (*it)->accept(m_this);
+        }
 	}
 
 	virtual void visitDataTypeFlowObj(IDataTypeFlowObj *t) override {

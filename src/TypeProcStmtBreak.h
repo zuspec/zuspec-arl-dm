@@ -20,13 +20,16 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeProcStmtBreak.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class TypeProcStmtBreak : public virtual ITypeProcStmtBreak{
+class TypeProcStmtBreak : 
+    public virtual ITypeProcStmtBreak,
+    public TypeProcStmt {
 public:
     TypeProcStmtBreak();
 

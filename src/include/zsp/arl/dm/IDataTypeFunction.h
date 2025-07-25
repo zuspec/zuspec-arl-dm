@@ -63,7 +63,8 @@ static inline DataTypeFunctionFlags operator ~ (const DataTypeFunctionFlags lhs)
 class IDataTypeFunction;
 using IDataTypeFunctionUP=vsc::dm::UP<IDataTypeFunction>;
 class IDataTypeFunction : 
-    public virtual vsc::dm::IAccept {
+    public virtual vsc::dm::IAccept,
+    public virtual vsc::dm::IAssociatedDataAcc {
 public:
 
     virtual ~IDataTypeFunction() { }
@@ -101,10 +102,6 @@ public:
     virtual bool hasFlags(DataTypeFunctionFlags f) const = 0;
 
     virtual void clrFlags(DataTypeFunctionFlags f) = 0;
-
-    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) = 0;
-
-    virtual vsc::dm::IAssociatedData *getAssociatedData() const = 0;
 
 };
 

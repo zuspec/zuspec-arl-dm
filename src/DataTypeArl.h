@@ -41,7 +41,7 @@ public:
 
     virtual int32_t getByteSize() const override;
 
-    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override;
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data, bool owned=true) override;
 
     virtual vsc::dm::IAssociatedData *getAssociatedData() const override;
 

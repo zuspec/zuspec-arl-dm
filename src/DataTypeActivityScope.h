@@ -28,6 +28,8 @@ public:
 
     virtual int32_t getActivityOffset() const override;
 
+    virtual const std::vector<vsc::dm::ITypeVarUP> &getVariables() const override;
+
 	virtual void addField(
         vsc::dm::ITypeField     *f,
         bool                    owned=true) override;
@@ -79,8 +81,8 @@ public:
         m_binds.push_back(IDataTypeActivityBindUP(b));
     };
     
-    virtual void setAssociatedData(vsc::dm::IAssociatedData *data) override {
-        m_associated_data = vsc::dm::IAssociatedDataUP(data);
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data, bool owned=true) override {
+        m_associated_data = vsc::dm::IAssociatedDataUP(data, owned);
     }
 
     virtual vsc::dm::IAssociatedData *getAssociatedData() const override {
@@ -99,6 +101,7 @@ public:
 
 private:
 	std::string									m_name;
+    std::vector<vsc::dm::ITypeVarUP>            m_variables;
 	std::vector<vsc::dm::ITypeFieldUP>			m_fields;
     int32_t                                     m_field_sz;
     int32_t                                     m_activity_sz;

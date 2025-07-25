@@ -42,8 +42,8 @@ int32_t DataTypeArl::getByteSize() const {
     return m_bytesz;
 }
 
-void DataTypeArl::setAssociatedData(vsc::dm::IAssociatedData *data) {
-    m_associated_data = vsc::dm::IAssociatedDataUP(data);
+void DataTypeArl::setAssociatedData(vsc::dm::IAssociatedData *data, bool owned) {
+    m_associated_data = vsc::dm::IAssociatedDataUP(data, owned);
 }
 
 vsc::dm::IAssociatedData *DataTypeArl::getAssociatedData() const {

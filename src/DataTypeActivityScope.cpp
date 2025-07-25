@@ -31,6 +31,10 @@ int32_t DataTypeActivityScope::getActivityOffset() const {
     return m_field_sz;
 }
 
+const std::vector<vsc::dm::ITypeVarUP> &DataTypeActivityScope::getVariables() const {
+    return m_variables;
+}
+
 void DataTypeActivityScope::addField(
     vsc::dm::ITypeField     *f,
     bool                    owned) {

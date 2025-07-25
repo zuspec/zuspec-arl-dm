@@ -20,13 +20,16 @@
  */
 #pragma once
 #include "zsp/arl/dm/ITypeProcStmtIfClause.h"
+#include "TypeProcStmt.h"
 
 namespace zsp {
 namespace arl {
 namespace dm {
 
 
-class TypeProcStmtIfClause : public virtual ITypeProcStmtIfClause {
+class TypeProcStmtIfClause : 
+    public virtual ITypeProcStmtIfClause,
+    public TypeProcStmt {
 public:
     TypeProcStmtIfClause(
         vsc::dm::ITypeExpr          *cond,

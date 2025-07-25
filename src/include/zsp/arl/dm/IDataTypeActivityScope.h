@@ -12,6 +12,7 @@
 #include "zsp/arl/dm/IDataTypeActivityBind.h"
 #include "zsp/arl/dm/ITypeFieldActivity.h"
 #include "vsc/dm/IDataTypeStruct.h"
+#include "vsc/dm/ITypeVarScope.h"
 
 namespace zsp {
 namespace arl {
@@ -20,6 +21,7 @@ namespace dm {
 
 class IDataTypeActivityScope : 
 	public virtual IDataTypeActivity,
+    public virtual vsc::dm::ITypeVarScope,
 	public virtual vsc::dm::IDataTypeStruct {
 public:
 
@@ -38,6 +40,12 @@ public:
     virtual const std::vector<IDataTypeActivityBindUP> &getBinds() const = 0;
 
     virtual void addBind(IDataTypeActivityBind *b) = 0;
+
+    virtual int32_t addVariable(vsc::dm::ITypeVar *var, bool owned=true) override { }
+
+    virtual int32_t getNumVariables() override { return 0; }
+
+    virtual const std::vector<vsc::dm::ITypeVarUP> &getVariables() const override { }
 
 };
 

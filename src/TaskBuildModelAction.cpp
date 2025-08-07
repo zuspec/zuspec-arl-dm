@@ -56,7 +56,7 @@ void TaskBuildModelAction::visitDataTypeAction(IDataTypeAction *t) {
 	}
 #endif
 
-	fprintf(stdout, "Activities: %d\n", t->activities().size());
+        fprintf(stdout, "Activities: %zu\n", t->activities().size());
 
 //	m_ctxt->mkModelFieldRoot(type, name)
 	VisitorDelegator::visitDataTypeAction(t);

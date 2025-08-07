@@ -37,6 +37,10 @@ class IDataTypePyObj;
 class IDataTypeRegGroup;
 class IDataTypeResource;
 class IDataTypeArlStruct;
+class IDataTypeTransparentAddrSpace;
+class IDataTypeCoreLibComponent;
+class IDataTypePureComponent;
+class IDataTypeReg;
 class IModelActivityBind;
 class IModelActivityParallel;
 class IModelActivityReplicate;
@@ -139,6 +143,14 @@ public:
 	virtual void visitDataTypeRegGroup(IDataTypeRegGroup *t) = 0;
 
 	virtual void visitDataTypeResource(IDataTypeResource *t) = 0;
+
+virtual void visitDataTypeTransparentAddrSpace(IDataTypeTransparentAddrSpace *t) = 0;
+
+virtual void visitDataTypeCoreLibComponent(IDataTypeCoreLibComponent *t) = 0;
+
+virtual void visitDataTypePureComponent(IDataTypePureComponent *t) = 0;
+
+virtual void visitDataTypeReg(IDataTypeReg *t) = 0;
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) = 0;
 

@@ -24,11 +24,9 @@
 #include "nlohmann/json.hpp"
 #include "zsp/arl/dm/ITypeExec.h"
 
-
 namespace zsp {
 namespace arl {
 namespace dm {
-
 
 TypeModelDumperJSON::TypeModelDumperJSON(
     dmgr::IDebugMgr     *dmgr,
@@ -56,18 +54,6 @@ bool TypeModelDumperJSON::dumpTypeModel(
         getTypeIdx(*it);
     }
 
-//    m_json_s.pop_back();
-
-#ifdef UNDEFINED
-    root["function-decl"] = {};
-    m_types = &root["function-decl"];
-    m_active = 0;
-
-    for (uint32_t i=0; i<m_function_l.size(); i++) {
-        m_function_l.at(i)->accept(m_this);
-    }
-#endif
-
     root["root-types"] = {};
 
     for (std::vector<vsc::dm::IAccept *>::const_iterator
@@ -91,18 +77,13 @@ void TypeModelDumperJSON::visitDataTypeAction(IDataTypeAction *i) {
     dynamic_cast<IVisitor *>(m_this)->visitDataTypeArlStruct(i);
     m_active = 0;
 
-
-    // Now,
-    DEBUG("Action: %s ; activities=%d", 
-        i->name().c_str(),
-        i->activities().size());
     m_active = &type;
     m_json_s.push_back(&type["activities"]);
-	for (std::vector<ITypeFieldActivityUP>::const_iterator
-			it=i->activities().begin();
-			it!=i->activities().end(); it++) {
-		(*it)->accept(m_this);
-	}
+    for (std::vector<ITypeFieldActivityUP>::const_iterator
+        it=i->activities().begin();
+        it!=i->activities().end(); it++) {
+        (*it)->accept(m_this);
+    }
     m_json_s.pop_back();
     m_active = 0;
 
@@ -222,9 +203,6 @@ void TypeModelDumperJSON::visitDataTypeEnum(vsc::dm::IDataTypeEnum *t) {
     type["kind"] = "data-type-enum";
     type["name"] = t->name();
     type["items"] = {};
-
-    // TODO: must be able to dump enums
-//    for (std::vector<vsc::dm::IData)
 
     addType(t, type);
 }
@@ -523,26 +501,26 @@ void TypeModelDumperJSON::visitTypeConstraintSoft(vsc::dm::ITypeConstraintSoft *
 void TypeModelDumperJSON::visitTypeConstraintUnique(vsc::dm::ITypeConstraintUnique *c) { }
 
 static std::map<vsc::dm::BinOp, std::string> binop2str_m = {
-	{ vsc::dm::BinOp::Eq, "eq" },
-	{ vsc::dm::BinOp::Ne, "ne" },
-	{ vsc::dm::BinOp::Gt, "gt" },
-	{ vsc::dm::BinOp::Ge, "ge" },
-	{ vsc::dm::BinOp::Lt, "lt" },
-	{ vsc::dm::BinOp::Le, "le" },
-	{ vsc::dm::BinOp::Add, "add" },
-	{ vsc::dm::BinOp::Sub, "sub" },
-	{ vsc::dm::BinOp::Div, "div" },
-	{ vsc::dm::BinOp::Mul, "mul" },
-	{ vsc::dm::BinOp::Mod, "mod" },
-	{ vsc::dm::BinOp::BinAnd, "bin-and" },
-	{ vsc::dm::BinOp::BinOr, "bin-or" },
-	{ vsc::dm::BinOp::BinXor, "bin-xor" },
-	{ vsc::dm::BinOp::LogAnd, "log-and" },
-	{ vsc::dm::BinOp::LogOr, "log-or" },
-	{ vsc::dm::BinOp::LogXor, "log-xor" },
-	{ vsc::dm::BinOp::Sll, "sll" },
-	{ vsc::dm::BinOp::Srl, "srl" },
-	{ vsc::dm::BinOp::Not, "not" }
+{ vsc::dm::BinOp::Eq, "eq" },
+{ vsc::dm::BinOp::Ne, "ne" },
+{ vsc::dm::BinOp::Gt, "gt" },
+{ vsc::dm::BinOp::Ge, "ge" },
+{ vsc::dm::BinOp::Lt, "lt" },
+{ vsc::dm::BinOp::Le, "le" },
+{ vsc::dm::BinOp::Add, "add" },
+{ vsc::dm::BinOp::Sub, "sub" },
+{ vsc::dm::BinOp::Div, "div" },
+{ vsc::dm::BinOp::Mul, "mul" },
+{ vsc::dm::BinOp::Mod, "mod" },
+{ vsc::dm::BinOp::BinAnd, "bin-and" },
+{ vsc::dm::BinOp::BinOr, "bin-or" },
+{ vsc::dm::BinOp::BinXor, "bin-xor" },
+{ vsc::dm::BinOp::LogAnd, "log-and" },
+{ vsc::dm::BinOp::LogOr, "log-or" },
+{ vsc::dm::BinOp::LogXor, "log-xor" },
+{ vsc::dm::BinOp::Sll, "sll" },
+{ vsc::dm::BinOp::Srl, "srl" },
+{ vsc::dm::BinOp::Not, "not" }
 };
 
 void TypeModelDumperJSON::visitTypeExprBin(vsc::dm::ITypeExprBin *e) { 
@@ -586,7 +564,6 @@ void TypeModelDumperJSON::visitTypeExprVal(vsc::dm::ITypeExprVal *e) {
     char tmp[64];
 
     strcpy(tmp, "TODO: type-expr-val");
-//    sprintf(tmp, "%lld", e->val()->val_u());
 
     nlohmann::json expr;
     expr["kind"] = "type-expr-val";
@@ -610,11 +587,6 @@ void TypeModelDumperJSON::visitTypeFieldActivity(ITypeFieldActivity *f) {
     }
 
     m_json_s.back()->push_back(field);
-    /*
-    if (m_active) {
-        (*m_active)["activities"].push_back(field);
-    }
-     */
     DEBUG_ENTER("visitTypeFieldActivity");
 }
 
@@ -729,9 +701,10 @@ int32_t TypeModelDumperJSON::getTypeIdx(vsc::dm::IAccept *t) {
         m_active = active_s;
         if ((it=m_type_m.find(t)) != m_type_m.end()) {
             return it->second;
-        } else {
-            fprintf(stdout, "Internal Error: failed to serialize JSON\n");
         }
+        
+        // If we reach here, return a default value
+        return -1;
     }
 }
 

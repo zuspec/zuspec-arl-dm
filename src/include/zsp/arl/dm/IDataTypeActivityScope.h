@@ -41,11 +41,14 @@ public:
 
     virtual void addBind(IDataTypeActivityBind *b) = 0;
 
-    virtual int32_t addVariable(vsc::dm::ITypeVar *var, bool owned=true) override { }
+    virtual int32_t addVariable(vsc::dm::ITypeVar *var, bool owned=true) override { return -1; }
 
     virtual int32_t getNumVariables() override { return 0; }
 
-    virtual const std::vector<vsc::dm::ITypeVarUP> &getVariables() const override { }
+    virtual const std::vector<vsc::dm::ITypeVarUP> &getVariables() const override {
+        static std::vector<vsc::dm::ITypeVarUP> empty;
+        return empty;
+    }
 
 };
 

@@ -1,10 +1,9 @@
-
 import ctypes
 from typing import List
 cimport debug_mgr.core as dm_core
 from zsp_arl_dm cimport decl
 
-from libc.stdint cimport int32_t
+from libc.stdint cimport int32_t, uint32_t
 from libcpp cimport bool
 cimport vsc_dm.core as vsc
 cimport vsc_dm.decl as vsc_decl
@@ -150,7 +149,6 @@ cdef class DataTypeAddrHandle(vsc.DataTypeStruct):
     @staticmethod
     cdef DataTypeAddrHandle mk(decl.IDataTypeAddrHandle *, bool owned=*)
     
-    
 cdef class DataTypeComponent(vsc.DataTypeStruct):
 
     cpdef getActionTypes(self)
@@ -166,6 +164,52 @@ cdef class DataTypeComponent(vsc.DataTypeStruct):
     @staticmethod
     cdef DataTypeComponent mk(decl.IDataTypeComponent *, bool owned=*)
 
+cdef class DataTypePureComponent(DataTypeComponent):
+
+    cdef decl.IDataTypePureComponent *asPureComponent(self)
+    
+    @staticmethod
+    cdef DataTypePureComponent mk(decl.IDataTypePureComponent *hndl, bool owned=*)
+
+cdef class DataTypeReg(DataTypePureComponent):
+    cpdef DataTypePackedStruct getDataType(self)
+    cpdef uint32_t getOffset(self)
+    cpdef uint32_t getWidth(self)
+    cpdef int getAccess(self)
+
+    cdef decl.IDataTypeReg *asReg(self)
+
+    @staticmethod
+    cdef DataTypeReg mk(decl.IDataTypeReg *hndl, bool owned=*)
+
+cdef class DataTypePyObj(vsc.DataType):
+
+    cdef decl.IDataTypePyObj *asPyObj(self)
+
+    @staticmethod
+    cdef DataTypePyObj mk(decl.IDataTypePyObj *hndl, bool owned=*)
+
+cdef class DataTypeResource(vsc.DataType):
+
+    cdef decl.IDataTypeResource *asResource(self)
+
+    @staticmethod
+    cdef DataTypeResource mk(decl.IDataTypeResource *hndl, bool owned=*)
+
+cdef class DataTypeTransparentAddrSpace(vsc.DataType):
+
+    cdef decl.IDataTypeTransparentAddrSpace *asTransparentAddrSpace(self)
+
+    @staticmethod
+    cdef DataTypeTransparentAddrSpace mk(decl.IDataTypeTransparentAddrSpace *hndl, bool owned=*)
+
+cdef class DataTypeCoreLibComponent(DataTypeComponent):
+
+    cdef decl.IDataTypeCoreLibComponent *asCoreLibComponent(self)
+
+    @staticmethod
+    cdef DataTypeCoreLibComponent mk(decl.IDataTypeCoreLibComponent *hndl, bool owned=*)
+
 cdef class DataTypeFlowObj(vsc.DataTypeStruct):
 
     cpdef kind(self)
@@ -175,7 +219,6 @@ cdef class DataTypeFlowObj(vsc.DataTypeStruct):
     @staticmethod
     cdef DataTypeFlowObj mk(decl.IDataTypeFlowObj *hndl, bool owned=*)
 
-
 # cdef class DataTypeFunctionParamDecl(TypeProcStmtVarDecl):
 
 #     cpdef getDirection(self)
@@ -184,7 +227,6 @@ cdef class DataTypeFlowObj(vsc.DataTypeStruct):
 
 #     @staticmethod
 #     cdef DataTypeFunctionParamDecl mk(decl.IDataTypeFunctionParamDecl *, bool owned=*)
-
 
 cdef class DataTypeFunction(vsc.ObjBase):
 
@@ -218,7 +260,6 @@ cdef class DataTypePackedStruct(vsc.DataTypeStruct):
 
 cdef class ModelBuildContext(vsc.ModelBuildContext):
     pass
-
 
 #cdef class ModelEvaluator(object):    
 #    cdef decl.IModelEvaluator        *_hndl
@@ -277,7 +318,6 @@ cdef class ModelFieldPool(vsc.ModelField):
 
     @staticmethod
     cdef ModelFieldPool mk(decl.IModelFieldPool *hndl, bool owned=*)
-
 
 cdef class PoolBindDirective(object):
     cdef decl.IPoolBindDirective         *_hndl
@@ -339,6 +379,110 @@ cdef class TypeFieldReg(vsc.TypeField):
 
 cdef class TypeProcStmt(vsc.ObjBase):
     pass
+    
+cdef class TypeProcStmtAssign(TypeProcStmt):
+    cpdef vsc.TypeExpr getLhs(self)
+    cpdef vsc.TypeExpr getRhs(self)
+    
+    cdef decl.ITypeProcStmtAssign *asAssign(self)
+    
+    @staticmethod
+    cdef TypeProcStmtAssign mk(decl.ITypeProcStmtAssign *, bool owned=*)
+    
+cdef class TypeProcStmtBreak(TypeProcStmt):
+    cdef decl.ITypeProcStmtBreak *asBreak(self)
+    
+    @staticmethod 
+    cdef TypeProcStmtBreak mk(decl.ITypeProcStmtBreak *, bool owned=*)
+    
+cdef class TypeProcStmtContinue(TypeProcStmt):
+    cdef decl.ITypeProcStmtContinue *asContinue(self)
+    
+    @staticmethod
+    cdef TypeProcStmtContinue mk(decl.ITypeProcStmtContinue *, bool owned=*)
+    
+cdef class TypeProcStmtExpr(TypeProcStmt):
+    cpdef vsc.TypeExpr getExpr(self)
+    
+    cdef decl.ITypeProcStmtExpr *asExpr(self)
+    
+    @staticmethod
+    cdef TypeProcStmtExpr mk(decl.ITypeProcStmtExpr *, bool owned=*)
+
+cdef class TypeProcStmtForeach(TypeProcStmt):
+    
+    cdef decl.ITypeProcStmtForeach *asForeach(self)
+    
+    @staticmethod
+    cdef TypeProcStmtForeach mk(decl.ITypeProcStmtForeach *, bool owned=*)
+
+cdef class TypeProcStmtIfClause(TypeProcStmt):
+    cpdef vsc.TypeExpr getCond(self)
+    cpdef TypeProcStmt getStmt(self)
+    
+    cdef decl.ITypeProcStmtIfClause *asIfClause(self)
+    
+    @staticmethod
+    cdef TypeProcStmtIfClause mk(decl.ITypeProcStmtIfClause *, bool owned=*)
+
+cdef class TypeProcStmtIfElse(TypeProcStmt):
+    cpdef getIfClauses(self)
+    cpdef TypeProcStmt getElseClause(self)
+    
+    cdef decl.ITypeProcStmtIfElse *asIfElse(self)
+    
+    @staticmethod
+    cdef TypeProcStmtIfElse mk(decl.ITypeProcStmtIfElse *, bool owned=*)
+
+cdef class TypeProcStmtMatchChoice(TypeProcStmt):
+    cpdef vsc.TypeExpr getCond(self)
+    cpdef TypeProcStmt getBody(self)
+    
+    cdef decl.ITypeProcStmtMatchChoice *asChoice(self)
+    
+    @staticmethod
+    cdef TypeProcStmtMatchChoice mk(decl.ITypeProcStmtMatchChoice *, bool owned=*)
+
+cdef class TypeProcStmtMatch(TypeProcStmt):
+    cpdef vsc.TypeExpr getCond(self)
+    cpdef getChoices(self)
+    
+    cdef decl.ITypeProcStmtMatch *asMatch(self)
+    
+    @staticmethod
+    cdef TypeProcStmtMatch mk(decl.ITypeProcStmtMatch *, bool owned=*)
+
+cdef class TypeProcStmtRepeat(TypeProcStmt):
+    cpdef vsc.TypeExpr getExpr(self)
+    cpdef TypeProcStmt getBody(self)
+    
+    cdef decl.ITypeProcStmtRepeat *asRepeat(self)
+    
+    @staticmethod
+    cdef TypeProcStmtRepeat mk(decl.ITypeProcStmtRepeat *, bool owned=*)
+
+cdef class TypeProcStmtRepeatWhile(TypeProcStmt):
+    cpdef vsc.TypeExpr getExpr(self)
+    cpdef TypeProcStmt getBody(self)
+    
+    cdef decl.ITypeProcStmtRepeatWhile *asRepeatWhile(self)
+    
+    @staticmethod
+    cdef TypeProcStmtRepeatWhile mk(decl.ITypeProcStmtRepeatWhile *, bool owned=*)
+
+cdef class TypeProcStmtReturn(TypeProcStmt):
+    cpdef vsc.TypeExpr getExpr(self)
+    
+    cdef decl.ITypeProcStmtReturn *asReturn(self)
+    
+    @staticmethod
+    cdef TypeProcStmtReturn mk(decl.ITypeProcStmtReturn *, bool owned=*)
+
+cdef class TypeProcStmtYield(TypeProcStmt):
+    cdef decl.ITypeProcStmtYield *asYield(self)
+    
+    @staticmethod
+    cdef TypeProcStmtYield mk(decl.ITypeProcStmtYield *, bool owned=*)
 
 cdef class TypeProcStmtScope(TypeProcStmt):
     
@@ -372,6 +516,18 @@ cdef class VisitorBase(vsc.VisitorBase):
 
     cpdef visitDataTypeComponent(self, DataTypeComponent t)
 
+    cpdef visitDataTypePureComponent(self, DataTypePureComponent t)
+
+    cpdef visitDataTypeReg(self, DataTypeReg t)
+    
+    cpdef visitDataTypePyObj(self, DataTypePyObj t)
+
+    cpdef visitDataTypeResource(self, DataTypeResource t)
+
+    cpdef visitDataTypeTransparentAddrSpace(self, DataTypeTransparentAddrSpace t)
+
+    cpdef visitDataTypeCoreLibComponent(self, DataTypeCoreLibComponent t)
+
     cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t)
 
     cpdef visitDataTypeFunction(self, DataTypeFunction t)
@@ -391,6 +547,30 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitTypeProcStmt(self, TypeProcStmt t)
 
     cpdef visitTypeProcStmtScope(self, TypeProcStmtScope t)
+    
+    cpdef visitTypeProcStmtAssign(self, TypeProcStmtAssign t)
+    
+    cpdef visitTypeProcStmtBreak(self, TypeProcStmtBreak t)
+    
+    cpdef visitTypeProcStmtContinue(self, TypeProcStmtContinue t)
+    
+    cpdef visitTypeProcStmtExpr(self, TypeProcStmtExpr t)
+    
+    cpdef visitTypeProcStmtForeach(self, TypeProcStmtForeach t)
+    
+    cpdef visitTypeProcStmtIfClause(self, TypeProcStmtIfClause t)
+    
+    cpdef visitTypeProcStmtIfElse(self, TypeProcStmtIfElse t)
+    
+    cpdef visitTypeProcStmtMatch(self, TypeProcStmtMatch t)
+    
+    cpdef visitTypeProcStmtRepeat(self, TypeProcStmtRepeat t)
+    
+    cpdef visitTypeProcStmtRepeatWhile(self, TypeProcStmtRepeatWhile t)
+    
+    cpdef visitTypeProcStmtReturn(self, TypeProcStmtReturn t)
+    
+    cpdef visitTypeProcStmtYield(self, TypeProcStmtYield t)
 
 cdef class WrapperBuilder(VisitorBase):
     cdef list _obj
@@ -403,6 +583,3 @@ cdef class WrapperBuilderVsc(vsc.WrapperBuilder):
     cdef WrapperBuilder            _core
 
     cdef vsc.ObjBase mkObj(self, vsc_decl.IAccept *obj, bool owned)
-
-
-

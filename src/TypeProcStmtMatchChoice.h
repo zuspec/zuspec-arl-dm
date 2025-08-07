@@ -44,6 +44,8 @@ public:
         return m_body.get();
     }
 
+    virtual void accept(vsc::dm::IVisitor *v) override;
+
 private:
     vsc::dm::ITypeExprRangelistUP           m_cond;
     ITypeProcStmtUP                         m_body;

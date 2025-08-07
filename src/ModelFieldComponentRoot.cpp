@@ -126,12 +126,10 @@ const std::vector<int32_t> &ModelFieldComponentRoot::getCompTypeSubInsts(
 
         if (l_it != it->second.subinst_m.at(parent_id).end()) {
             return l_it->second;
-        } else {
-            //
         }
-    } else {
-        // 
     }
+    static std::vector<int32_t> empty;
+    return empty;
 }
 
 const std::vector<IModelFieldPool *> &ModelFieldComponentRoot::getPools(

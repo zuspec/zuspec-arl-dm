@@ -21,6 +21,10 @@
 #pragma once
 #include <Python.h>
 #include "zsp/arl/dm/impl/VisitorBase.h"
+#include "zsp/arl/dm/IDataTypeTransparentAddrSpace.h"
+#include "zsp/arl/dm/IDataTypeCoreLibComponent.h"
+#include "zsp/arl/dm/IDataTypePureComponent.h"
+#include "zsp/arl/dm/IDataTypeReg.h"
 
 namespace zsp {
 namespace arl {
@@ -51,6 +55,18 @@ public:
 
 	virtual void visitDataTypePackedStruct(IDataTypePackedStruct *t) override;
 
+virtual void visitDataTypePyObj(IDataTypePyObj *t) override;
+
+virtual void visitDataTypeResource(IDataTypeResource *t) override;
+
+virtual void visitDataTypeTransparentAddrSpace(IDataTypeTransparentAddrSpace *t) override;
+
+virtual void visitDataTypeCoreLibComponent(IDataTypeCoreLibComponent *t) override;
+
+virtual void visitDataTypePureComponent(IDataTypePureComponent *t) override;
+
+virtual void visitDataTypeReg(IDataTypeReg *t) override;
+
 	virtual void visitModelFieldAction(IModelFieldAction *f) override;
 
 	virtual void visitModelFieldComponent(IModelFieldComponent *f) override;
@@ -62,6 +78,18 @@ public:
 	virtual void visitTypeFieldReg(ITypeFieldReg *f) override;
 
     virtual void visitTypeProcStmtScope(ITypeProcStmtScope *s) override;
+    virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override;
+    virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) override;
+    virtual void visitTypeProcStmtContinue(ITypeProcStmtContinue *s) override;
+    virtual void visitTypeProcStmtExpr(ITypeProcStmtExpr *s) override;
+    virtual void visitTypeProcStmtForeach(ITypeProcStmtForeach *s) override;
+    virtual void visitTypeProcStmtIfClause(ITypeProcStmtIfClause *s) override;
+    virtual void visitTypeProcStmtIfElse(ITypeProcStmtIfElse *s) override;
+    virtual void visitTypeProcStmtMatch(ITypeProcStmtMatch *s) override;
+    virtual void visitTypeProcStmtRepeat(ITypeProcStmtRepeat *s) override;
+    virtual void visitTypeProcStmtRepeatWhile(ITypeProcStmtRepeatWhile *s) override;
+    virtual void visitTypeProcStmtReturn(ITypeProcStmtReturn *s) override;
+    virtual void visitTypeProcStmtYield(ITypeProcStmtYield *s) override;
 
 private:
     PyObject                *m_obj;
@@ -71,4 +99,3 @@ private:
 }
 }
 }
-

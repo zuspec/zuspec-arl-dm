@@ -21,7 +21,10 @@
 
 #include "VisitorProxy.h"
 #include "core.h"
-
+#include "zsp/arl/dm/IDataTypeTransparentAddrSpace.h"
+#include "zsp/arl/dm/IDataTypeCoreLibComponent.h"
+#include "zsp/arl/dm/IDataTypePureComponent.h"
+#include "zsp/arl/dm/IDataTypeReg.h"
 
 namespace zsp {
 namespace arl {
@@ -71,6 +74,30 @@ void VisitorProxy::visitDataTypePackedStruct(IDataTypePackedStruct *t) {
     VisitorProxy_visitDataTypePackedStruct(m_obj, t);
 }
 
+void VisitorProxy::visitDataTypePyObj(IDataTypePyObj *t) {
+    VisitorProxy_visitDataTypePyObj(m_obj, t);
+}
+
+void VisitorProxy::visitDataTypeResource(IDataTypeResource *t) {
+    VisitorProxy_visitDataTypeResource(m_obj, t);
+}
+
+void VisitorProxy::visitDataTypeTransparentAddrSpace(IDataTypeTransparentAddrSpace *t) {
+    VisitorProxy_visitDataTypeTransparentAddrSpace(m_obj, t);
+}
+
+void VisitorProxy::visitDataTypeCoreLibComponent(IDataTypeCoreLibComponent *t) {
+    VisitorProxy_visitDataTypeCoreLibComponent(m_obj, t);
+}
+
+void VisitorProxy::visitDataTypePureComponent(IDataTypePureComponent *t) {
+    VisitorProxy_visitDataTypePureComponent(m_obj, t);
+}
+
+void VisitorProxy::visitDataTypeReg(IDataTypeReg *t) {
+    VisitorProxy_visitDataTypeReg(m_obj, t);
+}
+
 void VisitorProxy::visitModelFieldAction(IModelFieldAction *f) {
     VisitorProxy_visitModelFieldAction(m_obj, f);
 }
@@ -91,12 +118,56 @@ void VisitorProxy::visitTypeFieldReg(ITypeFieldReg *f) {
     VisitorProxy_visitTypeFieldReg(m_obj, f);
 }
 
-// void VisitorProxy::visitTypeProcStmt(ITypeProcStmt *s) {
-//     VisitorProxy_visitTypeProcStmt(m_obj, s);
-// }
-
 void VisitorProxy::visitTypeProcStmtScope(ITypeProcStmtScope *s) {
     VisitorProxy_visitTypeProcStmtScope(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtAssign(ITypeProcStmtAssign *s) {
+    VisitorProxy_visitTypeProcStmtAssign(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtBreak(ITypeProcStmtBreak *s) {
+    VisitorProxy_visitTypeProcStmtBreak(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtContinue(ITypeProcStmtContinue *s) {
+    VisitorProxy_visitTypeProcStmtContinue(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtExpr(ITypeProcStmtExpr *s) {
+    VisitorProxy_visitTypeProcStmtExpr(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtForeach(ITypeProcStmtForeach *s) {
+    VisitorProxy_visitTypeProcStmtForeach(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtIfClause(ITypeProcStmtIfClause *s) {
+    VisitorProxy_visitTypeProcStmtIfClause(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtIfElse(ITypeProcStmtIfElse *s) {
+    VisitorProxy_visitTypeProcStmtIfElse(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtMatch(ITypeProcStmtMatch *s) {
+    VisitorProxy_visitTypeProcStmtMatch(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtRepeat(ITypeProcStmtRepeat *s) {
+    VisitorProxy_visitTypeProcStmtRepeat(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtRepeatWhile(ITypeProcStmtRepeatWhile *s) {
+    VisitorProxy_visitTypeProcStmtRepeatWhile(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtReturn(ITypeProcStmtReturn *s) {
+    VisitorProxy_visitTypeProcStmtReturn(m_obj, s);
+}
+
+void VisitorProxy::visitTypeProcStmtYield(ITypeProcStmtYield *s) {
+    VisitorProxy_visitTypeProcStmtYield(m_obj, s);
 }
 
 }

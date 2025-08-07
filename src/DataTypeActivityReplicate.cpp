@@ -58,7 +58,7 @@ DataTypeActivityReplicate::DataTypeActivityReplicate(
         )
     ));
 
-    fprintf(stdout, "EQ=%d\n", vsc::dm::BinOp::Eq);
+    fprintf(stdout, "EQ=%d\n", static_cast<int>(vsc::dm::BinOp::Eq));
 }
 
 DataTypeActivityReplicate::~DataTypeActivityReplicate() {
@@ -91,7 +91,7 @@ IModelActivity *DataTypeActivityReplicate::mkActivity(
         ret->addConstraint(vsc::dm::TaskBuildModelConstraint<>(ctxt).build(it->get()));
     }
 
-	fprintf(stdout, "mkActivity: %d\n", getActivities().size());
+	fprintf(stdout, "mkActivity: %zu\n", getActivities().size());
 	for (std::vector<ITypeFieldActivityUP>::const_iterator
 		it=getActivities().begin();
 		it!=getActivities().end(); it++) {

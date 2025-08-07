@@ -28,9 +28,13 @@ namespace arl {
 namespace dm {
 
 enum class RegAccess {
-    READWRITE,
-    READONLY,
-    WRITEONLY
+    NoAccess = 0,
+    RW = 1,
+    RO = 2,
+    WO = 3,
+    W1 = 4,
+    CLR = 5,
+    SET = 6
 };
 
 class IDataTypeReg : public virtual IDataTypePureComponent {
@@ -51,5 +55,3 @@ public:
 } /* namespace dm */
 } /* namespace arl */
 } /* namespace zsp */
-
-

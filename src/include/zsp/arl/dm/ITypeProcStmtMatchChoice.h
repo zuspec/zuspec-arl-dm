@@ -30,7 +30,8 @@ namespace dm {
 
 class ITypeProcStmtMatchChoice;
 using ITypeProcStmtMatchChoiceUP=vsc::dm::UP<ITypeProcStmtMatchChoice>;
-class ITypeProcStmtMatchChoice {
+class ITypeProcStmtMatchChoice :
+    public virtual vsc::dm::IAccept {
 public:
 
     virtual ~ITypeProcStmtMatchChoice() { }

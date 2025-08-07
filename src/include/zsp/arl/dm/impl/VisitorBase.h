@@ -29,6 +29,10 @@
 #include "zsp/arl/dm/IDataTypeRegGroup.h"
 #include "zsp/arl/dm/IDataTypeResource.h"
 #include "zsp/arl/dm/IDataTypeArlStruct.h"
+#include "zsp/arl/dm/IDataTypeTransparentAddrSpace.h"
+#include "zsp/arl/dm/IDataTypeCoreLibComponent.h"
+#include "zsp/arl/dm/IDataTypePureComponent.h"
+#include "zsp/arl/dm/IDataTypeReg.h"
 #include "zsp/arl/dm/IModelActivityBind.h"
 #include "zsp/arl/dm/IModelActivityParallel.h"
 #include "zsp/arl/dm/IModelActivityReplicate.h"
@@ -209,9 +213,25 @@ public:
         dynamic_cast<IVisitor *>(m_this)->visitDataTypeComponent(t);
     }
 
-	virtual void visitDataTypeResource(IDataTypeResource *t) override {
-		dynamic_cast<IVisitor *>(m_this)->visitDataTypeFlowObj(t);
-	}
+virtual void visitDataTypeResource(IDataTypeResource *t) override {
+    dynamic_cast<IVisitor *>(m_this)->visitDataTypeFlowObj(t);
+}
+
+virtual void visitDataTypeTransparentAddrSpace(IDataTypeTransparentAddrSpace *t) override {
+    m_this->visitDataTypeStruct(t);
+}
+
+virtual void visitDataTypeCoreLibComponent(IDataTypeCoreLibComponent *t) override {
+    dynamic_cast<IVisitor *>(m_this)->visitDataTypeComponent(t);
+}
+
+virtual void visitDataTypePureComponent(IDataTypePureComponent *t) override {
+    dynamic_cast<IVisitor *>(m_this)->visitDataTypeArlStruct(t);
+}
+
+virtual void visitDataTypeReg(IDataTypeReg *t) override {
+    m_this->visitDataTypeStruct(t);
+}
 
 	virtual void visitModelActivityBind(IModelActivityBind *a) override {
 		for (std::vector<vsc::dm::IModelExprUP>::const_iterator

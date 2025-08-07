@@ -52,7 +52,10 @@ public:
 		return m_pool_binds;
 	}
 
-	virtual const std::vector<ITypeFieldActivityUP> &activities() const override { }
+        virtual const std::vector<ITypeFieldActivityUP> &activities() const override { 
+            static std::vector<ITypeFieldActivityUP> empty;
+            return empty;
+        }
 
 	virtual void addActivity(ITypeFieldActivity *activity) override { }
 
@@ -65,5 +68,3 @@ protected:
 }
 }
 }
-
-

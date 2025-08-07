@@ -22,6 +22,7 @@
 #include "vsc/dm/IContext.h"
 #include "vsc/dm/IDataType.h"
 #include "vsc/dm/IModelField.h"
+#include "vsc/dm/IAssociatedDataAcc.h"
 
 namespace zsp {
 namespace arl {
@@ -29,7 +30,8 @@ namespace dm {
 
 
 class DataTypeArl : 
-    public virtual vsc::dm::IDataType {
+    public virtual vsc::dm::IDataType,
+    public virtual vsc::dm::IAssociatedDataAcc {
 public:
     DataTypeArl(int32_t bytesz=0);
 
@@ -41,7 +43,8 @@ public:
 
     virtual int32_t getByteSize() const override;
 
-    virtual void setAssociatedData(vsc::dm::IAssociatedData *data, bool owned=true) override;
+    // IAssociatedDataAcc interface
+    virtual void setAssociatedData(vsc::dm::IAssociatedData *data, bool owned) override;
 
     virtual vsc::dm::IAssociatedData *getAssociatedData() const override;
 
@@ -62,5 +65,3 @@ protected:
 }
 }
 }
-
-

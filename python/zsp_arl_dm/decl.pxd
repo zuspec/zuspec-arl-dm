@@ -1,4 +1,3 @@
-
 cimport vsc_dm.decl as vsc
 cimport debug_mgr.decl as dm
 
@@ -9,6 +8,7 @@ from libcpp cimport bool
 from libc.stdint cimport int32_t
 from libc.stdint cimport int64_t
 from libc.stdint cimport uint64_t
+from libc.stdint cimport uint32_t
 cimport cpython.ref as cpy_ref
 
 ctypedef IContext *IContextP
@@ -30,6 +30,12 @@ ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
 ctypedef IDataTypeFunction *IDataTypeFunctionP
 ctypedef IDataTypeFunctionParamDecl *IDataTypeFunctionParamDeclP
 ctypedef IDataTypePackedStruct *IDataTypePackedStructP
+ctypedef IDataTypeReg *IDataTypeRegP
+ctypedef IDataTypeResource *IDataTypeResourceP
+ctypedef IDataTypeTransparentAddrSpace *IDataTypeTransparentAddrSpaceP
+ctypedef IDataTypePureComponent *IDataTypePureComponentP
+ctypedef IDataTypePyObj *IDataTypePyObjP
+ctypedef IDataTypeCoreLibComponent *IDataTypeCoreLibComponentP
 ctypedef IFactory *IFactoryP
 ctypedef IModelEvalIterator *IModelEvalIteratorP
 ctypedef IModelFieldAction *IModelFieldActionP
@@ -48,7 +54,22 @@ ctypedef ITypeFieldReg *ITypeFieldRegP
 ctypedef ITypeProcStmt *ITypeProcStmtP 
 ctypedef ITypeProcStmtDeclScope *ITypeProcStmtDeclScopeP 
 ctypedef ITypeProcStmtScope *ITypeProcStmtScopeP 
-ctypedef ITypeProcStmtVarDecl *ITypeProcStmtVarDeclP 
+ctypedef ITypeProcStmtVarDecl *ITypeProcStmtVarDeclP
+ctypedef ITypeProcStmtAssign *ITypeProcStmtAssignP
+ctypedef ITypeProcStmtBreak *ITypeProcStmtBreakP
+ctypedef ITypeProcStmtContinue *ITypeProcStmtContinueP
+ctypedef ITypeProcStmtExpr *ITypeProcStmtExprP
+ctypedef ITypeProcStmtForeach *ITypeProcStmtForeachP
+ctypedef ITypeProcStmtIfClause *ITypeProcStmtIfClauseP
+ctypedef vsc.UP[ITypeProcStmtIfClause] ITypeProcStmtIfClauseUP
+ctypedef ITypeProcStmtIfElse *ITypeProcStmtIfElseP
+ctypedef ITypeProcStmtMatch *ITypeProcStmtMatchP
+ctypedef ITypeProcStmtMatchChoice *ITypeProcStmtMatchChoiceP
+ctypedef vsc.UP[ITypeProcStmtMatchChoice] ITypeProcStmtMatchChoiceUP
+ctypedef ITypeProcStmtRepeat *ITypeProcStmtRepeatP
+ctypedef ITypeProcStmtRepeatWhile *ITypeProcStmtRepeatWhileP
+ctypedef ITypeProcStmtReturn *ITypeProcStmtReturnP
+ctypedef ITypeProcStmtYield *ITypeProcStmtYieldP
 
 cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
     cdef cppclass IContext(vsc.IContext):
@@ -160,6 +181,47 @@ cdef extern from "zsp/arl/dm/IDataTypeComponent.h" namespace "zsp::arl::dm":
         void addPoolBindDirective(IPoolBindDirective *)
         cpp_vector[IPoolBindDirectiveUP] &getPoolBindDirectives() const
         pass
+
+cdef extern from "zsp/arl/dm/IDataTypePureComponent.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypePureComponent(IDataTypeComponent):
+        pass
+
+cdef extern from "zsp/arl/dm/RegAccess.h" namespace "zsp::arl::dm":
+    cpdef enum RegAccess:
+        RegAccess_NoAccess "zsp::arl::dm::RegAccess::NoAccess"
+        RegAccess_RW "zsp::arl::dm::RegAccess::RW"
+        RegAccess_RO "zsp::arl::dm::RegAccess::RO"
+        RegAccess_WO "zsp::arl::dm::RegAccess::WO"
+        RegAccess_W1 "zsp::arl::dm::RegAccess::W1"
+        RegAccess_CLR "zsp::arl::dm::RegAccess::CLR"
+        RegAccess_SET "zsp::arl::dm::RegAccess::SET"
+
+
+    cdef cppclass IDataTypeReg(IDataTypePureComponent):
+        IDataTypePackedStruct *getDataType() const
+        uint32_t getOffset() const
+        uint32_t getWidth() const
+        RegAccess getAccess() const
+
+cdef extern from "zsp/arl/dm/IDataTypePyObj.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypePyObj(vsc.IDataType):
+        pass
+
+cdef extern from "zsp/arl/dm/IDataTypeResource.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypeResource(vsc.IDataType):
+        pass
+
+cdef extern from "zsp/arl/dm/IDataTypeTransparentAddrSpace.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypeTransparentAddrSpace(vsc.IDataType):
+        pass
+
+cdef extern from "vsc/dm/IValOpsDelegator.h" namespace "vsc::dm":
+    cdef cppclass IValOpsDelegator:
+        pass
+
+cdef extern from "zsp/arl/dm/IDataTypeCoreLibComponent.h" namespace "zsp::arl::dm":
+    cdef cppclass IDataTypeCoreLibComponent(IDataTypeComponent, IValOpsDelegator):
+        pass
     
 cdef extern from "zsp/arl/dm/IDataTypeFlowObj.h" namespace "zsp::arl::dm":
     cdef enum FlowObjKindE:
@@ -175,6 +237,64 @@ cdef extern from "zsp/arl/dm/ITypeProcStmt.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeProcStmt(vsc.IAccept):
         pass
 
+cdef extern from "zsp/arl/dm/ITypeProcStmtAssign.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtAssign(ITypeProcStmt):
+        vsc.ITypeExpr *getLhs() const
+        vsc.ITypeExpr *getRhs() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtBreak.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtBreak(ITypeProcStmt):
+        pass
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtContinue.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtContinue(ITypeProcStmt):
+        pass
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtExpr.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtExpr(ITypeProcStmt):
+        vsc.ITypeExpr *getExpr() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtForeach.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtForeach(ITypeProcStmt):
+        pass
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtIfClause.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtIfClause(ITypeProcStmt):
+        vsc.ITypeExpr *getCond() const
+        ITypeProcStmt *getStmt() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtIfElse.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtIfElse(ITypeProcStmt):
+        const cpp_vector[ITypeProcStmtIfClauseUP] &getIfClauses() const
+        ITypeProcStmt *getElseClause() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtMatchChoice.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtMatchChoice(ITypeProcStmt):
+        vsc.ITypeExpr *getCond() const
+        ITypeProcStmt *getBody() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtMatch.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtMatch(ITypeProcStmt):
+        vsc.ITypeExpr *getCond() const
+        const cpp_vector[ITypeProcStmtMatchChoiceUP] &getChoices() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtRepeat.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtRepeat(ITypeProcStmt):
+        vsc.ITypeExpr *getExpr() const
+        ITypeProcStmt *getBody() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtRepeatWhile.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtRepeatWhile(ITypeProcStmt):
+        vsc.ITypeExpr *getExpr() const
+        ITypeProcStmt *getBody() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtReturn.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtReturn(ITypeProcStmt):
+        vsc.ITypeExpr *getExpr() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtYield.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtYield(ITypeProcStmt):
+        pass
 cdef extern from "zsp/arl/dm/ITypeProcStmtDeclScope.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeProcStmtDeclScope(vsc.IAccept):
         vsc.IAssociatedData *getAssociatedData()
@@ -319,5 +439,3 @@ cdef extern from "VisitorProxy.h" namespace "zsp::arl::dm":
         VisitorProxy(cpy_ref.PyObject *)
 
 cdef extern IModelBuildContext *mkModelBuildContextArl(IContext *ctxt)
-
-

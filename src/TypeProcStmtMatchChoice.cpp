@@ -18,6 +18,7 @@
  * Created on:
  *     Author:
  */
+#include "zsp/arl/dm/IVisitor.h"
 #include "TypeProcStmtMatchChoice.h"
 
 
@@ -36,6 +37,12 @@ TypeProcStmtMatchChoice::TypeProcStmtMatchChoice(
 TypeProcStmtMatchChoice::~TypeProcStmtMatchChoice() {
 
 }
+
+void TypeProcStmtMatchChoice::accept(vsc::dm::IVisitor *v) {
+    if (dynamic_cast<IVisitor *>(v)) {
+    }
+}
+
 
 }
 }

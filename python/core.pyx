@@ -519,6 +519,49 @@ cdef class DataTypeComponent(vsc.DataTypeStruct):
         ret._owned = owned
         return ret
 
+cdef class DataTypePureComponent(DataTypeComponent):
+    cdef decl.IDataTypePureComponent *asPureComponent(self):
+        return dynamic_cast[decl.IDataTypePureComponentP](self._hndl)
+
+    @staticmethod
+    cdef DataTypePureComponent mk(decl.IDataTypePureComponent *hndl, bool owned=True):
+        ret = DataTypePureComponent()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+        
+cdef class DataTypeReg(DataTypePureComponent):
+    cpdef DataTypePackedStruct getDataType(self):
+        return DataTypePackedStruct.mk(self.asReg().getDataType(), False)
+        
+    cpdef uint32_t getOffset(self):
+        return self.asReg().getOffset()
+        
+    cpdef uint32_t getWidth(self):
+        return self.asReg().getWidth()
+        
+    cpdef int getAccess(self):
+        return int(self.asReg().getAccess())
+
+    cdef decl.IDataTypeReg *asReg(self):
+        return dynamic_cast[decl.IDataTypeRegP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeReg mk(decl.IDataTypeReg *hndl, bool owned=True):
+        ret = DataTypeReg()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+class RegAccess(IntEnum):
+    NoAccess = decl.RegAccess_NoAccess
+    RW = decl.RegAccess_RW
+    RO = decl.RegAccess_RO
+    WO = decl.RegAccess_WO
+    W1 = decl.RegAccess_W1
+    CLR = decl.RegAccess_CLR
+    SET = decl.RegAccess_SET
+
 class FlowObjKindE(IntEnum):
     Buffer = decl.FlowObjKindE.Buffer
     Resource = decl.FlowObjKindE.Resource
@@ -625,6 +668,50 @@ cdef class DataTypeFunction(vsc.ObjBase):
     @staticmethod
     cdef DataTypeFunction mk(decl.IDataTypeFunction *hndl, bool owned=True):
         ret = DataTypeFunction()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class DataTypePyObj(vsc.DataType):
+    cdef decl.IDataTypePyObj *asPyObj(self):
+        return dynamic_cast[decl.IDataTypePyObjP](self._hndl)
+
+    @staticmethod
+    cdef DataTypePyObj mk(decl.IDataTypePyObj *hndl, bool owned=True):
+        ret = DataTypePyObj()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+        
+cdef class DataTypeResource(vsc.DataType):
+    cdef decl.IDataTypeResource *asResource(self):
+        return dynamic_cast[decl.IDataTypeResourceP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeResource mk(decl.IDataTypeResource *hndl, bool owned=True):
+        ret = DataTypeResource()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class DataTypeTransparentAddrSpace(vsc.DataType):
+    cdef decl.IDataTypeTransparentAddrSpace *asTransparentAddrSpace(self):
+        return dynamic_cast[decl.IDataTypeTransparentAddrSpaceP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeTransparentAddrSpace mk(decl.IDataTypeTransparentAddrSpace *hndl, bool owned=True):
+        ret = DataTypeTransparentAddrSpace()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class DataTypeCoreLibComponent(DataTypeComponent):
+    cdef decl.IDataTypeCoreLibComponent *asCoreLibComponent(self):
+        return dynamic_cast[decl.IDataTypeCoreLibComponentP](self._hndl)
+
+    @staticmethod
+    cdef DataTypeCoreLibComponent mk(decl.IDataTypeCoreLibComponent *hndl, bool owned=True):
+        ret = DataTypeCoreLibComponent()
         ret._hndl = hndl
         ret._owned = owned
         return ret
@@ -944,6 +1031,54 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitDataTypeAction(self, DataTypeAction t):
         pass
 
+    cpdef visitDataTypePyObj(self, DataTypePyObj t):
+        pass
+
+    cpdef visitDataTypeResource(self, DataTypeResource t):
+        pass
+
+    cpdef visitDataTypeTransparentAddrSpace(self, DataTypeTransparentAddrSpace t):
+        pass
+
+    cpdef visitDataTypeCoreLibComponent(self, DataTypeCoreLibComponent t):
+        pass
+
+    cpdef visitTypeProcStmtAssign(self, TypeProcStmtAssign t):
+        pass
+
+    cpdef visitTypeProcStmtBreak(self, TypeProcStmtBreak t):
+        pass
+
+    cpdef visitTypeProcStmtContinue(self, TypeProcStmtContinue t):
+        pass
+
+    cpdef visitTypeProcStmtExpr(self, TypeProcStmtExpr t):
+        pass
+
+    cpdef visitTypeProcStmtForeach(self, TypeProcStmtForeach t):
+        pass
+
+    cpdef visitTypeProcStmtIfClause(self, TypeProcStmtIfClause t):
+        pass
+
+    cpdef visitTypeProcStmtIfElse(self, TypeProcStmtIfElse t):
+        pass
+
+    cpdef visitTypeProcStmtMatch(self, TypeProcStmtMatch t):
+        pass
+
+    cpdef visitTypeProcStmtRepeat(self, TypeProcStmtRepeat t):
+        pass
+
+    cpdef visitTypeProcStmtRepeatWhile(self, TypeProcStmtRepeatWhile t):
+        pass
+
+    cpdef visitTypeProcStmtReturn(self, TypeProcStmtReturn t):
+        pass
+
+    cpdef visitTypeProcStmtYield(self, TypeProcStmtYield t):
+        pass
+
     cpdef visitDataTypeArlStruct(self, DataTypeArlStruct t):
         pass
 
@@ -957,6 +1092,12 @@ cdef class VisitorBase(vsc.VisitorBase):
         pass
 
     cpdef visitDataTypeComponent(self, DataTypeComponent t):
+        pass
+
+    cpdef visitDataTypePureComponent(self, DataTypePureComponent t):
+        pass
+
+    cpdef visitDataTypeReg(self, DataTypeReg t):
         pass
 
     cpdef visitDataTypeFlowObj(self, DataTypeFlowObj t):
@@ -1003,6 +1144,36 @@ cdef class VisitorBase(vsc.VisitorBase):
 #     obj.enter()
 #     obj.visitDataTypeStruct(DataTypeStruct.mk(t, False))
 #     obj.leave()
+
+cdef public void VisitorProxy_visitDataTypePyObj(obj, decl.IDataTypePyObj *t) with gil:
+    obj.enter()
+    obj.visitDataTypePyObj(DataTypePyObj.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitDataTypeResource(obj, decl.IDataTypeResource *t) with gil:
+    obj.enter()
+    obj.visitDataTypeResource(DataTypeResource.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitDataTypeTransparentAddrSpace(obj, decl.IDataTypeTransparentAddrSpace *t) with gil:
+    obj.enter()
+    obj.visitDataTypeTransparentAddrSpace(DataTypeTransparentAddrSpace.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitDataTypeCoreLibComponent(obj, decl.IDataTypeCoreLibComponent *t) with gil:
+    obj.enter()
+    obj.visitDataTypeCoreLibComponent(DataTypeCoreLibComponent.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitDataTypePureComponent(obj, decl.IDataTypePureComponent *t) with gil:
+    obj.enter()
+    obj.visitDataTypePureComponent(DataTypePureComponent.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitDataTypeReg(obj, decl.IDataTypeReg *t) with gil:
+    obj.enter()
+    obj.visitDataTypeReg(DataTypeReg.mk(t, False))
+    obj.leave()
 
 cdef public void VisitorProxy_visitDataTypeAction(obj, decl.IDataTypeAction *t) with gil:
     obj.enter()
@@ -1062,9 +1233,278 @@ cdef public void VisitorProxy_visitTypeProcStmt(obj, decl.ITypeProcStmt *t) with
 #    obj.visitTypeProcStmt(TypeProcStmt.mk(t, False))
     pass
 
+cdef class TypeProcStmtMatchChoice(TypeProcStmt):
+    cpdef vsc.TypeExpr getCond(self):
+        return vsc.TypeExpr.mk(self.asChoice().getCond(), False)
+
+    cpdef TypeProcStmt getBody(self):
+        return vsc.WrapperBuilder().mkObj(self.asChoice().getBody(), False)
+
+    cdef decl.ITypeProcStmtMatchChoice *asChoice(self):
+        return dynamic_cast[decl.ITypeProcStmtMatchChoiceP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtMatchChoice mk(decl.ITypeProcStmtMatchChoice *hndl, bool owned=True):
+        ret = TypeProcStmtMatchChoice()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class TypeProcStmtRepeat(TypeProcStmt):
+    cpdef vsc.TypeExpr getExpr(self):
+        return vsc.TypeExpr.mk(self.asRepeat().getExpr(), False)
+
+    cpdef TypeProcStmt getBody(self):
+        return vsc.WrapperBuilder().mkObj(self.asRepeat().getBody(), False)
+
+    cdef decl.ITypeProcStmtRepeat *asRepeat(self):
+        return dynamic_cast[decl.ITypeProcStmtRepeatP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtRepeat mk(decl.ITypeProcStmtRepeat *hndl, bool owned=True):
+        ret = TypeProcStmtRepeat()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
 cdef public void VisitorProxy_visitTypeProcStmtScope(obj, decl.ITypeProcStmtScope *t) with gil:
     obj.enter()
     obj.visitTypeProcStmtScope(TypeProcStmtScope.mk(t, False))
+    obj.leave()
+
+cdef class TypeProcStmtAssign(TypeProcStmt):
+    cpdef vsc.TypeExpr getLhs(self):
+        return vsc.TypeExpr.mk(self.asAssign().getLhs(), False)
+
+    cpdef vsc.TypeExpr getRhs(self):
+        return vsc.TypeExpr.mk(self.asAssign().getRhs(), False)
+
+    cdef decl.ITypeProcStmtAssign *asAssign(self):
+        return dynamic_cast[decl.ITypeProcStmtAssignP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtAssign mk(decl.ITypeProcStmtAssign *hndl, bool owned=True):
+        ret = TypeProcStmtAssign()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef public void VisitorProxy_visitTypeProcStmtAssign(obj, decl.ITypeProcStmtAssign *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtAssign(TypeProcStmtAssign.mk(t, False))
+    obj.leave()
+
+cdef class TypeProcStmtBreak(TypeProcStmt):
+    cdef decl.ITypeProcStmtBreak *asBreak(self):
+        return dynamic_cast[decl.ITypeProcStmtBreakP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtBreak mk(decl.ITypeProcStmtBreak *hndl, bool owned=True):
+        ret = TypeProcStmtBreak()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class TypeProcStmtContinue(TypeProcStmt):
+    cdef decl.ITypeProcStmtContinue *asContinue(self):
+        return dynamic_cast[decl.ITypeProcStmtContinueP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtContinue mk(decl.ITypeProcStmtContinue *hndl, bool owned=True):
+        ret = TypeProcStmtContinue()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class TypeProcStmtExpr(TypeProcStmt):
+    cpdef vsc.TypeExpr getExpr(self):
+        return vsc.TypeExpr.mk(self.asExpr().getExpr(), False)
+
+    cdef decl.ITypeProcStmtExpr *asExpr(self):
+        return dynamic_cast[decl.ITypeProcStmtExprP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtExpr mk(decl.ITypeProcStmtExpr *hndl, bool owned=True):
+        ret = TypeProcStmtExpr()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class TypeProcStmtForeach(TypeProcStmt):
+
+    cdef decl.ITypeProcStmtForeach *asForeach(self):
+        return dynamic_cast[decl.ITypeProcStmtForeachP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtForeach mk(decl.ITypeProcStmtForeach *hndl, bool owned=True):
+        ret = TypeProcStmtForeach()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef public void VisitorProxy_visitTypeProcStmtBreak(obj, decl.ITypeProcStmtBreak *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtBreak(TypeProcStmtBreak.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitTypeProcStmtContinue(obj, decl.ITypeProcStmtContinue *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtContinue(TypeProcStmtContinue.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitTypeProcStmtExpr(obj, decl.ITypeProcStmtExpr *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtExpr(TypeProcStmtExpr.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitTypeProcStmtForeach(obj, decl.ITypeProcStmtForeach *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtForeach(TypeProcStmtForeach.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitTypeProcStmtIfClause(obj, decl.ITypeProcStmtIfClause *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtIfClause(TypeProcStmtIfClause.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitTypeProcStmtIfElse(obj, decl.ITypeProcStmtIfElse *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtIfElse(TypeProcStmtIfElse.mk(t, False))
+    obj.leave()
+
+cdef class TypeProcStmtIfClause(TypeProcStmt):
+    cpdef vsc.TypeExpr getCond(self):
+        return vsc.TypeExpr.mk(self.asIfClause().getCond(), False)
+
+    cpdef TypeProcStmt getStmt(self):
+        return vsc.WrapperBuilder().mkObj(self.asIfClause().getStmt(), False)
+
+    cdef decl.ITypeProcStmtIfClause *asIfClause(self):
+        return dynamic_cast[decl.ITypeProcStmtIfClauseP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtIfClause mk(decl.ITypeProcStmtIfClause *hndl, bool owned=True):
+        ret = TypeProcStmtIfClause()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef public void VisitorProxy_visitTypeProcStmtMatchChoice(obj, decl.ITypeProcStmtMatchChoice *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtMatchChoice(TypeProcStmtMatchChoice.mk(t, False))
+    obj.leave()
+
+cdef class TypeProcStmtMatch(TypeProcStmt):
+    cpdef vsc.TypeExpr getCond(self):
+        return vsc.TypeExpr.mk(self.asMatch().getCond(), False)
+
+    cpdef getChoices(self):
+        cdef const cpp_vector[decl.ITypeProcStmtMatchChoiceUP] *choices = &self.asMatch().getChoices()
+        ret = []
+        for i in range(choices.size()):
+            ret.append(TypeProcStmtMatchChoice.mk(choices.at(i).get(), False))
+        return ret
+
+    cdef decl.ITypeProcStmtMatch *asMatch(self):
+        return dynamic_cast[decl.ITypeProcStmtMatchP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtMatch mk(decl.ITypeProcStmtMatch *hndl, bool owned=True):
+        ret = TypeProcStmtMatch()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class TypeProcStmtIfElse(TypeProcStmt):
+    cpdef getIfClauses(self):
+        cdef const cpp_vector[decl.ITypeProcStmtIfClauseUP] *clauses = &self.asIfElse().getIfClauses()
+        ret = []
+        for i in range(clauses.size()):
+            ret.append(TypeProcStmtIfClause.mk(clauses.at(i).get(), False))
+        return ret
+
+    cpdef TypeProcStmt getElseClause(self):
+        cdef decl.ITypeProcStmt *else_stmt = self.asIfElse().getElseClause()
+        if else_stmt != NULL:
+            return vsc.WrapperBuilder().mkObj(else_stmt, False)
+        else:
+            return None
+
+    cdef decl.ITypeProcStmtIfElse *asIfElse(self):
+        return dynamic_cast[decl.ITypeProcStmtIfElseP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtIfElse mk(decl.ITypeProcStmtIfElse *hndl, bool owned=True):
+        ret = TypeProcStmtIfElse()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef public void VisitorProxy_visitTypeProcStmtMatch(obj, decl.ITypeProcStmtMatch *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtMatch(TypeProcStmtMatch.mk(t, False))
+    obj.leave()
+
+cdef class TypeProcStmtRepeatWhile(TypeProcStmt):
+    cpdef vsc.TypeExpr getExpr(self):
+        return vsc.TypeExpr.mk(self.asRepeatWhile().getExpr(), False)
+
+    cpdef TypeProcStmt getBody(self):
+        return vsc.WrapperBuilder().mkObj(self.asRepeatWhile().getBody(), False)
+
+    cdef decl.ITypeProcStmtRepeatWhile *asRepeatWhile(self):
+        return dynamic_cast[decl.ITypeProcStmtRepeatWhileP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtRepeatWhile mk(decl.ITypeProcStmtRepeatWhile *hndl, bool owned=True):
+        ret = TypeProcStmtRepeatWhile()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef public void VisitorProxy_visitTypeProcStmtRepeat(obj, decl.ITypeProcStmtRepeat *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtRepeat(TypeProcStmtRepeat.mk(t, False))
+    obj.leave()
+
+cdef class TypeProcStmtReturn(TypeProcStmt):
+    cpdef vsc.TypeExpr getExpr(self):
+        return vsc.TypeExpr.mk(self.asReturn().getExpr(), False)
+
+    cdef decl.ITypeProcStmtReturn *asReturn(self):
+        return dynamic_cast[decl.ITypeProcStmtReturnP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtReturn mk(decl.ITypeProcStmtReturn *hndl, bool owned=True):
+        ret = TypeProcStmtReturn()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef public void VisitorProxy_visitTypeProcStmtRepeatWhile(obj, decl.ITypeProcStmtRepeatWhile *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtRepeatWhile(TypeProcStmtRepeatWhile.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitTypeProcStmtReturn(obj, decl.ITypeProcStmtReturn *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtReturn(TypeProcStmtReturn.mk(t, False))
+    obj.leave()
+
+cdef class TypeProcStmtYield(TypeProcStmt):
+    cdef decl.ITypeProcStmtYield *asYield(self):
+        return dynamic_cast[decl.ITypeProcStmtYieldP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtYield mk(decl.ITypeProcStmtYield *hndl, bool owned=True):
+        ret = TypeProcStmtYield()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef public void VisitorProxy_visitTypeProcStmtYield(obj, decl.ITypeProcStmtYield *t) with gil:
+    obj.enter()
+    obj.visitTypeProcStmtYield(TypeProcStmtYield.mk(t, False))
     obj.leave()
 
 
@@ -1112,6 +1552,24 @@ cdef class WrapperBuilder(VisitorBase):
 
     cpdef visitDataTypePackedStruct(self, DataTypePackedStruct t):
         self._set_obj(t)
+        
+    cpdef visitDataTypePyObj(self, DataTypePyObj t):
+        self._set_obj(t)
+
+    cpdef visitDataTypeResource(self, DataTypeResource t):
+        self._set_obj(t)
+
+    cpdef visitDataTypeTransparentAddrSpace(self, DataTypeTransparentAddrSpace t):
+        self._set_obj(t)
+
+    cpdef visitDataTypeCoreLibComponent(self, DataTypeCoreLibComponent t):
+        self._set_obj(t)
+
+    cpdef visitDataTypePureComponent(self, DataTypePureComponent t):
+        self._set_obj(t)
+
+    cpdef visitDataTypeReg(self, DataTypeReg t):
+        self._set_obj(t)
 
     cpdef visitModelFieldAction(self, ModelFieldAction a):
         print("visitModelFieldAction")
@@ -1148,4 +1606,3 @@ cdef class WrapperBuilderVsc(vsc.WrapperBuilder):
 
 
 vsc.addWrapperBuilder(WrapperBuilderVsc())
-

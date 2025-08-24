@@ -28,5 +28,7 @@ package:
       src: pypi
     - name: cython
       src: pypi
+    - name: setuptools-scm
+      src: pypi
 
 

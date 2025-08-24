@@ -187,7 +187,7 @@ cdef extern from "zsp/arl/dm/IDataTypePureComponent.h" namespace "zsp::arl::dm":
         pass
 
 cdef extern from "zsp/arl/dm/RegAccess.h" namespace "zsp::arl::dm":
-    cpdef enum RegAccess:
+    cdef enum RegAccess:
         RegAccess_NoAccess "zsp::arl::dm::RegAccess::NoAccess"
         RegAccess_RW "zsp::arl::dm::RegAccess::RW"
         RegAccess_RO "zsp::arl::dm::RegAccess::RO"

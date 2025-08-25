@@ -28,16 +28,13 @@ cdef class Context(vsc.Context):
     cpdef DataTypeActivityReplicate mkDataTypeActivityReplicate(self, vsc.TypeExpr count)
     cpdef DataTypeActivitySchedule mkDataTypeActivitySchedule(self)
     cpdef DataTypeActivitySequence mkDataTypeActivitySequence(self)
-    cpdef bool addDataTypeAction(self, DataTypeAction)
     cpdef DataTypeActivityTraverse mkDataTypeActivityTraverse(self, vsc.TypeExprFieldRef, vsc.TypeConstraint)
     cpdef DataTypeAddrClaim mkDataTypeAddrClaim(self, name)
     cpdef DataTypeAddrClaimTransparent mkDataTypeAddrClaimTransparent(self, name)
     cpdef DataTypeComponent findDataTypeComponent(self, name)
     cpdef DataTypeComponent mkDataTypeComponent(self, name)
-    cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t)
     cpdef DataTypeFlowObj findDataTypeFlowObj(self, name, kind)
     cpdef DataTypeFlowObj mkDataTypeFlowObj(self, name, kind)
-    cpdef bool addDataTypeFlowObj(self, DataTypeFlowObj obj_t)
 
 # TODO:    
 #    cpdef ModelEvaluator mkModelEvaluator(self)
@@ -543,6 +540,8 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitModelFieldPool(self, ModelFieldPool f)
 
     cpdef visitTypeFieldReg(self, TypeFieldReg f)
+
+    cpdef visitTypeFieldInOut(self, TypeFieldInOut f)
 
     cpdef visitTypeProcStmt(self, TypeProcStmt t)
 

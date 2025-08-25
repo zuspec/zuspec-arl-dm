@@ -77,6 +77,8 @@ virtual void visitDataTypeReg(IDataTypeReg *t) override;
 
 	virtual void visitTypeFieldReg(ITypeFieldReg *f) override;
 
+    virtual void visitTypeFieldInOut(ITypeFieldInOut *f) override;
+
     virtual void visitTypeProcStmtScope(ITypeProcStmtScope *s) override;
     virtual void visitTypeProcStmtAssign(ITypeProcStmtAssign *s) override;
     virtual void visitTypeProcStmtBreak(ITypeProcStmtBreak *s) override;

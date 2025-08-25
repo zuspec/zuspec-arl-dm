@@ -30,7 +30,9 @@ cdef class Factory(object):
             ctxt = vsc.Factory.inst().mkContext()
 
         ctxt._owned = False
-        return Context.mk(self._hndl.mkContext(ctxt._hndl), True)
+        ret = Context.mk(self._hndl.mkContext(ctxt._hndl), True)
+        ctxt._hndl = NULL
+        return ret
     
     @staticmethod
     def inst():
@@ -102,10 +104,6 @@ cdef class Context(vsc.Context):
 
         return ret
     
-    cpdef bool addDataTypeAction(self, DataTypeAction a):
-        a._owned = False
-        return self.asContext().addDataTypeAction(a.asAction())
-        
     cpdef DataTypeActivityReplicate mkDataTypeActivityReplicate(self, vsc.TypeExpr count):
         count._owned = False
         return DataTypeActivityReplicate.mk(
@@ -154,10 +152,6 @@ cdef class Context(vsc.Context):
         return DataTypeComponent.mk(
             self.asContext().mkDataTypeComponent(name.encode()), True)
         
-    cpdef bool addDataTypeComponent(self, DataTypeComponent comp_t):
-        comp_t._owned = False
-        return self.asContext().addDataTypeComponent(comp_t.asComponent())
-
     cpdef DataTypeFlowObj findDataTypeFlowObj(self, name, kind):
         cdef int kind_i = int(kind)
         cdef decl.IDataTypeFlowObj *obj = self.asContext().findDataTypeFlowObj(
@@ -174,10 +168,6 @@ cdef class Context(vsc.Context):
         return DataTypeFlowObj.mk(self.asContext().mkDataTypeFlowObj(
             name.encode(),
             <decl.FlowObjKindE>(kind_i)), True)
-
-    cpdef bool addDataTypeFlowObj(self, DataTypeFlowObj obj_t):
-        obj_t._owned = False
-        return self.asContext().addDataTypeFlowObj(obj_t.asFlowObj())
 
 # TODO:    
 #    cpdef ModelEvaluator mkModelEvaluator(self):
@@ -1121,8 +1111,9 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitModelFieldPool(self, ModelFieldPool f):
         pass
     
-    cpdef visitTypeFieldReg(self, TypeFieldReg f):
-        pass
+    cpdef visitTypeFieldReg(self, TypeFieldReg f): pass
+
+    cpdef visitTypeFieldInOut(self, TypeFieldInOut f): pass
 
     cpdef visitTypeProcStmt(self, TypeProcStmt t):
         pass
@@ -1228,6 +1219,9 @@ cdef public void VisitorProxy_visitModelFieldPool(obj, decl.IModelFieldPool *c) 
 
 cdef public void VisitorProxy_visitTypeFieldReg(obj, decl.ITypeFieldReg *c) with gil:
     obj.visitTypeFieldReg(TypeFieldReg.mk(c, False))
+
+cdef public void VisitorProxy_visitTypeFieldInOut(obj, decl.ITypeFieldInOut *c) with gil:
+    obj.visitTypeFieldInOut(TypeFieldInOut.mk(c, False))
 
 cdef public void VisitorProxy_visitTypeProcStmt(obj, decl.ITypeProcStmt *t) with gil:
 #    obj.visitTypeProcStmt(TypeProcStmt.mk(t, False))
@@ -1587,6 +1581,9 @@ cdef class WrapperBuilder(VisitorBase):
     
     cpdef visitTypeFieldReg(self, TypeFieldReg f):
         print("visitTypeFieldReg")
+        self._set_obj(f)
+
+    cpdef visitTypeFieldInOut(self, TypeFieldInOut f):
         self._set_obj(f)
 
     cpdef visitTypeProcStmt(self, TypeProcStmt t):

@@ -28,6 +28,7 @@ ctypedef IDataTypeArlStruct *IDataTypeArlStructP
 ctypedef IDataTypeComponent *IDataTypeComponentP
 ctypedef IDataTypeFlowObj *IDataTypeFlowObjP
 ctypedef IDataTypeFunction *IDataTypeFunctionP
+ctypedef vsc.UP[IDataTypeFunction] IDataTypeFunctionUP
 ctypedef IDataTypeFunctionParamDecl *IDataTypeFunctionParamDeclP
 ctypedef IDataTypePackedStruct *IDataTypePackedStructP
 ctypedef IDataTypeReg *IDataTypeRegP
@@ -45,6 +46,10 @@ ctypedef IModelFieldExecutor *IModelFieldExecutorP
 ctypedef IModelFieldPool *IModelFieldPoolP
 ctypedef IPoolBindDirective *IPoolBindDirectiveP
 ctypedef vsc.UP[IPoolBindDirective] IPoolBindDirectiveUP
+ctypedef ITypeExec *ITypeExecP
+ctypedef vsc.UP[ITypeExec] ITypeExecUP
+ctypedef ITypeExecProc *ITypeExecProcP
+ctypedef vsc.UP[ITypeExecProc] ITypeExecProcUP
 ctypedef ITypeFieldActivity *ITypeFieldActivityP
 ctypedef vsc.UP[ITypeFieldActivity] ITypeFieldActivityUP
 ctypedef ITypeFieldClaim *ITypeFieldClaimP
@@ -52,8 +57,8 @@ ctypedef ITypeFieldInOut *ITypeFieldInOutP
 ctypedef ITypeFieldPool *ITypeFieldPoolP
 ctypedef ITypeFieldReg *ITypeFieldRegP
 ctypedef ITypeProcStmt *ITypeProcStmtP 
+ctypedef vsc.UP[ITypeProcStmt] ITypeProcStmtUP 
 ctypedef ITypeProcStmtDeclScope *ITypeProcStmtDeclScopeP 
-ctypedef ITypeProcStmtScope *ITypeProcStmtScopeP 
 ctypedef ITypeProcStmtVarDecl *ITypeProcStmtVarDeclP
 ctypedef ITypeProcStmtAssign *ITypeProcStmtAssignP
 ctypedef ITypeProcStmtBreak *ITypeProcStmtBreakP
@@ -69,6 +74,8 @@ ctypedef vsc.UP[ITypeProcStmtMatchChoice] ITypeProcStmtMatchChoiceUP
 ctypedef ITypeProcStmtRepeat *ITypeProcStmtRepeatP
 ctypedef ITypeProcStmtRepeatWhile *ITypeProcStmtRepeatWhileP
 ctypedef ITypeProcStmtReturn *ITypeProcStmtReturnP
+ctypedef ITypeProcStmtScope *ITypeProcStmtScopeP
+ctypedef vsc.UP[ITypeProcStmtScope] ITypeProcStmtScopeUP
 ctypedef ITypeProcStmtYield *ITypeProcStmtYieldP
 
 cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
@@ -102,6 +109,7 @@ cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
             vsc.ITypeExprFieldRef       *pool,
             vsc.ITypeExprFieldRef       *target)
         ITypeFieldActivity *mkTypeFieldActivity(const cpp_string &, IDataTypeActivity *, bool)
+        ITypeExecProc *mkTypeExecProc(ExecKindT kind, ITypeProcStmtScope *body)
         ITypeFieldClaim *mkTypeFieldClaim(const cpp_string &, vsc.IDataType *, bool)
         ITypeFieldInOut *mkTypeFieldInOut(const cpp_string &, vsc.IDataType *, bool)
         ITypeFieldPool *mkTypeFieldPool(
@@ -160,7 +168,10 @@ cdef extern from "zsp/arl/dm/IDataTypeActivityTraverse.h" namespace "zsp::arl::d
 
 cdef extern from "zsp/arl/dm/IDataTypeArlStruct.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeArlStruct(vsc.IDataTypeStruct):
-        pass
+        const cpp_vector[ITypeExecUP] &getExecs(ExecKindT kind) const
+        void addExec(ITypeExec *exec)
+        void addFunction(IDataTypeFunction *f, bool owned)
+        const cpp_vector[IDataTypeFunctionUP] &getFunctions()
 
 cdef extern from "zsp/arl/dm/IDataTypeAddrClaim.h" namespace "zsp::arl::dm":
     cdef cppclass IDataTypeAddrClaim(IDataTypeArlStruct):
@@ -292,6 +303,11 @@ cdef extern from "zsp/arl/dm/ITypeProcStmtReturn.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeProcStmtReturn(ITypeProcStmt):
         vsc.ITypeExpr *getExpr() const
 
+cdef extern from "zsp/arl/dm/ITypeProcStmtScope.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtScope(ITypeProcStmt):
+        void addStatement(ITypeProcStmt *stmt, bool owned)
+        const cpp_vector[ITypeProcStmtUP] &getStatements() const
+
 cdef extern from "zsp/arl/dm/ITypeProcStmtYield.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeProcStmtYield(ITypeProcStmt):
         pass
@@ -299,10 +315,6 @@ cdef extern from "zsp/arl/dm/ITypeProcStmtDeclScope.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeProcStmtDeclScope(vsc.IAccept):
         vsc.IAssociatedData *getAssociatedData()
         void setAssociatedData(vsc.IAssociatedData *)
-        pass
-
-cdef extern from "zsp/arl/dm/ITypeProcStmtScope.h" namespace "zsp::arl::dm":
-    cdef cppclass ITypeProcStmtScope(ITypeProcStmtDeclScope):
         pass
 
 cdef extern from "zsp/arl/dm/ITypeProcStmtVarDecl.h" namespace "zsp::arl::dm":
@@ -407,6 +419,13 @@ cdef extern from "zsp/arl/dm/ITypeExec.h" namespace "zsp::arl::dm":
         ExecBody "zsp::arl::dm::ExecKindT::Body"
         ExecPreSolve "zsp::arl::dm::ExecKindT::PreSolve"
         ExecPostSolve "zsp::arl::dm::ExecKindT::PostSolve"
+
+    cdef cppclass ITypeExec(vsc.IAccept):
+        ExecKindT getKind() const
+
+cdef extern from "zsp/arl/dm/ITypeExecProc.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeExecProc(ITypeExec):
+        ITypeProcStmtScope *getBody() const
     
 cdef extern from "zsp/arl/dm/ITypeFieldActivity.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeFieldActivity(vsc.ITypeField):

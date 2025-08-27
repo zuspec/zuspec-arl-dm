@@ -39,6 +39,7 @@ cdef class Context(vsc.Context):
 # TODO:    
 #    cpdef ModelEvaluator mkModelEvaluator(self)
     cpdef PoolBindDirective mkPoolBindDirective(self, kind, vsc.TypeExprFieldRef pool, vsc.TypeExprFieldRef target)
+    cpdef TypeExecProc mkTypeExecProc(self, kind, TypeProcStmtScope body)
     cpdef TypeFieldActivity mkTypeFieldActivity(self, name, DataTypeActivity, bool)
     cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType, bool)
     cpdef TypeFieldInOut mkTypeFieldInOut(self, name, vsc.DataType, bool)
@@ -352,6 +353,24 @@ cdef class TypeFieldInOut(vsc.TypeField):
     @staticmethod
     cdef TypeFieldInOut mk(decl.ITypeFieldInOut *hndl, bool owned=*)
 
+cdef class TypeExec(vsc.ObjBase):
+
+    cpdef getKind(self)
+
+    cdef decl.ITypeExec *asExec(self)
+
+    @staticmethod
+    cdef TypeExec mk(decl.ITypeExec *, bool owned=*)
+
+cdef class TypeExecProc(TypeExec):
+
+    cpdef TypeProcStmtScope getBody(self)
+
+    cdef decl.ITypeExecProc *asProc(self)
+
+    @staticmethod
+    cdef TypeExecProc mk(decl.ITypeExecProc *hndl, bool owned=*)
+
 cdef class TypeFieldPool(vsc.TypeField):
     
     cpdef int getDeclSize(self)
@@ -375,7 +394,8 @@ cdef class TypeFieldReg(vsc.TypeField):
     cdef TypeFieldReg mk(decl.ITypeFieldReg *, bool owned=*)
 
 cdef class TypeProcStmt(vsc.ObjBase):
-    pass
+
+    cdef decl.ITypeProcStmt *asStmt(self)
     
 cdef class TypeProcStmtAssign(TypeProcStmt):
     cpdef vsc.TypeExpr getLhs(self)
@@ -458,6 +478,17 @@ cdef class TypeProcStmtRepeat(TypeProcStmt):
     @staticmethod
     cdef TypeProcStmtRepeat mk(decl.ITypeProcStmtRepeat *, bool owned=*)
 
+cdef class TypeProcStmtScope(TypeProcStmt):
+
+    cpdef addStatement(self, TypeProcStmt stmt, bool owned=*)
+
+    cpdef getStatements(self)
+
+    cdef decl.ITypeProcStmtScope *asScope(self)
+
+    @staticmethod
+    cdef TypeProcStmtScope mk(decl.ITypeProcStmtScope *, bool owned=*)
+
 cdef class TypeProcStmtRepeatWhile(TypeProcStmt):
     cpdef vsc.TypeExpr getExpr(self)
     cpdef TypeProcStmt getBody(self)
@@ -480,13 +511,6 @@ cdef class TypeProcStmtYield(TypeProcStmt):
     
     @staticmethod
     cdef TypeProcStmtYield mk(decl.ITypeProcStmtYield *, bool owned=*)
-
-cdef class TypeProcStmtScope(TypeProcStmt):
-    
-    cdef decl.ITypeProcStmtScope *asScope(self)
-
-    @staticmethod
-    cdef TypeProcStmtScope mk(decl.ITypeProcStmtScope *, bool owned=*)
 
 cdef class TypeProcStmtVarDecl(TypeProcStmt):
 

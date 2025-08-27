@@ -188,6 +188,12 @@ cdef class Context(vsc.Context):
             pool.asFieldRef(),
             tp), True)
 
+    cpdef TypeExecProc mkTypeExecProc(self, kind, TypeProcStmtScope body):
+        cdef int kind_i = int(kind)
+        return TypeExecProc.mk(self.asContext().mkTypeExecProc(
+            <decl.ExecKindT>(kind_i),
+            body.asScope()
+            ), True)
     
     cpdef TypeFieldActivity mkTypeFieldActivity(self, name, DataTypeActivity type, bool owned):
     
@@ -894,6 +900,36 @@ class ExecKindT(IntEnum):
     PreSolve = decl.ExecKindT.ExecPostSolve
     PostSolve = decl.ExecKindT.ExecPostSolve
 
+cdef class TypeExec(vsc.ObjBase):
+
+    cpdef getKind(self):
+        return ExecKindT(self.asExec().getKind())
+
+    cdef decl.ITypeExec *asExec(self):
+        return dynamic_cast[decl.ITypeExecP](self._hndl)
+
+    @staticmethod
+    cdef TypeExec mk(decl.ITypeExec *hndl, bool owned=True):
+        ret = TypeExec()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
+cdef class TypeExecProc(TypeExec):
+
+    cpdef TypeProcStmtScope getBody(self):
+        return TypeProcStmtScope.mk(self.asProc().getBody(), False)
+
+    cdef decl.ITypeExecProc *asProc(self):
+        return dynamic_cast[decl.ITypeExecProcP](self._hndl)
+
+    @staticmethod
+    cdef TypeExecProc mk(decl.ITypeExecProc *hndl, bool owned=True):
+        ret = TypeExecProc()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
 cdef class TypeFieldActivity(vsc.TypeField):
 
     cdef decl.ITypeFieldActivity *asActivity(self):
@@ -971,9 +1007,25 @@ cdef class TypeFieldReg(vsc.TypeField):
         return ret
 
 cdef class TypeProcStmt(vsc.ObjBase):
+
+    cdef decl.ITypeProcStmt *asStmt(self):
+        return dynamic_cast[decl.ITypeProcStmtP](self._hndl)
     pass
 
 cdef class TypeProcStmtScope(TypeProcStmt):
+
+    cpdef addStatement(self, TypeProcStmt stmt, bool owned=True):
+        if owned:
+            if not stmt._owned:
+                raise Exception("Attempting to confer ownership")
+            stmt._owned = False
+
+        self.asScope().addStatement(stmt.asStmt(), owned)
+
+    cpdef getStatements(self):
+        ret = []
+
+        return ret
 
     cdef decl.ITypeProcStmtScope *asScope(self):
         return dynamic_cast[decl.ITypeProcStmtScopeP](self._hndl)

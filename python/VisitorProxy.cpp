@@ -174,6 +174,10 @@ void VisitorProxy::visitTypeProcStmtYield(ITypeProcStmtYield *s) {
     VisitorProxy_visitTypeProcStmtYield(m_obj, s);
 }
 
+void VisitorProxy::visitTypeExecProc(ITypeExecProc *t) {
+    VisitorProxy_visitTypeExecProc(m_obj, t);
+}
+
 }
 }
 }

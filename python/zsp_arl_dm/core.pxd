@@ -44,6 +44,41 @@ cdef class Context(vsc.Context):
     cpdef TypeFieldClaim mkTypeFieldClaim(self, name, vsc.DataType, bool)
     cpdef TypeFieldInOut mkTypeFieldInOut(self, name, vsc.DataType, bool)
     cpdef TypeFieldPool mkTypeFieldPool(self, name, vsc.DataType, bool, vsc.TypeFieldAttr, decl_size)
+
+    cpdef mkTypeProcStmtAssign(self, vsc.TypeExpr lhs, int op, vsc.TypeExpr rhs)
+
+    cpdef mkTypeProcStmtBreak(self)
+
+    cpdef mkTypeProcStmtContinue(self)
+
+    cpdef mkTypeProcStmtExpr(self, vsc.TypeExpr e, bint owned=*)
+
+    cpdef mkTypeProcStmtForeach(self, vsc.TypeExpr target, TypeProcStmt body)
+
+    cpdef mkTypeProcStmtIfClause(self, vsc.TypeExpr cond, TypeProcStmt stmt)
+
+    cpdef mkTypeProcStmtIfElse(self, list if_c, TypeProcStmt else_c)
+
+    cpdef mkTypeProcStmtMatch(self, vsc.TypeExpr cond)
+
+    cpdef mkTypeProcStmtMatchChoice(self, vsc.TypeExpr cond, TypeProcStmt body)
+
+    cpdef mkTypeProcStmtRepeat(self, vsc.TypeExpr cond, TypeProcStmt body)
+
+    cpdef mkTypeProcStmtRepeatWhile(self, vsc.TypeExpr cond, TypeProcStmt body)
+
+    cpdef mkTypeProcStmtReturn(self, vsc.TypeExpr expr)
+
+    cpdef mkTypeProcStmtScope(self)
+
+#    cpdef mkTypeProcStmtScope_stmts(self, list stmts)
+
+    cpdef mkTypeProcStmtVarDecl(self, str name, vsc.DataType type, bint own, vsc.TypeExpr init)
+
+    cpdef mkTypeProcStmtWhile(self, vsc.TypeExpr cond, TypeProcStmt body)
+
+    cpdef mkTypeProcStmtYield(self)
+
     
     cdef decl.IContext *asContext(self)
     
@@ -121,6 +156,12 @@ cdef class DataTypeActivityTraverse(DataTypeActivity):
     cdef mk(decl.IDataTypeActivityTraverse *hndl, bool owned=*)
 
 cdef class DataTypeArlStruct(vsc.DataTypeStruct):
+
+    cpdef getExecs(self, kind)
+    cpdef addExec(self, TypeExec e)
+    cpdef addFunction(self, DataTypeFunction f, bool owned=*)
+    cpdef getFunctions(self)
+
     cdef decl.IDataTypeArlStruct *asArlStruct(self)
 
     @staticmethod
@@ -147,7 +188,7 @@ cdef class DataTypeAddrHandle(vsc.DataTypeStruct):
     @staticmethod
     cdef DataTypeAddrHandle mk(decl.IDataTypeAddrHandle *, bool owned=*)
     
-cdef class DataTypeComponent(vsc.DataTypeStruct):
+cdef class DataTypeComponent(DataTypeArlStruct):
 
     cpdef getActionTypes(self)
 
@@ -506,6 +547,15 @@ cdef class TypeProcStmtReturn(TypeProcStmt):
     @staticmethod
     cdef TypeProcStmtReturn mk(decl.ITypeProcStmtReturn *, bool owned=*)
 
+cdef class TypeProcStmtWhile(TypeProcStmt):
+    cpdef vsc.TypeExpr getCond(self)
+    cpdef TypeProcStmt getBody(self)
+    
+    cdef decl.ITypeProcStmtWhile *asWhile(self)
+    
+    @staticmethod
+    cdef TypeProcStmtWhile mk(decl.ITypeProcStmtWhile *, bool owned=*)
+
 cdef class TypeProcStmtYield(TypeProcStmt):
     cdef decl.ITypeProcStmtYield *asYield(self)
     
@@ -594,6 +644,7 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitTypeProcStmtReturn(self, TypeProcStmtReturn t)
     
     cpdef visitTypeProcStmtYield(self, TypeProcStmtYield t)
+    cpdef visitTypeExecProc(self, TypeExecProc t)
 
 cdef class WrapperBuilder(VisitorBase):
     cdef list _obj
@@ -601,6 +652,8 @@ cdef class WrapperBuilder(VisitorBase):
     cdef vsc.ObjBase mkObj(self, vsc_decl.IAccept *obj, bool owned)
 
     cdef _set_obj(self, vsc.ObjBase obj)
+
+    cpdef visitTypeExecProc(self, TypeExecProc t)
 
 cdef class WrapperBuilderVsc(vsc.WrapperBuilder):
     cdef WrapperBuilder            _core

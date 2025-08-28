@@ -92,6 +92,7 @@ virtual void visitDataTypeReg(IDataTypeReg *t) override;
     virtual void visitTypeProcStmtRepeatWhile(ITypeProcStmtRepeatWhile *s) override;
     virtual void visitTypeProcStmtReturn(ITypeProcStmtReturn *s) override;
     virtual void visitTypeProcStmtYield(ITypeProcStmtYield *s) override;
+    virtual void visitTypeExecProc(ITypeExecProc *t) override;
 
 private:
     PyObject                *m_obj;

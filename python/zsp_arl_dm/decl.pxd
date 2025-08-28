@@ -76,6 +76,7 @@ ctypedef ITypeProcStmtRepeatWhile *ITypeProcStmtRepeatWhileP
 ctypedef ITypeProcStmtReturn *ITypeProcStmtReturnP
 ctypedef ITypeProcStmtScope *ITypeProcStmtScopeP
 ctypedef vsc.UP[ITypeProcStmtScope] ITypeProcStmtScopeUP
+ctypedef ITypeProcStmtWhile *ITypeProcStmtWhileP
 ctypedef ITypeProcStmtYield *ITypeProcStmtYieldP
 
 cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
@@ -101,6 +102,25 @@ cdef extern from "zsp/arl/dm/IContext.h" namespace "zsp::arl::dm":
         IDataTypeFlowObj *findDataTypeFlowObj(const cpp_string &name, FlowObjKindE kind)
         IDataTypeFlowObj *mkDataTypeFlowObj(const cpp_string &name, FlowObjKindE kind)
         bool addDataTypeFlowObj(IDataTypeFlowObj *)
+
+        # mkTypeProc* methods
+        ITypeProcStmtAssign *mkTypeProcStmtAssign(vsc.ITypeExpr *lhs, int op, vsc.ITypeExpr *rhs)
+        ITypeProcStmtBreak *mkTypeProcStmtBreak()
+        ITypeProcStmtContinue *mkTypeProcStmtContinue()
+        ITypeProcStmtExpr *mkTypeProcStmtExpr(vsc.ITypeExpr *e, bool owned)
+        ITypeProcStmtForeach *mkTypeProcStmtForeach(vsc.ITypeExpr *target, ITypeProcStmt *body)
+        ITypeProcStmtIfClause *mkTypeProcStmtIfClause(vsc.ITypeExpr *cond, ITypeProcStmt *stmt)
+        ITypeProcStmtIfElse *mkTypeProcStmtIfElse(const cpp_vector[ITypeProcStmtIfClauseP] &if_c, ITypeProcStmt *else_c)
+        ITypeProcStmtMatch *mkTypeProcStmtMatch(vsc.ITypeExpr *cond)
+        ITypeProcStmtMatchChoice *mkTypeProcStmtMatchChoice(vsc.ITypeExpr *cond, ITypeProcStmt *body)
+        ITypeProcStmtRepeat *mkTypeProcStmtRepeat(vsc.ITypeExpr *cond, ITypeProcStmt *body)
+        ITypeProcStmtRepeatWhile *mkTypeProcStmtRepeatWhile(vsc.ITypeExpr *cond, ITypeProcStmt *body)
+        ITypeProcStmtReturn *mkTypeProcStmtReturn(vsc.ITypeExpr *expr)
+        ITypeProcStmtScope *mkTypeProcStmtScope()
+        ITypeProcStmtScope *mkTypeProcStmtScope(const cpp_vector[ITypeProcStmtP] &stmts)
+        ITypeProcStmtVarDecl *mkTypeProcStmtVarDecl(const cpp_string &name, vsc.IDataType *type, bool own, vsc.ITypeExpr *init)
+        ITypeProcStmtWhile *mkTypeProcStmtWhile(vsc.ITypeExpr *cond, ITypeProcStmt *body)
+        ITypeProcStmtYield *mkTypeProcStmtYield()
 
 #TODO:        IModelEvaluator *mkModelEvaluator()
 
@@ -249,6 +269,15 @@ cdef extern from "zsp/arl/dm/ITypeProcStmt.h" namespace "zsp::arl::dm":
         pass
 
 cdef extern from "zsp/arl/dm/ITypeProcStmtAssign.h" namespace "zsp::arl::dm":
+    cdef enum TypeProcStmtAssignOp:
+        Eq "zsp::arl::dm::TypeProcStmtAssignOp::Eq"
+        PlusEq "zsp::arl::dm::TypeProcStmtAssignOp::PlusEq"
+        MinusEq "zsp::arl::dm::TypeProcStmtAssignOp::MinusEq"
+        ShlEq "zsp::arl::dm::TypeProcStmtAssignOp::ShlEq"
+        ShrEq "zsp::arl::dm::TypeProcStmtAssignOp::ShrEq"
+        OrEq "zsp::arl::dm::TypeProcStmtAssignOp::OrEq"
+        AndEq "zsp::arl::dm::TypeProcStmtAssignOp::AndEq"
+
     cdef cppclass ITypeProcStmtAssign(ITypeProcStmt):
         vsc.ITypeExpr *getLhs() const
         vsc.ITypeExpr *getRhs() const
@@ -302,6 +331,11 @@ cdef extern from "zsp/arl/dm/ITypeProcStmtRepeatWhile.h" namespace "zsp::arl::dm
 cdef extern from "zsp/arl/dm/ITypeProcStmtReturn.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeProcStmtReturn(ITypeProcStmt):
         vsc.ITypeExpr *getExpr() const
+
+cdef extern from "zsp/arl/dm/ITypeProcStmtWhile.h" namespace "zsp::arl::dm":
+    cdef cppclass ITypeProcStmtWhile(ITypeProcStmt):
+        vsc.ITypeExpr *getCond() const
+        ITypeProcStmt *getBody() const
 
 cdef extern from "zsp/arl/dm/ITypeProcStmtScope.h" namespace "zsp::arl::dm":
     cdef cppclass ITypeProcStmtScope(ITypeProcStmt):

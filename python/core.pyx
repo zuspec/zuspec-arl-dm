@@ -190,6 +190,9 @@ cdef class Context(vsc.Context):
 
     cpdef TypeExecProc mkTypeExecProc(self, kind, TypeProcStmtScope body):
         cdef int kind_i = int(kind)
+        if not body._owned:
+            raise Exception("'body' must be owned by the caller")
+        body._owned = False
         return TypeExecProc.mk(self.asContext().mkTypeExecProc(
             <decl.ExecKindT>(kind_i),
             body.asScope()
@@ -241,6 +244,89 @@ cdef class Context(vsc.Context):
     
     cdef decl.IContext *asContext(self):
         return dynamic_cast[decl.IContextP](self._hndl)
+
+    cpdef mkTypeProcStmtAssign(self, vsc.TypeExpr lhs, int op, vsc.TypeExpr rhs):
+        cdef int op_i = int(op)
+        lhs._owned = False
+        rhs._owned = False
+        return TypeProcStmtAssign.mk(
+            self.asContext().mkTypeProcStmtAssign(lhs.asExpr(), <decl.TypeProcStmtAssignOp>(op_i), rhs.asExpr()), True)
+
+    cpdef mkTypeProcStmtBreak(self):
+        return TypeProcStmtBreak.mk(self.asContext().mkTypeProcStmtBreak(), True)
+
+    cpdef mkTypeProcStmtContinue(self):
+        return TypeProcStmtContinue.mk(self.asContext().mkTypeProcStmtContinue(), True)
+
+    cpdef mkTypeProcStmtExpr(self, vsc.TypeExpr e, bint owned=True):
+        e._owned = False
+        return TypeProcStmtExpr.mk(self.asContext().mkTypeProcStmtExpr(e.asExpr(), owned), True)
+
+    cpdef mkTypeProcStmtForeach(self, vsc.TypeExpr target, TypeProcStmt body):
+        target._owned = False
+        return TypeProcStmtForeach.mk(
+            self.asContext().mkTypeProcStmtForeach(target.asExpr(), body.asStmt()), True)
+
+    cpdef mkTypeProcStmtIfClause(self, vsc.TypeExpr cond, TypeProcStmt stmt):
+        cond._owned = False
+        return TypeProcStmtIfClause.mk(
+            self.asContext().mkTypeProcStmtIfClause(cond.asExpr(), stmt.asStmt()), True)
+
+    cpdef mkTypeProcStmtIfElse(self, list if_c, TypeProcStmt else_c):
+        cdef cpp_vector[decl.ITypeProcStmtIfClauseP] clauses
+        cdef TypeProcStmtIfClause clause
+        for cc in if_c:
+            clause = <TypeProcStmtIfClause>(cc)
+            clauses.push_back(clause.asIfClause())
+        return TypeProcStmtIfElse.mk(
+            self.asContext().mkTypeProcStmtIfElse(clauses, else_c.asStmt()), True)
+
+    cpdef mkTypeProcStmtMatch(self, vsc.TypeExpr cond):
+        cond._owned = False
+        return TypeProcStmtMatch.mk(self.asContext().mkTypeProcStmtMatch(cond.asExpr()), True)
+
+    cpdef mkTypeProcStmtMatchChoice(self, vsc.TypeExpr cond, TypeProcStmt body):
+        # TODO:
+        # return TypeProcStmtMatchChoice.mk(
+        #     self.asContext().mkTypeProcStmtMatchChoice(cond.asExpr(), body.asStmt()), True)
+        return None
+
+    cpdef mkTypeProcStmtRepeat(self, vsc.TypeExpr cond, TypeProcStmt body):
+        cond._owned = False
+        return TypeProcStmtRepeat.mk(
+            self.asContext().mkTypeProcStmtRepeat(cond.asExpr(), body.asStmt()), True)
+
+    cpdef mkTypeProcStmtRepeatWhile(self, vsc.TypeExpr cond, TypeProcStmt body):
+        cond._owned = False
+        return TypeProcStmtRepeatWhile.mk(
+            self.asContext().mkTypeProcStmtRepeatWhile(cond.asExpr(), body.asStmt()), True)
+
+    cpdef mkTypeProcStmtReturn(self, vsc.TypeExpr expr):
+        expr._owned = False
+        return TypeProcStmtReturn.mk(self.asContext().mkTypeProcStmtReturn(expr.asExpr()), True)
+
+    cpdef mkTypeProcStmtScope(self):
+        return TypeProcStmtScope.mk(self.asContext().mkTypeProcStmtScope(), True)
+
+    # cpdef mkTypeProcStmtScope_stmts(self, list stmts):
+    #     cdef cpp_vector[decl.ITypeProcStmtUP] stmts_v
+    #     for stmt in stmts:
+    #         stmts_v.push_back(<decl.ITypeProcStmtUP>stmt._hndl)
+    #     return TypeProcStmtScope.mk(self.asContext().mkTypeProcStmtScope(stmts_v), True)
+
+    cpdef mkTypeProcStmtVarDecl(self, str name, vsc.DataType type, bint own, vsc.TypeExpr init):
+        type_p = type.asType() if type is not None else NULL
+        init_p = init.asExpr() if init is not None else NULL
+        return TypeProcStmtVarDecl.mk(
+            self.asContext().mkTypeProcStmtVarDecl(name.encode(), type_p, own, init_p), True)
+
+    cpdef mkTypeProcStmtWhile(self, vsc.TypeExpr cond, TypeProcStmt body):
+        cond._owned = False
+        return TypeProcStmtWhile.mk(
+            self.asContext().mkTypeProcStmtWhile(cond.asExpr(), body.asStmt()), True)
+
+    cpdef mkTypeProcStmtYield(self):
+        return TypeProcStmtYield.mk(self.asContext().mkTypeProcStmtYield(), True)
 
     @staticmethod
     cdef mk(decl.IContext *hndl, bool owned=True):
@@ -436,6 +522,31 @@ cdef class DataTypeActivityTraverse(DataTypeActivity):
         return ret    
 
 cdef class DataTypeArlStruct(vsc.DataTypeStruct):
+
+    cpdef getExecs(self, kind):
+        cdef int kind_i = int(kind)
+        cdef const cpp_vector[decl.ITypeExecUP] *execs = &self.asArlStruct().getExecs(
+            <decl.ExecKindT>(kind_i))
+        ret = []
+        print("execs: %d" % execs.size())
+        for i in range(execs.size()):
+            it = vsc.WrapperBuilder().mkObj(execs.at(i).get(), False)
+            ret.append(it)
+
+        return ret
+
+    cpdef addExec(self, TypeExec e):
+        if not e._owned:
+            raise Exception("Exec block is not owned")
+        e._owned = False
+        self.asArlStruct().addExec(e.asExec())
+
+    cpdef addFunction(self, DataTypeFunction f, bool owned=True):
+        pass
+
+    cpdef getFunctions(self):
+        pass
+
     cdef decl.IDataTypeArlStruct *asArlStruct(self):
         return dynamic_cast[decl.IDataTypeArlStructP](self._hndl)
 
@@ -482,7 +593,7 @@ cdef class DataTypeAddrHandle(vsc.DataTypeStruct):
         ret._owned = owned
         return ret
 
-cdef class DataTypeComponent(vsc.DataTypeStruct):
+cdef class DataTypeComponent(DataTypeArlStruct):
 
     cpdef getActionTypes(self):
         cdef const cpp_vector[decl.IDataTypeActionP] *atv = &self.asComponent().getActionTypes()
@@ -1173,6 +1284,9 @@ cdef class VisitorBase(vsc.VisitorBase):
     cpdef visitTypeProcStmtScope(self, TypeProcStmtScope t):
         pass
 
+    cpdef visitTypeExecProc(self, TypeExecProc t):
+        pass
+
 # cdef public void VisitorProxy_visitDataTypeEnum(obj, vsc_decl.IDataTypeEnum *t) with gil:
 #     obj.enter()
 #     obj.visitDataTypeEnum(vsc.DataTypeEnum.mk(t, False))
@@ -1548,9 +1662,31 @@ cdef class TypeProcStmtYield(TypeProcStmt):
         ret._owned = owned
         return ret
 
+cdef class TypeProcStmtWhile(TypeProcStmt):
+    cpdef vsc.TypeExpr getCond(self):
+        return vsc.TypeExpr.mk(self.asWhile().getCond(), False)
+
+    cpdef TypeProcStmt getBody(self):
+        return vsc.WrapperBuilder().mkObj(self.asWhile().getBody(), False)
+
+    cdef decl.ITypeProcStmtWhile *asWhile(self):
+        return dynamic_cast[decl.ITypeProcStmtWhileP](self._hndl)
+
+    @staticmethod
+    cdef TypeProcStmtWhile mk(decl.ITypeProcStmtWhile *hndl, bool owned=True):
+        ret = TypeProcStmtWhile()
+        ret._hndl = hndl
+        ret._owned = owned
+        return ret
+
 cdef public void VisitorProxy_visitTypeProcStmtYield(obj, decl.ITypeProcStmtYield *t) with gil:
     obj.enter()
     obj.visitTypeProcStmtYield(TypeProcStmtYield.mk(t, False))
+    obj.leave()
+
+cdef public void VisitorProxy_visitTypeExecProc(obj, decl.ITypeExecProc *t) with gil:
+    obj.enter()
+    obj.visitTypeExecProc(TypeExecProc.mk(t, False))
     obj.leave()
 
 
@@ -1643,6 +1779,9 @@ cdef class WrapperBuilder(VisitorBase):
         pass
     
     cpdef visitTypeProcStmtScope(self, TypeProcStmtScope t):
+        self._set_obj(t)
+
+    cpdef visitTypeExecProc(self, TypeExecProc t):
         self._set_obj(t)
 
 cdef class WrapperBuilderVsc(vsc.WrapperBuilder):

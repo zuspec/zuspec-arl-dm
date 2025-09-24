@@ -268,18 +268,32 @@ cdef class Context(vsc.Context):
             self.asContext().mkTypeProcStmtForeach(target.asExpr(), body.asStmt()), True)
 
     cpdef mkTypeProcStmtIfClause(self, vsc.TypeExpr cond, TypeProcStmt stmt):
+        if not cond._owned:
+            raise Exception("cond is not owned")
+        if not stmt._owned:
+            raise Exception("stmt is not owned")
         cond._owned = False
+        stmt._owned = False
         return TypeProcStmtIfClause.mk(
             self.asContext().mkTypeProcStmtIfClause(cond.asExpr(), stmt.asStmt()), True)
 
     cpdef mkTypeProcStmtIfElse(self, list if_c, TypeProcStmt else_c):
         cdef cpp_vector[decl.ITypeProcStmtIfClauseP] clauses
         cdef TypeProcStmtIfClause clause
+        cdef decl.ITypeProcStmt *else_cp = NULL
         for cc in if_c:
             clause = <TypeProcStmtIfClause>(cc)
+            if not clause._owned:
+                raise Exception("Clause is not owned")
+            clause._owned = False
             clauses.push_back(clause.asIfClause())
+        if else_c is not None:
+            if not else_c._owned:
+                raise Exception("else_c not owned")
+            else_c._owned = False
+            else_cp = else_c.asStmt()
         return TypeProcStmtIfElse.mk(
-            self.asContext().mkTypeProcStmtIfElse(clauses, else_c.asStmt()), True)
+            self.asContext().mkTypeProcStmtIfElse(clauses, else_cp), True)
 
     cpdef mkTypeProcStmtMatch(self, vsc.TypeExpr cond):
         cond._owned = False
@@ -1134,7 +1148,13 @@ cdef class TypeProcStmtScope(TypeProcStmt):
         self.asScope().addStatement(stmt.asStmt(), owned)
 
     cpdef getStatements(self):
+        cdef const cpp_vector[decl.ITypeProcStmtUP] *stmts = &self.asScope().getStatements()
+        cdef TypeProcStmt stmt
+
         ret = []
+        for i in range(stmts.size()):
+            stmt = WrapperBuilder().mkObj(stmts.at(i).get(), False)
+            ret.append(ret)
 
         return ret
 
